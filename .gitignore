@@ -14,9 +14,5 @@ out/
 .DS_Store
 Thumbs.db
 
-# Large media / frame sequences
-public/frames/
-public/drone-frames/
-
 # Claude settings
 .claude/
