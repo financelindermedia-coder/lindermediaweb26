@@ -1,5 +1,20 @@
 'use client'
 
+const PROBLEME = [
+    {
+        nr: '01',
+        text: '„Wir haben eine gute Website – aber kaum Anfragen."',
+    },
+    {
+        nr: '02',
+        text: '„Werbung läuft – aber ohne klares Ziel oder messbares Ergebnis."',
+    },
+    {
+        nr: '03',
+        text: '„Marketing und Vertrieb ziehen nicht an einem Strang."',
+    },
+]
+
 export default function ProblemSection() {
     return (
         <section style={{
@@ -19,69 +34,70 @@ export default function ProblemSection() {
                     | Das eigentliche Problem
                 </p>
 
-                <h2 style={{
-                    fontSize: 'clamp(2.2rem, 4.5vw, 5.5rem)',
-                    fontWeight: 300, lineHeight: 1.05,
-                    letterSpacing: '-0.02em', textTransform: 'uppercase',
-                    color: '#ffffff', marginBottom: '6rem',
-                    maxWidth: '18ch',
-                }}>
-                    Viele Unternehmen<br />
-                    investieren in Sichtbarkeit.<br />
-                    <strong style={{ fontWeight: 900 }}>Nicht in Richtung.</strong>
-                </h2>
-
                 <div className="problem-grid">
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.8rem' }}>
+                    <div>
+                        <h2 style={{
+                            fontSize: 'clamp(2.2rem, 4.5vw, 5.5rem)',
+                            fontWeight: 300, lineHeight: 1.05,
+                            letterSpacing: '-0.02em', textTransform: 'uppercase',
+                            color: '#ffffff', marginBottom: '0.5rem',
+                        }}>
+                            Einzelmaßnahmen
+                        </h2>
+                        <h2 style={{
+                            fontSize: 'clamp(2.2rem, 4.5vw, 5.5rem)',
+                            fontWeight: 900, lineHeight: 1.05,
+                            letterSpacing: '-0.02em', textTransform: 'uppercase',
+                            color: '#ffffff', marginBottom: '2.5rem',
+                        }}>
+                            scheitern.
+                        </h2>
                         <p style={{
                             fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)',
                             fontWeight: 400, lineHeight: 1.8,
-                            color: 'rgba(255,255,255,0.55)',
+                            color: 'rgba(255,255,255,0.45)',
+                            maxWidth: '38ch',
                         }}>
-                            Websites. Werbung. SEO. Social Media. Google Ads.
-                            All diese Maßnahmen können Aufmerksamkeit erzeugen.
-                        </p>
-                        <p style={{
-                            fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)',
-                            fontWeight: 400, lineHeight: 1.8,
-                            color: 'rgba(255,255,255,0.55)',
-                        }}>
-                            Doch sie bleiben Stückwerk, wenn Strategie, Positionierung,
-                            Kommunikation und Vertrieb nicht dieselbe Richtung verfolgen.
-                        </p>
-                        <p style={{
-                            fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)',
-                            fontWeight: 400, lineHeight: 1.8,
-                            color: 'rgba(255,255,255,0.55)',
-                        }}>
-                            Das Ergebnis: Budgets werden investiert, Aktivität entsteht –
-                            aber keine Wirkung.
+                            Viele Unternehmen investieren in Werbung, Websites oder SEO –
+                            doch sie bleiben Stückwerk, wenn Strategie fehlt.
                         </p>
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.8rem' }}>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+                        {PROBLEME.map((p, i) => (
+                            <div key={p.nr} style={{
+                                borderTop: '1px solid rgba(255,255,255,0.07)',
+                                padding: '2.2rem 0',
+                                borderBottom: i === PROBLEME.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none',
+                                display: 'flex', gap: '2rem', alignItems: 'flex-start',
+                            }}>
+                                <span style={{
+                                    fontSize: 'clamp(0.62rem, 0.72vw, 0.68rem)',
+                                    fontWeight: 400, letterSpacing: '0.22em',
+                                    textTransform: 'uppercase', color: 'rgba(0,212,180,0.5)',
+                                    paddingTop: '0.3rem', flexShrink: 0,
+                                }}>
+                                    {p.nr}
+                                </span>
+                                <p style={{
+                                    fontSize: 'clamp(1.1rem, 1.5vw, 1.3rem)',
+                                    fontWeight: 400, lineHeight: 1.65,
+                                    color: 'rgba(255,255,255,0.7)',
+                                    fontStyle: 'italic',
+                                }}>
+                                    {p.text}
+                                </p>
+                            </div>
+                        ))}
+
                         <p style={{
-                            fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)',
-                            fontWeight: 400, lineHeight: 1.8,
-                            color: 'rgba(255,255,255,0.55)',
-                        }}>
-                            Das eigentliche Problem ist selten fehlende Sichtbarkeit.
-                            Es ist fehlende Kohärenz.
-                        </p>
-                        <p style={{
-                            fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)',
-                            fontWeight: 400, lineHeight: 1.8,
-                            color: 'rgba(255,255,255,0.55)',
-                        }}>
-                            Wenn Entscheider zu uns kommen, sind sie selten unbekannt.
-                            Aber oft missverstanden. Ihre Stärke kommt nach außen nicht
-                            so an, wie sie intern gelebt wird.
-                        </p>
-                        <p style={{
-                            fontSize: 'clamp(1.2rem, 1.6vw, 1.45rem)',
+                            marginTop: '2.5rem',
+                            fontSize: 'clamp(1rem, 1.3vw, 1.15rem)',
                             fontWeight: 400, lineHeight: 1.75,
                             color: 'rgba(255,255,255,0.85)',
                         }}>
-                            Genau dort beginnt unsere Arbeit.
+                            Das ist kein Zeichen schlechter Qualität.
+                            Es fehlt die gemeinsame Richtung.
                         </p>
                     </div>
                 </div>

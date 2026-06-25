@@ -4,10 +4,10 @@ import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 
 const NAV_LINKS = [
-    { label: 'Markenarchitektur', href: '#video-scroll' },
-    { label: 'Methode',           href: '#methode'      },
-    { label: 'Projekte',          href: '#projekte'     },
-    { label: 'FAQ',               href: '#faq'          },
+    { label: 'Methode',   href: '#methode'    },
+    { label: 'Projekte',  href: '#projekte'   },
+    { label: 'Über uns',  href: '#ueber-uns'  },
+    { label: 'FAQ',       href: '#faq'        },
 ]
 
 export default function Navbar() {
@@ -107,7 +107,7 @@ export default function Navbar() {
                         transition: 'all 0.3s ease',
                     }}
                 >
-                    Gespräch beginnen
+                    Gespräch anfragen
                 </a>
             </div>
         </nav>

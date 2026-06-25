@@ -127,8 +127,16 @@ export default function ContactSection() {
                                 onMouseEnter={e => { e.currentTarget.style.opacity = '0.85' }}
                                 onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
                             >
-                                Gespräch beginnen
+                                Jetzt Gespräch anfragen
                             </button>
+                            <p style={{
+                                marginTop: '0.8rem',
+                                fontSize: '0.72rem', fontWeight: 400,
+                                letterSpacing: '0.12em', textTransform: 'uppercase',
+                                color: 'rgba(255,255,255,0.25)',
+                            }}>
+                                Kostenfrei und unverbindlich
+                            </p>
                         </form>
                     )}
                 </div>

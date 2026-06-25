@@ -10,22 +10,22 @@ const barlow = Barlow({
 })
 
 export const metadata: Metadata = {
-    title: 'LinderMedia — Markenarchitektur & Sichtbarkeit',
-    description: 'Starke Marken entstehen nicht an der Oberfläche. Wir entwickeln Markenarchitektur, die Strategie, Identität und Kommunikation verbindet — für nachhaltige Sichtbarkeit.',
-    keywords: ['Markenarchitektur', 'Markenstrategie', 'Sichtbarkeit', 'Positionierung', 'Corporate Identity', 'Branding', 'Marketing', 'LinderMedia'],
+    title: 'LinderMedia — Strategische Markenarchitektur & performantes Marketing',
+    description: 'Markenstrategie, Website, Google Ads und Leadgenerierung aus einer Hand. LinderMedia entwickelt Systeme, die messbar wirken. Jetzt Strategiegespräch anfragen.',
+    keywords: ['Markenstrategie', 'Leadgenerierung', 'Website Design', 'Google Ads', 'Positionierung', 'Corporate Identity', 'Markenarchitektur', 'LinderMedia'],
     authors: [{ name: 'LinderMedia' }],
     robots: { index: true, follow: true },
     openGraph: {
-        title: 'LinderMedia — Markenarchitektur & Sichtbarkeit',
-        description: 'Starke Marken entstehen nicht an der Oberfläche. Wir entwickeln die Architektur, die alles trägt.',
+        title: 'LinderMedia — Strategische Markenarchitektur & performantes Marketing',
+        description: 'Markenstrategie, Website, Ads und Automatisierung – ein System, das messbar wirkt.',
         type: 'website',
         locale: 'de_DE',
         siteName: 'LinderMedia',
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'LinderMedia — Markenarchitektur & Sichtbarkeit',
-        description: 'Starke Marken entstehen nicht an der Oberfläche.',
+        title: 'LinderMedia — Strategische Markenarchitektur & performantes Marketing',
+        description: 'Markenstrategie, Website, Ads und Automatisierung – ein System, das messbar wirkt.',
     },
 }
 

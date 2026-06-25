@@ -70,6 +70,18 @@ body {
     gap: 5vw;
     align-items: start;
 }
+.methode-header-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5vw;
+    align-items: end;
+    margin-top: 3rem;
+}
+.zahlen-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+}
 .methode-tags {
     display: flex;
     flex-wrap: wrap;
@@ -142,6 +154,15 @@ body {
     .leistungen-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
+    }
+    .methode-header-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-top: 1.5rem;
+    }
+    .zahlen-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
     }
     .erkenntnis-intro-grid,
     .erkenntnis-slide-grid {

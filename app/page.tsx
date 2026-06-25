@@ -7,6 +7,7 @@ import Navbar from '@/components/Navbar'
 import ErkenntnisSection from '@/components/sections/ErkenntnisSection'
 import ProblemSection from '@/components/sections/ProblemSection'
 import MethodeSection from '@/components/sections/MethodeSection'
+import ZahlenSection from '@/components/sections/ZahlenSection'
 import ReferenzenSection from '@/components/sections/ReferenzenSection'
 import StimmenSection from '@/components/sections/StimmenSection'
 import MenschenSection from '@/components/sections/MenschenSection'
@@ -29,6 +30,7 @@ export default function Home() {
                     <ErkenntnisSection />
                     <ProblemSection />
                     <MethodeSection />
+                    <ZahlenSection />
                     <ReferenzenSection />
                     <StimmenSection />
                     <MenschenSection />
