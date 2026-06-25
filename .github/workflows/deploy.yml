@@ -18,4 +18,6 @@ jobs:
           script: |
             cd /var/www/lindermedia
             git pull origin main
-            docker compose up -d --build
+            PUPPETEER_SKIP_DOWNLOAD=true npm ci
+            npm run build
+            pm2 restart lindermedia
