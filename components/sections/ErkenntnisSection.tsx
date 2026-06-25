@@ -78,7 +78,7 @@ const CARDS = [
             { text: 'Konsistenz folgt',   highlight: false },
             { text: 'Klarheit.',          highlight: true  },
         ],
-        sub: 'Bevor wir über Ihre Situation sprechen, beantworten wir die Fragen, die uns am häufigsten gestellt werden.',
+        sub: 'Was das in der Praxis bedeutet – und wie wir arbeiten – zeigen wir im Folgenden.',
     },
 ]
 

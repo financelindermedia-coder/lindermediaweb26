@@ -5,6 +5,8 @@ import Image from 'next/image'
 
 const NAV_LINKS = [
     { label: 'Markenarchitektur', href: '#video-scroll' },
+    { label: 'Methode',           href: '#methode'      },
+    { label: 'Projekte',          href: '#projekte'     },
     { label: 'FAQ',               href: '#faq'          },
 ]
 

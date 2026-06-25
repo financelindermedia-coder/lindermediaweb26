@@ -40,16 +40,24 @@ export default function ContactSection() {
                         color: '#ffffff', marginBottom: '1.6rem',
                         textTransform: 'uppercase',
                     }}>
-                        Bereit für<br />
-                        <strong style={{ fontWeight: 900 }}>Klarheit?</strong>
+                        Was steckt unter<br />
+                        <strong style={{ fontWeight: 900 }}>der Oberfläche?</strong>
                     </h2>
                     <p style={{
                         fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)', fontWeight: 400,
                         lineHeight: 1.75, color: 'rgba(255,255,255,0.55)',
+                        marginBottom: '1.8rem',
                     }}>
-                        Erzählen Sie uns, wo Ihre Marke heute steht.<br />
-                        Gemeinsam finden wir heraus,<br />
-                        was sie morgen tragen kann.
+                        Nicht jedes Unternehmen braucht mehr Marketing.<br />
+                        Manchmal braucht es die richtige Richtung.
+                    </p>
+                    <p style={{
+                        fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)', fontWeight: 400,
+                        lineHeight: 1.75, color: 'rgba(255,255,255,0.4)',
+                    }}>
+                        Erzählen Sie uns, wo Ihr Unternehmen heute steht.<br />
+                        In einem ersten Gespräch – ohne Agenda, ohne Verkaufsdruck –<br />
+                        finden wir gemeinsam heraus, wo die Arbeit wirklich beginnen sollte.
                     </p>
                 </div>
 
