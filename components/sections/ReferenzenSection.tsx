@@ -1,10 +1,13 @@
 'use client'
 
+import Image from 'next/image'
+
 const PROJEKTE = [
     {
         nr: '01',
         branche: 'Handwerk & Baugewerbe',
         titel: 'Spezialist wird Marke',
+        bild: '/images/projekt-01.svg',
         ausgangslage: 'Ein regionaler Fachbetrieb mit 22 Jahren Erfahrung — aber kaum Präsenz im Netz. Anfragen kamen ausschließlich über Empfehlung.',
         strategie: 'Positionierung als klarer Spezialist für ein spezifisches Segment. Keine Generalisierung. Klare Sprache für eine klar definierte Zielgruppe.',
         umsetzung: 'Website-Relaunch, lokale SEO-Strategie, Google-Ads-Kampagne mit spezifischen Suchintentionen. Alle Maßnahmen auf dieselbe Botschaft ausgerichtet.',
@@ -14,6 +17,7 @@ const PROJEKTE = [
         nr: '02',
         branche: 'B2B Software & Technologie',
         titel: 'Komplexes Produkt, klare Botschaft',
+        bild: '/images/projekt-02.svg',
         ausgangslage: 'Technisch überlegenes Produkt — aber die Website erklärte Feature statt Wirkung. Vertrieb musste Aufklärungsarbeit leisten, die die Website hätte übernehmen können.',
         strategie: 'Kommunikationsstrategie: Weg von technischen Spezifikationen, hin zur Entscheiderperspektive. Was ändert sich, wenn man dieses Produkt einsetzt?',
         umsetzung: 'Website-Relaunch mit Fokus auf Outcome. Landingpages für spezifische Entscheidersituationen. Begleitung durch Content-Aufbau.',
@@ -23,6 +27,7 @@ const PROJEKTE = [
         nr: '03',
         branche: 'Dienstleistung & Beratung',
         titel: 'Expertise sichtbar machen',
+        bild: '/images/projekt-03.svg',
         ausgangslage: 'Eine Beraterin mit nachgewiesener Expertise — aber eine Website, die nichts davon transportierte. Kunden kamen über Netzwerk, nicht über Suche.',
         strategie: 'Persönliche Positionierung. Klares Fachgebiet. Sprache, die zeigt, dass hier jemand wirklich versteht, was auf dem Spiel steht.',
         umsetzung: 'Neues Website-Konzept, strategischer Content-Aufbau, Google-Präsenz für relevante Suchbegriffe.',
@@ -64,18 +69,31 @@ export default function ReferenzenSection() {
                     fontSize: 'clamp(2.2rem, 4.5vw, 5.5rem)',
                     fontWeight: 900, lineHeight: 1.05,
                     letterSpacing: '-0.02em', textTransform: 'uppercase',
-                    color: '#ffffff', marginBottom: '6rem',
+                    color: '#ffffff', marginBottom: '7rem',
                 }}>
                     wirklich wird.
                 </h2>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
-                    {PROJEKTE.map((p, i) => (
-                        <div key={p.nr} style={{
-                            borderTop: '1px solid rgba(255,255,255,0.08)',
-                            paddingTop: '4rem', paddingBottom: '4rem',
-                            borderBottom: i === PROJEKTE.length - 1 ? '1px solid rgba(255,255,255,0.08)' : 'none',
-                        }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8rem' }}>
+                    {PROJEKTE.map((p) => (
+                        <div key={p.nr}>
+                            {/* Project image */}
+                            <div style={{
+                                position: 'relative', width: '100%',
+                                aspectRatio: '16 / 9',
+                                borderRadius: '2px', overflow: 'hidden',
+                                marginBottom: '3rem',
+                                border: '1px solid rgba(255,255,255,0.06)',
+                            }}>
+                                <Image
+                                    src={p.bild}
+                                    alt={`Projekt ${p.nr} – ${p.titel}`}
+                                    fill
+                                    style={{ objectFit: 'cover' }}
+                                />
+                            </div>
+
+                            {/* Project details */}
                             <div className="referenz-grid">
                                 {/* Left */}
                                 <div>
@@ -130,11 +148,11 @@ export default function ReferenzenSection() {
                     ))}
                 </div>
 
-                <div style={{ marginTop: '5rem' }}>
+                <div style={{ marginTop: '5rem', paddingTop: '3rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
                     <p style={{
                         fontSize: 'clamp(0.95rem, 1.2vw, 1.1rem)',
                         fontWeight: 400, lineHeight: 1.75,
-                        color: 'rgba(255,255,255,0.3)',
+                        color: 'rgba(255,255,255,0.25)',
                     }}>
                         Alle Zahlen basieren auf realen Projekten. Namen und Branchen wurden auf Wunsch der Kunden anonymisiert.
                     </p>

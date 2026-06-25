@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 export default function MenschenSection() {
     return (
         <section id="ueber-uns" style={{
@@ -20,23 +22,19 @@ export default function MenschenSection() {
                 </p>
 
                 <div className="menschen-grid">
-                    {/* Portrait placeholder */}
+                    {/* Portrait */}
                     <div>
                         <div style={{
+                            position: 'relative',
                             width: '100%', aspectRatio: '3 / 4',
-                            background: 'rgba(255,255,255,0.03)',
-                            border: '1px solid rgba(255,255,255,0.07)',
-                            borderRadius: '2px',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            borderRadius: '2px', overflow: 'hidden',
                         }}>
-                            <p style={{
-                                fontSize: 'clamp(0.65rem, 0.75vw, 0.72rem)',
-                                fontWeight: 400, letterSpacing: '0.2em',
-                                textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)',
-                                textAlign: 'center',
-                            }}>
-                                Portrait folgt
-                            </p>
+                            <Image
+                                src="/images/portrait-andreas.svg"
+                                alt="Andreas Linder, Gründer LinderMedia"
+                                fill
+                                style={{ objectFit: 'cover' }}
+                            />
                         </div>
                         <div style={{ marginTop: '1.5rem' }}>
                             <p style={{

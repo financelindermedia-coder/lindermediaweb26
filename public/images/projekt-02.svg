@@ -1,0 +1,80 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg2" cx="70%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#0a1a30"/>
+      <stop offset="100%" stop-color="#020810"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg2)"/>
+
+  <!-- Split layout: left dark, right slightly lighter -->
+  <rect x="0" y="0" width="580" height="675" fill="#020810"/>
+  <rect x="580" y="0" width="620" height="675" fill="#040e1e"/>
+  <line x1="580" y1="0" x2="580" y2="675" stroke="#00d4b4" stroke-opacity="0.08" stroke-width="1"/>
+
+  <!-- Left side — text mockup -->
+  <text x="60" y="100" font-family="'Helvetica Neue', sans-serif" font-size="9" letter-spacing="4" fill="#00d4b4" fill-opacity="0.5">| B2B SOFTWARE & TECHNOLOGIE</text>
+  <rect x="60" y="120" width="380" height="32" rx="2" fill="#ffffff" fill-opacity="0.08"/>
+  <rect x="60" y="162" width="320" height="32" rx="2" fill="#ffffff" fill-opacity="0.06"/>
+  <rect x="60" y="220" width="440" height="12" rx="2" fill="#ffffff" fill-opacity="0.04"/>
+  <rect x="60" y="240" width="400" height="12" rx="2" fill="#ffffff" fill-opacity="0.04"/>
+  <rect x="60" y="260" width="420" height="12" rx="2" fill="#ffffff" fill-opacity="0.04"/>
+  <rect x="60" y="280" width="360" height="12" rx="2" fill="#ffffff" fill-opacity="0.04"/>
+
+  <!-- CTA button mockup -->
+  <rect x="60" y="330" width="180" height="42" rx="2" fill="white" fill-opacity="0.9"/>
+  <text x="150" y="356" text-anchor="middle" font-family="'Helvetica Neue', sans-serif" font-size="10" font-weight="700" letter-spacing="2" fill="#020810">DEMO ANFRAGEN</text>
+
+  <!-- Metric -->
+  <text x="60" y="440" font-family="'Helvetica Neue', sans-serif" font-size="36" font-weight="700" letter-spacing="-2" fill="white" fill-opacity="0.9">+40%</text>
+  <text x="60" y="462" font-family="'Helvetica Neue', sans-serif" font-size="10" letter-spacing="2" fill="#00d4b4" fill-opacity="0.55">MEHR ERSTANFRAGEN MIT KONKRETEM BEDARF</text>
+
+  <!-- Right side — dashboard/product mockup -->
+  <rect x="620" y="60" width="540" height="340" rx="4" fill="#040d1a" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+  <!-- Dashboard top bar -->
+  <rect x="620" y="60" width="540" height="32" rx="4" fill="#0d1f38"/>
+  <rect x="620" y="82" width="540" height="10" fill="#0d1f38"/>
+  <!-- Dashboard nav items -->
+  <rect x="640" y="72" width="60" height="8" rx="2" fill="#ffffff" fill-opacity="0.12"/>
+  <rect x="710" y="72" width="50" height="8" rx="2" fill="#ffffff" fill-opacity="0.06"/>
+  <rect x="770" y="72" width="55" height="8" rx="2" fill="#ffffff" fill-opacity="0.06"/>
+
+  <!-- Dashboard content -->
+  <rect x="640" y="110" width="200" height="120" rx="3" fill="#0a1628" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+  <text x="740" y="158" text-anchor="middle" font-family="'Helvetica Neue', sans-serif" font-size="22" font-weight="700" fill="white" fill-opacity="0.8">87%</text>
+  <text x="740" y="175" text-anchor="middle" font-family="'Helvetica Neue', sans-serif" font-size="8" letter-spacing="2" fill="rgba(255,255,255,0.3)">CONVERSION</text>
+
+  <rect x="856" y="110" width="284" height="120" rx="3" fill="#0a1628" stroke="#00d4b4" stroke-opacity="0.12" stroke-width="1"/>
+  <!-- Mini chart bars -->
+  <rect x="876" y="200" width="16" height="20" rx="1" fill="#00d4b4" fill-opacity="0.4"/>
+  <rect x="900" y="185" width="16" height="35" rx="1" fill="#00d4b4" fill-opacity="0.5"/>
+  <rect x="924" y="170" width="16" height="50" rx="1" fill="#00d4b4" fill-opacity="0.6"/>
+  <rect x="948" y="155" width="16" height="65" rx="1" fill="#00d4b4" fill-opacity="0.75"/>
+  <rect x="972" y="145" width="16" height="75" rx="1" fill="#00d4b4" fill-opacity="0.9"/>
+  <rect x="996" y="135" width="16" height="85" rx="1" fill="#00d4b4"/>
+  <rect x="1020" y="148" width="16" height="72" rx="1" fill="#00d4b4" fill-opacity="0.85"/>
+  <rect x="1044" y="138" width="16" height="82" rx="1" fill="#00d4b4"/>
+  <text x="1000" y="126" text-anchor="middle" font-family="'Helvetica Neue', sans-serif" font-size="7" letter-spacing="2" fill="#00d4b4" fill-opacity="0.5">ANFRAGEN / MONAT</text>
+
+  <!-- More content rows -->
+  <rect x="640" y="248" width="500" height="10" rx="2" fill="#ffffff" fill-opacity="0.04"/>
+  <rect x="640" y="266" width="440" height="10" rx="2" fill="#ffffff" fill-opacity="0.04"/>
+  <rect x="640" y="284" width="480" height="10" rx="2" fill="#ffffff" fill-opacity="0.04"/>
+  <rect x="640" y="302" width="400" height="10" rx="2" fill="#ffffff" fill-opacity="0.04"/>
+  <rect x="640" y="320" width="460" height="10" rx="2" fill="#ffffff" fill-opacity="0.04"/>
+  <rect x="640" y="338" width="380" height="10" rx="2" fill="#ffffff" fill-opacity="0.04"/>
+
+  <!-- Watermark -->
+  <text x="600" y="640" text-anchor="middle" font-family="'Helvetica Neue', sans-serif" font-size="9" letter-spacing="4" fill="#00d4b4" fill-opacity="0.2">PROJEKT 02 — SCREENSHOT FOLGT — B2B SOFTWARE & TECHNOLOGIE</text>
+
+  <!-- Corner marks -->
+  <path d="M 20 20 L 20 44" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 20 20 L 44 20" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 1180 20 L 1180 44" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 1180 20 L 1156 20" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 20 655 L 20 631" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 20 655 L 44 655" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 1180 655 L 1180 631" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 1180 655 L 1156 655" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+</svg>
