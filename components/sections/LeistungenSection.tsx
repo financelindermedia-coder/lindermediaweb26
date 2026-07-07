@@ -13,20 +13,30 @@ const LEISTUNGEN = [
 ]
 
 export default function LeistungenSection() {
-    const wrapRef  = useRef<HTMLDivElement>(null)
-    const fillRef  = useRef<HTMLSpanElement>(null)
+    const pinRef    = useRef<HTMLDivElement>(null)
+    const trackRef  = useRef<HTMLDivElement>(null)
+    const fillRef   = useRef<HTMLSpanElement>(null)
     const pearlRefs = useRef<(HTMLSpanElement | null)[]>([])
-    const rafRef   = useRef<number | null>(null)
+    const rafRef    = useRef<number | null>(null)
 
     useEffect(() => {
-        const wrap = wrapRef.current
+        const pin = pinRef.current
+        const track = trackRef.current
         const fill = fillRef.current
-        if (!wrap || !fill) return
+        if (!pin || !track || !fill) return
 
+        let distance = 0
+        function layout() {
+            if (!pin || !track) return
+            distance = Math.max(track.scrollWidth - window.innerWidth, 0)
+            pin.style.height = `${window.innerHeight + distance}px`
+        }
         function update() {
             rafRef.current = null
-            if (!wrap || !fill) return
-            const edge = wrap.scrollLeft + wrap.clientWidth * 0.55
+            if (!pin || !track || !fill) return
+            const scrolled = Math.min(Math.max(-pin.getBoundingClientRect().top, 0), distance)
+            track.style.transform = `translate3d(${-scrolled}px, 0, 0)`
+            const edge = scrolled + window.innerWidth * 0.55
             fill.style.width = `${edge}px`
             pearlRefs.current.forEach((n) => {
                 if (!n) return
@@ -37,82 +47,64 @@ export default function LeistungenSection() {
             })
         }
         function onScroll() { if (rafRef.current === null) rafRef.current = requestAnimationFrame(update) }
+        function onResize() { layout(); update() }
 
-        function onWheel(e: WheelEvent) {
-            if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return
-            const atStart = wrap.scrollLeft <= 0
-            const atEnd = wrap.scrollLeft >= wrap.scrollWidth - wrap.clientWidth - 1
-            if ((e.deltaY < 0 && atStart) || (e.deltaY > 0 && atEnd)) return
-            e.preventDefault()
-            wrap.scrollLeft += e.deltaY
-        }
-        let down = false, startX = 0, startL = 0
-        function pd(e: PointerEvent) { if (e.pointerType !== 'mouse') return; down = true; startX = e.clientX; startL = wrap.scrollLeft; wrap.classList.add('dragging') }
-        function pm(e: PointerEvent) { if (!down) return; wrap.scrollLeft = startL - (e.clientX - startX) }
-        function pu() { if (!down) return; down = false; wrap.classList.remove('dragging') }
-
+        layout()
         update()
-        wrap.addEventListener('scroll', onScroll, { passive: true })
-        wrap.addEventListener('wheel', onWheel, { passive: false })
-        wrap.addEventListener('pointerdown', pd)
-        window.addEventListener('pointermove', pm)
-        window.addEventListener('pointerup', pu)
-        window.addEventListener('resize', onScroll)
+        window.addEventListener('scroll', onScroll, { passive: true })
+        window.addEventListener('resize', onResize)
+        // Bilder können die Track-Breite ändern → nach Load neu vermessen
+        const imgs = track.querySelectorAll('img')
+        imgs.forEach((im) => im.addEventListener('load', onResize))
         return () => {
-            wrap.removeEventListener('scroll', onScroll)
-            wrap.removeEventListener('wheel', onWheel)
-            wrap.removeEventListener('pointerdown', pd)
-            window.removeEventListener('pointermove', pm)
-            window.removeEventListener('pointerup', pu)
-            window.removeEventListener('resize', onScroll)
+            window.removeEventListener('scroll', onScroll)
+            window.removeEventListener('resize', onResize)
+            imgs.forEach((im) => im.removeEventListener('load', onResize))
             if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)
         }
     }, [])
 
     return (
-        <section
-            id="leistungen"
-            style={{ background: '#020810', color: '#f8fafc', fontFamily: 'var(--font-barlow), sans-serif', padding: '10rem 0', overflow: 'hidden' }}
-        >
-            <div style={{ padding: '0 var(--px)' }}>
-                <p style={{ fontSize: 'clamp(0.68rem, 0.8vw, 0.78rem)', fontWeight: 400, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(0,212,180,0.7)', marginBottom: '2.5rem' }}>
-                    | Leistungen
-                </p>
-                <h2 style={{ fontSize: 'clamp(2.2rem, 4.5vw, 5.5rem)', fontWeight: 300, lineHeight: 1.05, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#fff', marginBottom: '0.3rem' }}>
-                    Sechs Bausteine,
-                </h2>
-                <h2 style={{ fontSize: 'clamp(2.2rem, 4.5vw, 5.5rem)', fontWeight: 900, lineHeight: 1.05, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#fff' }}>
-                    ein durchgehender Faden.
-                </h2>
-            </div>
-
-            <div className="lst-track-wrap" ref={wrapRef}>
-                <div className="lst-track">
-                    <div className="lst-line" aria-hidden="true">
-                        <span className="lst-line-base" />
-                        <span className="lst-line-fill" ref={fillRef} />
+        <section id="leistungen" style={{ background: '#0f2d3a', color: '#f8fafc', fontFamily: 'var(--font-barlow), sans-serif' }}>
+            <div className="lst-pin" ref={pinRef}>
+                <div className="lst-sticky">
+                    <div className="lst-head">
+                        <p style={{ fontSize: 'clamp(0.68rem, 0.8vw, 0.78rem)', fontWeight: 400, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(0,212,180,0.7)', marginBottom: '1rem' }}>
+                            | Leistungen
+                        </p>
+                        <h2 style={{ fontWeight: 300, lineHeight: 1.05, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#fff' }}>
+                            Sechs Bausteine, <strong style={{ fontWeight: 900 }}>ein durchgehender Faden.</strong>
+                        </h2>
                     </div>
 
-                    {LEISTUNGEN.map((item, i) => (
-                        <article key={item.title} className="lst-panel">
-                            <span className="lst-pearl" ref={(el) => { pearlRefs.current[i] = el }} />
-                            <p className="lst-eye"><b>{String(i + 1).padStart(2, '0')}</b> {item.title}</p>
-                            <h3 className="lst-headline">{item.tagline}</h3>
-                            <p className="lst-desc">{item.description}</p>
-                            <div className="lst-img">
-                                <Image src={item.bild} alt={`Bildwelt für ${item.title}`} fill style={{ objectFit: 'cover' }} />
+                    <div className="lst-viewport">
+                        <div className="lst-track" ref={trackRef}>
+                            <div className="lst-line" aria-hidden="true">
+                                <span className="lst-line-base" />
+                                <span className="lst-line-fill" ref={fillRef} />
                             </div>
-                        </article>
-                    ))}
 
-                    <span className="lst-track-tail" aria-hidden="true" />
+                            {LEISTUNGEN.map((item, i) => (
+                                <article key={item.title} className="lst-panel">
+                                    <span className="lst-pearl" ref={(el) => { pearlRefs.current[i] = el }} />
+                                    <p className="lst-eye"><b>{String(i + 1).padStart(2, '0')}</b> {item.title}</p>
+                                    <h3 className="lst-headline">{item.tagline}</h3>
+                                    <p className="lst-desc">{item.description}</p>
+                                    <div className="lst-img">
+                                        <Image src={item.bild} alt={`Bildwelt für ${item.title}`} fill style={{ objectFit: 'cover' }} />
+                                    </div>
+                                </article>
+                            ))}
+                            <span className="lst-track-tail" aria-hidden="true" />
+                        </div>
+                    </div>
+
+                    <p className="lst-hint" aria-hidden="true">
+                        <span>Scrollen</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M6 13l6 6 6-6" /></svg>
+                    </p>
                 </div>
             </div>
-
-            <p className="lst-hint" aria-hidden="true">
-                <span>Ziehen / Wischen</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-            </p>
         </section>
     )
 }
