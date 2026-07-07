@@ -46,7 +46,7 @@ export default function FAQSection() {
                 <h2 style={{
                     fontSize: 'clamp(2rem, 3.5vw, 4.2rem)', fontWeight: 300,
                     lineHeight: 1.05, letterSpacing: '-0.012em',
-                    color: '#0c3d66', marginBottom: '1.4rem',
+                    color: '#ffffff', marginBottom: '1.4rem',
                     textTransform: 'uppercase',
                 }}>
                     Noch<br />
@@ -54,7 +54,7 @@ export default function FAQSection() {
                 </h2>
                 <p style={{
                     fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)', fontWeight: 400,
-                    lineHeight: 1.75, color: 'rgba(12,61,102,0.72)',
+                    lineHeight: 1.75, color: 'rgba(255,255,255,0.6)',
                     marginBottom: '3rem', maxWidth: '48ch',
                 }}>
                     Jede Marke ist anders. Viele Fragen tauchen jedoch immer wieder auf.
@@ -66,7 +66,7 @@ export default function FAQSection() {
                     {ITEMS.map((item, i) => (
                         <div
                             key={i}
-                            style={{ borderTop: '1.5px solid rgba(12,61,102,0.25)' }}
+                            style={{ borderTop: '1.5px solid rgba(255,255,255,0.14)' }}
                         >
                             <button
                                 onClick={() => setOpen(open === i ? null : i)}
@@ -80,12 +80,12 @@ export default function FAQSection() {
                             >
                                 <span style={{
                                     fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)', fontWeight: 600,
-                                    lineHeight: 1.5, color: '#0c3d66',
+                                    lineHeight: 1.5, color: '#ffffff',
                                 }}>
                                     {item.q}
                                 </span>
                                 <span style={{
-                                    fontSize: '1.7rem', color: '#0c3d66',
+                                    fontSize: '1.7rem', color: '#ffffff',
                                     flexShrink: 0, marginTop: '0.1rem',
                                     transform: open === i ? 'rotate(45deg)' : 'rotate(0)',
                                     transition: 'transform 0.25s ease',
@@ -101,7 +101,7 @@ export default function FAQSection() {
                             }}>
                                 <p style={{
                                     fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)', fontWeight: 400,
-                                    lineHeight: 1.75, color: 'rgba(12,61,102,0.8)',
+                                    lineHeight: 1.75, color: 'rgba(255,255,255,0.65)',
                                     paddingBottom: '1.6rem',
                                 }}>
                                     {item.a}
