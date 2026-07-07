@@ -1,0 +1,43 @@
+<svg width="1200" height="640" viewBox="0 0 1200 640" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgC" cx="34%" cy="44%" r="72%">
+      <stop offset="0%" stop-color="#0d2436"/>
+      <stop offset="100%" stop-color="#020810"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="640" fill="url(#bgC)"/>
+
+  <!-- Stacked article cards -->
+  <g>
+    <rect x="250" y="150" width="360" height="300" rx="8" fill="#0a1a2e" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1" transform="rotate(-4 430 300)"/>
+    <rect x="290" y="130" width="360" height="320" rx="8" fill="#0d1f38" stroke="#00d4b4" stroke-opacity="0.22" stroke-width="1"/>
+    <!-- headline -->
+    <rect x="322" y="168" width="220" height="18" rx="3" fill="#ffffff" fill-opacity="0.75"/>
+    <rect x="322" y="196" width="160" height="18" rx="3" fill="#ffffff" fill-opacity="0.5"/>
+    <!-- body lines -->
+    <rect x="322" y="240" width="296" height="10" rx="2" fill="#ffffff" fill-opacity="0.2"/>
+    <rect x="322" y="262" width="296" height="10" rx="2" fill="#ffffff" fill-opacity="0.2"/>
+    <rect x="322" y="284" width="260" height="10" rx="2" fill="#ffffff" fill-opacity="0.2"/>
+    <rect x="322" y="306" width="280" height="10" rx="2" fill="#ffffff" fill-opacity="0.2"/>
+    <rect x="322" y="328" width="200" height="10" rx="2" fill="#ffffff" fill-opacity="0.2"/>
+    <!-- tag -->
+    <rect x="322" y="380" width="120" height="30" rx="15" fill="#00d4b4" fill-opacity="0.14" stroke="#00d4b4" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="382" y="400" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="10" letter-spacing="2" fill="#00d4b4" fill-opacity="0.8">RELEVANZ</text>
+  </g>
+
+  <!-- Resonance / reach visual -->
+  <g transform="translate(760,290)">
+    <circle r="26" fill="#00d4b4" fill-opacity="0.5"/>
+    <circle r="70"  fill="none" stroke="#00d4b4" stroke-opacity="0.35" stroke-width="1.5"/>
+    <circle r="120" fill="none" stroke="#00d4b4" stroke-opacity="0.22" stroke-width="1.5"/>
+    <circle r="170" fill="none" stroke="#00d4b4" stroke-opacity="0.12" stroke-width="1.5"/>
+  </g>
+
+  <text x="600" y="520" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="22" font-weight="300" fill="#ffffff" fill-opacity="0.5" letter-spacing="1">Relevanz schaffen statt Reichweite bügeln.</text>
+  <text x="600" y="588" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="9" letter-spacing="4" fill="#00d4b4" fill-opacity="0.25">LEISTUNG — CONTENT</text>
+
+  <path d="M 40 40 L 40 68 M 40 40 L 68 40" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 1160 40 L 1160 68 M 1160 40 L 1132 40" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 40 600 L 40 572 M 40 600 L 68 600" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 1160 600 L 1160 572 M 1160 600 L 1132 600" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+</svg>

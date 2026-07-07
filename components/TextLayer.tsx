@@ -16,20 +16,20 @@ function sceneOpacity(scrollVh: number, start: number, end: number): number {
 }
 
 const SCENES = {
-    hero:           { start: -10,  end: 120  },
-    erkenntnis:     { start: 120,  end: 168  },
-    wasserlinie:    { start: 195,  end: 272  },
-    nebel:          { start: 120,  end: 272  },
-    konsistenz:     { start: 272,  end: 340  },
-    mission:        { start: 340,  end: 380  },
-    vision:         { start: 375,  end: 415  },
-    werte:          { start: 415,  end: 455  },
-    positionierung: { start: 455,  end: 495  },
-    identitaet:     { start: 495,  end: 535  },
-    sprache:        { start: 535,  end: 575  },
-    vertrauen:      { start: 575,  end: 615  },
-    tiefster:       { start: 615,  end: 665  },
-    sichtbarkeit:   { start: 720,  end: 810  },
+    hero:           { start: -10,  end: 120  },   // Frames ~0–31  · helle Oberfläche
+    erkenntnis:     { start: 150,  end: 270  },   // Frames ~38–69 · Eisberg erscheint (dunkler Text)
+    wasserlinie:    { start: 470,  end: 620  },   // Frames ~120–159 · kurz oberhalb der Wasserlinie (dunkler Text)
+    nebel:          { start: 470,  end: 720  },   // Nebelband an der Wasserlinie
+    // Stationen: überlappungsfrei mit klarer Lücke → immer nur EINE Szene sichtbar
+    mission:        { start: 720,  end: 765  },   // ab hier unter Wasser (weißer Text)
+    vision:         { start: 773,  end: 818  },
+    werte:          { start: 826,  end: 871  },
+    positionierung: { start: 879,  end: 924  },
+    identitaet:     { start: 932,  end: 977  },
+    sprache:        { start: 985,  end: 1030 },
+    vertrauen:      { start: 1038, end: 1083 },
+    tiefster:       { start: 1095, end: 1150 },   // tiefster, dunkelster Punkt
+    sichtbarkeit:   { start: 1160, end: 1210 },   // Grund, fast schwarz
 }
 
 const HL: React.CSSProperties = {
@@ -55,7 +55,9 @@ const EYE: React.CSSProperties = {
     color: 'rgba(255,255,255,0.55)',
     marginBottom: '0.9rem',
 }
-const TS = '0 2px 28px rgba(0,0,0,0.55), 0 0 70px rgba(0,0,0,0.25)'
+// Enge, glyph-nahe Schatten für Lesbarkeit auf hellem Eis – KEIN Box-Overlay,
+// sondern ein dunkler Saum direkt um die Buchstaben.
+const TS = '0 1px 3px rgba(0,0,0,0.92), 0 2px 16px rgba(0,0,0,0.72), 0 0 60px rgba(0,0,0,0.45)'
 
 export default function TextLayer() {
     const refs = useRef<Record<string, HTMLDivElement | null>>({})
@@ -138,32 +140,6 @@ export default function TextLayer() {
                 </p>
             </div>
 
-            {/* ── KONSISTENZ (an der Wasserlinie) ── */}
-            <div ref={r('konsistenz')} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', opacity: 0, visibility: 'hidden' }}>
-                <p style={{
-                    fontSize: 'clamp(0.68rem, 0.8vw, 0.78rem)', fontWeight: 700,
-                    letterSpacing: '0.25em', textTransform: 'uppercase',
-                    color: 'rgba(0,212,180,0.85)', marginBottom: '0.8rem',
-                    textShadow: TS,
-                }}>
-                    Sichtbarkeit folgt
-                </p>
-                <h2 style={{
-                    fontSize: 'clamp(4rem, 10vw, 13rem)',
-                    fontWeight: 900, lineHeight: 0.9,
-                    letterSpacing: '-0.025em', textTransform: 'uppercase',
-                    color: '#ffffff', textShadow: TS,
-                    marginBottom: '2rem',
-                }}>
-                    Konsistenz.
-                </h2>
-                <div style={{ width: '2.5rem', height: '1px', background: 'rgba(0,212,180,0.45)', margin: '0 auto 1.8rem' }} />
-                <p style={{ ...BODY, textShadow: TS, maxWidth: '34ch', margin: '0 auto' }}>
-                    Die stärksten Marken sind nicht die lautesten.<br />
-                    Sie sind die klarsten.
-                </p>
-            </div>
-
             {/* ── STATIONEN 01–07 ── */}
             <Station r={r('mission')}         num="01" label="Mission"         align="left"
                 hl={<>Der Antrieb<br /><strong style={{fontWeight:900}}>der Marke.</strong></>}
@@ -237,20 +213,20 @@ interface StationProps {
 function Station({ r, num, label, hl, body, align }: StationProps) {
     const right = align === 'right'
     return (
-        <div ref={r} style={{
+        <div ref={r} className="station-scene" style={{
             position: 'absolute', top: '50%',
             ...(right ? { right: 'var(--px)' } : { left: 'var(--px)' }),
-            transform: 'translateY(-50%)', maxWidth: '34vw',
+            transform: 'translateY(-50%)', maxWidth: 'clamp(280px, 34vw, 460px)',
             opacity: 0, visibility: 'hidden',
             ...(right ? { textAlign: 'right' } : {}),
         }}>
-            <p style={{ fontSize: 'clamp(0.85rem, 1.1vw, 1rem)', fontWeight: 400, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)', marginBottom: '0.8rem' }}>
+            <p style={{ fontSize: 'clamp(0.85rem, 1.1vw, 1rem)', fontWeight: 400, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.72)', textShadow: TS, marginBottom: '0.8rem' }}>
                 {right ? `${label} · ${num}` : `${num} · ${label}`}
             </p>
             <h3 style={{ fontSize: 'clamp(2rem, 3.5vw, 4.2rem)', fontWeight: 300, lineHeight: 1.1, color: '#ffffff', letterSpacing: '-0.012em', textShadow: TS, marginBottom: '1.2rem', textTransform: 'uppercase' }}>
                 {hl}
             </h3>
-            <p style={{ fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)', fontWeight: 400, lineHeight: 1.75, color: 'rgba(255,255,255,0.65)', textShadow: TS, maxWidth: '34ch', ...(right ? { marginLeft: 'auto' } : {}) }}>
+            <p style={{ fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)', fontWeight: 400, lineHeight: 1.75, color: 'rgba(255,255,255,0.88)', textShadow: TS, maxWidth: '34ch', ...(right ? { marginLeft: 'auto' } : {}) }}>
                 {body}
             </p>
         </div>

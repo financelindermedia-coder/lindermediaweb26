@@ -1,0 +1,47 @@
+<svg width="1200" height="640" viewBox="0 0 1200 640" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgW" cx="32%" cy="42%" r="70%">
+      <stop offset="0%" stop-color="#0d2436"/>
+      <stop offset="100%" stop-color="#020810"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="640" fill="url(#bgW)"/>
+
+  <!-- Browser window -->
+  <rect x="180" y="90" width="840" height="460" rx="8" fill="#040d1a" stroke="#ffffff" stroke-opacity="0.07" stroke-width="1"/>
+  <rect x="180" y="90" width="840" height="40" rx="8" fill="#0d1f38"/>
+  <rect x="180" y="118" width="840" height="12" fill="#0d1f38"/>
+  <circle cx="214" cy="110" r="5" fill="#ff5f57" fill-opacity="0.45"/>
+  <circle cx="234" cy="110" r="5" fill="#febc2e" fill-opacity="0.45"/>
+  <circle cx="254" cy="110" r="5" fill="#28c840" fill-opacity="0.45"/>
+  <rect x="300" y="101" width="480" height="18" rx="9" fill="#ffffff" fill-opacity="0.04"/>
+
+  <!-- Hero -->
+  <rect x="220" y="160" width="360" height="20" rx="3" fill="#ffffff" fill-opacity="0.85"/>
+  <rect x="220" y="192" width="300" height="20" rx="3" fill="#ffffff" fill-opacity="0.55"/>
+  <rect x="220" y="238" width="200" height="14" rx="2" fill="#ffffff" fill-opacity="0.30"/>
+  <rect x="220" y="260" width="240" height="14" rx="2" fill="#ffffff" fill-opacity="0.30"/>
+  <!-- CTA button -->
+  <rect x="220" y="300" width="170" height="46" rx="4" fill="#00d4b4" fill-opacity="0.18" stroke="#00d4b4" stroke-opacity="0.5" stroke-width="1"/>
+  <rect x="248" y="318" width="114" height="10" rx="2" fill="#00d4b4" fill-opacity="0.7"/>
+
+  <!-- Visual panel -->
+  <rect x="640" y="160" width="340" height="230" rx="6" fill="#00d4b4" fill-opacity="0.06" stroke="#00d4b4" stroke-opacity="0.2" stroke-width="1"/>
+  <circle cx="810" cy="275" r="60" fill="none" stroke="#00d4b4" stroke-opacity="0.35" stroke-width="2"/>
+  <path d="M 810 235 L 810 315 M 770 275 L 850 275" stroke="#00d4b4" stroke-opacity="0.35" stroke-width="2"/>
+
+  <!-- Conversion cards -->
+  <rect x="220" y="420" width="240" height="90" rx="4" fill="#0d1f38" stroke="#00d4b4" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="340" y="466" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="26" font-weight="700" fill="#ffffff" fill-opacity="0.9">Klarheit</text>
+  <text x="340" y="490" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="9" letter-spacing="2.5" fill="#00d4b4" fill-opacity="0.6">STRUKTUR</text>
+  <rect x="490" y="420" width="240" height="90" rx="4" fill="#0d1f38" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+  <text x="610" y="466" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="26" font-weight="700" fill="#ffffff" fill-opacity="0.9">Wirkung</text>
+  <text x="610" y="490" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="9" letter-spacing="2.5" fill="rgba(255,255,255,0.3)">CONVERSION</text>
+
+  <text x="600" y="588" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="9" letter-spacing="4" fill="#00d4b4" fill-opacity="0.25">LEISTUNG — WEBSITE</text>
+
+  <path d="M 40 40 L 40 68 M 40 40 L 68 40" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 1160 40 L 1160 68 M 1160 40 L 1132 40" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 40 600 L 40 572 M 40 600 L 68 600" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 1160 600 L 1160 572 M 1160 600 L 1132 600" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+</svg>

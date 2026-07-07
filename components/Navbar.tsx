@@ -4,10 +4,11 @@ import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 
 const NAV_LINKS = [
-    { label: 'Methode',   href: '#methode'    },
-    { label: 'Projekte',  href: '#projekte'   },
-    { label: 'Über uns',  href: '#ueber-uns'  },
-    { label: 'FAQ',       href: '#faq'        },
+    { label: 'Methode',     href: '#methode'    },
+    { label: 'Leistungen',  href: '#leistungen' },
+    { label: 'Projekte',    href: '#projekte'   },
+    { label: 'Über uns',    href: '#ueber-uns'  },
+    { label: 'FAQ',         href: '#faq'        },
 ]
 
 export default function Navbar() {

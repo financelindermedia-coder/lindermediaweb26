@@ -18,10 +18,11 @@ const PROBLEME = [
 export default function ProblemSection() {
     return (
         <section style={{
-            background: '#020810',
+            background: '#1a3a4d',
             padding: '10rem var(--px)',
             fontFamily: 'var(--font-barlow), sans-serif',
             borderTop: '1px solid rgba(255,255,255,0.06)',
+            transition: 'background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1)',
         }}>
             <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
 

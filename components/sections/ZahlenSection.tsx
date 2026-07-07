@@ -10,11 +10,12 @@ const ZAHLEN = [
 export default function ZahlenSection() {
     return (
         <section style={{
-            background: 'rgba(0,212,180,0.04)',
-            borderTop: '1px solid rgba(0,212,180,0.12)',
-            borderBottom: '1px solid rgba(0,212,180,0.12)',
+            background: '#08192a',
+            borderTop: '1px solid rgba(255,255,255,0.06)',
+            borderBottom: '1px solid rgba(255,255,255,0.06)',
             padding: '6rem var(--px)',
             fontFamily: 'var(--font-barlow), sans-serif',
+            transition: 'background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1)',
         }}>
             <div className="zahlen-grid" style={{ maxWidth: '1200px', margin: '0 auto' }}>
                 {ZAHLEN.map((z, i) => (

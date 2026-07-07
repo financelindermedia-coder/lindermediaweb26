@@ -8,6 +8,7 @@ export default function MenschenSection() {
             background: '#020810',
             fontFamily: 'var(--font-barlow), sans-serif',
             borderTop: '1px solid rgba(255,255,255,0.06)',
+            transition: 'background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1)',
         }}>
             {/* Wer steckt dahinter */}
             <div style={{ padding: '10rem var(--px) 0', maxWidth: '1200px', margin: '0 auto' }}>

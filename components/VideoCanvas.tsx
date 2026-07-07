@@ -2,8 +2,8 @@
 
 import { useEffect, useRef } from 'react'
 
-const TOTAL_FRAMES = 266
-const SKIP_FRAMES  = 1
+const TOTAL_FRAMES = 308
+const SKIP_FRAMES  = 0
 const USE_FRAMES   = TOTAL_FRAMES - SKIP_FRAMES
 
 export default function VideoCanvas() {

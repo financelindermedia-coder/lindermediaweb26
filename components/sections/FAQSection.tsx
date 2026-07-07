@@ -5,31 +5,15 @@ import { useState } from 'react'
 const ITEMS = [
     {
         q: 'Woran erkenne ich, dass meine Marke ein Klarheitsproblem hat?',
-        a: 'Viele Unternehmen bemerken es zunächst nicht. Die Symptome zeigen sich an anderer Stelle: Angebote werden hauptsächlich über den Preis verglichen. Kunden verstehen die Unterschiede zum Wettbewerb nicht. Marketingmaßnahmen erzeugen Aufmerksamkeit, aber keine nachhaltige Wirkung. Oder die Außendarstellung passt nicht mehr zu dem Unternehmen, das längst entstanden ist. Oft ist nicht die Leistung das Problem. Sondern die Wahrnehmung.',
+        a: 'Viele Unternehmen bemerken es zunächst nicht. Die Symptome zeigen sich an anderer Stelle: Angebote werden hauptsächlich über den Preis verglichen. Kunden verstehen die Unterschiede zum Wettbewerb nicht. Marketingmaßnahmen erzeugen Aufmerksamkeit, aber keine nachhaltige Wirkung. Oft ist nicht die Leistung das Problem. Sondern die Wahrnehmung.',
     },
     {
         q: 'Was kostet fehlende Klarheit?',
-        a: 'Die eigentliche Frage lautet oft nicht, was Markenentwicklung kostet. Die interessantere Frage ist, was fehlende Klarheit kostet. Wenn Kunden Unterschiede nicht erkennen. Wenn Mitarbeiter unterschiedliche Vorstellungen von der Zukunft haben. Wenn Marketing ständig neu ansetzen muss. Oder wenn Entscheidungen immer wieder diskutiert werden. Dann entstehen Kosten, die selten auf einer Rechnung stehen. Die Auswirkungen sind dennoch täglich spürbar.',
-    },
-    {
-        q: 'Warum reichen mehr Marketing oder mehr Werbung oft nicht aus?',
-        a: 'Marketing verstärkt das, was bereits vorhanden ist. Ist die Botschaft unklar, wird mehr Menschen eine unklare Botschaft gezeigt. Ist die Positionierung schwach, wird eine schwache Positionierung sichtbarer. Deshalb liegt die Ursache häufig nicht bei der Reichweite, sondern darunter.',
-    },
-    {
-        q: 'Woran erkenne ich, ob meine Positionierung funktioniert?',
-        a: 'Eine funktionierende Positionierung zeigt sich selten in Präsentationen. Sie zeigt sich im Alltag. Menschen verstehen schnell, wofür das Unternehmen steht. Kunden stellen die richtigen Fragen. Empfehlungen werden präziser. Und Gespräche drehen sich weniger um den Preis als um den tatsächlichen Nutzen.',
+        a: 'Die eigentliche Frage lautet oft nicht, was Markenentwicklung kostet. Die interessantere Frage ist, was fehlende Klarheit kostet. Wenn Kunden Unterschiede nicht erkennen. Wenn Marketing ständig neu ansetzen muss. Dann entstehen Kosten, die selten auf einer Rechnung stehen. Die Auswirkungen sind dennoch täglich spürbar.',
     },
     {
         q: 'Ist meine Marke wirklich das Problem?',
         a: 'Vielleicht. Vielleicht auch nicht. Deshalb beginnen wir nicht mit Lösungen, sondern mit Fragen. Manchmal liegt die Ursache in der Positionierung. Manchmal in der Kommunikation. Manchmal in der Sichtbarkeit. Erst wenn klar ist, wo die eigentliche Herausforderung liegt, wird über Maßnahmen gesprochen.',
-    },
-    {
-        q: 'Warum wirken manche Unternehmen größer, als sie tatsächlich sind?',
-        a: 'Weil Wahrnehmung nicht von Unternehmensgröße abhängt. Sondern von Klarheit. Ein kleines Unternehmen mit einer klaren Identität wirkt oft stärker als ein deutlich größeres Unternehmen mit einem uneinheitlichen Auftritt. Menschen orientieren sich an dem, was sie verstehen. Nicht an Mitarbeiterzahlen.',
-    },
-    {
-        q: 'Wann sollte man sich mit Markenentwicklung beschäftigen?',
-        a: 'Nicht erst dann, wenn etwas nicht mehr funktioniert. Sondern idealerweise dann, wenn sich etwas verändert: Wachstum. Neue Märkte. Neue Zielgruppen. Neue Produkte. Je früher Klarheit geschaffen wird, desto leichter lassen sich spätere Entscheidungen treffen.',
     },
     {
         q: 'Was passiert, wenn wir nichts verändern?',
@@ -44,12 +28,11 @@ export default function FAQSection() {
         <section
             id="faq"
             style={{
-                background: 'rgba(210, 225, 240, 0.55)',
-                backdropFilter: 'blur(18px)',
-                WebkitBackdropFilter: 'blur(18px)',
-                borderTop: '1px solid rgba(12,61,102,0.12)',
+                background: '#020810',
+                borderTop: '1px solid rgba(255,255,255,0.06)',
                 padding: '9rem var(--px)',
                 fontFamily: 'var(--font-barlow), sans-serif',
+                transition: 'background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1)',
             }}
         >
             <div style={{ maxWidth: '760px', margin: '0 auto' }}>

@@ -4,7 +4,7 @@ import type { CSSProperties } from 'react'
 const NAV = [
     { label: 'Markenarchitektur', href: '#video-scroll' },
     { label: 'Leistungen',        href: '#leistungen'   },
-    { label: 'FAQ',               href: '#faq'           },
+    { label: 'FAQ',               href: '#faq'          },
 ]
 
 const LABEL: CSSProperties = {
@@ -98,9 +98,9 @@ export default function Footer() {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
                         <div>
                             <p style={{ ...MUTED, marginBottom: '0.15rem' }}>Telefon</p>
-                            <a href="tel:" style={{ ...VALUE, textDecoration: 'none' }}>
+                            <p style={{ ...VALUE }}>
                                 +49 — — —
-                            </a>
+                            </p>
                         </div>
                         <div>
                             <p style={{ ...MUTED, marginBottom: '0.15rem' }}>E-Mail</p>

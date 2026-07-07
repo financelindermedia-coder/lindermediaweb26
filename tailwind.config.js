@@ -31,6 +31,15 @@ module.exports = {
                     800: '#115e59',
                     900: '#134e4a',
                 },
+                'depth': {
+                    'surface': '#c8d8e8',      /* Layer 0: Icy surface */
+                    'layer-1': '#1a3a4d',      /* Layer 1: Deep water blue (Problem) */
+                    'layer-2': '#0f2d3a',      /* Layer 2: Darker teal (Method) */
+                    'layer-3': '#08192a',      /* Layer 3: Even deeper (Numbers, References) */
+                    'layer-4': '#020810',      /* Layer 4: Near-black (Testimonials, Team, FAQ) */
+                    'emergence': '#e8f0f5',    /* Layer 5: Light emergence (Contact) */
+                    'accent': '#00d4b4',       /* Turquoise thread throughout */
+                },
             },
             backgroundImage: {
                 'gradient-blue-ice': 'linear-gradient(135deg, #f0f7ff 0%, #e0f2fe 100%)',

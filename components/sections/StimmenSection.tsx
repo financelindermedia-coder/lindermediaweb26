@@ -2,31 +2,50 @@
 
 const STIMMEN = [
     {
-        zitat: 'Wir haben vorher viel Geld für Werbung ausgegeben und nicht verstanden, warum es nicht funktioniert. LinderMedia hat uns nicht einfach eine neue Website gebaut, sondern uns zuerst geholfen zu verstehen, wen wir eigentlich ansprechen wollen. Das klingt banal – war es aber nicht.',
+        zitat: 'Wir haben vorher viel Geld für Werbung ausgegeben und nicht verstanden, warum es nicht funktioniert. LinderMedia hat uns nicht einfach eine neue Website gebaut, sondern zuerst geholfen zu verstehen, wen wir eigentlich ansprechen wollen.',
         name: 'Geschäftsführer',
-        kontext: 'Mittelständisches Unternehmen, Baugewerbe, Bayern',
+        kontext: 'Baugewerbe, Bayern',
     },
     {
-        zitat: 'Was mich überrascht hat: Andreas stellt Fragen, die ich mir selbst noch nicht gestellt hatte. Nicht nur über Marketing, sondern über mein Unternehmen. Warum tun wir, was wir tun? Was macht uns wirklich anders? Diese Klarheit hat geholfen – nicht nur bei der Website.',
+        zitat: 'Andreas stellt Fragen, die ich mir selbst noch nicht gestellt hatte. Nicht nur über Marketing, sondern über mein Unternehmen. Diese Klarheit hat geholfen – nicht nur bei der Website.',
         name: 'Gründerin',
-        kontext: 'Unternehmensberatung, Nordrhein-Westfalen',
+        kontext: 'Unternehmensberatung, NRW',
     },
     {
-        zitat: 'Ich war skeptisch gegenüber Agenturen, weil ich viele Mal erlebt habe, wie viel Gerede und wie wenig Substanz dahintersteckt. Hier war es anders. Kurze Wege, direkte Aussagen, keine leeren Versprechen. Und die Ergebnisse sprechen für sich.',
+        zitat: 'Ich war skeptisch gegenüber Agenturen – zu viel Gerede, zu wenig Substanz. Hier war es anders. Kurze Wege, direkte Aussagen, keine leeren Versprechen. Und die Ergebnisse sprechen für sich.',
         name: 'Inhaber',
-        kontext: 'Fachbetrieb, Handwerk & Gebäudetechnik',
+        kontext: 'Handwerk & Gebäudetechnik',
     },
 ]
+
+function PersonIcon() {
+    return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="8" r="3.4" />
+            <path d="M4.5 20a7.5 7.5 0 0 1 15 0" />
+        </svg>
+    )
+}
 
 export default function StimmenSection() {
     return (
         <section style={{
-            background: 'rgba(2,8,24,0.98)',
+            background: '#020810',
             padding: '10rem var(--px)',
             fontFamily: 'var(--font-barlow), sans-serif',
             borderTop: '1px solid rgba(255,255,255,0.06)',
+            position: 'relative',
+            overflow: 'hidden',
         }}>
-            <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+            {/* dezenter Akzent-Glow im Hintergrund */}
+            <div aria-hidden="true" style={{
+                position: 'absolute', top: '18%', left: '50%', transform: 'translateX(-50%)',
+                width: 'min(70vw, 800px)', height: '380px',
+                background: 'radial-gradient(ellipse at center, rgba(0,212,180,0.10), transparent 70%)',
+                pointerEvents: 'none',
+            }} />
+
+            <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative' }}>
 
                 <p style={{
                     fontSize: 'clamp(0.68rem, 0.8vw, 0.78rem)',
@@ -49,48 +68,24 @@ export default function StimmenSection() {
                     fontSize: 'clamp(2.2rem, 4.5vw, 5.5rem)',
                     fontWeight: 900, lineHeight: 1.05,
                     letterSpacing: '-0.02em', textTransform: 'uppercase',
-                    color: '#ffffff', marginBottom: '7rem',
+                    color: '#ffffff', marginBottom: '5rem',
                 }}>
                     wenn Werbung aufhört.
                 </h2>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+                <div className="stimmen-grid">
                     {STIMMEN.map((s, i) => (
-                        <div key={i} style={{
-                            borderTop: '1px solid rgba(255,255,255,0.06)',
-                            padding: '4.5rem 0',
-                            borderBottom: i === STIMMEN.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none',
-                        }}>
-                            <div className="stimme-grid">
-                                <p style={{
-                                    fontSize: 'clamp(1.15rem, 1.7vw, 1.55rem)',
-                                    fontWeight: 300, lineHeight: 1.7,
-                                    color: 'rgba(255,255,255,0.75)',
-                                    fontStyle: 'italic',
-                                }}>
-                                    &ldquo;{s.zitat}&rdquo;
-                                </p>
-                                <div style={{
-                                    display: 'flex', flexDirection: 'column',
-                                    justifyContent: 'flex-end', gap: '0.3rem',
-                                }}>
-                                    <p style={{
-                                        fontSize: 'clamp(0.82rem, 0.95vw, 0.9rem)',
-                                        fontWeight: 600, letterSpacing: '0.1em',
-                                        textTransform: 'uppercase', color: '#ffffff',
-                                    }}>
-                                        {s.name}
-                                    </p>
-                                    <p style={{
-                                        fontSize: 'clamp(0.72rem, 0.82vw, 0.78rem)',
-                                        fontWeight: 400, letterSpacing: '0.08em',
-                                        color: 'rgba(255,255,255,0.3)',
-                                    }}>
-                                        {s.kontext}
-                                    </p>
-                                </div>
+                        <article key={i} className="stimme-card">
+                            <span className="stimme-quote-mark" aria-hidden="true">&ldquo;</span>
+                            <p className="stimme-text">{s.zitat}</p>
+                            <div className="stimme-foot">
+                                <span className="stimme-avatar"><PersonIcon /></span>
+                                <span>
+                                    <span className="stimme-name" style={{ display: 'block' }}>{s.name}</span>
+                                    <span className="stimme-ctx" style={{ display: 'block' }}>{s.kontext}</span>
+                                </span>
                             </div>
-                        </div>
+                        </article>
                     ))}
                 </div>
 

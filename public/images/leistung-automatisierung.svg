@@ -1,0 +1,54 @@
+<svg width="1200" height="640" viewBox="0 0 1200 640" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgAu" cx="50%" cy="44%" r="72%">
+      <stop offset="0%" stop-color="#0d2436"/>
+      <stop offset="100%" stop-color="#020810"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="640" fill="url(#bgAu)"/>
+
+  <!-- Flow diagram -->
+  <g font-family="'Helvetica Neue',sans-serif">
+    <!-- connectors -->
+    <path d="M 300 220 H 470 M 300 420 H 470" stroke="#00d4b4" stroke-opacity="0.3" stroke-width="1.5"/>
+    <path d="M 610 220 C 700 220 700 320 780 320" fill="none" stroke="#00d4b4" stroke-opacity="0.3" stroke-width="1.5"/>
+    <path d="M 610 420 C 700 420 700 320 780 320" fill="none" stroke="#00d4b4" stroke-opacity="0.3" stroke-width="1.5"/>
+    <path d="M 920 320 H 1010" stroke="#00d4b4" stroke-opacity="0.3" stroke-width="1.5"/>
+
+    <!-- flow dots -->
+    <circle cx="385" cy="220" r="4" fill="#ffd98a" fill-opacity="0.9"/>
+    <circle cx="385" cy="420" r="4" fill="#ffd98a" fill-opacity="0.9"/>
+    <circle cx="965" cy="320" r="4" fill="#ffd98a" fill-opacity="0.9"/>
+
+    <!-- input nodes -->
+    <rect x="180" y="188" width="120" height="64" rx="8" fill="#0d1f38" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
+    <text x="240" y="226" text-anchor="middle" font-size="12" letter-spacing="1" fill="#ffffff" fill-opacity="0.6">Anfrage</text>
+    <rect x="180" y="388" width="120" height="64" rx="8" fill="#0d1f38" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
+    <text x="240" y="426" text-anchor="middle" font-size="12" letter-spacing="1" fill="#ffffff" fill-opacity="0.6">Kontakt</text>
+
+    <!-- mid nodes -->
+    <rect x="470" y="188" width="140" height="64" rx="8" fill="#0d1f38" stroke="#00d4b4" stroke-opacity="0.25" stroke-width="1"/>
+    <text x="540" y="226" text-anchor="middle" font-size="12" letter-spacing="1" fill="#00d4b4" fill-opacity="0.8">Prüfen</text>
+    <rect x="470" y="388" width="140" height="64" rx="8" fill="#0d1f38" stroke="#00d4b4" stroke-opacity="0.25" stroke-width="1"/>
+    <text x="540" y="426" text-anchor="middle" font-size="12" letter-spacing="1" fill="#00d4b4" fill-opacity="0.8">Zuordnen</text>
+
+    <!-- engine node -->
+    <circle cx="850" cy="320" r="70" fill="#00d4b4" fill-opacity="0.08" stroke="#00d4b4" stroke-opacity="0.35" stroke-width="1.5"/>
+    <g transform="translate(850,320)" stroke="#00d4b4" stroke-opacity="0.7" stroke-width="2" fill="none">
+      <circle r="16"/>
+      <path d="M 0 -30 L 0 -22 M 0 22 L 0 30 M -30 0 L -22 0 M 22 0 L 30 0 M -21 -21 L -16 -16 M 16 16 L 21 21 M 21 -21 L 16 -16 M -16 16 L -21 21"/>
+    </g>
+
+    <!-- output -->
+    <rect x="1010" y="288" width="130" height="64" rx="8" fill="#0d1f38" stroke="#00d4b4" stroke-opacity="0.25" stroke-width="1"/>
+    <text x="1075" y="326" text-anchor="middle" font-size="12" letter-spacing="1" fill="#ffffff" fill-opacity="0.75">Lead</text>
+  </g>
+
+  <text x="600" y="530" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="22" font-weight="300" fill="#ffffff" fill-opacity="0.5" letter-spacing="1">Wiederholung wird zur Maschine.</text>
+  <text x="600" y="588" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="9" letter-spacing="4" fill="#00d4b4" fill-opacity="0.25">LEISTUNG — AUTOMATISIERUNG</text>
+
+  <path d="M 40 40 L 40 68 M 40 40 L 68 40" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 1160 40 L 1160 68 M 1160 40 L 1132 40" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 40 600 L 40 572 M 40 600 L 68 600" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 1160 600 L 1160 572 M 1160 600 L 1132 600" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+</svg>
