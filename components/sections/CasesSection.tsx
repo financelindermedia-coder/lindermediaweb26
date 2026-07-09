@@ -19,17 +19,21 @@ type Projekt = {
     beschreibung: string
     ergebnis: string
     accent: string
+    shotDesk?: string
+    shotMob?: string
 }
 
 const PROJEKTE: Projekt[] = [
     {
         nr: '01',
-        name: 'KLC Cleanwater',
-        branche: 'Umwelttechnik & Wasseraufbereitung',
+        name: 'SolarImpact Yacht',
+        branche: 'Solaryachten & Maritime E-Mobilität',
         beschreibung:
-            'Ein technischer Anbieter mit echter Kompetenz, die online kaum ankam. Wir haben Positionierung, Website und Sichtbarkeit auf eine klare Botschaft ausgerichtet.',
-        ergebnis: 'Deutlich mehr qualifizierte Anfragen aus organischer Suche.',
-        accent: '#2ec5b6',
+            'Ein Pionier solarbetriebener Luxusyachten mit SWATH-Technologie – technisch herausragend, aber online kaum als Innovationsführer sichtbar. Wir haben Positionierung, Website und Botschaft auf ein klares Premium-Profil ausgerichtet.',
+        ergebnis: 'Ein Auftritt, der die Innovationsführerschaft im Premium-Segment sichtbar macht.',
+        accent: '#ff6b35',
+        shotDesk: '/images/case-solarimpact-desk.jpg',
+        shotMob: '/images/case-solarimpact-mob.jpg',
     },
     {
         nr: '02',
@@ -38,7 +42,7 @@ const PROJEKTE: Projekt[] = [
         beschreibung:
             'Etabliertes Sortiment, aber ein unscharfer digitaler Auftritt. Neue Struktur, klare Markensprache und konsistente Kampagnen über alle Kanäle.',
         ergebnis: 'Höhere Wiedererkennung und messbar mehr Online-Reichweite.',
-        accent: '#3a9bd8',
+        accent: '#ff8f5c',
     },
     {
         nr: '03',
@@ -47,7 +51,7 @@ const PROJEKTE: Projekt[] = [
         beschreibung:
             'Ein Erlebnisanbieter, der Emotion verkauft, aber nüchtern kommunizierte. Wir haben die Marke visuell und sprachlich aufgeladen.',
         ergebnis: 'Buchungsanfragen spürbar gestiegen.',
-        accent: '#17b0a0',
+        accent: '#f26a2e',
     },
     {
         nr: '04',
@@ -56,7 +60,7 @@ const PROJEKTE: Projekt[] = [
         beschreibung:
             'Ein hochwertiges, erklärungsbedürftiges Produkt. Fokus auf Nutzen statt Technik, klare Landingpages für konkrete Entscheidungssituationen.',
         ergebnis: 'Der Vertrieb startet mit vorqualifizierten Anfragen.',
-        accent: '#4bb58a',
+        accent: '#ff7d48',
     },
     {
         nr: '05',
@@ -65,9 +69,19 @@ const PROJEKTE: Projekt[] = [
         beschreibung:
             'Persönliche Expertise, die online nicht ankam. Positionierung, Website und Content konsequent auf die Zielgruppe zugeschnitten.',
         ergebnis: 'Erste organische Anfragen innerhalb weniger Wochen.',
-        accent: '#6bbf7a',
+        accent: '#e0561f',
     },
 ]
+
+/** Echter Website-Screenshot (falls vorhanden), sonst der CSS-Mock. */
+function Screen({ p, variant }: { p: Projekt; variant: 'desk' | 'mob' }) {
+    const shot = variant === 'desk' ? p.shotDesk : p.shotMob
+    if (shot) {
+        // eslint-disable-next-line @next/next/no-img-element
+        return <img src={shot} alt={`Website-Vorschau ${p.name}`} className="cm-img" loading="lazy" />
+    }
+    return <MockScreen p={p} variant={variant} />
+}
 
 function MockScreen({ p, variant }: { p: Projekt; variant: 'desk' | 'mob' }) {
     return (
@@ -108,7 +122,7 @@ export default function CasesSection() {
             <p style={{
                 fontSize: 'clamp(0.68rem, 0.8vw, 0.78rem)',
                 fontWeight: 400, letterSpacing: '0.2em',
-                textTransform: 'uppercase', color: 'rgba(0,212,180,0.7)',
+                textTransform: 'uppercase', color: 'rgba(255,107,53,0.85)',
                 marginBottom: '2.5rem', padding: '0 var(--px)',
             }}>
                 | Projekte & Referenzen
@@ -116,7 +130,7 @@ export default function CasesSection() {
 
             <div style={{ padding: '0 var(--px)', marginBottom: '4.5rem' }}>
                 <h2 style={{
-                    fontSize: 'clamp(2.2rem, 4.5vw, 5.5rem)',
+                    fontSize: 'var(--h2)',
                     fontWeight: 300, lineHeight: 1.05,
                     letterSpacing: '-0.02em', textTransform: 'uppercase',
                     color: '#ffffff', marginBottom: '0.2rem',
@@ -124,7 +138,7 @@ export default function CasesSection() {
                     Was aus der Arbeit
                 </h2>
                 <h2 style={{
-                    fontSize: 'clamp(2.2rem, 4.5vw, 5.5rem)',
+                    fontSize: 'var(--h2)',
                     fontWeight: 900, lineHeight: 1.05,
                     letterSpacing: '-0.02em', textTransform: 'uppercase',
                     color: '#ffffff',
@@ -143,7 +157,7 @@ export default function CasesSection() {
                                     key={p.nr}
                                     className={`cases-shot${i === active ? ' is-active' : ''}`}
                                 >
-                                    <MockScreen p={p} variant="desk" />
+                                    <Screen p={p} variant="desk" />
                                 </div>
                             ))}
                         </div>
@@ -156,7 +170,7 @@ export default function CasesSection() {
                                 key={p.nr}
                                 className={`cases-shot${i === active ? ' is-active' : ''}`}
                             >
-                                <MockScreen p={p} variant="mob" />
+                                <Screen p={p} variant="mob" />
                             </div>
                         ))}
                         <span className="cases-phone-notch" />

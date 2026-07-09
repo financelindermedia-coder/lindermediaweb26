@@ -19,6 +19,14 @@ const ITEMS = [
         q: 'Was passiert, wenn wir nichts verändern?',
         a: 'Vielleicht zunächst gar nichts. Das ist oft das Tückische. Unternehmen funktionieren häufig über Jahre hinweg auch ohne klare Markenarchitektur. Die Frage ist nicht, ob es funktioniert. Die Frage ist, wie viel Potenzial dabei ungenutzt bleibt.',
     },
+    {
+        q: 'Wie läuft die Zusammenarbeit mit LinderMedia ab?',
+        a: 'Sie sprechen direkt mit der Person, die Ihre Strategie entwickelt und umsetzt – keine Account-Manager, keine langen Übergaben. Wir beginnen mit einem Gespräch über Ihr Unternehmen, klären das Fundament (Positionierung, Botschaft, Zielgruppe) und bauen erst darauf die sichtbaren Maßnahmen auf: Website, SEO, Content, Ads, Automatisierung. Schritt für Schritt, transparent, mit klarer Richtung.',
+    },
+    {
+        q: 'Für wen ist LinderMedia gedacht?',
+        a: 'Für Unternehmen, die in ihrer Sache wirklich gut sind – und trotzdem nicht so wahrgenommen werden, wie sie es verdienen. Ob Handwerk, Beratung oder Dienstleistung: Wenn Ihre Stärke nach außen nicht ankommt, liegt das selten am Angebot. Sondern an fehlender Klarheit. Genau dort setzen wir an.',
+    },
 ]
 
 export default function FAQSection() {
@@ -38,7 +46,7 @@ export default function FAQSection() {
             <div style={{ maxWidth: '760px', margin: '0 auto' }}>
                 <p style={{
                     fontSize: 'clamp(0.68rem, 0.8vw, 0.78rem)', fontWeight: 400, letterSpacing: '0.2em',
-                    textTransform: 'uppercase', color: 'rgba(0,212,180,0.7)',
+                    textTransform: 'uppercase', color: 'rgba(255,107,53,0.85)',
                     marginBottom: '1rem',
                 }}>
                     | FAQ
@@ -85,10 +93,10 @@ export default function FAQSection() {
                                     {item.q}
                                 </span>
                                 <span style={{
-                                    fontSize: '1.7rem', color: '#ffffff',
+                                    fontSize: '1.7rem', color: open === i ? '#ff6b35' : '#ffffff',
                                     flexShrink: 0, marginTop: '0.1rem',
                                     transform: open === i ? 'rotate(45deg)' : 'rotate(0)',
-                                    transition: 'transform 0.25s ease',
+                                    transition: 'transform 0.25s ease, color 0.25s ease',
                                     display: 'inline-block',
                                 }}>
                                     +
@@ -96,8 +104,8 @@ export default function FAQSection() {
                             </button>
                             <div style={{
                                 overflow: 'hidden',
-                                maxHeight: open === i ? '400px' : '0',
-                                transition: 'max-height 0.35s ease',
+                                maxHeight: open === i ? '900px' : '0',
+                                transition: 'max-height 0.45s ease',
                             }}>
                                 <p style={{
                                     fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)', fontWeight: 400,

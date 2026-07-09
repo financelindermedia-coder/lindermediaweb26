@@ -67,7 +67,7 @@ export default function MenschenSection() {
             <div className="um-pin" ref={pinRef}>
                 <div className="um-sticky">
                     <div className="um-head">
-                        <p style={{ fontSize: 'clamp(0.68rem, 0.8vw, 0.78rem)', fontWeight: 400, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(0,212,180,0.7)', marginBottom: '1rem' }}>
+                        <p style={{ fontSize: 'clamp(0.68rem, 0.8vw, 0.78rem)', fontWeight: 400, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,107,53,0.85)', marginBottom: '1rem' }}>
                             | Hinter LinderMedia
                         </p>
                         <h2 style={{ fontWeight: 300, lineHeight: 1.05, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#fff', fontSize: 'clamp(1.9rem, 3.6vw, 4rem)' }}>
@@ -103,8 +103,13 @@ export default function MenschenSection() {
                             {/* Beat 2 – Portrait */}
                             <article className="um-panel um-panel-portrait">
                                 <span className="um-node" ref={(el) => { nodeRefs.current[1] = el }} />
+                                {/* Showreel-Slot: <Image> später durch <video> ersetzen */}
                                 <div className="um-portrait">
                                     <Image src="/images/portrait-andreas.svg" alt="Andreas Linder, Gründer LinderMedia" fill style={{ objectFit: 'cover' }} />
+                                    <button type="button" className="um-play" aria-label="Showreel abspielen">
+                                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                                    </button>
+                                    <span className="um-showreel">Showreel · 01:24</span>
                                 </div>
                                 <p className="um-name">Andreas Linder</p>
                                 <p className="um-role">Gründer, LinderMedia</p>

@@ -1,108 +1,80 @@
 'use client'
 
 import Image from 'next/image'
-import { useEffect, useRef } from 'react'
 
-const LEISTUNGEN = [
-    { title: 'Website',         tagline: 'Websites, die nicht nur gut aussehen. Sondern verkaufen.', description: 'Klare Architektur, spürbare Conversion und Inhalte, die sofort verständlich machen, warum Sie besser sind.', bild: '/images/leistung-website.svg' },
-    { title: 'SEO',             tagline: 'Sichtbar werden, wenn es wirklich zählt.',                 description: 'Technik, Inhalte und Struktur arbeiten zusammen, damit Sie nicht nur gefunden werden, sondern in Erinnerung bleiben.', bild: '/images/leistung-seo.svg' },
-    { title: 'Content',         tagline: 'Relevanz schaffen statt Reichweite bügeln.',               description: 'Texte und Botschaften, die Ihre Zielgruppe verstehen und als Lösung wahrnehmen.', bild: '/images/leistung-content.svg' },
-    { title: 'Google Ads',      tagline: 'Kampagnen, die auf konkrete Entscheidungen zielen.',        description: 'Jede Anzeige ist Teil einer markenkohärenten Reise – nicht eines schnellen Klicks.', bild: '/images/leistung-google-ads.svg' },
-    { title: 'Automatisierung', tagline: 'Wiederholung wird zur Maschine.',                          description: 'Leadprozesse, die sauber arbeiten, ohne den manuellen Aufwand zu erhöhen.', bild: '/images/leistung-automatisierung.svg' },
-    { title: 'Leadgenerierung', tagline: 'Aus Aufmerksamkeit wird echtes Interesse.',                description: 'Klar strukturierte Wege, die potenzielle Kunden mit Vertrauen an Bord holen.', bild: '/images/leistung-leadgenerierung.svg' },
+/**
+ * Leistungen als vernetzte System-Grafik: das LinderMedia-Logo in der Mitte,
+ * sechs Disziplinen ringsum, mit Verbindungslinien zum Zentrum – „Ein System.
+ * Alle Disziplinen. Ein Ziel." Links der Intro-Text.
+ */
+
+type Side = 'l' | 'r'
+type Node = { label: string; sub: string; icon: JSX.Element; side: Side; pos: number }
+
+const ICONS = {
+    strategie: <><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" /><path d="M12 1v3M12 20v3M1 12h3M20 12h3" /></>,
+    branding: <><path d="M12 2l4.5 6L12 22 7.5 8 12 2z" /><path d="M7.5 8h9" /></>,
+    webdesign: <><rect x="3" y="4" width="18" height="13" rx="2" /><path d="M3 8h18M9 21h6M12 17v4" /></>,
+    content: <><path d="M5 3h9l5 5v13H5z" /><path d="M14 3v5h5M8 13h8M8 17h8" /></>,
+    seoads: <><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" /></>,
+    automation: <><circle cx="12" cy="12" r="3" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1" /></>,
+}
+
+const NODES: Node[] = [
+    { label: 'Strategie', sub: 'Klarheit schaffen',            icon: ICONS.strategie,  side: 'l', pos: 14 },
+    { label: 'Branding',  sub: 'Markenidentität entwickeln',   icon: ICONS.branding,   side: 'l', pos: 50 },
+    { label: 'Webdesign', sub: 'Digital erlebbar machen',      icon: ICONS.webdesign,  side: 'l', pos: 86 },
+    { label: 'Content',   sub: 'Relevanz kommunizieren',       icon: ICONS.content,    side: 'r', pos: 14 },
+    { label: 'SEO & Ads', sub: 'Sichtbarkeit aufbauen',        icon: ICONS.seoads,     side: 'r', pos: 50 },
+    { label: 'Automation',sub: 'Prozesse intelligent verbinden',icon: ICONS.automation,side: 'r', pos: 86 },
 ]
 
 export default function LeistungenSection() {
-    const pinRef    = useRef<HTMLDivElement>(null)
-    const trackRef  = useRef<HTMLDivElement>(null)
-    const fillRef   = useRef<HTMLSpanElement>(null)
-    const pearlRefs = useRef<(HTMLSpanElement | null)[]>([])
-    const rafRef    = useRef<number | null>(null)
-
-    useEffect(() => {
-        const pin = pinRef.current
-        const track = trackRef.current
-        const fill = fillRef.current
-        if (!pin || !track || !fill) return
-
-        let distance = 0
-        function layout() {
-            if (!pin || !track) return
-            distance = Math.max(track.scrollWidth - window.innerWidth, 0)
-            pin.style.height = `${window.innerHeight + distance}px`
-        }
-        function update() {
-            rafRef.current = null
-            if (!pin || !track || !fill) return
-            const scrolled = Math.min(Math.max(-pin.getBoundingClientRect().top, 0), distance)
-            track.style.transform = `translate3d(${-scrolled}px, 0, 0)`
-            const edge = scrolled + window.innerWidth * 0.55
-            fill.style.width = `${edge}px`
-            pearlRefs.current.forEach((n) => {
-                if (!n) return
-                const panel = n.parentElement as HTMLElement | null
-                const x = (panel ? panel.offsetLeft : 0) + n.offsetLeft + 8
-                const on = x <= edge
-                if (on !== n.classList.contains('lit')) n.classList.toggle('lit', on)
-            })
-        }
-        function onScroll() { if (rafRef.current === null) rafRef.current = requestAnimationFrame(update) }
-        function onResize() { layout(); update() }
-
-        layout()
-        update()
-        window.addEventListener('scroll', onScroll, { passive: true })
-        window.addEventListener('resize', onResize)
-        // Bilder können die Track-Breite ändern → nach Load neu vermessen
-        const imgs = track.querySelectorAll('img')
-        imgs.forEach((im) => im.addEventListener('load', onResize))
-        return () => {
-            window.removeEventListener('scroll', onScroll)
-            window.removeEventListener('resize', onResize)
-            imgs.forEach((im) => im.removeEventListener('load', onResize))
-            if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)
-        }
-    }, [])
-
     return (
-        <section id="leistungen" style={{ background: '#0f2d3a', color: '#f8fafc', fontFamily: 'var(--font-barlow), sans-serif' }}>
-            <div className="lst-pin" ref={pinRef}>
-                <div className="lst-sticky">
-                    <div className="lst-head">
-                        <p style={{ fontSize: 'clamp(0.68rem, 0.8vw, 0.78rem)', fontWeight: 400, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(0,212,180,0.7)', marginBottom: '1rem' }}>
-                            | Leistungen
-                        </p>
-                        <h2 style={{ fontWeight: 300, lineHeight: 1.05, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#fff' }}>
-                            Sechs Bausteine, <strong style={{ fontWeight: 900 }}>ein durchgehender Faden.</strong>
-                        </h2>
-                    </div>
-
-                    <div className="lst-viewport">
-                        <div className="lst-track" ref={trackRef}>
-                            <div className="lst-line" aria-hidden="true">
-                                <span className="lst-line-base" />
-                                <span className="lst-line-fill" ref={fillRef} />
-                            </div>
-
-                            {LEISTUNGEN.map((item, i) => (
-                                <article key={item.title} className="lst-panel">
-                                    <span className="lst-pearl" ref={(el) => { pearlRefs.current[i] = el }} />
-                                    <p className="lst-eye"><b>{String(i + 1).padStart(2, '0')}</b> {item.title}</p>
-                                    <h3 className="lst-headline">{item.tagline}</h3>
-                                    <p className="lst-desc">{item.description}</p>
-                                    <div className="lst-img">
-                                        <Image src={item.bild} alt={`Bildwelt für ${item.title}`} fill style={{ objectFit: 'cover' }} />
-                                    </div>
-                                </article>
-                            ))}
-                            <span className="lst-track-tail" aria-hidden="true" />
-                        </div>
-                    </div>
-
-                    <p className="lst-hint" aria-hidden="true">
-                        <span>Scrollen</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M6 13l6 6 6-6" /></svg>
+        <section id="leistungen" className="sys" style={{ fontFamily: 'var(--font-barlow), sans-serif' }}>
+            <div className="sys-inner">
+                {/* Intro */}
+                <div className="sys-intro">
+                    <p className="sys-eye">| 05 — Unsere Leistungen</p>
+                    <h2 className="sys-headline">
+                        Ein System.<br />Alle Disziplinen.<br /><span>Ein Ziel.</span>
+                    </h2>
+                    <p className="sys-lead">
+                        Wir verbinden Strategie, Kreativität und Technologie zu einem
+                        System, das für Sie arbeitet.
                     </p>
+                    <a className="sys-link" href="#contact">
+                        <span>Mehr erfahren</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                    </a>
+                </div>
+
+                {/* Diagramm */}
+                <div className="sys-diagram">
+                    <svg className="sys-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                        {NODES.map((n) => {
+                            const x = n.side === 'l' ? 36 : 64
+                            return <line key={n.label} x1="50" y1="50" x2={x} y2={n.pos} />
+                        })}
+                    </svg>
+
+                    <div className="sys-center">
+                        <span className="sys-center-badge">
+                            <Image src="/logo/logo_LM_white_box.svg" alt="LinderMedia" width={44} height={43} />
+                        </span>
+                    </div>
+
+                    {NODES.map((n) => (
+                        <div key={n.label} className={`sys-node sys-node-${n.side}`} style={{ top: `${n.pos}%` }}>
+                            <span className="sys-ic">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">{n.icon}</svg>
+                            </span>
+                            <span className="sys-tx">
+                                <span className="sys-lbl">{n.label}</span>
+                                <span className="sys-sub">{n.sub}</span>
+                            </span>
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>

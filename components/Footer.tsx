@@ -26,9 +26,9 @@ const MUTED: CSSProperties = {
 export default function Footer() {
     return (
         <footer style={{
-            background: 'rgba(2, 8, 16, 0.55)',
-            backdropFilter: 'blur(18px)',
-            WebkitBackdropFilter: 'blur(18px)',
+            background: 'rgba(2, 8, 16, 0.3)',
+            backdropFilter: 'blur(14px)',
+            WebkitBackdropFilter: 'blur(14px)',
             borderTop: '1px solid rgba(255,255,255,0.07)',
             padding: '5rem var(--px) 4rem',
             fontFamily: 'var(--font-barlow), sans-serif',
@@ -36,10 +36,7 @@ export default function Footer() {
         }}>
 
             {/* ── Main grid ── */}
-            <div style={{
-                display: 'grid',
-                gridTemplateColumns: '1.5fr 1fr 1.5fr',
-                gap: '4vw',
+            <div className="footer-grid" style={{
                 paddingBottom: '3.5rem',
                 borderBottom: '1px solid rgba(255,255,255,0.07)',
                 marginBottom: '2.5rem',
@@ -75,7 +72,7 @@ export default function Footer() {
                                 ...VALUE, textDecoration: 'none',
                                 transition: 'color 0.2s',
                             }}
-                                onMouseEnter={e => { e.currentTarget.style.color = '#00d4b4' }}
+                                onMouseEnter={e => { e.currentTarget.style.color = '#ff6b35' }}
                                 onMouseLeave={e => { e.currentTarget.style.color = '#ffffff' }}
                             >
                                 {l.label}
@@ -84,7 +81,7 @@ export default function Footer() {
                         <a href="#contact" style={{
                             marginTop: '0.8rem',
                             fontSize: '0.78rem', fontWeight: 600, letterSpacing: '0.14em',
-                            textTransform: 'uppercase', color: '#00d4b4',
+                            textTransform: 'uppercase', color: '#ff6b35',
                             textDecoration: 'none',
                         }}>
                             Gespräch beginnen →
@@ -135,8 +132,8 @@ export default function Footer() {
                     © {new Date().getFullYear()} LinderMedia — Alle Rechte vorbehalten.
                 </p>
                 <div style={{ display: 'flex', gap: '2.5rem' }}>
-                    <a href="#" style={{ fontSize: '0.82rem', fontWeight: 400, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>Impressum</a>
-                    <a href="#" style={{ fontSize: '0.82rem', fontWeight: 400, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>Datenschutz</a>
+                    <a href="/impressum" style={{ fontSize: '0.82rem', fontWeight: 400, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>Impressum</a>
+                    <a href="/datenschutz" style={{ fontSize: '0.82rem', fontWeight: 400, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>Datenschutz</a>
                 </div>
             </div>
         </footer>

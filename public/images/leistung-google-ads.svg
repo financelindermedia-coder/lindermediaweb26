@@ -10,12 +10,12 @@
   <!-- Target -->
   <g transform="translate(420,300)">
     <circle r="180" fill="none" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1.5"/>
-    <circle r="128" fill="none" stroke="#00d4b4" stroke-opacity="0.16" stroke-width="1.5"/>
-    <circle r="76"  fill="none" stroke="#00d4b4" stroke-opacity="0.30" stroke-width="1.5"/>
-    <circle r="26"  fill="#00d4b4" fill-opacity="0.5"/>
-    <circle r="26"  fill="none" stroke="#00d4b4" stroke-opacity="0.7" stroke-width="2"/>
+    <circle r="128" fill="none" stroke="#ff6b35" stroke-opacity="0.16" stroke-width="1.5"/>
+    <circle r="76"  fill="none" stroke="#ff6b35" stroke-opacity="0.30" stroke-width="1.5"/>
+    <circle r="26"  fill="#ff6b35" fill-opacity="0.5"/>
+    <circle r="26"  fill="none" stroke="#ff6b35" stroke-opacity="0.7" stroke-width="2"/>
     <!-- crosshair -->
-    <path d="M 0 -210 L 0 -150 M 0 150 L 0 210 M -210 0 L -150 0 M 150 0 L 210 0" stroke="#00d4b4" stroke-opacity="0.35" stroke-width="1.5"/>
+    <path d="M 0 -210 L 0 -150 M 0 150 L 0 210 M -210 0 L -150 0 M 150 0 L 210 0" stroke="#ff6b35" stroke-opacity="0.35" stroke-width="1.5"/>
     <!-- arrow into bullseye -->
     <path d="M 150 -150 L 20 -18" stroke="#ffd98a" stroke-opacity="0.8" stroke-width="3" stroke-linecap="round"/>
     <path d="M 40 -18 L 20 -18 L 20 -38" fill="none" stroke="#ffd98a" stroke-opacity="0.8" stroke-width="3" stroke-linecap="round"/>
@@ -23,21 +23,21 @@
 
   <!-- Ad card -->
   <g transform="translate(720,230)">
-    <rect x="0" y="0" width="360" height="180" rx="8" fill="#0d1f38" stroke="#00d4b4" stroke-opacity="0.22" stroke-width="1"/>
+    <rect x="0" y="0" width="360" height="180" rx="8" fill="#0d1f38" stroke="#ff6b35" stroke-opacity="0.22" stroke-width="1"/>
     <rect x="28" y="28" width="52" height="22" rx="4" fill="#febc2e" fill-opacity="0.18" stroke="#febc2e" stroke-opacity="0.5" stroke-width="1"/>
     <text x="54" y="43" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="11" font-weight="700" fill="#febc2e" fill-opacity="0.85">AD</text>
     <rect x="96" y="30" width="180" height="12" rx="3" fill="#ffffff" fill-opacity="0.4"/>
     <rect x="28" y="74" width="304" height="10" rx="2" fill="#ffffff" fill-opacity="0.22"/>
     <rect x="28" y="94" width="240" height="10" rx="2" fill="#ffffff" fill-opacity="0.22"/>
-    <rect x="28" y="132" width="130" height="30" rx="4" fill="#00d4b4" fill-opacity="0.16" stroke="#00d4b4" stroke-opacity="0.45" stroke-width="1"/>
-    <text x="93" y="152" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="10" letter-spacing="2" fill="#00d4b4" fill-opacity="0.8">ANFRAGEN</text>
+    <rect x="28" y="132" width="130" height="30" rx="4" fill="#ff6b35" fill-opacity="0.16" stroke="#ff6b35" stroke-opacity="0.45" stroke-width="1"/>
+    <text x="93" y="152" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="10" letter-spacing="2" fill="#ff6b35" fill-opacity="0.8">ANFRAGEN</text>
   </g>
 
   <text x="600" y="520" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="22" font-weight="300" fill="#ffffff" fill-opacity="0.5" letter-spacing="1">Kampagnen, die auf Entscheidungen zielen.</text>
-  <text x="600" y="588" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="9" letter-spacing="4" fill="#00d4b4" fill-opacity="0.25">LEISTUNG — GOOGLE ADS</text>
+  <text x="600" y="588" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="9" letter-spacing="4" fill="#ff6b35" fill-opacity="0.25">LEISTUNG — GOOGLE ADS</text>
 
-  <path d="M 40 40 L 40 68 M 40 40 L 68 40" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
-  <path d="M 1160 40 L 1160 68 M 1160 40 L 1132 40" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
-  <path d="M 40 600 L 40 572 M 40 600 L 68 600" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
-  <path d="M 1160 600 L 1160 572 M 1160 600 L 1132 600" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 40 40 L 40 68 M 40 40 L 68 40" stroke="#ff6b35" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 1160 40 L 1160 68 M 1160 40 L 1132 40" stroke="#ff6b35" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 40 600 L 40 572 M 40 600 L 68 600" stroke="#ff6b35" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 1160 600 L 1160 572 M 1160 600 L 1132 600" stroke="#ff6b35" stroke-opacity="0.15" stroke-width="1"/>
 </svg>

@@ -3,16 +3,15 @@
 import LenisProvider from '@/components/LenisProvider'
 import VideoCanvas from '@/components/VideoCanvas'
 import TextLayer from '@/components/TextLayer'
-import GlowCanvas from '@/components/GlowCanvas'
 import GlowLayer from '@/components/GlowLayer'
+import SectionConnector from '@/components/SectionConnector'
 import Navbar from '@/components/Navbar'
 import ProblemSection from '@/components/sections/ProblemSection'
 import MethodeSection from '@/components/sections/MethodeSection'
 import LeistungenSection from '@/components/sections/LeistungenSection'
 import CasesSection from '@/components/sections/CasesSection'
 import StimmenSection from '@/components/sections/StimmenSection'
-import MenschenSection from '@/components/sections/MenschenSection'
-import FAQSection from '@/components/sections/FAQSection'
+import MenschenFaqSection from '@/components/sections/MenschenFaqSection'
 import ContactSection from '@/components/sections/ContactSection'
 import Footer from '@/components/Footer'
 
@@ -21,7 +20,6 @@ export default function Home() {
         <>
             <LenisProvider />
             <VideoCanvas />
-            <GlowCanvas />
             <Navbar />
             <TextLayer />
             <GlowLayer />
@@ -34,12 +32,17 @@ export default function Home() {
 
                 <div style={{ position: 'relative', zIndex: 2 }}>
                     <ProblemSection />
+                    <SectionConnector />
                     <MethodeSection />
+                    <SectionConnector flip />
                     <LeistungenSection />
+                    <SectionConnector />
                     <CasesSection />
+                    <SectionConnector flip />
+                    <MenschenFaqSection />
+                    <SectionConnector />
                     <StimmenSection />
-                    <MenschenSection />
-                    <FAQSection />
+                    <SectionConnector flip />
                     <div className="site-closing">
                         <ContactSection />
                         <Footer />

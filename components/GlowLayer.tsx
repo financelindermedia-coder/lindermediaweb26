@@ -16,12 +16,12 @@ import { useEffect, useRef } from 'react'
  * Gesteuert über den #glow-scroll-Driver.
  */
 
-// Zentrale Glow-Farbe — einmal ändern, um Cyan ↔ Amber zu tauschen.
+// Zentrale Glow-Farbe — einmal ändern, um die Pfad-Farbe zu tauschen.
 const GLOW = {
-    core:  '#4fe6d0',        // heller Kern
-    mid:   '#00d4b4',        // Markenfarbe
-    deep:  '#0a9d88',        // tiefer Ton
-    soft:  'rgba(0,212,180,0.28)',
+    core:  '#ffb27f',        // heller Kern (warmes Orange)
+    mid:   '#ff6b35',        // Markenakzent Orange
+    deep:  '#c94a1e',        // tiefer Ton
+    soft:  'rgba(255,107,53,0.30)',
 }
 
 type Icon = 'web' | 'content' | 'ads' | 'auto' | 'leads' | 'impact'
@@ -30,24 +30,27 @@ const STEPSTONES: {
     num: string; label: string; sub: string; icon: Icon
     x: number; y: number; side: 'left' | 'right'; at: number
 }[] = [
-    { num: '01', label: 'Webdesign',      sub: 'Vertrauen schaffen.',   icon: 'web',     x: 22, y: 86, side: 'right', at: 0.12 },
-    { num: '02', label: 'Content',        sub: 'Relevanz erzeugen.',    icon: 'content', x: 40, y: 70, side: 'right', at: 0.28 },
-    { num: '03', label: 'Google Ads',     sub: 'Sichtbarkeit steigern.',icon: 'ads',     x: 26, y: 54, side: 'right', at: 0.44 },
-    { num: '04', label: 'Automatisierung',sub: 'Prozesse skalieren.',   icon: 'auto',    x: 48, y: 40, side: 'right', at: 0.60 },
-    { num: '05', label: 'Leads',          sub: 'Anfragen generieren.',  icon: 'leads',   x: 32, y: 26, side: 'right', at: 0.76 },
-    { num: '06', label: 'Wirkung',        sub: 'Nachhaltig wachsen.',   icon: 'impact',  x: 56, y: 12, side: 'left',  at: 0.92 },
+    { num: '01', label: 'Webdesign',      sub: 'Vertrauen schaffen.',   icon: 'web',     x: 59, y: 84, side: 'right', at: 0.12 },
+    { num: '02', label: 'Content',        sub: 'Relevanz erzeugen.',    icon: 'content', x: 45, y: 76, side: 'left',  at: 0.28 },
+    { num: '03', label: 'Google Ads',     sub: 'Sichtbarkeit steigern.',icon: 'ads',     x: 58, y: 68, side: 'right', at: 0.44 },
+    { num: '04', label: 'Automatisierung',sub: 'Prozesse skalieren.',   icon: 'auto',    x: 45, y: 60, side: 'left',  at: 0.60 },
+    { num: '05', label: 'Leads',          sub: 'Anfragen generieren.',  icon: 'leads',   x: 57, y: 53, side: 'right', at: 0.76 },
+    { num: '06', label: 'Wirkung',        sub: 'Nachhaltig wachsen.',   icon: 'impact',  x: 51, y: 44, side: 'right', at: 0.92 },
 ]
 
-// Pfad durch die Stepstone-Knoten (viewBox 1000×1000, y nach unten)
+// Pfad, der dem sichtbaren Grat folgt: von der Wasserlinie (unten) den Grat
+// hoch bis GENAU auf die Spitze (letzter Knoten = Gipfel). Knoten sitzen auf
+// den Stepstone-Punkten (x·10 / y·10), viewBox 1000×1000,
+// preserveAspectRatio="none" → 1000-Einheit = 1 % Viewport.
 const PATH_D =
-    'M 220 970 ' +
-    'L 220 860 ' +
-    'C 220 780 400 780 400 700 ' +
-    'C 400 620 260 620 260 540 ' +
-    'C 260 460 480 480 480 400 ' +
-    'C 480 320 320 340 320 260 ' +
-    'C 320 180 560 200 560 120 ' +
-    'L 560 30'
+    'M 620 950 ' +
+    'C 605 900 600 885 590 840 ' +   // → 01 Webdesign (59,84)
+    'C 575 780 460 775 450 760 ' +   // → 02 Content   (45,76)
+    'C 445 720 590 700 580 680 ' +   // → 03 Google Ads(58,68)
+    'C 570 645 455 640 450 600 ' +   // → 04 Automat.  (45,60)
+    'C 448 560 580 565 570 530 ' +   // → 05 Leads     (57,53)
+    'C 562 490 515 480 510 440 ' +   // → 06 Wirkung   (51,44) = Gipfel
+    'L 508 420'
 
 const ICONS: Record<Icon, JSX.Element> = {
     web: <><rect x="3" y="4" width="18" height="13" rx="2" /><path d="M3 8h18M9 21h6M12 17v4" /></>,
@@ -72,7 +75,6 @@ export default function GlowLayer() {
     const stoneRefs = useRef<(HTMLDivElement | null)[]>([])
     const activeRef = useRef<boolean[]>(new Array(STEPSTONES.length).fill(false))
     const introRef  = useRef<HTMLDivElement | null>(null)
-    const finaleRef = useRef<(HTMLDivElement | null)[]>([])
     const rafRef    = useRef<number | null>(null)
     const lenRef    = useRef(0)
 
@@ -107,22 +109,26 @@ export default function GlowLayer() {
                 if (root.style.opacity !== '0') root.style.opacity = '0'
                 return
             }
-            root.style.opacity = String(Math.min(p / 0.10, 1))
+            // Der GANZE Layer (Pfad + Stationen + Intro) baut sich auf, hält kurz und
+            // blendet dann wieder aus — komplett weg bei p≈0.88, BEVOR die Problem-
+            // Sektion (nach dem 900vh-Driver, ab p≈0.89) ins Bild scrollt.
+            const endFade = 1 - Math.min(Math.max((p - 0.80) / 0.08, 0), 1)
+            root.style.opacity = String(Math.min(p / 0.10, 1) * endFade)
 
-            // Path reveal (bottom → summit) over the first 86%
-            const reveal = Math.min(Math.max(p / 0.86, 0), 1)
+            // Path reveal (Wasserlinie → Gipfel), fertig bei p≈0.70, dann Halten
+            const reveal = Math.min(Math.max(p / 0.70, 0), 1)
             if (lenRef.current) {
                 const off = String(lenRef.current * (1 - reveal))
                 if (pathRef.current)  pathRef.current.style.strokeDashoffset  = off
                 if (underRef.current) underRef.current.style.strokeDashoffset = off
             }
 
-            // Everything glow-related fades out during the white summit fade
-            const glowVis = 1 - Math.min(Math.max((p - 0.86) / 0.1, 0), 1)
+            const glowVis = endFade
             const svgWrap = root.querySelector<HTMLElement>('[data-glow-svg]')
             if (svgWrap) svgWrap.style.opacity = String(Math.max(glowVis, 0))
 
-            // Stepstone activation
+            // Stepstone: erst einblenden, wenn der Pfad ihren Punkt erreicht
+            // (progressive Reveal — Station taucht erst bei Ankunft auf).
             STEPSTONES.forEach((s, i) => {
                 const el = stoneRefs.current[i]
                 if (!el) return
@@ -136,25 +142,17 @@ export default function GlowLayer() {
                         el.classList.add('gl-pulse')
                     }
                 }
-                el.style.opacity = String(Math.max(glowVis, 0))
+                // 0 bis kurz vor dem Knoten, dann sanft auf 1 (× End-Ausblendung)
+                const appear = Math.min(Math.max((reveal - (s.at - 0.05)) / 0.05, 0), 1)
+                el.style.opacity = String(Math.max(appear * glowVis, 0))
             })
 
             // Left intro copy — present during the climb, gone at the summit
             // Rechte Seite (freie Eisfläche) – kollidiert nicht mit dem Pfad/den
             // Karten links, bleibt daher über den Aufstieg sichtbar.
             if (introRef.current) {
-                introRef.current.style.opacity = String(win(p, 0.05, 0.68, 0.05) * glowVis)
+                introRef.current.style.opacity = String(win(p, 0.04, 0.40, 0.05) * glowVis)
             }
-
-            // Apple-artige Typo-Sequenz auf dem White-Fade
-            const finaleWindows = [
-                win(p, 0.89, 0.955, 0.03),
-                win(p, 0.955, 1.02, 0.03),
-            ]
-            finaleWindows.forEach((o, i) => {
-                const el = finaleRef.current[i]
-                if (el) el.style.opacity = String(o)
-            })
         }
 
         // Continuous rAF loop — robust against Lenis / programmatic scroll,
@@ -191,40 +189,31 @@ export default function GlowLayer() {
             {/* ── Left intro copy: "Der Weg zur Wirkung" ── */}
             <div
                 ref={introRef}
-                className="gl-intro"
+                className="gl-intro tl-glass tl-glass--light"
                 style={{
                     position: 'absolute',
-                    right: 'var(--px)', top: '30%',
-                    maxWidth: 'min(82vw, 360px)', opacity: 0,
-                    textShadow: '0 2px 30px rgba(0,0,0,0.7)',
+                    left: 'var(--px)', top: '50%',
+                    transform: 'translateY(-50%)',
+                    maxWidth: 'clamp(320px, 38vw, 560px)', opacity: 0,
                 }}
             >
                 <p style={{
-                    fontSize: '0.78rem', fontWeight: 400, letterSpacing: '0.22em',
-                    textTransform: 'uppercase', color: GLOW.mid, marginBottom: '1.4rem',
-                }}>05 — Der Weg</p>
+                    fontSize: 'clamp(0.68rem, 0.8vw, 0.78rem)', fontWeight: 400, letterSpacing: '0.2em',
+                    textTransform: 'uppercase', color: '#ff6b35', marginBottom: '0.9rem',
+                }}>| 05 — Der Weg</p>
                 <h2 style={{
-                    fontSize: 'clamp(2rem, 3.6vw, 3.6rem)', fontWeight: 300,
+                    fontSize: 'var(--h2)', fontWeight: 300,
                     lineHeight: 1.05, letterSpacing: '-0.02em',
-                    textTransform: 'uppercase', color: '#fff', marginBottom: '1.6rem',
+                    textTransform: 'uppercase', color: '#12242e', marginBottom: '1.4rem',
                 }}>
                     Der Weg zur<br />
-                    <span style={{ color: GLOW.core }}>Wirkung.</span>
+                    <span style={{ fontWeight: 900, color: '#ff6b35' }}>Wirkung.</span>
                 </h2>
                 <p style={{
-                    fontSize: 'clamp(1rem, 1.3vw, 1.2rem)', fontWeight: 400,
-                    lineHeight: 1.7, color: 'rgba(255,255,255,0.72)', marginBottom: '1.2rem',
+                    fontSize: 'clamp(1.05rem, 1.4vw, 1.25rem)', fontWeight: 400,
+                    lineHeight: 1.7, color: 'rgba(18,36,46,0.85)', maxWidth: '40ch',
                 }}>
-                    Unter der Oberfläche entsteht Klarheit.<br />
-                    Durch sie entsteht Richtung.<br />
-                    Und genau dieser Weg führt nach oben.
-                </p>
-                <p style={{
-                    fontSize: 'clamp(1rem, 1.3vw, 1.2rem)', fontWeight: 600,
-                    lineHeight: 1.6, color: '#fff',
-                }}>
-                    Schritt für Schritt.<br />
-                    Bis aus Sichtbarkeit Wirkung wird.
+                    Schritt für Schritt. Bis aus Sichtbarkeit Wirkung wird.
                 </p>
             </div>
 
@@ -242,7 +231,7 @@ export default function GlowLayer() {
                             <stop offset="100%" stopColor={GLOW.core} />
                         </linearGradient>
                         <filter id="glBlur" x="-50%" y="-50%" width="200%" height="200%">
-                            <feGaussianBlur stdDeviation="7" result="b" />
+                            <feGaussianBlur stdDeviation="2.2" result="b" />
                             <feMerge>
                                 <feMergeNode in="b" />
                                 <feMergeNode in="SourceGraphic" />
@@ -254,16 +243,16 @@ export default function GlowLayer() {
                         d={PATH_D}
                         fill="none"
                         stroke={GLOW.soft}
-                        strokeWidth="16"
+                        strokeWidth="5"
                         strokeLinecap="round"
-                        style={{ filter: 'url(#glBlur)' }}
+                        style={{ filter: 'url(#glBlur)', opacity: 0.5 }}
                     />
                     <path
                         ref={pathRef}
                         d={PATH_D}
                         fill="none"
                         stroke="url(#glGrad)"
-                        strokeWidth="3.5"
+                        strokeWidth="1.4"
                         strokeLinecap="round"
                         style={{ filter: 'url(#glBlur)' }}
                     />
@@ -293,24 +282,6 @@ export default function GlowLayer() {
                     </div>
                 ))}
             </div>
-
-            {/* ── Apple-artige Typo-Sequenz (auf White-Fade) ── */}
-            {['Sichtbarkeit folgt Konsistenz.', 'Konsistenz folgt Klarheit.'].map((t, i) => (
-                <div
-                    key={i}
-                    ref={el => { finaleRef.current[i] = el }}
-                    style={{
-                        position: 'absolute', left: '50%', top: '50%',
-                        transform: 'translate(-50%, -50%)', textAlign: 'center', opacity: 0,
-                        width: 'min(90vw, 1000px)',
-                        fontFamily: 'var(--font-barlow), sans-serif',
-                        fontSize: 'clamp(2rem, 5vw, 4.5rem)', fontWeight: 400,
-                        lineHeight: 1.1, letterSpacing: '-0.02em', color: '#0c3d66',
-                    }}
-                >
-                    {t}
-                </div>
-            ))}
         </div>
     )
 }

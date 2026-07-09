@@ -10,7 +10,7 @@
   <!-- Funnel -->
   <g transform="translate(600,120)">
     <path d="M -260 0 L 260 0 L 150 150 L 150 300 L -150 300 L -150 150 Z"
-          fill="#00d4b4" fill-opacity="0.05" stroke="#00d4b4" stroke-opacity="0.25" stroke-width="1.5"/>
+          fill="#ff6b35" fill-opacity="0.05" stroke="#ff6b35" stroke-opacity="0.25" stroke-width="1.5"/>
     <!-- stage dividers -->
     <line x1="-217" y1="60" x2="217" y2="60" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
     <line x1="-174" y1="120" x2="174" y2="120" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
@@ -20,26 +20,26 @@
     <circle cx="-120" cy="26" r="5" fill="#ffffff" fill-opacity="0.3"/>
     <circle cx="10" cy="30" r="5" fill="#ffffff" fill-opacity="0.3"/>
     <circle cx="150" cy="24" r="5" fill="#ffffff" fill-opacity="0.3"/>
-    <circle cx="-40" cy="90" r="5" fill="#00d4b4" fill-opacity="0.5"/>
-    <circle cx="90" cy="94" r="5" fill="#00d4b4" fill-opacity="0.5"/>
+    <circle cx="-40" cy="90" r="5" fill="#ff6b35" fill-opacity="0.5"/>
+    <circle cx="90" cy="94" r="5" fill="#ff6b35" fill-opacity="0.5"/>
     <circle cx="0" cy="250" r="7" fill="#ffd98a" fill-opacity="0.85"/>
 
     <!-- stage labels -->
     <text x="300" y="34" font-family="'Helvetica Neue',sans-serif" font-size="12" letter-spacing="2" fill="rgba(255,255,255,0.35)">AUFMERKSAMKEIT</text>
     <text x="300" y="128" font-family="'Helvetica Neue',sans-serif" font-size="12" letter-spacing="2" fill="rgba(255,255,255,0.35)">INTERESSE</text>
-    <text x="300" y="228" font-family="'Helvetica Neue',sans-serif" font-size="12" letter-spacing="2" fill="#00d4b4" fill-opacity="0.7">VERTRAUEN</text>
+    <text x="300" y="228" font-family="'Helvetica Neue',sans-serif" font-size="12" letter-spacing="2" fill="#ff6b35" fill-opacity="0.7">VERTRAUEN</text>
   </g>
 
   <!-- collected leads -->
   <g transform="translate(600,470)">
-    <rect x="-90" y="0" width="180" height="52" rx="26" fill="#00d4b4" fill-opacity="0.16" stroke="#00d4b4" stroke-opacity="0.5" stroke-width="1.5"/>
-    <text x="0" y="33" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="14" font-weight="700" letter-spacing="2" fill="#00d4b4" fill-opacity="0.9">QUALIFIZIERT</text>
+    <rect x="-90" y="0" width="180" height="52" rx="26" fill="#ff6b35" fill-opacity="0.16" stroke="#ff6b35" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="0" y="33" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="14" font-weight="700" letter-spacing="2" fill="#ff6b35" fill-opacity="0.9">QUALIFIZIERT</text>
   </g>
 
-  <text x="600" y="588" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="9" letter-spacing="4" fill="#00d4b4" fill-opacity="0.25">LEISTUNG — LEADGENERIERUNG</text>
+  <text x="600" y="588" text-anchor="middle" font-family="'Helvetica Neue',sans-serif" font-size="9" letter-spacing="4" fill="#ff6b35" fill-opacity="0.25">LEISTUNG — LEADGENERIERUNG</text>
 
-  <path d="M 40 40 L 40 68 M 40 40 L 68 40" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
-  <path d="M 1160 40 L 1160 68 M 1160 40 L 1132 40" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
-  <path d="M 40 600 L 40 572 M 40 600 L 68 600" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
-  <path d="M 1160 600 L 1160 572 M 1160 600 L 1132 600" stroke="#00d4b4" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 40 40 L 40 68 M 40 40 L 68 40" stroke="#ff6b35" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 1160 40 L 1160 68 M 1160 40 L 1132 40" stroke="#ff6b35" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 40 600 L 40 572 M 40 600 L 68 600" stroke="#ff6b35" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M 1160 600 L 1160 572 M 1160 600 L 1132 600" stroke="#ff6b35" stroke-opacity="0.15" stroke-width="1"/>
 </svg>

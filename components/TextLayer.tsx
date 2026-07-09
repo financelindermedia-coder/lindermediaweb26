@@ -15,25 +15,28 @@ function sceneOpacity(scrollVh: number, start: number, end: number): number {
     return 1
 }
 
+// ⚠️ Kalibriert auf das neue Video `neu_f_ib.mp4` (303 Frames). Arc:
+// Frame 1 = Nebel/Spitze · ~100 = Split-Level (10/90) · ~200 = tiefster,
+// dunkelster Punkt · 303 = wieder aufgetauchter, heller Eisberg.
+// Frame ≈ scrollVh × 0,2525  (bzw. scrollVh ≈ Frame × 3,96).
 const SCENES = {
-    hero:           { start: -10,  end: 120  },   // Frames ~0–31  · helle Oberfläche
-    erkenntnis:     { start: 150,  end: 270  },   // Frames ~38–69 · Eisberg erscheint (dunkler Text)
-    wasserlinie:    { start: 470,  end: 620  },   // Frames ~120–159 · kurz oberhalb der Wasserlinie (dunkler Text)
-    nebel:          { start: 470,  end: 720  },   // Nebelband an der Wasserlinie
-    // Stationen: überlappungsfrei mit klarer Lücke → immer nur EINE Szene sichtbar
-    mission:        { start: 720,  end: 765  },   // ab hier unter Wasser (weißer Text)
-    vision:         { start: 773,  end: 818  },
-    werte:          { start: 826,  end: 871  },
-    positionierung: { start: 879,  end: 924  },
-    identitaet:     { start: 932,  end: 977  },
-    sprache:        { start: 985,  end: 1030 },
-    vertrauen:      { start: 1038, end: 1083 },
-    tiefster:       { start: 1095, end: 1150 },   // tiefster, dunkelster Punkt
-    sichtbarkeit:   { start: 1160, end: 1210 },   // Grund, fast schwarz
+    hero:           { start: -10,  end: 110  },   // Frames ~0–28  · neblige Oberfläche (dunkler Text)
+    erkenntnis:     { start: 140,  end: 290  },   // Frames ~35–73 · Eisberg über Wasser (dunkler Text)
+    wasserlinie:    { start: 315,  end: 430  },   // Frames ~80–108 · Split-Level Wasserlinie (dunkler Text)
+    // Stationen unter Wasser (weißer Text) · früher & enger getaktet · Frames ~111–173
+    mission:        { start: 438,  end: 470  },
+    vision:         { start: 474,  end: 506  },
+    werte:          { start: 510,  end: 542  },
+    positionierung: { start: 546,  end: 578  },
+    identitaet:     { start: 582,  end: 614  },
+    sprache:        { start: 618,  end: 650  },
+    vertrauen:      { start: 654,  end: 686  },
+    tiefster:       { start: 800,  end: 870  },   // Frame ~205–215 · tiefster Punkt, Eis füllt das Bild (weißer Text)
+    sichtbarkeit:   { start: 900,  end: 1015 },   // Frames ~227–256 · beim Aufstieg (weißer Text auf Eiswand)
 }
 
 const HL: React.CSSProperties = {
-    fontSize: 'clamp(2rem, 3.5vw, 4.2rem)',
+    fontSize: 'var(--h2)',
     fontWeight: 300,
     lineHeight: 1.05,
     color: '#ffffff',
@@ -97,7 +100,7 @@ export default function TextLayer() {
             }} />
 
             {/* ── 01 HERO ── */}
-            <div ref={r('hero')} className="text-scene" style={{ position: 'absolute', top: '50%', left: 'var(--px)', transform: 'translateY(-50%)', maxWidth: 'clamp(320px, 38vw, 600px)', opacity: 0, visibility: 'hidden' }}>
+            <div ref={r('hero')} className="text-scene tl-glass tl-glass--light" style={{ position: 'absolute', top: '50%', left: 'var(--px)', transform: 'translateY(-50%)', maxWidth: 'clamp(320px, 38vw, 600px)', opacity: 0, visibility: 'hidden' }}>
                 <p style={{ ...EYE, color: 'rgba(12,61,102,0.6)' }}>| 01</p>
                 <h1 style={{ ...HL, color: '#0c3d66', textShadow: 'none' }}>
                     Starke Marken entstehen<br />
@@ -113,7 +116,7 @@ export default function TextLayer() {
             </div>
 
             {/* ── 02 ERKENNTNIS ── */}
-            <div ref={r('erkenntnis')} className="text-scene" style={{ position: 'absolute', top: '50%', right: 'var(--px)', transform: 'translateY(-50%)', maxWidth: 'clamp(320px, 38vw, 600px)', textAlign: 'right', opacity: 0, visibility: 'hidden' }}>
+            <div ref={r('erkenntnis')} className="text-scene tl-glass tl-glass--light tl-glass--right" style={{ position: 'absolute', top: '50%', right: 'var(--px)', transform: 'translateY(-50%)', maxWidth: 'clamp(320px, 38vw, 600px)', textAlign: 'right', opacity: 0, visibility: 'hidden' }}>
                 <p style={{ ...EYE, color: 'rgba(12,61,102,0.6)' }}>02 |</p>
                 <h2 style={{ ...HL, color: '#0c3d66', textShadow: 'none' }}>
                     Die meisten sehen<br />
@@ -127,7 +130,7 @@ export default function TextLayer() {
             </div>
 
             {/* ── 03 WASSERLINIE ── */}
-            <div ref={r('wasserlinie')} className="text-scene" style={{ position: 'absolute', top: '50%', left: 'var(--px)', transform: 'translateY(-50%)', maxWidth: 'clamp(320px, 38vw, 600px)', opacity: 0, visibility: 'hidden' }}>
+            <div ref={r('wasserlinie')} className="text-scene tl-glass tl-glass--light" style={{ position: 'absolute', top: '50%', left: 'var(--px)', transform: 'translateY(-50%)', maxWidth: 'clamp(320px, 38vw, 600px)', opacity: 0, visibility: 'hidden' }}>
                 <p style={{ ...EYE, color: 'rgba(12,61,102,0.6)' }}>| 03 — Schlüsselmoment</p>
                 <h2 style={{ ...HL, color: '#0c3d66', textShadow: 'none' }}>
                     90 % der Wirkung<br />
@@ -172,18 +175,19 @@ export default function TextLayer() {
             {/* ── SICHTBARKEIT HEADLINE ── */}
             <div ref={r('sichtbarkeit')} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', opacity: 0, visibility: 'hidden' }}>
                 <h2 style={{
-                    fontSize: 'clamp(4rem, 10vw, 13rem)',
+                    fontSize: 'clamp(2.2rem, 8vw, 8rem)',
                     fontWeight: 900, lineHeight: 0.9,
                     letterSpacing: '-0.02em', textTransform: 'uppercase',
                     color: '#ffffff', textShadow: TS,
+                    maxWidth: '92vw',
                 }}>
                     Sichtbarkeit.
                 </h2>
             </div>
 
             {/* ── TIEFSTER PUNKT ── */}
-            <div ref={r('tiefster')} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', maxWidth: '54vw', opacity: 0, visibility: 'hidden' }}>
-                <h2 style={{ ...HL, fontSize: 'clamp(2.4rem, 4.8vw, 5.8rem)', textShadow: TS, marginBottom: '2.4rem' }}>
+            <div ref={r('tiefster')} className="tl-glass tl-glass--dark" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', maxWidth: 'min(54vw, 760px)', opacity: 0, visibility: 'hidden' }}>
+                <h2 style={{ ...HL, fontSize: 'var(--h2)', textShadow: TS, marginBottom: '2.4rem' }}>
                     Das ist das Fundament,<br />
                     <strong style={{ fontWeight: 900 }}>das alles trägt.</strong>
                 </h2>
@@ -213,7 +217,7 @@ interface StationProps {
 function Station({ r, num, label, hl, body, align }: StationProps) {
     const right = align === 'right'
     return (
-        <div ref={r} className="station-scene" style={{
+        <div ref={r} className={`station-scene tl-glass tl-glass--dark${right ? ' tl-glass--right' : ''}`} style={{
             position: 'absolute', top: '50%',
             ...(right ? { right: 'var(--px)' } : { left: 'var(--px)' }),
             transform: 'translateY(-50%)', maxWidth: 'clamp(280px, 34vw, 460px)',
@@ -223,7 +227,7 @@ function Station({ r, num, label, hl, body, align }: StationProps) {
             <p style={{ fontSize: 'clamp(0.85rem, 1.1vw, 1rem)', fontWeight: 400, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.72)', textShadow: TS, marginBottom: '0.8rem' }}>
                 {right ? `${label} · ${num}` : `${num} · ${label}`}
             </p>
-            <h3 style={{ fontSize: 'clamp(2rem, 3.5vw, 4.2rem)', fontWeight: 300, lineHeight: 1.1, color: '#ffffff', letterSpacing: '-0.012em', textShadow: TS, marginBottom: '1.2rem', textTransform: 'uppercase' }}>
+            <h3 style={{ fontSize: 'var(--h2)', fontWeight: 300, lineHeight: 1.1, color: '#ffffff', letterSpacing: '-0.012em', textShadow: TS, marginBottom: '1.2rem', textTransform: 'uppercase' }}>
                 {hl}
             </h3>
             <p style={{ fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)', fontWeight: 400, lineHeight: 1.75, color: 'rgba(255,255,255,0.88)', textShadow: TS, maxWidth: '34ch', ...(right ? { marginLeft: 'auto' } : {}) }}>

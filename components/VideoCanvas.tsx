@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 
-const TOTAL_FRAMES = 308
+const TOTAL_FRAMES = 303
 const SKIP_FRAMES  = 0
 const USE_FRAMES   = TOTAL_FRAMES - SKIP_FRAMES
 

@@ -37,13 +37,13 @@ export default function ContactSection() {
                 <div>
                     <p style={{
                         fontSize: 'clamp(0.68rem, 0.8vw, 0.78rem)', fontWeight: 400, letterSpacing: '0.2em',
-                        textTransform: 'uppercase', color: 'rgba(0,212,180,0.9)',
+                        textTransform: 'uppercase', color: 'rgba(255,107,53,0.95)',
                         marginBottom: '1rem',
                     }}>
                         | Kontakt
                     </p>
                     <h2 style={{
-                        fontSize: 'clamp(2rem, 3.5vw, 4.2rem)', fontWeight: 300,
+                        fontSize: 'var(--h2)', fontWeight: 300,
                         lineHeight: 1.05, letterSpacing: '-0.012em',
                         color: '#ffffff', marginBottom: '1.6rem',
                         textTransform: 'uppercase',
@@ -91,7 +91,7 @@ export default function ContactSection() {
                                     <input
                                         name={field.name} type={field.type} required
                                         style={fieldStyle}
-                                        onFocus={e => { e.currentTarget.style.borderColor = 'rgba(0,212,180,0.6)' }}
+                                        onFocus={e => { e.currentTarget.style.borderColor = 'rgba(255,107,53,0.7)' }}
                                         onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.16)' }}
                                     />
                                 </div>
@@ -103,7 +103,7 @@ export default function ContactSection() {
                                 <textarea
                                     name="message" rows={4} required
                                     style={{ ...fieldStyle, resize: 'vertical' }}
-                                    onFocus={e => { e.currentTarget.style.borderColor = 'rgba(0,212,180,0.6)' }}
+                                    onFocus={e => { e.currentTarget.style.borderColor = 'rgba(255,107,53,0.7)' }}
                                     onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.16)' }}
                                 />
                             </div>
@@ -111,14 +111,14 @@ export default function ContactSection() {
                                 type="submit"
                                 style={{
                                     alignSelf: 'flex-start',
-                                    background: '#00d4b4', color: '#04121a',
-                                    border: 'none', borderRadius: '4px',
+                                    background: '#ff6b35', color: '#0b1820',
+                                    border: 'none', borderRadius: '999px',
                                     padding: '0.95rem 2.4rem',
                                     fontSize: '0.7rem', fontWeight: 700,
                                     letterSpacing: '0.2em', textTransform: 'uppercase',
                                     cursor: 'pointer', fontFamily: 'inherit',
                                     marginTop: '0.4rem',
-                                    boxShadow: '0 0 30px rgba(0,212,180,0.35)',
+                                    boxShadow: '0 0 30px rgba(255,107,53,0.4)',
                                     transition: 'opacity 0.2s',
                                 }}
                                 onMouseEnter={e => { e.currentTarget.style.opacity = '0.88' }}

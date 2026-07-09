@@ -18,7 +18,7 @@ import { useEffect, useRef } from 'react'
  * Nur die Overlays (Crossfade-In, White-Fade) reagieren auf das Scrollen –
  * das Bild selbst nicht.
  */
-const BG_SRC = '/images/Hintergrund.jpg'
+const BG_SRC = '/images/IB__S3.png'
 
 export default function GlowCanvas() {
     const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -55,29 +55,30 @@ export default function GlowCanvas() {
                 const dh = 1080 * scale
                 const dx = (canvas.width - dw) / 2
                 const dy = (canvas.height - dh) / 2
-                // Scharf – nur dezente Entsättigung/Abdunklung, kein Blur.
-                ctx.filter = 'saturate(0.85) brightness(0.9)'
+                // Scharf & hell – realistischer Eisberg wie im Referenzbild,
+                // nur minimal entsättigt für farbliche Kohärenz.
+                ctx.filter = 'saturate(0.95) brightness(1.02) contrast(1.02)'
                 ctx.drawImage(frame, dx, dy, dw, dh)
                 ctx.filter = 'none'
             }
 
-            // ── Dunkles Teal-Overlay mit Verlauf: unten kräftiger, damit der
-            //    Glow-Pfad + die Karten klar lesen. Bewusst konstant (ruhig). ──
+            // ── Sehr dezentes, kühles Overlay – nur unten (Wasserlinie) etwas
+            //    kräftiger für Tiefe. Himmel/Eisberg bleiben hell & klar. ──
             const grade = ctx.createLinearGradient(0, 0, 0, canvas.height)
-            grade.addColorStop(0,   'rgba(6, 22, 34, 0.42)')
-            grade.addColorStop(0.5, 'rgba(5, 18, 30, 0.52)')
-            grade.addColorStop(1,   'rgba(3, 12, 22, 0.72)')
+            grade.addColorStop(0,    'rgba(12, 28, 44, 0.08)')
+            grade.addColorStop(0.55, 'rgba(10, 24, 38, 0.10)')
+            grade.addColorStop(1,    'rgba(4, 14, 24, 0.42)')
             ctx.globalCompositeOperation = 'source-over'
             ctx.fillStyle = grade
             ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-            // ── Sanfte Vignette, hält den Fokus in der Bildmitte ──
+            // ── Ganz sanfte Vignette, hält den Fokus mittig (kaum sichtbar) ──
             const vig = ctx.createRadialGradient(
-                canvas.width / 2, canvas.height / 2, canvas.height * 0.25,
-                canvas.width / 2, canvas.height / 2, canvas.height * 0.85,
+                canvas.width / 2, canvas.height / 2, canvas.height * 0.3,
+                canvas.width / 2, canvas.height / 2, canvas.height * 0.9,
             )
             vig.addColorStop(0, 'rgba(0,0,0,0)')
-            vig.addColorStop(1, 'rgba(2, 10, 18, 0.45)')
+            vig.addColorStop(1, 'rgba(2, 10, 18, 0.22)')
             ctx.fillStyle = vig
             ctx.fillRect(0, 0, canvas.width, canvas.height)
         }
@@ -105,21 +106,14 @@ export default function GlowCanvas() {
                 return
             }
 
-            // Weicher Crossfade aus dem dunklen Unterwasser-Ende von Akt 1
-            const fadeIn = Math.min(Math.max(progress / 0.10, 0), 1)
-            canvas.style.opacity = String(fadeIn)
+            // Weicher Crossfade aus Akt 1 (Anfang) …
+            const fadeIn  = Math.min(Math.max(progress / 0.10, 0), 1)
+            // … und sanftes Ausblenden am Ende (KEIN weißer Wash mehr) — die
+            // dahinterliegende Problem-Sektion scheint dadurch weich durch.
+            const fadeOut = 1 - Math.min(Math.max((progress - 0.92) / 0.12, 0), 1)
+            canvas.style.opacity = String(Math.min(fadeIn, fadeOut))
 
-            // Bild + Grade sind statisch — nur einmal neu zeichnen reicht,
-            // aber wir zeichnen bei Scrollbewegung neu, um den White-Fade sauber
-            // darüberzulegen.
             paint()
-
-            // ── White-Fade am Ende → Überleitung in die Typo-Sequenz ──
-            if (progress > 0.86) {
-                const t = Math.min((progress - 0.86) / 0.14, 1)
-                ctx.fillStyle = `rgba(255, 255, 255, ${t})`
-                ctx.fillRect(0, 0, canvas.width, canvas.height)
-            }
         }
 
         // Continuous rAF loop — robust gegen Lenis / programmatisches Scrollen,
