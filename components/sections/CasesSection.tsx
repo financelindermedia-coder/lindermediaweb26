@@ -1,20 +1,20 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 /**
- * Projekte / Cases – interaktiver Switcher.
+ * Projekte / Cases.
  *
- * Links ein Device-Mockup (Laptop + Phone), dessen "Screenshot" beim
- * Wechsel crossfadet. Rechts eine nummerierte Projektliste; das aktive
- * Projekt klappt Beschreibung + Ergebnis auf. Die Screenshots sind
- * markenkonforme CSS-Mockups (kein externes Bildmaterial), die je Projekt
- * den Namen tragen – so wird der Wechsel unmittelbar sichtbar.
+ * Desktop: großes Bild links, klickbare Projektliste rechts – beim Wechsel
+ * crossfadet das Bild (kein Reload, nur ein weicher Fade).
+ * Mobile: automatisch ein nativer Swipe-Slider – je Projekt eine Slide mit
+ * Bild, Name, Text und „Weiter"-Button; Punkte zeigen die Position.
  */
 
 type Projekt = {
     nr: string
     name: string
+    url: string
     branche: string
     beschreibung: string
     ergebnis: string
@@ -27,6 +27,7 @@ const PROJEKTE: Projekt[] = [
     {
         nr: '01',
         name: 'SolarImpact Yacht',
+        url: 'solarimpact.com',
         branche: 'Solaryachten & Maritime E-Mobilität',
         beschreibung:
             'Ein Pionier solarbetriebener Luxusyachten mit SWATH-Technologie – technisch herausragend, aber online kaum als Innovationsführer sichtbar. Wir haben Positionierung, Website und Botschaft auf ein klares Premium-Profil ausgerichtet.',
@@ -38,6 +39,7 @@ const PROJEKTE: Projekt[] = [
     {
         nr: '02',
         name: 'Rübsamen',
+        url: 'ruebsamen.de',
         branche: 'Handel & Lifestyle',
         beschreibung:
             'Etabliertes Sortiment, aber ein unscharfer digitaler Auftritt. Neue Struktur, klare Markensprache und konsistente Kampagnen über alle Kanäle.',
@@ -47,6 +49,7 @@ const PROJEKTE: Projekt[] = [
     {
         nr: '03',
         name: 'Wellenwind',
+        url: 'wellenwind.de',
         branche: 'Freizeit & Erlebnis',
         beschreibung:
             'Ein Erlebnisanbieter, der Emotion verkauft, aber nüchtern kommunizierte. Wir haben die Marke visuell und sprachlich aufgeladen.',
@@ -56,6 +59,7 @@ const PROJEKTE: Projekt[] = [
     {
         nr: '04',
         name: 'Novodeck',
+        url: 'novodeck.de',
         branche: 'Bauelemente & Außenbereich',
         beschreibung:
             'Ein hochwertiges, erklärungsbedürftiges Produkt. Fokus auf Nutzen statt Technik, klare Landingpages für konkrete Entscheidungssituationen.',
@@ -65,6 +69,7 @@ const PROJEKTE: Projekt[] = [
     {
         nr: '05',
         name: 'Energiebalance',
+        url: 'energiebalance.de',
         branche: 'Gesundheit & Coaching',
         beschreibung:
             'Persönliche Expertise, die online nicht ankam. Positionierung, Website und Content konsequent auf die Zielgruppe zugeschnitten.',
@@ -106,15 +111,48 @@ function MockScreen({ p, variant }: { p: Projekt; variant: 'desk' | 'mob' }) {
     )
 }
 
+const Arrow = () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+)
+
+/** Randloser Browser-Frame (Chrome-Bar + URL) statt Geräte-Mockup. */
+function BrowserFrame({ url, className, children }: { url: string; className?: string; children: React.ReactNode }) {
+    return (
+        <div className={`bframe${className ? ' ' + className : ''}`}>
+            <div className="bframe-bar">
+                <span className="bframe-dots"><i /><i /><i /></span>
+                <span className="bframe-url">{url}</span>
+            </div>
+            <div className="bframe-screen">{children}</div>
+        </div>
+    )
+}
+
 export default function CasesSection() {
     const [active, setActive] = useState(0)
+    const [slide, setSlide] = useState(0)
+    const trackRef = useRef<HTMLDivElement>(null)
+
+    const goTo = (i: number) => {
+        const track = trackRef.current
+        if (!track) return
+        const idx = ((i % PROJEKTE.length) + PROJEKTE.length) % PROJEKTE.length
+        const el = track.children[idx] as HTMLElement | undefined
+        if (el) track.scrollTo({ left: el.offsetLeft, behavior: 'smooth' })
+    }
+    const onScroll = () => {
+        const track = trackRef.current
+        if (!track) return
+        const i = Math.round(track.scrollLeft / track.clientWidth)
+        setSlide(Math.max(0, Math.min(PROJEKTE.length - 1, i)))
+    }
 
     return (
         <section
             id="projekte"
             style={{
                 background: '#08192a',
-                padding: '10rem 0',
+                padding: 'clamp(7rem, 13vw, 13rem) 0',
                 fontFamily: 'var(--font-barlow), sans-serif',
                 borderTop: '1px solid rgba(255,255,255,0.06)',
             }}
@@ -147,37 +185,21 @@ export default function CasesSection() {
                 </h2>
             </div>
 
+            {/* ── Desktop: großzügiger Browser-Frame links, Liste rechts (weicher Fade) ── */}
             <div className="cases-layout">
-                {/* ── Device-Mockup (Laptop + Phone) ── */}
                 <div className="cases-stage">
-                    <div className="cases-laptop">
-                        <div className="cases-laptop-screen">
-                            {PROJEKTE.map((p, i) => (
-                                <div
-                                    key={p.nr}
-                                    className={`cases-shot${i === active ? ' is-active' : ''}`}
-                                >
-                                    <Screen p={p} variant="desk" />
-                                </div>
-                            ))}
-                        </div>
-                        <div className="cases-laptop-base"><span /></div>
-                    </div>
-
-                    <div className="cases-phone">
+                    <BrowserFrame url={PROJEKTE[active].url} className="bframe-lg">
                         {PROJEKTE.map((p, i) => (
                             <div
                                 key={p.nr}
                                 className={`cases-shot${i === active ? ' is-active' : ''}`}
                             >
-                                <Screen p={p} variant="mob" />
+                                <Screen p={p} variant="desk" />
                             </div>
                         ))}
-                        <span className="cases-phone-notch" />
-                    </div>
+                    </BrowserFrame>
                 </div>
 
-                {/* ── Nummerierte Projektliste ── */}
                 <ul className="cases-list">
                     {PROJEKTE.map((p, i) => {
                         const on = i === active
@@ -206,6 +228,49 @@ export default function CasesSection() {
                         )
                     })}
                 </ul>
+            </div>
+
+            {/* ── Mobile: nativer Swipe-Slider ── */}
+            <div className="cases-slider" ref={trackRef} onScroll={onScroll}>
+                {PROJEKTE.map((p, i) => {
+                    const last = i === PROJEKTE.length - 1
+                    return (
+                        <article
+                            key={p.nr}
+                            className="cslide"
+                            style={{ ['--acc' as string]: p.accent } as React.CSSProperties}
+                        >
+                            <BrowserFrame url={p.url} className="cslide-frame">
+                                <Screen p={p} variant="desk" />
+                            </BrowserFrame>
+                            <span className="cslide-nr">{p.nr} — Projekt</span>
+                            <h3 className="cslide-name">{p.name}</h3>
+                            <p className="cslide-branche">{p.branche}</p>
+                            <p className="cslide-desc">{p.beschreibung}</p>
+                            <p className="cslide-erg">{p.ergebnis}</p>
+                            {last ? (
+                                <a className="cslide-btn" href="#contact">
+                                    <span>Gespräch anfragen</span><Arrow />
+                                </a>
+                            ) : (
+                                <button type="button" className="cslide-btn" onClick={() => goTo(i + 1)}>
+                                    <span>Weiter</span><Arrow />
+                                </button>
+                            )}
+                        </article>
+                    )
+                })}
+            </div>
+            <div className="cslide-dots">
+                {PROJEKTE.map((p, i) => (
+                    <button
+                        key={p.nr}
+                        type="button"
+                        className={`cslide-dot${i === slide ? ' is-on' : ''}`}
+                        onClick={() => goTo(i)}
+                        aria-label={`Projekt ${p.nr} anzeigen`}
+                    />
+                ))}
             </div>
 
             <div style={{ padding: '0 var(--px)', marginTop: '4.5rem' }}>
