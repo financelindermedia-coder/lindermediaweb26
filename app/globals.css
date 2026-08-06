@@ -1709,7 +1709,10 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 /* ── Aufgeteilt: „Über uns" und FAQ als eigene Full-Width-Sektionen ── */
 /* About: Headline oben, darunter Showreel + Gründer-Text nebeneinander */
 .mfx-inner-about { display: block; max-width: 1180px; }
-.mfx-about-head { margin-bottom: clamp(2.2rem, 4vw, 3.4rem); }
+.mfx-about-head { margin-bottom: clamp(1.6rem, 3vw, 2.4rem); }
+/* Einspaltig: Text steht direkt unter der Headline (Showreel entfernt) */
+.mfx-inner-about > .mfx-about-text { max-width: 62ch; }
+.mfx-inner-about > .mfx-about-text .mfx-about-p { max-width: none; }
 .mfx-about-grid {
     display: grid;
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
@@ -2183,10 +2186,13 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     background: currentColor; opacity: 0.75;
 }
 
-/* Variante für die gepinnte Eisberg-/Glow-Strecke: läuft fixiert mit */
+/* Variante für die gepinnte Eisberg-/Glow-Strecke: läuft fixiert mit.
+   Safe-Area einrechnen, sonst liegt der Hinweis auf iPhones unter der
+   Browserleiste bzw. dem Home-Indikator. */
 .ai-badge--fixed {
     position: fixed; z-index: 6;
-    right: clamp(1rem, 2.5vw, 2rem); bottom: clamp(1rem, 2.5vw, 1.8rem);
+    right: clamp(1rem, 2.5vw, 2rem);
+    bottom: calc(clamp(1rem, 2.5vw, 1.8rem) + env(safe-area-inset-bottom, 0px));
     opacity: 0; pointer-events: none;
 }
 .ai-badge--fixed.is-on { opacity: 1; pointer-events: auto; }
@@ -2195,11 +2201,22 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 .a2v-ai,
 .site-closing-ai {
     position: absolute; z-index: 3;
-    right: clamp(1rem, 2.5vw, 2rem); bottom: clamp(1rem, 2.5vw, 1.8rem);
+    right: clamp(1rem, 2.5vw, 2rem);
+    bottom: calc(clamp(1rem, 2.5vw, 1.8rem) + env(safe-area-inset-bottom, 0px));
 }
 
 @media (max-width: 700px) {
     .ai-badge { font-size: 0.56rem; letter-spacing: 0.14em; padding: 0.36em 0.7em; }
+    /* etwas mehr Luft zum Displayrand, wo Browserleisten eingeblendet werden */
+    .ai-badge--fixed,
+    .a2v-ai,
+    .site-closing-ai { bottom: calc(1.35rem + env(safe-area-inset-bottom, 0px)); }
+    /* Blur auf Handys reduzieren – 22px über volle Sektionshöhe kostet dort spürbar Leistung */
+    .a2-duo,
+    .mfx-about-section,
+    .ped-frost {
+        backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
