@@ -3,8 +3,10 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-    title: 'Datenschutzerklärung — LinderMedia',
+    title: 'Datenschutzerklärung',
     description: 'Informationen zur Verarbeitung personenbezogener Daten bei LinderMedia gemäß DSGVO.',
+    alternates: { canonical: '/datenschutz' },
+    robots: { index: true, follow: true },
 }
 
 const h1: CSSProperties = { fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 900, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#fff', marginBottom: '2.5rem' }

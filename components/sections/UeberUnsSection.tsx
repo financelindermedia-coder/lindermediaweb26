@@ -2,20 +2,12 @@
 
 /**
  * „Über uns" als eigenständige Sektion (aus MenschenFaqSection herausgelöst):
- * Fullscreen-Hintergrundvideo, Headline oben, darunter Showreel + Gründer-Text
- * nebeneinander. Anker #ueber-uns für die Navigation.
+ * ruhiger dunkler Hintergrund (kein Hintergrundvideo), Headline oben, darunter
+ * Showreel + Gründer-Text nebeneinander. Anker #ueber-uns für die Navigation.
  */
 export default function UeberUnsSection() {
     return (
         <section id="ueber-uns" className="mfx mfx-about-section" style={{ fontFamily: 'var(--font-barlow), sans-serif' }}>
-            {/* Fullscreen-Hintergrundvideo + Abdunkelung */}
-            <div className="mfx-bg" aria-hidden="true">
-                <video className="mfx-video" autoPlay muted loop playsInline poster="/images/IB__S3.png">
-                    <source src="/video/ib-t2.mp4" type="video/mp4" />
-                </video>
-                <span className="mfx-veil" />
-            </div>
-
             <div className="mfx-inner mfx-inner-about">
                 <div className="mfx-about-head">
                     <p className="mfx-eye">| Hinter LinderMedia</p>

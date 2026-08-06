@@ -53,7 +53,7 @@ export default function StimmenSection() {
     }, [])
 
     return (
-        <section id="stimmen" className="ped ped-pinned" style={{ fontFamily: 'var(--font-barlow), sans-serif' }}>
+        <section id="stimmen" className="ped ped-pinned ped-frost" style={{ fontFamily: 'var(--font-barlow), sans-serif' }}>
             <div className="ped-pin" ref={pinRef}>
                 <div className="ped-sticky">
                     <div className="ped-track" ref={trackRef}>

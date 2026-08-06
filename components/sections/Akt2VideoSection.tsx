@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react'
 import useReveal from '@/components/useReveal'
+import AiBadge from '@/components/AiBadge'
 
 /**
  * Akt-2-Video-Sektion: vollflächiges Fullscreen-Video mit Text-Overlay links
@@ -19,6 +20,8 @@ type Props = {
     chapter: string
     videoSrc: string
     poster?: string
+    /** KI-generiertes Material: blendet den Transparenzhinweis unten rechts ein. */
+    aiGenerated?: boolean
 }
 
 export default function Akt2VideoSection({
@@ -32,6 +35,7 @@ export default function Akt2VideoSection({
     chapter,
     videoSrc,
     poster,
+    aiGenerated = false,
 }: Props) {
     const revealRef = useReveal<HTMLElement>({ threshold: 0.3 })
     const videoRef = useRef<HTMLVideoElement>(null)
@@ -61,6 +65,7 @@ export default function Akt2VideoSection({
                 loop
                 playsInline
                 preload="metadata"
+                {...(aiGenerated ? { 'data-ai-generated': 'true' } : {})}
             />
             <span className="a2v-overlay" aria-hidden="true" />
 
@@ -105,6 +110,8 @@ export default function Akt2VideoSection({
                 <span className="a2v-foot-index">{index}</span>
                 <span className="a2v-foot-chapter">{chapter}</span>
             </div>
+
+            {aiGenerated && <AiBadge className="a2v-ai" />}
         </section>
     )
 }

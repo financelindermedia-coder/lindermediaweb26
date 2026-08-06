@@ -3,8 +3,10 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-    title: 'Impressum — LinderMedia',
-    description: 'Impressum und Anbieterkennzeichnung der LinderMedia.',
+    title: 'Impressum',
+    description: 'Impressum und Anbieterkennzeichnung von LinderMedia, Andreas Linder, Schloßstraße 31, 56459 Pottum.',
+    alternates: { canonical: '/impressum' },
+    robots: { index: true, follow: true },
 }
 
 const h1: CSSProperties = { fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 900, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#fff', marginBottom: '2.5rem' }

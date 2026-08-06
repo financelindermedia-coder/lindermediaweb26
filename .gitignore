@@ -16,3 +16,6 @@ Thumbs.db
 
 # Claude settings
 .claude/
+
+# Video-Originale (zu groß für GitHub) — im Repo liegen die Web-Fassungen vid-lm-*.mp4
+/public/video/Vid_LM_*.mp4

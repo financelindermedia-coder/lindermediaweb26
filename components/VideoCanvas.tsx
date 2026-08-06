@@ -92,6 +92,7 @@ export default function VideoCanvas() {
         <canvas
             ref={canvasRef}
             aria-hidden="true"
+            data-ai-generated="true"
             style={{ position: 'fixed', inset: 0, width: '100vw', height: '100vh', zIndex: 0, display: 'block' }}
         />
     )
