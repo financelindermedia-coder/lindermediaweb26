@@ -39,7 +39,7 @@ conv images/Novodex.jpg 80
 conv images/RE.jpg 80
 conv images/lubrican.jpg 80
 conv images/lighthouse.jpg 80
-conv images/case-solarimpact-desk.jpg 82
+# solarimpact.jpg bleibt JPG: WebP kam bei jeder Stufe groesser heraus.
 conv video/poster-lm-1.jpg 78
 conv video/poster-lm-2.jpg 78
 

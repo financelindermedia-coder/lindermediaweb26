@@ -23,10 +23,8 @@ type Projekt = {
     leistungen: string
     beschreibung: string
     accent: string
-    /** Key-Visual bzw. Website-Screenshot, 16:9 bevorzugt. */
+    /** Key-Visual der Marke, 16:9. */
     visual?: string
-    /** Screenshot oben ausrichten (Website), statt mittig (Key-Visual). */
-    alignTop?: boolean
 }
 
 const PROJEKTE: Projekt[] = [
@@ -37,8 +35,9 @@ const PROJEKTE: Projekt[] = [
         beschreibung:
             'Markenauftritt für ein Hightech-Startup, das innovative SWATH-Technologie und solarbetriebene Schifffahrt sichtbar macht.',
         accent: '#ff6b35',
-        visual: '/images/case-solarimpact-desk.webp',
-        alignTop: true,
+        // Bleibt JPG: das Original ist bereits stark komprimiert, WebP kam bei
+        // jeder Qualitaetsstufe groesser heraus (142K JPG vs. 231K bei q62).
+        visual: '/images/solarimpact.jpg',
     },
     {
         nr: '02',
@@ -97,7 +96,7 @@ function Screen({ p, variant }: { p: Projekt; variant: 'desk' | 'mob' }) {
             <img
                 src={p.visual}
                 alt={`${p.name} – Key-Visual`}
-                className={`cm-img${p.alignTop ? '' : ' cm-img-center'}`}
+                className="cm-img"
                 width={1920}
                 height={1080}
                 loading="lazy"

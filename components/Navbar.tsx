@@ -55,6 +55,7 @@ export default function Navbar() {
     return (
         <nav
             ref={navRef}
+            className="nav-bar"
             style={{
                 position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
                 display: 'grid',

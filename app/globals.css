@@ -1460,9 +1460,12 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 }
 
 /* ── Navbar: Burger + Mobil-Menü (absolute → 3-Spalten-Grid bleibt intakt) ── */
-/* Wortmarke neben dem Logo – nur mobil, wo Navigation und CTA im Burger
-   stecken und die Leiste sonst nur das Signet zeigen wuerde. Die Farbe setzt
-   die Navbar zur Laufzeit (hell ueber dem Eisberg, weiss darunter). */
+/* Wortmarke neben dem Logo. Sichtbar mobil (Navigation und CTA stecken im
+   Burger) und auf breiten Screens. Im Band dazwischen (769–1199px) bleibt sie
+   aus: dort stehen Links UND CTA in der Leiste, und mit dem grosszuegigen
+   var(--px)-Gutter reicht die Breite nicht ohne Gedraenge.
+   Die Farbe setzt die Navbar zur Laufzeit (dunkelblau ueber dem Eisberg,
+   weiss darunter). */
 .nav-wordmark {
     display: none;
     font-size: 0.92rem;
@@ -1474,6 +1477,25 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     color: #0c3d66;
     text-shadow: 0 1px 6px rgba(0, 0, 0, 0.22);
     transition: color 0.4s ease;
+}
+/* Die Leiste uebernahm bisher den sehr grosszuegigen Inhalts-Gutter var(--px)
+   (bis 300px je Seite = 600px allein fuer die Raender). Dadurch stiess „FAQ"
+   schon ohne Wortmarke ans Signet. Auf Desktop daher ein eigener, engerer
+   Rand; mobil bleibt var(--px) unveraendert.
+   !important, weil das Padding in Navbar.tsx als Inline-Style gesetzt ist. */
+@media (min-width: 769px) {
+    .nav-bar {
+        padding-left: clamp(2rem, 5vw, 5rem) !important;
+        padding-right: clamp(2rem, 5vw, 5rem) !important;
+    }
+    /* „Über uns" nie zweizeilig umbrechen lassen */
+    .nav-links a { white-space: nowrap; }
+}
+/* Wortmarke erst ab 1400px: darunter teilt das Raster 1fr-auto-1fr beide
+   Seiten gleich breit auf, obwohl links fuenf Links und rechts nur ein Button
+   stehen – die breitere Mitte draengte die Links dann wieder ans Signet. */
+@media (min-width: 1400px) {
+    .nav-wordmark { display: inline-block; }
 }
 
 .nav-burger {
@@ -1510,11 +1532,6 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     .nav-cta-wrap { display: none !important; }
     .nav-burger { display: flex !important; }
     .nav-wordmark { display: inline-block; }
-}
-/* Auf sehr schmalen Geraeten enger setzen, damit Signet + Wortmarke nicht an
-   den Burger stossen. */
-@media (max-width: 400px) {
-    .nav-wordmark { font-size: 0.78rem; letter-spacing: 0.12em; }
 
     .cases-layout {
         grid-template-columns: 1fr;
@@ -1576,6 +1593,12 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     .tl-glass {
         padding: 1.5rem 1.4rem !important;
     }
+}
+
+/* Auf sehr schmalen Geraeten die Wortmarke enger setzen, damit Signet +
+   Schriftzug nicht an den Burger stossen. */
+@media (max-width: 400px) {
+    .nav-wordmark { font-size: 0.78rem; letter-spacing: 0.12em; }
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -1990,8 +2013,8 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     .footer-grid > div { align-items: center; }
 }
 
-/* Echter Website-Screenshot im Device-Mockup */
-.cm-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+/* Key-Visual im Bildrahmen – fuellt den 16:9-Ausschnitt, mittig eingepasst */
+.cm-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
 
 /* ── Projekte: randloser Browser-Frame (statt Geräte-Mockup) ── */
 .bframe {
@@ -2035,8 +2058,6 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 .kvframe-screen .cm-img, .kvframe-screen .cm { position: absolute; inset: 0; width: 100%; height: 100%; }
 .kvframe-screen .cases-shot { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s ease; }
 .kvframe-screen .cases-shot.is-active { opacity: 1; }
-/* Key-Visuals mittig einpassen; nur echte Website-Screenshots oben ausrichten */
-.cm-img-center { object-position: center; }
 
 /* ── Projekte: Mobile Swipe-Slider (Desktop unverändert) ── */
 .cases-slider { display: none; }
@@ -2532,6 +2553,11 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
         gap: clamp(1.4rem, 3vw, 2rem);
     }
     .sysr-lines, .sysr-ring { display: none; }
+    /* Der Scrim ragt mit inset:-10% ueber die Buehne hinaus. Im radialen
+       Desktop-Layout ist das gewollt (weicher Halo um den Kreis); im
+       gestapelten Raster erzeugt er horizontalen Seitwaerts-Scroll, weil die
+       Buehne dort fast die volle Breite einnimmt. */
+    .sysr-stage::before { inset: 0; }
     .sysr-center {
         position: static; transform: none; grid-column: 1 / -1;
         display: flex; justify-content: center; margin-bottom: 0.5rem;
