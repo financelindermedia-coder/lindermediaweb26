@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import useReveal from '@/components/useReveal'
 import AiBadge from '@/components/AiBadge'
 
@@ -38,33 +38,79 @@ export default function Akt2VideoSection({
     aiGenerated = false,
 }: Props) {
     const revealRef = useReveal<HTMLElement>({ threshold: 0.3 })
+    const sectionRef = useRef<HTMLElement | null>(null)
     const videoRef = useRef<HTMLVideoElement>(null)
     const [paused, setPaused] = useState(false)
+    /** Erst laden, wenn die Sektion in die Naehe des Viewports kommt. */
+    const [armed, setArmed] = useState(false)
+    /** Vom Nutzer per Button pausiert – dann nicht automatisch weiterspielen. */
+    const manuallyPaused = useRef(false)
+
+    /**
+     * Die drei Fullscreen-Videos wiegen zusammen rund 31 MB. Ohne diesen
+     * Observer laedt der Browser sie schon beim Seitenaufruf an, obwohl sie weit
+     * unterhalb des Viewports liegen. Die Quelle wird deshalb erst gesetzt, wenn
+     * die Sektion einen Viewport entfernt ist; ausserhalb des Bildes pausiert
+     * das Video wieder (spart Dekodier-Last und Akku auf Mobilgeraeten).
+     */
+    useEffect(() => {
+        const el = sectionRef.current
+        if (!el) return
+
+        const io = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) setArmed(true)
+
+                const v = videoRef.current
+                if (!v || !v.src) return
+                if (entry.intersectionRatio > 0.15) {
+                    if (!manuallyPaused.current) v.play().catch(() => {})
+                } else if (!v.paused) {
+                    v.pause()
+                }
+            },
+            { rootMargin: '100% 0px', threshold: [0, 0.15, 0.5] },
+        )
+        io.observe(el)
+        return () => io.disconnect()
+    }, [])
 
     const toggle = () => {
         const v = videoRef.current
         if (!v) return
         if (v.paused) {
-            v.play()
+            manuallyPaused.current = false
+            v.play().catch(() => {})
             setPaused(false)
         } else {
+            manuallyPaused.current = true
             v.pause()
             setPaused(true)
         }
     }
 
     return (
-        <section id={id} ref={revealRef} className="a2v">
+        <section
+            id={id}
+            ref={(el) => {
+                // useReveal liefert ein RefObject (current readonly) – der
+                // Cast erlaubt, dasselbe Element an beide Refs zu haengen.
+                ;(revealRef as React.MutableRefObject<HTMLElement | null>).current = el
+                sectionRef.current = el
+            }}
+            className="a2v"
+        >
             <video
                 ref={videoRef}
                 className="a2v-video"
-                src={videoSrc}
+                // Quelle erst setzen, wenn die Sektion in Reichweite ist
+                src={armed ? videoSrc : undefined}
                 poster={poster}
                 autoPlay
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload="none"
                 {...(aiGenerated ? { 'data-ai-generated': 'true' } : {})}
             />
             <span className="a2v-overlay" aria-hidden="true" />

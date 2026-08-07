@@ -418,7 +418,7 @@ section {
 .ped-sticky-bg { position: absolute; inset: 0; z-index: 0; }
 .ped-sticky-bg::before {
     content: ''; position: absolute; inset: 0;
-    background: url('/images/IB__S4.png') center / cover no-repeat; opacity: 0.42;
+    background: url('/images/IB__S4.webp') center / cover no-repeat; opacity: 0.42;
 }
 .ped-sticky-bg::after {
     content: ''; position: absolute; inset: 0;
@@ -492,7 +492,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 .ped-bg { isolation: isolate; }
 .ped-bg::before {
     content: ''; position: absolute; inset: 0; z-index: -2;
-    background: url('/images/IB__S4.png') center / cover no-repeat;
+    background: url('/images/IB__S4.webp') center / cover no-repeat;
     opacity: 0.42;
 }
 .ped-bg::after {
@@ -1460,6 +1460,22 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 }
 
 /* ── Navbar: Burger + Mobil-Menü (absolute → 3-Spalten-Grid bleibt intakt) ── */
+/* Wortmarke neben dem Logo – nur mobil, wo Navigation und CTA im Burger
+   stecken und die Leiste sonst nur das Signet zeigen wuerde. Die Farbe setzt
+   die Navbar zur Laufzeit (hell ueber dem Eisberg, weiss darunter). */
+.nav-wordmark {
+    display: none;
+    font-size: 0.92rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    line-height: 1;
+    white-space: nowrap;
+    color: #0c3d66;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.22);
+    transition: color 0.4s ease;
+}
+
 .nav-burger {
     position: absolute; left: var(--px); top: 50%; transform: translateY(-50%);
     display: none; flex-direction: column; gap: 5px;
@@ -1493,6 +1509,12 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     .nav-links { display: none !important; }
     .nav-cta-wrap { display: none !important; }
     .nav-burger { display: flex !important; }
+    .nav-wordmark { display: inline-block; }
+}
+/* Auf sehr schmalen Geraeten enger setzen, damit Signet + Wortmarke nicht an
+   den Burger stossen. */
+@media (max-width: 400px) {
+    .nav-wordmark { font-size: 0.78rem; letter-spacing: 0.12em; }
 
     .cases-layout {
         grid-template-columns: 1fr;

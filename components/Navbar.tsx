@@ -30,17 +30,20 @@ export default function Navbar() {
             const cta    = nav.querySelector<HTMLElement>('[data-cta]')
             const links  = nav.querySelectorAll<HTMLElement>('[data-navlink]')
             const burger = nav.querySelectorAll<HTMLElement>('[data-burger] span')
+            const mark   = nav.querySelector<HTMLElement>('[data-navwordmark]')
 
             if (wantsDark) {
                 nav.style.background = 'rgba(200,216,232,0.3)'
                 if (cta) { cta.style.color = '#0c3d66'; cta.style.borderColor = 'rgba(12,61,102,0.4)' }
                 links.forEach(l => { l.style.color = 'rgba(12,61,102,0.7)' })
                 burger.forEach(s => { s.style.background = '#0c3d66' })
+                if (mark) mark.style.color = '#0c3d66'
             } else {
                 nav.style.background = 'rgba(2,8,16,0.15)'
                 if (cta) { cta.style.color = 'rgba(255,255,255,0.85)'; cta.style.borderColor = 'rgba(255,255,255,0.3)' }
                 links.forEach(l => { l.style.color = 'rgba(255,255,255,0.6)' })
                 burger.forEach(s => { s.style.background = 'rgba(255,255,255,0.85)' })
+                if (mark) mark.style.color = 'rgba(255,255,255,0.92)'
             }
         }
 
@@ -100,15 +103,24 @@ export default function Navbar() {
                 <span style={{ transform: menuOpen ? 'translateY(-6px) rotate(-45deg)' : 'none' }} />
             </button>
 
-            {/* Center — Logo */}
-            <a href="#" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => setMenuOpen(false)}>
+            {/* Center — Logo (mobil zusätzlich mit Wortmarke) */}
+            <a
+                href="#"
+                className="nav-brand"
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem', textDecoration: 'none' }}
+                onClick={() => setMenuOpen(false)}
+            >
                 <Image
                     src="/logo/logo_LM_white_box.svg"
                     alt="LinderMedia"
                     width={36}
                     height={35}
+                    priority
                     style={{ display: 'block', filter: 'drop-shadow(0 1px 6px rgba(0,0,0,0.3))' }}
                 />
+                {/* Nur mobil sichtbar – auf dem Desktop tragen Navigation und
+                    CTA die Leiste, dort wuerde die Wortmarke die Mitte fuellen. */}
+                <span className="nav-wordmark" data-navwordmark aria-hidden="true">LinderMedia</span>
             </a>
 
             {/* Right — CTA (Desktop) */}

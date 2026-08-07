@@ -19,6 +19,7 @@ import FragenSection from '@/components/sections/FragenSection'
 import ContactSection from '@/components/sections/ContactSection'
 import Footer from '@/components/Footer'
 import AiBadge from '@/components/AiBadge'
+import LazyVideo from '@/components/LazyVideo'
 import { FAQ } from '@/lib/faq'
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '@/lib/site'
 
@@ -96,7 +97,7 @@ export default function Home() {
                         kicker="Warum Klarheit zuerst kommt"
                         chapter="Strategie & Fundament"
                         videoSrc={AKT2_VIDEOS.v1}
-                        poster="/video/poster-lm-1.jpg"
+                        poster="/video/poster-lm-1.webp"
                         headline="Aus Strategie wird Wirklichkeit."
                         text={[
                             'Eine Marke beginnt nicht mit Gestaltung. Sie beginnt mit Klarheit.',
@@ -120,7 +121,7 @@ export default function Home() {
                         kicker="Wie aus Konzept Gestaltung wird"
                         chapter="Kreation & Umsetzung"
                         videoSrc={AKT2_VIDEOS.v2}
-                        poster="/video/poster-lm-2.jpg"
+                        poster="/video/poster-lm-2.webp"
                         headline="Aus Ideen werden Erlebnisse."
                         text={[
                             'Strategie. Design. Technologie.',
@@ -146,7 +147,7 @@ export default function Home() {
                         kicker="Was am Ende bleibt"
                         chapter="Haltung & Orientierung"
                         videoSrc={AKT2_VIDEOS.v3}
-                        poster="/images/lighthouse.jpg"
+                        poster="/images/lighthouse.webp"
                         aiGenerated
                         headline="Orientierung."
                         text={[
@@ -159,16 +160,11 @@ export default function Home() {
 
                     {/* ── Abschluss: Kontakt (Leuchtturm-Hintergrund bleibt) ── */}
                     <div className="site-closing">
-                        <video
+                        <LazyVideo
                             className="site-closing-video"
                             src="/video/lighthouse_vid.mp4"
-                            poster="/images/lighthouse.jpg"
-                            autoPlay
-                            muted
-                            loop
-                            playsInline
-                            preload="auto"
-                            data-ai-generated="true"
+                            poster="/images/lighthouse.webp"
+                            aiGenerated
                         />
                         {/* gleiches Leuchtturm-Material wie Video 03 → gleiche Kennzeichnung */}
                         <AiBadge className="site-closing-ai" />

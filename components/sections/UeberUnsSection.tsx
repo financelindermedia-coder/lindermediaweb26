@@ -13,9 +13,12 @@ export default function UeberUnsSection() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                     className="mfx-portrait"
-                    src="/images/andi.jpg"
+                    src="/images/andi.webp"
                     alt=""
+                    width={2800}
+                    height={853}
                     loading="lazy"
+                    decoding="async"
                 />
                 <span className="mfx-veil" />
             </div>

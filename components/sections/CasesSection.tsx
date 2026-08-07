@@ -37,7 +37,7 @@ const PROJEKTE: Projekt[] = [
         beschreibung:
             'Markenauftritt für ein Hightech-Startup, das innovative SWATH-Technologie und solarbetriebene Schifffahrt sichtbar macht.',
         accent: '#ff6b35',
-        visual: '/images/case-solarimpact-desk.jpg',
+        visual: '/images/case-solarimpact-desk.webp',
         alignTop: true,
     },
     {
@@ -47,7 +47,7 @@ const PROJEKTE: Projekt[] = [
         beschreibung:
             'Eine Premium-Marke für individuelle Yachtdecks – klar positioniert und visuell auf den Punkt gebracht.',
         accent: '#ff7d48',
-        visual: '/images/Novodex.jpg',
+        visual: '/images/Novodex.webp',
     },
     {
         nr: '03',
@@ -56,7 +56,7 @@ const PROJEKTE: Projekt[] = [
         beschreibung:
             'Von der Idee zur eigenständigen Segelmarke – inklusive Shop, Content und visueller Identität.',
         accent: '#f26a2e',
-        visual: '/images/wellenwind.jpg',
+        visual: '/images/wellenwind.webp',
     },
     {
         // ENTWURF – Text von Andreas noch offen
@@ -66,7 +66,7 @@ const PROJEKTE: Projekt[] = [
         beschreibung:
             'Eine Premium-Marke im Yachting-Segment – zurückhaltend, hochwertig und vom ersten Moment an unverwechselbar.',
         accent: '#ff8f5c',
-        visual: '/images/marevo.jpg',
+        visual: '/images/marevo.webp',
     },
     {
         nr: '05',
@@ -75,7 +75,7 @@ const PROJEKTE: Projekt[] = [
         beschreibung:
             'Konzeption und Gestaltung einer digitalen Präsenz zur authentischen Inszenierung einer außergewöhnlichen Lebensgeschichte – mit Fokus auf Storytelling und visuelle Kommunikation.',
         accent: '#c94a1e',
-        visual: '/images/RE.jpg',
+        visual: '/images/RE.webp',
     },
     {
         // ENTWURF – Text von Andreas noch offen
@@ -85,7 +85,7 @@ const PROJEKTE: Projekt[] = [
         beschreibung:
             'Ein technisches Produkt im Performance-Umfeld – inszeniert für einen Markt, der Leistung sehen will, bevor sie erklärt wird.',
         accent: '#e0561f',
-        visual: '/images/lubrican.jpg',
+        visual: '/images/lubrican.webp',
     },
 ]
 
@@ -98,7 +98,10 @@ function Screen({ p, variant }: { p: Projekt; variant: 'desk' | 'mob' }) {
                 src={p.visual}
                 alt={`${p.name} – Key-Visual`}
                 className={`cm-img${p.alignTop ? '' : ' cm-img-center'}`}
+                width={1920}
+                height={1080}
                 loading="lazy"
+                decoding="async"
             />
         )
     }

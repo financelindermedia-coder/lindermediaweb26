@@ -6,9 +6,9 @@ import { useEffect, useRef } from 'react'
  * Akt 2 – statischer Eisberg-Hintergrund.
  *
  * KEIN Video / keine Kamerafahrt mehr: Als Hintergrund dient das feste Bild
- * `public/images/Hintergrund.jpg`. Es bleibt während der gesamten
- * Scroll-Sequenz unbewegt (kein Zoom, kein Parallax) und dient nur als
- * ruhiger visueller Anker.
+ * aus `BG_SRC` (siehe unten). Es bleibt während der gesamten Scroll-Sequenz
+ * unbewegt (kein Zoom, kein Parallax) und dient nur als ruhiger visueller
+ * Anker.
  *
  * Für die Lesbarkeit des Glow-Pfads (GlowLayer) und der Glaskarten wird das
  * Bild dezent bearbeitet: leichte Entsättigung + weicher Blur, dunkles
@@ -18,7 +18,7 @@ import { useEffect, useRef } from 'react'
  * Nur die Overlays (Crossfade-In, White-Fade) reagieren auf das Scrollen –
  * das Bild selbst nicht.
  */
-const BG_SRC = '/images/IB__S3.png'
+const BG_SRC = '/images/IB__S3.webp'
 
 export default function GlowCanvas() {
     const canvasRef = useRef<HTMLCanvasElement>(null)

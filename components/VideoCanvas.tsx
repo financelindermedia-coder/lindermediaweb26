@@ -40,19 +40,54 @@ export default function VideoCanvas() {
             ctx.drawImage(frame, dx, dy, dw, dh)
         }
 
-        // Preload all frames; prioritise the first visible frame (SKIP_FRAMES)
-        for (let i = 0; i < TOTAL_FRAMES; i++) {
-            const img = new Image()
-            img.src = `/frames/frame_${String(i + 1).padStart(4, '0')}.webp`
-            img.onload = () => {
-                framesRef.current[i] = img
-                // Draw the first non-black frame as soon as it arrives
-                if (i === SKIP_FRAMES && currentFrameRef.current === -1) {
-                    currentFrameRef.current = SKIP_FRAMES
-                    drawFrame(SKIP_FRAMES)
+        /**
+         * Frames gestaffelt laden statt alle 303 auf einmal.
+         *
+         * Vorher wurden beim Mount 303 Requests gleichzeitig abgesetzt (rund
+         * 17 MB). Das saettigt die Verbindung und verzoegert genau das Bild,
+         * das der Nutzer als erstes sieht. Jetzt: zuerst das Startbild allein,
+         * danach der Rest ueber eine kleine Anzahl paralleler Arbeiter – die
+         * Reihenfolge bleibt die Abspielreihenfolge, also ist der naechste
+         * benoetigte Frame in aller Regel schon da, bevor er gebraucht wird.
+         */
+        const CONCURRENCY = 6
+        let cancelled = false
+
+        function loadFrame(i: number): Promise<void> {
+            return new Promise((resolve) => {
+                const img = new Image()
+                img.decoding = 'async'
+                img.src = `/frames/frame_${String(i + 1).padStart(4, '0')}.webp`
+                const done = () => resolve()
+                img.onload = () => {
+                    framesRef.current[i] = img
+                    // Startbild zeichnen, sobald es da ist
+                    if (i === SKIP_FRAMES && currentFrameRef.current === -1) {
+                        currentFrameRef.current = SKIP_FRAMES
+                        drawFrame(SKIP_FRAMES)
+                    }
+                    done()
+                }
+                img.onerror = done
+            })
+        }
+
+        async function preloadFrames() {
+            await loadFrame(SKIP_FRAMES)
+            if (cancelled) return
+
+            const queue: number[] = []
+            for (let i = 0; i < TOTAL_FRAMES; i++) if (i !== SKIP_FRAMES) queue.push(i)
+
+            let cursor = 0
+            const worker = async () => {
+                while (!cancelled && cursor < queue.length) {
+                    await loadFrame(queue[cursor++])
                 }
             }
+            await Promise.all(Array.from({ length: CONCURRENCY }, worker))
         }
+        void preloadFrames()
 
         function updateFrame() {
             rafRef.current = null
@@ -82,6 +117,7 @@ export default function VideoCanvas() {
         window.addEventListener('resize', onResize)
 
         return () => {
+            cancelled = true
             window.removeEventListener('scroll', onScroll)
             window.removeEventListener('resize', onResize)
             if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)
