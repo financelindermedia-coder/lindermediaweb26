@@ -5,6 +5,11 @@ import { useRef, useState } from 'react'
 /**
  * Projekte / Cases.
  *
+ * Gezeigt werden die Key-Visuals der jeweiligen Marke (16:9), nicht Website-
+ * Screenshots – deshalb ein neutraler Bildrahmen statt der früheren Browser-
+ * Leiste mit URL. Die Browser-Chrome würde ein Key-Visual fälschlich als
+ * Website des Kunden ausgeben (.bframe*-CSS liegt für den Fall bereit).
+ *
  * Desktop: großes Bild links, klickbare Projektliste rechts – beim Wechsel
  * crossfadet das Bild (kein Reload, nur ein weicher Fade).
  * Mobile: automatisch ein nativer Swipe-Slider – je Projekt eine Slide mit
@@ -14,76 +19,88 @@ import { useRef, useState } from 'react'
 type Projekt = {
     nr: string
     name: string
-    url: string
-    branche: string
+    /** Disziplinen-Zeile, z. B. „Branding · Webdesign · Positionierung". */
+    leistungen: string
     beschreibung: string
-    ergebnis: string
     accent: string
-    shotDesk?: string
-    shotMob?: string
+    /** Key-Visual bzw. Website-Screenshot, 16:9 bevorzugt. */
+    visual?: string
+    /** Screenshot oben ausrichten (Website), statt mittig (Key-Visual). */
+    alignTop?: boolean
 }
 
 const PROJEKTE: Projekt[] = [
     {
         nr: '01',
-        name: 'SolarImpact Yacht',
-        url: 'solarimpact.com',
-        branche: 'Solaryachten & Maritime E-Mobilität',
+        name: 'Solar Impact Yacht',
+        leistungen: 'Branding · Webdesign · Positionierung',
         beschreibung:
-            'Ein Pionier solarbetriebener Luxusyachten mit SWATH-Technologie – technisch herausragend, aber online kaum als Innovationsführer sichtbar. Wir haben Positionierung, Website und Botschaft auf ein klares Premium-Profil ausgerichtet.',
-        ergebnis: 'Ein Auftritt, der die Innovationsführerschaft im Premium-Segment sichtbar macht.',
+            'Markenauftritt für ein Hightech-Startup, das innovative SWATH-Technologie und solarbetriebene Schifffahrt sichtbar macht.',
         accent: '#ff6b35',
-        shotDesk: '/images/case-solarimpact-desk.jpg',
-        shotMob: '/images/case-solarimpact-mob.jpg',
+        visual: '/images/case-solarimpact-desk.jpg',
+        alignTop: true,
     },
     {
         nr: '02',
-        name: 'Rübsamen',
-        url: 'ruebsamen.de',
-        branche: 'Handel & Lifestyle',
+        name: 'Novodex',
+        leistungen: 'Markenentwicklung · Visualisierung · Design',
         beschreibung:
-            'Etabliertes Sortiment, aber ein unscharfer digitaler Auftritt. Neue Struktur, klare Markensprache und konsistente Kampagnen über alle Kanäle.',
-        ergebnis: 'Höhere Wiedererkennung und messbar mehr Online-Reichweite.',
-        accent: '#ff8f5c',
+            'Eine Premium-Marke für individuelle Yachtdecks – klar positioniert und visuell auf den Punkt gebracht.',
+        accent: '#ff7d48',
+        visual: '/images/Novodex.jpg',
     },
     {
         nr: '03',
         name: 'Wellenwind',
-        url: 'wellenwind.de',
-        branche: 'Freizeit & Erlebnis',
+        leistungen: 'Markenstrategie · E-Commerce · Content',
         beschreibung:
-            'Ein Erlebnisanbieter, der Emotion verkauft, aber nüchtern kommunizierte. Wir haben die Marke visuell und sprachlich aufgeladen.',
-        ergebnis: 'Buchungsanfragen spürbar gestiegen.',
+            'Von der Idee zur eigenständigen Segelmarke – inklusive Shop, Content und visueller Identität.',
         accent: '#f26a2e',
+        visual: '/images/wellenwind.jpg',
     },
     {
+        // ENTWURF – Text von Andreas noch offen
         nr: '04',
-        name: 'Novodeck',
-        url: 'novodeck.de',
-        branche: 'Bauelemente & Außenbereich',
+        name: 'Marèvo',
+        leistungen: 'Markenentwicklung · Design · Bildwelt',
         beschreibung:
-            'Ein hochwertiges, erklärungsbedürftiges Produkt. Fokus auf Nutzen statt Technik, klare Landingpages für konkrete Entscheidungssituationen.',
-        ergebnis: 'Der Vertrieb startet mit vorqualifizierten Anfragen.',
-        accent: '#ff7d48',
+            'Eine Premium-Marke im Yachting-Segment – zurückhaltend, hochwertig und vom ersten Moment an unverwechselbar.',
+        accent: '#ff8f5c',
+        visual: '/images/marevo.jpg',
     },
     {
         nr: '05',
-        name: 'Energiebalance',
-        url: 'energiebalance.de',
-        branche: 'Gesundheit & Coaching',
+        name: 'Rainer Engel – Ein spektakuläres Leben',
+        leistungen: 'Strategie · Design · Social Media',
         beschreibung:
-            'Persönliche Expertise, die online nicht ankam. Positionierung, Website und Content konsequent auf die Zielgruppe zugeschnitten.',
-        ergebnis: 'Erste organische Anfragen innerhalb weniger Wochen.',
+            'Konzeption und Gestaltung einer digitalen Präsenz zur authentischen Inszenierung einer außergewöhnlichen Lebensgeschichte – mit Fokus auf Storytelling und visuelle Kommunikation.',
+        accent: '#c94a1e',
+        visual: '/images/RE.jpg',
+    },
+    {
+        // ENTWURF – Text von Andreas noch offen
+        nr: '06',
+        name: 'LubriCan',
+        leistungen: 'Branding · Produktinszenierung · Content',
+        beschreibung:
+            'Ein technisches Produkt im Performance-Umfeld – inszeniert für einen Markt, der Leistung sehen will, bevor sie erklärt wird.',
         accent: '#e0561f',
+        visual: '/images/lubrican.jpg',
     },
 ]
 
-/** Echter Website-Screenshot (falls vorhanden), sonst der CSS-Mock. */
+/** Key-Visual bzw. Screenshot (falls vorhanden), sonst der CSS-Mock. */
 function Screen({ p, variant }: { p: Projekt; variant: 'desk' | 'mob' }) {
-    const shot = variant === 'desk' ? p.shotDesk : p.shotMob
-    if (shot) {
-        // eslint-disable-next-line @next/next/no-img-element
-        return <img src={shot} alt={`Website-Vorschau ${p.name}`} className="cm-img" loading="lazy" />
+    if (p.visual) {
+        return (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+                src={p.visual}
+                alt={`${p.name} – Key-Visual`}
+                className={`cm-img${p.alignTop ? '' : ' cm-img-center'}`}
+                loading="lazy"
+            />
+        )
     }
     return <MockScreen p={p} variant={variant} />
 }
@@ -115,15 +132,11 @@ const Arrow = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
 )
 
-/** Randloser Browser-Frame (Chrome-Bar + URL) statt Geräte-Mockup. */
-function BrowserFrame({ url, className, children }: { url: string; className?: string; children: React.ReactNode }) {
+/** Neutraler 16:9-Bildrahmen – zeigt das Key-Visual ohne fremde Zutaten. */
+function KeyVisualFrame({ className, children }: { className?: string; children: React.ReactNode }) {
     return (
-        <div className={`bframe${className ? ' ' + className : ''}`}>
-            <div className="bframe-bar">
-                <span className="bframe-dots"><i /><i /><i /></span>
-                <span className="bframe-url">{url}</span>
-            </div>
-            <div className="bframe-screen">{children}</div>
+        <div className={`kvframe${className ? ' ' + className : ''}`}>
+            <div className="kvframe-screen">{children}</div>
         </div>
     )
 }
@@ -152,7 +165,7 @@ export default function CasesSection() {
             id="projekte"
             style={{
                 background: '#08192a',
-                padding: 'clamp(7rem, 13vw, 13rem) 0',
+                padding: 'clamp(7rem, 13vw, 13rem) 0 clamp(3.5rem, 6vw, 6rem)',
                 fontFamily: 'var(--font-barlow), sans-serif',
                 borderTop: '1px solid rgba(255,255,255,0.06)',
             }}
@@ -188,7 +201,7 @@ export default function CasesSection() {
             {/* ── Desktop: großzügiger Browser-Frame links, Liste rechts (weicher Fade) ── */}
             <div className="cases-layout">
                 <div className="cases-stage">
-                    <BrowserFrame url={PROJEKTE[active].url} className="bframe-lg">
+                    <KeyVisualFrame className="kvframe-lg">
                         {PROJEKTE.map((p, i) => (
                             <div
                                 key={p.nr}
@@ -197,7 +210,7 @@ export default function CasesSection() {
                                 <Screen p={p} variant="desk" />
                             </div>
                         ))}
-                    </BrowserFrame>
+                    </KeyVisualFrame>
                 </div>
 
                 <ul className="cases-list">
@@ -215,11 +228,10 @@ export default function CasesSection() {
                                     <span className="cases-num">{p.nr}</span>
                                     <span className="cases-item-main">
                                         <span className="cases-name">{p.name}</span>
-                                        <span className="cases-branche">{p.branche}</span>
+                                        <span className="cases-branche">{p.leistungen}</span>
                                         <span className="cases-detail">
                                             <span className="cases-detail-inner">
                                                 <span className="cases-desc">{p.beschreibung}</span>
-                                                <span className="cases-ergebnis">{p.ergebnis}</span>
                                             </span>
                                         </span>
                                     </span>
@@ -240,14 +252,13 @@ export default function CasesSection() {
                             className="cslide"
                             style={{ ['--acc' as string]: p.accent } as React.CSSProperties}
                         >
-                            <BrowserFrame url={p.url} className="cslide-frame">
+                            <KeyVisualFrame className="cslide-frame">
                                 <Screen p={p} variant="desk" />
-                            </BrowserFrame>
+                            </KeyVisualFrame>
                             <span className="cslide-nr">{p.nr} — Projekt</span>
                             <h3 className="cslide-name">{p.name}</h3>
-                            <p className="cslide-branche">{p.branche}</p>
+                            <p className="cslide-branche">{p.leistungen}</p>
                             <p className="cslide-desc">{p.beschreibung}</p>
-                            <p className="cslide-erg">{p.ergebnis}</p>
                             {last ? (
                                 <a className="cslide-btn" href="#contact">
                                     <span>Gespräch anfragen</span><Arrow />
@@ -273,15 +284,6 @@ export default function CasesSection() {
                 ))}
             </div>
 
-            <div style={{ padding: '0 var(--px)', marginTop: '4.5rem' }}>
-                <p style={{
-                    fontSize: 'clamp(0.95rem, 1.2vw, 1.1rem)',
-                    fontWeight: 400, lineHeight: 1.75,
-                    color: 'rgba(255,255,255,0.25)',
-                }}>
-                    Ausgewählte Projekte aus realer Zusammenarbeit. Die Vorschauen sind stilisierte Darstellungen der jeweiligen Auftritte.
-                </p>
-            </div>
         </section>
     )
 }

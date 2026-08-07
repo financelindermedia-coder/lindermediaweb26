@@ -67,8 +67,8 @@ export default function MethodeSection() {
                                 Wir arbeiten<br /><span>unter der Oberfläche.</span>
                             </h2>
                             <p className="ped-hc-lead">
-                                Strategie & Identität bilden das Fundament.
-                                Sichtbarkeit ist die Konsequenz – nicht der Anfang.
+                                Fünf Schritte, die aufeinander aufbauen –
+                                vom Kern der Marke bis zur messbaren Anfrage.
                             </p>
                             <a className="ped-hc-link" href="#leistungen">
                                 <span>Die Lösung</span>{ARROW}

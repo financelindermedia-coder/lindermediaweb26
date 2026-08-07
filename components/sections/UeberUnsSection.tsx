@@ -2,13 +2,24 @@
 
 /**
  * „Über uns" als eigenständige Sektion (aus MenschenFaqSection herausgelöst):
- * Frosted-Glass-Panel, Headline oben, Gründer-Text direkt darunter – einspaltig.
- * Der Showreel-Platzhalter ist entfernt; ein Hintergrundvideo kann später über
- * `.mfx-bg` wieder ergänzt werden. Anker #ueber-uns für die Navigation.
+ * Portrait als Hintergrund, darüber ein Verlaufs-Schleier, damit der Text links
+ * ruhig lesbar bleibt und das Gesicht rechts frei steht. Headline oben,
+ * Gründer-Text direkt darunter – einspaltig. Anker #ueber-uns für die Navigation.
  */
 export default function UeberUnsSection() {
     return (
         <section id="ueber-uns" className="mfx mfx-about-section" style={{ fontFamily: 'var(--font-barlow), sans-serif' }}>
+            <div className="mfx-bg" aria-hidden="true">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                    className="mfx-portrait"
+                    src="/images/andi.jpg"
+                    alt=""
+                    loading="lazy"
+                />
+                <span className="mfx-veil" />
+            </div>
+
             <div className="mfx-inner mfx-inner-about">
                 <div className="mfx-about-head">
                     <p className="mfx-eye">| Hinter LinderMedia</p>

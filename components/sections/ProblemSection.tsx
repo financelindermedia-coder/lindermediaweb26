@@ -80,8 +80,8 @@ export default function ProblemSection() {
                             <span className="ped-tag">Die Ursache</span>
                             <h3 className="ped-title">{splitTitle('Es fehlt die\nStrategie.')}</h3>
                             <p className="ped-desc">
-                                Einzelmaßnahmen greifen nicht ineinander. Was fehlt, ist die
-                                gemeinsame Richtung darunter – das Fundament, das alles trägt.
+                                Was fehlt, ist die gemeinsame Richtung darunter – das Fundament,
+                                das jedes einzelne Teil überhaupt erst tragfähig macht.
                             </p>
                             <a className="ped-arrow" href="#methode" aria-label="So lösen wir das">{ARROW}</a>
                         </article>

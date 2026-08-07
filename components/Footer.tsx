@@ -93,12 +93,8 @@ export default function Footer() {
                 <div>
                     <p style={LABEL}>Kontakt</p>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-                        <div>
-                            <p style={{ ...MUTED, marginBottom: '0.15rem' }}>Telefon</p>
-                            <p style={{ ...VALUE }}>
-                                +49 — — —
-                            </p>
-                        </div>
+                        {/* Telefon bewusst ausgeblendet, bis eine echte Nummer vorliegt –
+                            ein Strich-Platzhalter wirkt auf der Live-Seite wie ein Fehler. */}
                         <div>
                             <p style={{ ...MUTED, marginBottom: '0.15rem' }}>E-Mail</p>
                             <a href="mailto:finance.lindermedia@gmail.com" style={{ ...VALUE, textDecoration: 'none' }}>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { BUSINESS } from '@/lib/site'
 
 export default function ContactSection() {
     const [sent, setSent] = useState(false)
@@ -69,6 +70,27 @@ export default function ContactSection() {
                         In einem ersten Gespräch – ohne Agenda, ohne Verkaufsdruck –<br />
                         finden wir gemeinsam heraus, wo die Arbeit wirklich beginnen sollte.
                     </p>
+
+                    {/* Direkter Weg neben dem Formular – manche schreiben lieber selbst. */}
+                    <p style={{
+                        marginTop: '2rem',
+                        fontSize: '0.7rem', fontWeight: 400, letterSpacing: '0.2em',
+                        textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)',
+                        marginBottom: '0.5rem',
+                    }}>
+                        Oder direkt
+                    </p>
+                    <a
+                        href={`mailto:${BUSINESS.email}`}
+                        style={{
+                            fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)', fontWeight: 400,
+                            lineHeight: 1.75, color: '#ffffff', textDecoration: 'none',
+                            borderBottom: '1px solid rgba(255,107,53,0.6)',
+                            textShadow: '0 1px 12px rgba(0,0,0,0.4)',
+                        }}
+                    >
+                        {BUSINESS.email}
+                    </a>
                 </div>
 
                 {/* Right — form */}

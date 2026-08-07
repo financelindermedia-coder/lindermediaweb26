@@ -93,8 +93,8 @@ export default function Home() {
                     <Akt2VideoSection
                         id="strategie-wirklichkeit"
                         index="01"
-                        kicker="Fullscreen Video 01"
-                        chapter="Von der Strategie zur Wirkung"
+                        kicker="Warum Klarheit zuerst kommt"
+                        chapter="Strategie & Fundament"
                         videoSrc={AKT2_VIDEOS.v1}
                         poster="/video/poster-lm-1.jpg"
                         headline="Aus Strategie wird Wirklichkeit."
@@ -117,8 +117,8 @@ export default function Home() {
                     <Akt2VideoSection
                         id="ideen-erlebnisse"
                         index="02"
-                        kicker="Fullscreen Video 02"
-                        chapter="Der kreative Prozess"
+                        kicker="Wie aus Konzept Gestaltung wird"
+                        chapter="Kreation & Umsetzung"
                         videoSrc={AKT2_VIDEOS.v2}
                         poster="/video/poster-lm-2.jpg"
                         headline="Aus Ideen werden Erlebnisse."
@@ -130,11 +130,12 @@ export default function Home() {
                         ctaHref="#projekte"
                     />
                     <CasesSection />
+                    {/* Beweiskette: erst die Arbeit (Cases), direkt danach die Stimmen dazu */}
+                    <StimmenSection />
 
-                    {/* ── vorerst behalten (finale Platzierung offen) ── */}
+                    {/* Vertrauen in die Person, danach die letzten Einwände (FAQ) */}
                     <UeberUnsSection />
                     <FragenSection />
-                    <StimmenSection />
 
                     {/* ── Akt 2 · Phase 3: Vertrauen ── */}
                     <SectionConnector />
@@ -142,8 +143,8 @@ export default function Home() {
                     <Akt2VideoSection
                         id="orientierung"
                         index="03"
-                        kicker="Fullscreen Video 03"
-                        chapter="Orientierung"
+                        kicker="Was am Ende bleibt"
+                        chapter="Haltung & Orientierung"
                         videoSrc={AKT2_VIDEOS.v3}
                         poster="/images/lighthouse.jpg"
                         aiGenerated
