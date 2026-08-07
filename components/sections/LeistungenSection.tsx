@@ -10,7 +10,7 @@ import useReveal from '@/components/useReveal'
  * nicht Leistungen. Mobil: gestapeltes Raster (keine Linien).
  */
 type Align = 'ct' | 'cb' | 'l' | 'r'
-type Node = { label: string; sub: [string, string]; angle: number; align: Align; icon: JSX.Element; big?: boolean }
+type Node = { label: string; sub: [string, string]; angle: number; align: Align; icon: JSX.Element }
 
 const I = (d: JSX.Element) => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -21,11 +21,11 @@ const I = (d: JSX.Element) => (
 const NODES: Node[] = [
     { label: 'Strategie', sub: ['Richtung geben.', 'Klarheit schaffen.'], angle: -90, align: 'ct',
       icon: I(<><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" /><path d="M12 1v3M12 20v3M1 12h3M20 12h3" /></>) },
-    { label: 'Design', sub: ['Ästhetik gestalten.', 'Bedeutung sichtbar machen.'], angle: -45, align: 'l', big: true,
+    { label: 'Design', sub: ['Ästhetik gestalten.', 'Bedeutung sichtbar machen.'], angle: -45, align: 'l',
       icon: I(<><path d="M12 20h9" /><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" /></>) },
     { label: 'Fotografie', sub: ['Momente einfangen.', 'Echt. Ausdrucksstark.'], angle: 0, align: 'l',
       icon: I(<><rect x="3" y="6" width="18" height="14" rx="2" /><circle cx="12" cy="13" r="4" /><path d="M8 6l1.5-2h5L16 6" /></>) },
-    { label: 'Film & Video', sub: ['Geschichten bewegen.', 'Emotionen erzeugen.'], angle: 45, align: 'l', big: true,
+    { label: 'Film & Video', sub: ['Geschichten bewegen.', 'Emotionen erzeugen.'], angle: 45, align: 'l',
       icon: I(<><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M10 9l5 3-5 3V9z" /></>) },
     { label: 'Webdesign', sub: ['Digital erlebbar machen.', 'Funktion trifft Ästhetik.'], angle: 90, align: 'cb',
       icon: I(<><rect x="3" y="4" width="18" height="13" rx="2" /><path d="M8 21h8M12 17v4" /></>) },
@@ -33,7 +33,7 @@ const NODES: Node[] = [
       icon: I(<><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z" /><path d="M12 12l9-5M12 12v10M12 12L3 7" /></>) },
     { label: 'Technologie', sub: ['Erlebnisse entwickeln.', 'Stabil. Schnell. Sicher.'], angle: 180, align: 'r',
       icon: I(<><path d="M8 8l-4 4 4 4M16 8l4 4-4 4" /></>) },
-    { label: 'Identität', sub: ['Marke formen.', 'Charakter zeigen.'], angle: 225, align: 'r', big: true,
+    { label: 'Identität', sub: ['Marke formen.', 'Charakter zeigen.'], angle: 225, align: 'r',
       icon: I(<><path d="M12 2l4.5 6L12 22 7.5 8 12 2z" /><path d="M7.5 8h9" /></>) },
 ]
 
@@ -70,7 +70,7 @@ export default function LeistungenSection() {
                 {PLACED.map((n, i) => (
                     <div
                         key={n.label}
-                        className={`sysr-node sysr-node-${n.align}${n.big ? ' sysr-node--lg' : ''} reveal`}
+                        className={`sysr-node sysr-node-${n.align} reveal`}
                         data-reveal
                         style={{ left: `${n.x}%`, top: `${n.y}%`, ['--d' as string]: `${0.3 + i * 0.1}s` } as React.CSSProperties}
                     >

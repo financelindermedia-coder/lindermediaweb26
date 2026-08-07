@@ -2143,10 +2143,6 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 .a2-duo .sysr-lbl { width: 132px; }
 .a2-duo .sysr-node-l .sysr-lbl { left: 40px; }
 .a2-duo .sysr-node-r .sysr-lbl { right: 40px; }
-.a2-duo .sysr-node--lg .sysr-ic { width: 78px; height: 78px; }
-.a2-duo .sysr-node--lg .sysr-ic svg { width: 31px; height: 31px; }
-.a2-duo .sysr-node--lg.sysr-node-l .sysr-lbl { left: 52px; }
-.a2-duo .sysr-node--lg.sysr-node-r .sysr-lbl { right: 52px; }
 .a2-duo .sysr-text { margin-top: clamp(2rem, 3.5vw, 3rem); }
 /* Sanfte Schatten für zusätzliche Lesbarkeit auf dem Frost-Panel */
 .a2-duo .sysr-name,
@@ -2483,17 +2479,6 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 .sysr-node-r .sysr-lbl  { right: 48px; top: 0; transform: translateY(-50%); text-align: right; align-items: flex-end; }
 .sysr-node-ct .sysr-lbl { left: 0; bottom: 48px; transform: translateX(-50%); text-align: center; align-items: center; }
 .sysr-node-cb .sysr-lbl { left: 0; top: 48px;    transform: translateX(-50%); text-align: center; align-items: center; }
-
-/* Größere „Primär"-Kreise (Identität, Design, Film & Video) für mehr Spannung */
-.sysr-node--lg .sysr-ic {
-    width: 86px; height: 86px;
-    box-shadow: 0 0 30px rgba(255, 107, 53, 0.22); border-color: rgba(255, 107, 53, 0.5);
-}
-.sysr-node--lg .sysr-ic svg { width: 34px; height: 34px; }
-.sysr-node--lg.sysr-node-l .sysr-lbl  { left: 60px; }
-.sysr-node--lg.sysr-node-r .sysr-lbl  { right: 60px; }
-.sysr-node--lg.sysr-node-ct .sysr-lbl { bottom: 60px; }
-.sysr-node--lg.sysr-node-cb .sysr-lbl { top: 60px; }
 
 .sysr-text {
     max-width: 46ch; margin: clamp(3rem, 5vw, 4.5rem) auto 0;
