@@ -1474,8 +1474,8 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     text-transform: uppercase;
     line-height: 1;
     white-space: nowrap;
-    color: #0c3d66;
-    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.22);
+    color: #ffffff;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
     transition: color 0.4s ease;
 }
 /* Die Leiste uebernahm bisher den sehr grosszuegigen Inhalts-Gutter var(--px)
@@ -1524,6 +1524,31 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.85rem; font-weight: 400;
     padding: 0.9rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
+/* Marke am Kopf des Menues: Signet ueber der Wortmarke, zentriert.
+   Ueberschreibt die Link-Grundregeln des Panels (kein Versal-Sperrsatz,
+   keine Trennlinie darunter, sondern eine kraeftigere Abgrenzung). */
+.nav-mobile-brand {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 1.4rem 0 1.5rem !important;
+    margin-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+.nav-mobile-brand img { display: block; opacity: 0.95; }
+/* Typografie wie die Wortmarke im Footer (800, 0.22em, Versalien), nur
+   kleiner gesetzt. Farbe setzt update() je nach hellem/dunklem Panel. */
+.nav-mobile-brand span {
+    font-size: 0.8rem; font-weight: 800;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: #ffffff; line-height: 1;
+    transition: color 0.4s ease;
+}
+/* Panel und Menuepunkte faden mit, wenn die Leiste zwischen hell und dunkel
+   wechselt – sonst springt die Farbe hart um. */
+.nav-mobile { transition: opacity 0.3s ease, transform 0.3s ease, background 0.4s ease, border-color 0.4s ease; }
+.nav-mobile a { transition: color 0.4s ease, border-color 0.4s ease; }
 .nav-mobile-cta { color: #ff6b35 !important; border-bottom: none !important; margin-top: 0.6rem; font-weight: 700 !important; }
 @media (min-width: 769px) { .nav-mobile { display: none; } }
 
@@ -1532,6 +1557,12 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     .nav-cta-wrap { display: none !important; }
     .nav-burger { display: flex !important; }
     .nav-wordmark { display: inline-block; }
+    /* Links und CTA sind ausgeblendet und fallen damit aus dem Raster – die
+       Marke ruecke sonst in die erste Spalte und begaenne genau dort, wo der
+       absolut positionierte Burger sitzt (32px Ueberlappung). Eine einzelne
+       Spalte zentriert sie stattdessen ueber die volle Breite.
+       !important, weil grid-template-columns in Navbar.tsx inline steht. */
+    .nav-bar { grid-template-columns: 1fr !important; }
 
     .cases-layout {
         grid-template-columns: 1fr;
