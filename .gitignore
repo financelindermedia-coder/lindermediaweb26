@@ -20,19 +20,37 @@ Thumbs.db
 # Video-Originale (zu groß für GitHub) — im Repo liegen die Web-Fassungen vid-lm-*.mp4
 /public/video/Vid_LM_*.mp4
 
+# Schnitt-Originale aller Web-Videos. scripts/to-web-video.sh rechnet sie in die
+# ausgelieferten Fassungen (name.mp4 + name-m.mp4) um; ins Deployment gehen nur
+# diese. Zusammen rund 320 MB, deshalb bleiben sie lokal.
+/public/video/_src/
+
 # ── Nicht deployen: Quellmaterial und Altlasten ──────────────────────────────
 # Alles hier liegt weiterhin lokal, wird aber nicht mehr ausgeliefert. Wurde
 # zur Laufzeit von keiner Komponente geladen und blähte nur das Deployment auf.
-/public/video/neu_f_ib.mp4          # Quelle der 303 Frames in /public/frames
-/public/video/ib_t1.mp4             # Vorgänger von neu_f_ib.mp4
-/public/video/ib-t2.mp4             # Über-uns-Hintergrund, seit 08/2026 ersetzt
-/public/video/lindermedia_gedanken.mp4  # ersetzt durch vid-lm-1.mp4
-/public/video/IB__S3.png            # Duplikat von public/images/IB__S3.png
+#
+# ACHTUNG: In .gitignore beginnt ein Kommentar nur am Zeilenanfang. Steht er
+# hinter dem Muster, gehört er zum Muster und die Regel greift nie – genau das
+# war hier der Fall, weshalb neu_f_ib.mp4 trotz Eintrag 48 MB im Repo belegte.
+# Kommentare deshalb immer über die Zeile setzen.
+
+# Quelle der 303 Frames in /public/frames
+/public/video/neu_f_ib.mp4
+# Vorgänger von neu_f_ib.mp4
+/public/video/ib_t1.mp4
+# Über-uns-Hintergrund, seit 08/2026 ersetzt
+/public/video/ib-t2.mp4
+# ersetzt durch vid-lm-1.mp4
+/public/video/lindermedia_gedanken.mp4
+# Duplikat von public/images/IB__S3.png
+/public/video/IB__S3.png
 /public/images/IB__S1.png
 /public/images/IB__S2.png
 /public/images/IB__S5.png
-/public/images/Hintergrund.jpg      # nur noch in einem Kommentar erwähnt
-/public/glow-frames/                # 155 Frames, von keiner Komponente geladen
+# nur noch in einem Kommentar erwähnt
+/public/images/Hintergrund.jpg
+# 155 Frames, von keiner Komponente geladen
+/public/glow-frames/
 
 # ── Bild-Originale: ausgeliefert werden die .webp-Fassungen daneben ──────────
 # Bleiben lokal als verlustarme Quelle zum Neu-Konvertieren (scripts/to-webp.sh).
@@ -46,4 +64,4 @@ Thumbs.db
 /public/images/lubrican.jpg
 /public/images/lighthouse.jpg
 /public/images/case-solarimpact-*.jpg
-/public/video/poster-lm-*.jpg
+/public/video/poster-*.jpg

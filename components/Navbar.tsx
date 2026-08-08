@@ -10,6 +10,11 @@ const NAV_LINKS = [
     { label: 'Über uns',    href: '#ueber-uns'  },
     { label: 'FAQ',         href: '#faq'        },
 ]
+// Desktop: auf beide Seiten des Logos verteilt, statt alle fuenf dicht davor
+// zu ballen. Die Mobil-Liste (weiter unten) durchlaeuft weiterhin NAV_LINKS
+// vollstaendig, in ihrer natuerlichen Reihenfolge.
+const NAV_LINKS_LEFT  = NAV_LINKS.slice(0, 3)
+const NAV_LINKS_RIGHT = NAV_LINKS.slice(3)
 
 /**
  * Schaltet das Signet im geoeffneten Mobil-Menue um: petrol auf hellem Panel,
@@ -26,6 +31,25 @@ export default function Navbar() {
     const navRef  = useRef<HTMLElement>(null)
     const darkRef = useRef(false)
     const [menuOpen, setMenuOpen] = useState(false)
+
+    const renderNavLink = (link: { label: string; href: string }) => (
+        <a
+            key={link.href}
+            data-navlink
+            href={link.href}
+            style={{
+                fontSize: '0.82rem', fontWeight: 600, letterSpacing: '0.16em',
+                textTransform: 'uppercase', color: '#ffffff',
+                textDecoration: 'none',
+                textShadow: '0 1px 8px rgba(0,0,0,0.6)',
+                transition: 'color 0.3s ease, opacity 0.3s ease',
+            }}
+            onMouseEnter={e => { e.currentTarget.dataset.prev = e.currentTarget.style.color; e.currentTarget.style.color = '#ff6b35' }}
+            onMouseLeave={e => { e.currentTarget.style.color = e.currentTarget.dataset.prev ?? '' }}
+        >
+            {link.label}
+        </a>
+    )
 
     useEffect(() => {
         function update() {
@@ -113,26 +137,10 @@ export default function Navbar() {
                 transition: 'background 0.4s ease',
             }}
         >
-            {/* Left — Nav links (Desktop) */}
+            {/* Left — erste Haelfte der Nav-Links (Desktop), am Seitenrand verankert
+                statt vor dem Logo zu ballen */}
             <div className="nav-links" style={{ display: 'flex', alignItems: 'center', gap: '2.4rem' }}>
-                {NAV_LINKS.map(link => (
-                    <a
-                        key={link.href}
-                        data-navlink
-                        href={link.href}
-                        style={{
-                            fontSize: '0.82rem', fontWeight: 600, letterSpacing: '0.16em',
-                            textTransform: 'uppercase', color: '#ffffff',
-                            textDecoration: 'none',
-                            textShadow: '0 1px 8px rgba(0,0,0,0.6)',
-                            transition: 'color 0.3s ease, opacity 0.3s ease',
-                        }}
-                        onMouseEnter={e => { e.currentTarget.dataset.prev = e.currentTarget.style.color; e.currentTarget.style.color = '#ff6b35' }}
-                        onMouseLeave={e => { e.currentTarget.style.color = e.currentTarget.dataset.prev ?? '' }}
-                    >
-                        {link.label}
-                    </a>
-                ))}
+                {NAV_LINKS_LEFT.map(renderNavLink)}
             </div>
 
             {/* Left — Burger (Mobile) */}
@@ -149,11 +157,11 @@ export default function Navbar() {
                 <span style={{ transform: menuOpen ? 'translateY(-6px) rotate(-45deg)' : 'none' }} />
             </button>
 
-            {/* Center — Logo (mobil zusätzlich mit Wortmarke) */}
+            {/* Center — Logo mit Wortmarke darunter, wie im Footer (nur kleiner) */}
             <a
                 href="#"
                 className="nav-brand"
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem', textDecoration: 'none' }}
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.35rem', textDecoration: 'none' }}
                 onClick={() => setMenuOpen(false)}
             >
                 {/* Immer weiss: die Leiste liegt ueber wechselndem Videobild,
@@ -172,17 +180,19 @@ export default function Navbar() {
                 <span className="nav-wordmark" data-navwordmark aria-hidden="true">LinderMedia</span>
             </a>
 
-            {/* Right — CTA (Desktop) */}
-            <div className="nav-cta-wrap" style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            {/* Right — zweite Haelfte der Nav-Links + CTA (Desktop), rechtsbuendig
+                verankert; der CTA faellt bewusst kleiner aus als die Links */}
+            <div className="nav-links nav-cta-wrap" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '2.4rem' }}>
+                {NAV_LINKS_RIGHT.map(renderNavLink)}
                 <a
                     data-cta
                     href="#contact"
                     className="nav-cta"
                     style={{
-                        fontSize: '0.82rem', fontWeight: 700, letterSpacing: '0.16em',
+                        fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.14em',
                         textTransform: 'uppercase', color: '#ffffff',
                         textShadow: '0 1px 8px rgba(0,0,0,0.6)',
-                        textDecoration: 'none', padding: '0.55rem 1.4rem',
+                        textDecoration: 'none', padding: '0.42rem 1rem',
                         border: '1px solid rgba(255,255,255,0.5)',
                         borderRadius: '2px', whiteSpace: 'nowrap',
                         transition: 'all 0.3s ease',

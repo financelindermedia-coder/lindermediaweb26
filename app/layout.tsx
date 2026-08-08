@@ -81,6 +81,7 @@ const jsonLd = {
             description: SITE_DESCRIPTION,
             slogan: 'Starke Marken entstehen nicht an der Oberfläche.',
             email: BUSINESS.email,
+            telephone: BUSINESS.telephone,
             address: {
                 '@type': 'PostalAddress',
                 streetAddress: BUSINESS.street,

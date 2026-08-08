@@ -42,6 +42,7 @@ conv images/lighthouse.jpg 80
 # solarimpact.jpg bleibt JPG: WebP kam bei jeder Stufe groesser heraus.
 conv video/poster-lm-1.jpg 78
 conv video/poster-lm-2.jpg 78
+conv video/poster-orientierung.jpg 78
 
 echo
 echo "Fertig. Referenzen im Code zeigen auf die .webp-Dateien."

@@ -33,9 +33,10 @@ export default function DatenschutzPage() {
                 <h2 style={h2}>1. Verantwortlicher</h2>
                 <p style={p}>
                     LinderMedia<br />
-                    Andreas Linder<br />
-                    Schloßstraße 31, 56459 Pottum<br />
-                    E-Mail: <a href="mailto:finance.lindermedia@gmail.com" style={{ color: '#fff', textDecoration: 'none' }}>finance.lindermedia@gmail.com</a>
+                    Dipl.-Ing. Andreas Linder<br />
+                    Schloßstraße 31, D – 56459 Pottum<br />
+                    Telefon: <a href="tel:+4917693177417" style={{ color: '#fff', textDecoration: 'none' }}>+49 (0) 176. 931 77 417</a><br />
+                    E-Mail: <a href="mailto:hello@lindermedia.de" style={{ color: '#fff', textDecoration: 'none' }}>hello@lindermedia.de</a>
                 </p>
 
                 <h2 style={h2}>2. Erhebung und Speicherung von Zugriffsdaten</h2>
@@ -44,8 +45,13 @@ export default function DatenschutzPage() {
                     Server-Logfiles gespeichert (z. B. IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene
                     Seite, verwendeter Browser). Diese Verarbeitung erfolgt zur Gewährleistung eines
                     störungsfreien Betriebs und der Sicherheit auf Grundlage unseres berechtigten Interesses
-                    (Art. 6 Abs. 1 lit. f DSGVO).
-                    {' '}<span style={{ color: 'rgba(255,255,255,0.45)' }}>[Hosting-Anbieter eintragen]</span>
+                    (Art. 6 Abs. 1 lit. f DSGVO). Diese Website wird gehostet bei der Hetzner Online GmbH,
+                    Industriestr. 25, 91710 Gunzenhausen, Deutschland. Die Verarbeitung erfolgt ausschließlich
+                    auf Servern innerhalb der Europäischen Union, eine Übermittlung in Drittstaaten findet
+                    dadurch nicht statt. Details entnehmen Sie der Datenschutzerklärung von Hetzner unter{' '}
+                    <a href="https://www.hetzner.com/de/legal/privacy-policy/" target="_blank" rel="noopener noreferrer" style={{ color: '#fff', textDecoration: 'underline' }}>
+                        hetzner.com/de/legal/privacy-policy
+                    </a>.
                 </p>
 
                 <h2 style={h2}>3. Kontaktformular &amp; Kontaktaufnahme</h2>
@@ -88,8 +94,8 @@ export default function DatenschutzPage() {
                 </p>
 
                 <p style={{ ...muted, marginTop: '3rem' }}>
-                    Hinweis: Diese Vorlage deckt die Standardfälle ab. Bitte ergänzen Sie die mit [ … ]
-                    markierten Angaben und lassen Sie die Erklärung vor Veröffentlichung rechtlich prüfen.
+                    Hinweis: Sobald Tracking- oder Analyse-Dienste eingebunden werden, wird Abschnitt 4
+                    (Cookies) um die dann eingesetzten Dienste ergänzt.
                 </p>
             </div>
         </main>

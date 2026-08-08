@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import useVideoSource from '@/components/useVideoSource'
 
 /**
  * Hintergrund-Video, das erst laedt, wenn es in die Naehe des Viewports kommt.
@@ -22,6 +23,8 @@ type Props = {
 export default function LazyVideo({ src, poster, className, aiGenerated }: Props) {
     const ref = useRef<HTMLVideoElement>(null)
     const [armed, setArmed] = useState(false)
+    /** Desktop- oder Mobil-Schnitt; `null`, solange noch nicht gemessen wurde. */
+    const resolvedSrc = useVideoSource(src)
 
     useEffect(() => {
         const el = ref.current
@@ -44,7 +47,7 @@ export default function LazyVideo({ src, poster, className, aiGenerated }: Props
         <video
             ref={ref}
             className={className}
-            src={armed ? src : undefined}
+            src={armed && resolvedSrc ? resolvedSrc : undefined}
             poster={poster}
             autoPlay
             muted

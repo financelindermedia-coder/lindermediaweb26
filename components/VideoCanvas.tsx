@@ -6,6 +6,14 @@ const TOTAL_FRAMES = 303
 const SKIP_FRAMES  = 0
 const USE_FRAMES   = TOTAL_FRAMES - SKIP_FRAMES
 
+/**
+ * Auf schmalen Viewports laeuft die Sequenz aus /frames-m: halbe Kantenlaenge
+ * und nur jeder zweite Frame – 2,8 statt 16,8 MB (scripts/to-mobile-frames.sh).
+ * Das ist die erste Ladung der Seite ueberhaupt, deshalb faellt sie mobil am
+ * staerksten ins Gewicht. Bei 1200vh Scrollweg bleiben 152 Frames fluessig.
+ */
+const NARROW_QUERY = '(max-width: 820px)'
+
 export default function VideoCanvas() {
     const canvasRef       = useRef<HTMLCanvasElement>(null)
     const framesRef       = useRef<(HTMLImageElement | null)[]>(new Array(TOTAL_FRAMES).fill(null))
@@ -17,6 +25,13 @@ export default function VideoCanvas() {
         if (!canvas) return
         const ctx = canvas.getContext('2d')
         if (!ctx) return
+
+        const narrow = window.matchMedia(NARROW_QUERY).matches
+        const dir  = narrow ? '/frames-m' : '/frames'
+        // Mobil liegt nur jeder zweite Frame vor – die Dateinamen bleiben gleich.
+        const step = narrow ? 2 : 1
+        /** Naechster tatsaechlich vorhandener Frame zu einem Wunsch-Index. */
+        const snap = (i: number) => i - (i % step)
 
         function setSize() {
             if (!canvas) return
@@ -57,7 +72,7 @@ export default function VideoCanvas() {
             return new Promise((resolve) => {
                 const img = new Image()
                 img.decoding = 'async'
-                img.src = `/frames/frame_${String(i + 1).padStart(4, '0')}.webp`
+                img.src = `${dir}/frame_${String(i + 1).padStart(4, '0')}.webp`
                 const done = () => resolve()
                 img.onload = () => {
                     framesRef.current[i] = img
@@ -77,7 +92,7 @@ export default function VideoCanvas() {
             if (cancelled) return
 
             const queue: number[] = []
-            for (let i = 0; i < TOTAL_FRAMES; i++) if (i !== SKIP_FRAMES) queue.push(i)
+            for (let i = 0; i < TOTAL_FRAMES; i += step) if (i !== SKIP_FRAMES) queue.push(i)
 
             let cursor = 0
             const worker = async () => {
@@ -96,7 +111,7 @@ export default function VideoCanvas() {
             const progress = Math.min(window.scrollY / el.offsetHeight, 1)
             // Map progress to the usable frame range starting at SKIP_FRAMES
             const offset  = Math.min(Math.floor(progress * USE_FRAMES), USE_FRAMES - 1)
-            const fileIdx = SKIP_FRAMES + offset
+            const fileIdx = snap(SKIP_FRAMES + offset)
             if (fileIdx !== currentFrameRef.current) {
                 currentFrameRef.current = fileIdx
                 drawFrame(fileIdx)

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import useVisibleRaf from '@/components/useVisibleRaf'
 
 /**
  * Problem-Sektion als SCROLL-GEPINNTER Horizontal-Scroller: Beim Herunterscrollen
@@ -24,34 +25,33 @@ const splitTitle = (t: string) => t.split('\n').map((l, j) => <span key={j}>{l}<
 export default function ProblemSection() {
     const pinRef = useRef<HTMLDivElement>(null)
     const trackRef = useRef<HTMLDivElement>(null)
+    const distanceRef = useRef(0)
 
     useEffect(() => {
         const pin = pinRef.current
         const track = trackRef.current
         if (!pin || !track) return
 
-        let distance = 0
-        let raf = 0
-
         const layout = () => {
             // Reststrecke = horizontale Überlänge des Tracks; Pin-Höhe = 1 Viewport + Strecke
-            distance = Math.max(track.scrollWidth - window.innerWidth, 0)
-            pin.style.height = `${window.innerHeight + distance}px`
-        }
-        const frame = () => {
-            const scrolled = Math.min(Math.max(-pin.getBoundingClientRect().top, 0), distance)
-            track.style.transform = `translate3d(${-scrolled}px, 0, 0)`
-            raf = requestAnimationFrame(frame)
+            distanceRef.current = Math.max(track.scrollWidth - window.innerWidth, 0)
+            pin.style.height = `${window.innerHeight + distanceRef.current}px`
         }
 
         layout()
         window.addEventListener('resize', layout)
-        raf = requestAnimationFrame(frame)
-        return () => {
-            window.removeEventListener('resize', layout)
-            cancelAnimationFrame(raf)
-        }
+        return () => window.removeEventListener('resize', layout)
     }, [])
+
+    // Läuft nur, solange die gepinnte Strecke in Reichweite ist – pro Bild
+    // stehen hier ein Layout-Lesezugriff und ein transform-Schreibzugriff.
+    useVisibleRaf(pinRef, () => {
+        const pin = pinRef.current
+        const track = trackRef.current
+        if (!pin || !track) return
+        const scrolled = Math.min(Math.max(-pin.getBoundingClientRect().top, 0), distanceRef.current)
+        track.style.transform = `translate3d(${-scrolled}px, 0, 0)`
+    })
 
     return (
         <section className="ped ped-pinned" style={{ fontFamily: 'var(--font-barlow), sans-serif' }}>

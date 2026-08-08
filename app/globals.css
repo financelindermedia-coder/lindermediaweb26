@@ -1460,17 +1460,17 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 }
 
 /* ── Navbar: Burger + Mobil-Menü (absolute → 3-Spalten-Grid bleibt intakt) ── */
-/* Wortmarke neben dem Logo. Sichtbar mobil (Navigation und CTA stecken im
-   Burger) und auf breiten Screens. Im Band dazwischen (769–1199px) bleibt sie
-   aus: dort stehen Links UND CTA in der Leiste, und mit dem grosszuegigen
-   var(--px)-Gutter reicht die Breite nicht ohne Gedraenge.
+/* Wortmarke unter dem Logo, wie im Footer – nur deutlich kleiner gesetzt.
+   Da sie gestapelt (nicht mehr neben dem Signet) steht, braucht sie kaum
+   zusaetzliche Breite und passt darum jetzt auf allen Breiten, auch im
+   Band zwischen Mobil- und breitem Desktop-Layout.
    Die Farbe setzt die Navbar zur Laufzeit (dunkelblau ueber dem Eisberg,
    weiss darunter). */
 .nav-wordmark {
-    display: none;
-    font-size: 0.92rem;
+    display: inline-block;
+    font-size: clamp(0.5rem, 0.85vw, 0.6rem);
     font-weight: 800;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     line-height: 1;
     white-space: nowrap;
@@ -1491,13 +1491,6 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     /* „Über uns" nie zweizeilig umbrechen lassen */
     .nav-links a { white-space: nowrap; }
 }
-/* Wortmarke erst ab 1400px: darunter teilt das Raster 1fr-auto-1fr beide
-   Seiten gleich breit auf, obwohl links fuenf Links und rechts nur ein Button
-   stehen – die breitere Mitte draengte die Links dann wieder ans Signet. */
-@media (min-width: 1400px) {
-    .nav-wordmark { display: inline-block; }
-}
-
 .nav-burger {
     position: absolute; left: var(--px); top: 50%; transform: translateY(-50%);
     display: none; flex-direction: column; gap: 5px;
@@ -1556,7 +1549,6 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     .nav-links { display: none !important; }
     .nav-cta-wrap { display: none !important; }
     .nav-burger { display: flex !important; }
-    .nav-wordmark { display: inline-block; }
     /* Links und CTA sind ausgeblendet und fallen damit aus dem Raster – die
        Marke ruecke sonst in die erste Spalte und begaenne genau dort, wo der
        absolut positionierte Burger sitzt (32px Ueberlappung). Eine einzelne
@@ -2281,6 +2273,9 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
         linear-gradient(90deg, rgba(4,12,20,0.92) 0%, rgba(4,12,20,0.66) 34%, rgba(4,12,20,0.12) 68%, rgba(4,12,20,0.4) 100%),
         linear-gradient(to top, rgba(4,12,20,0.78) 0%, rgba(4,12,20,0) 42%);
 }
+/* Kompass-/Leitlinien-Overlay: liegt über dem Video-Verlauf, unter der Textebene.
+   preserveAspectRatio="slice" im SVG spiegelt object-fit:cover → bleibt zentriert. */
+.a2v-compass { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
 .a2v-inner { position: relative; z-index: 2; width: 100%; max-width: 1560px; margin: 0 auto; padding: 0 var(--px); }
 .a2v-content { max-width: 560px; }
 .a2v-kicker {
@@ -2504,10 +2499,12 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 .sysr-title { display: inline-block; }
 
 .sysr-stage { position: relative; width: min(760px, 84vw); aspect-ratio: 1; margin: 0 auto; }
-/* Weicher dunkler Scrim hinter der Grafik → Nodes lesen über jedem Panel-Bereich */
+/* Der Scrim gehoert nur zum gestapelten Mobil-Layout (Hintergrund dort per
+   Media Query weiter unten gesetzt). Im radialen Desktop-Layout tragen Ring
+   und Verbindungslinien die Tiefe schon – ein zusaetzlicher grauer Kreis
+   dahinter wirkt dort wie ein Fremdkoerper. */
 .sysr-stage::before {
     content: ''; position: absolute; inset: -10%; z-index: 0; pointer-events: none;
-    background: radial-gradient(circle at 50% 50%, rgba(4, 12, 20, 0.6) 0%, rgba(4, 12, 20, 0.32) 46%, rgba(4, 12, 20, 0) 72%);
 }
 .sysr-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 0; }
 .sysr-lines line {
@@ -2582,20 +2579,35 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
         width: 100%; max-width: 680px; aspect-ratio: auto;
         display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: clamp(1.4rem, 3vw, 2rem);
+        /* Platz fuer den absolut positionierten Badge oben (siehe .sysr-center) */
+        padding-top: clamp(6rem, 15vw, 8.5rem);
     }
     .sysr-lines, .sysr-ring { display: none; }
-    /* Der Scrim ragt mit inset:-10% ueber die Buehne hinaus. Im radialen
-       Desktop-Layout ist das gewollt (weicher Halo um den Kreis); im
-       gestapelten Raster erzeugt er horizontalen Seitwaerts-Scroll, weil die
-       Buehne dort fast die volle Breite einnimmt. */
+    /* Kein Scrim mehr hier (weder Desktop noch gestapeltes Raster) – reines
+       content-Element ohne Hintergrund, inset:0 nur damit es nicht ueber die
+       Buehne hinausragt und horizontalen Seitwaerts-Scroll ausloest. */
     .sysr-stage::before { inset: 0; }
+    /* Absolut + left:50%/translateX(-50%) statt Grid+Flex: zentriert den Badge
+       zuverlaessig auf der Buehnen-Mitte, unabhaengig von den beiden
+       Icon-Spalten darunter (die durch unterschiedlich langen Text nie exakt
+       symmetrisch "aussehen", auch wenn ihre Grid-Spalten es rechnerisch sind). */
     .sysr-center {
-        position: static; transform: none; grid-column: 1 / -1;
-        display: flex; justify-content: center; margin-bottom: 0.5rem;
+        position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+        grid-column: unset;
     }
+    /* Der kraeftige Orange-Glow passt im radialen Desktop-Layout (dort umspielt
+       ihn zusaetzlich der Ring), wirkt im gestapelten Raster ohne Ring aber wie
+       ein unmotivierter Fleck ueber der Grafik – hier traegt Rand + Farbe allein. */
+    .sysr-badge { box-shadow: none; }
+    /* justify-content:center statt flex-start: Icon+Label bilden pro Spalte
+       einen kompakten Block, der in der (vollen, gleich breiten) Spalte
+       mittig sitzt statt an ihrem linken Rand zu kleben. Erst dadurch liegt
+       der optische Schwerpunkt beider Spalten zusammen exakt dort, wo der
+       Badge (mathematisch die Buehnen-Mitte) tatsaechlich sitzt – links
+       verankerte Icons zogen den Eindruck vorher spuerbar nach links. */
     .sysr-node {
         position: static !important; width: auto; height: auto; z-index: auto;
-        display: flex; align-items: center; gap: 0.95rem; text-align: left;
+        display: flex; justify-content: center; align-items: center; gap: 0.95rem; text-align: left;
     }
     .sysr-ic { position: static; transform: none; flex-shrink: 0; }
     .sysr-node:hover .sysr-ic { transform: scale(1.06); }
@@ -2606,4 +2618,8 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 }
 @media (max-width: 480px) {
     .sysr-stage { grid-template-columns: 1fr; max-width: 340px; }
+    /* Nur eine Spalte: hier gilt die Badge-Mitte nicht mehr als Bezugspunkt
+       zwischen zwei Icon-Spalten – linksbuendig liest sich in einer
+       schmalen Einzel-Liste gewohnter. */
+    .sysr-node { justify-content: flex-start; }
 }

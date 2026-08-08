@@ -55,11 +55,13 @@ const pageJsonLd = {
     ],
 }
 
-// Akt-2-Videos zentral (web-komprimierte Fassungen der Originale unter public/video/)
+// Akt-2-Videos zentral. Angegeben wird die Desktop-Fassung; useVideoSource
+// waehlt auf schmalen Viewports die Datei mit `-m`-Endung daneben
+// (erzeugt von scripts/to-web-video.sh aus public/video/_src/).
 const AKT2_VIDEOS = {
     v1: '/video/vid-lm-1.mp4',  // „Aus Strategie wird Wirklichkeit"
     v2: '/video/vid-lm-2.mp4',  // „Aus Ideen werden Erlebnisse"
-    v3: '/video/lighthouse_vid.mp4',  // „Orientierung" (Leuchtturm)
+    v3: '/video/orientierung-flight.mp4',  // „Orientierung" (Drohnenflug S1→S2→S3 mit Kompass-Overlay)
 }
 
 export default function Home() {
@@ -147,8 +149,11 @@ export default function Home() {
                         kicker="Was am Ende bleibt"
                         chapter="Haltung & Orientierung"
                         videoSrc={AKT2_VIDEOS.v3}
-                        poster="/images/lighthouse.webp"
+                        poster="/video/poster-orientierung.webp"
                         aiGenerated
+                        compassOverlay
+                        showPlayButton={false}
+                        endHoldSeconds={5}
                         headline="Orientierung."
                         text={[
                             'Die besten Marken geben Orientierung.',

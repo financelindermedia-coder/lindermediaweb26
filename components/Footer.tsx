@@ -93,12 +93,16 @@ export default function Footer() {
                 <div>
                     <p style={LABEL}>Kontakt</p>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-                        {/* Telefon bewusst ausgeblendet, bis eine echte Nummer vorliegt –
-                            ein Strich-Platzhalter wirkt auf der Live-Seite wie ein Fehler. */}
+                        <div>
+                            <p style={{ ...MUTED, marginBottom: '0.15rem' }}>Telefon</p>
+                            <a href="tel:+4917693177417" style={{ ...VALUE, textDecoration: 'none' }}>
+                                +49 (0) 176. 931 77 417
+                            </a>
+                        </div>
                         <div>
                             <p style={{ ...MUTED, marginBottom: '0.15rem' }}>E-Mail</p>
-                            <a href="mailto:finance.lindermedia@gmail.com" style={{ ...VALUE, textDecoration: 'none' }}>
-                                finance.lindermedia@gmail.com
+                            <a href="mailto:hello@lindermedia.de" style={{ ...VALUE, textDecoration: 'none' }}>
+                                hello@lindermedia.de
                             </a>
                         </div>
                         <div>

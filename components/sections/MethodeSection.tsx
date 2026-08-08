@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import useVisibleRaf from '@/components/useVisibleRaf'
 
 /**
  * „So arbeiten wir" – gepinnter Horizontal-Scroller wie die Problem-Sektion,
@@ -26,34 +27,32 @@ const splitTitle = (t: string) => t.split('\n').map((l, j) => <span key={j}>{l}<
 export default function MethodeSection() {
     const pinRef = useRef<HTMLDivElement>(null)
     const trackRef = useRef<HTMLDivElement>(null)
+    const distanceRef = useRef(0)
 
     useEffect(() => {
         const pin = pinRef.current
         const track = trackRef.current
         if (!pin || !track) return
 
-        let distance = 0
-        let raf = 0
-
         const layout = () => {
-            distance = Math.max(track.scrollWidth - window.innerWidth, 0)
-            pin.style.height = `${window.innerHeight + distance}px`
-        }
-        const frame = () => {
-            const scrolled = Math.min(Math.max(-pin.getBoundingClientRect().top, 0), distance)
-            // Gegenrichtung: Start bei -distance (rechtes Ende), wandert nach 0
-            track.style.transform = `translate3d(${scrolled - distance}px, 0, 0)`
-            raf = requestAnimationFrame(frame)
+            distanceRef.current = Math.max(track.scrollWidth - window.innerWidth, 0)
+            pin.style.height = `${window.innerHeight + distanceRef.current}px`
         }
 
         layout()
         window.addEventListener('resize', layout)
-        raf = requestAnimationFrame(frame)
-        return () => {
-            window.removeEventListener('resize', layout)
-            cancelAnimationFrame(raf)
-        }
+        return () => window.removeEventListener('resize', layout)
     }, [])
+
+    // Nur laufen lassen, solange die Strecke in Reichweite ist (siehe ProblemSection).
+    useVisibleRaf(pinRef, () => {
+        const pin = pinRef.current
+        const track = trackRef.current
+        if (!pin || !track) return
+        const scrolled = Math.min(Math.max(-pin.getBoundingClientRect().top, 0), distanceRef.current)
+        // Gegenrichtung: Start bei -distance (rechtes Ende), wandert nach 0
+        track.style.transform = `translate3d(${scrolled - distanceRef.current}px, 0, 0)`
+    })
 
     return (
         <section id="methode" className="ped ped-pinned" style={{ fontFamily: 'var(--font-barlow), sans-serif' }}>

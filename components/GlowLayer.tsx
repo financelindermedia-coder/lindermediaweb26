@@ -88,10 +88,26 @@ export default function GlowLayer() {
             }
         }
 
+        const scrollEl = document.getElementById('glow-scroll')
+
+        /*
+         * Masse der Scroll-Strecke einmal merken statt pro Bild abfragen:
+         * `offsetTop`/`offsetHeight` erzwingen jeweils ein Layout, und das
+         * sechzigmal in der Sekunde ist auf dem Telefon deutlich zu spueren.
+         * Geaendert werden koennen sie ohnehin nur durch ein Resize.
+         */
+        let top = 0
+        let height = 1
+        function measure() {
+            if (!scrollEl) return
+            top = scrollEl.offsetTop
+            height = scrollEl.offsetHeight || 1
+        }
+        measure()
+
         function progressOf(): number {
-            const el = document.getElementById('glow-scroll')
-            if (!el) return -1
-            return (window.scrollY - el.offsetTop) / el.offsetHeight
+            if (!scrollEl) return -1
+            return (window.scrollY - top) / height
         }
 
         let lastP = -999
@@ -155,23 +171,57 @@ export default function GlowLayer() {
             }
         }
 
-        // Continuous rAF loop — robust against Lenis / programmatic scroll,
-        // which don't reliably emit native 'scroll' events.
+        // rAF statt 'scroll'-Event — robust against Lenis / programmatic scroll,
+        // which don't reliably emit native 'scroll' events. Die Schleife laeuft
+        // aber nur, solange die Glow-Strecke in Reichweite ist: sie macht neun
+        // Bildschirmhoehen der Seite aus, den weit groesseren Rest daneben
+        // braucht sie nicht mitzurechnen.
         function loop() {
             update()
             rafRef.current = requestAnimationFrame(loop)
         }
+        function start() {
+            if (rafRef.current === null && !document.hidden) loop()
+        }
+        function stop() {
+            if (rafRef.current !== null) {
+                cancelAnimationFrame(rafRef.current)
+                rafRef.current = null
+            }
+        }
+
         function onResize() {
             if (pathRef.current) lenRef.current = pathRef.current.getTotalLength()
+            measure()
             lastP = -999
+        }
+        const onVisibility = () => (document.hidden ? stop() : start())
+
+        let io: IntersectionObserver | undefined
+        if (scrollEl) {
+            io = new IntersectionObserver(
+                ([entry]) => {
+                    if (entry.isIntersecting) start()
+                    else {
+                        stop()
+                        update() // letzter Stand, damit nichts halb eingeblendet stehenbleibt
+                    }
+                },
+                { rootMargin: '20% 0px' },
+            )
+            io.observe(scrollEl)
+        } else {
+            start()
         }
 
         window.addEventListener('resize', onResize)
-        loop()
+        document.addEventListener('visibilitychange', onVisibility)
 
         return () => {
+            io?.disconnect()
             window.removeEventListener('resize', onResize)
-            if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)
+            document.removeEventListener('visibilitychange', onVisibility)
+            stop()
         }
     }, [])
 
