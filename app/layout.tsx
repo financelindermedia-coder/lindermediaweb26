@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Barlow } from 'next/font/google'
 import './globals.css'
-import { AREA_SERVED, BUSINESS, SERVICES, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '@/lib/site'
+import { AREA_SERVED, BUSINESS, NOINDEX, SERVICES, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '@/lib/site'
 
 const barlow = Barlow({
     subsets: ['latin'],
@@ -36,11 +36,19 @@ export const metadata: Metadata = {
     creator: BUSINESS.name,
     publisher: BUSINESS.name,
     alternates: { canonical: '/' },
-    robots: {
-        index: true,
-        follow: true,
-        googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
-    },
+    /*
+     * Auf der Vorschau-Instanz zusaetzlich zur gesperrten robots.txt ein
+     * `noindex` im Head. Das ist keine Doppelung ohne Zweck: an die robots.txt
+     * halten sich die grossen Suchmaschinen, etliche KI-Crawler aber nicht –
+     * die lesen dann wenigstens das Meta-Tag.
+     */
+    robots: NOINDEX
+        ? { index: false, follow: false, googleBot: { index: false, follow: false } }
+        : {
+              index: true,
+              follow: true,
+              googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
+          },
     openGraph: {
         title: SITE_TITLE,
         description: SITE_DESCRIPTION,

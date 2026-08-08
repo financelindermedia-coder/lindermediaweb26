@@ -1,3 +1,12 @@
+/*
+ * Vorschau-Sperre – dieselbe Variable wie NOINDEX in lib/site.ts, hier noch
+ * einmal roh gelesen, weil next.config.js nicht aus dem TypeScript-Code
+ * importieren kann. Der Header greift im Gegensatz zum Meta-Tag auch fuer
+ * Videos, Bilder und die Framesequenz, die sonst ueber die Bildersuche
+ * auffindbar blieben.
+ */
+const NOINDEX = ['1', 'true'].includes((process.env.NEXT_PUBLIC_NOINDEX ?? '').trim().toLowerCase())
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
@@ -10,6 +19,12 @@ const nextConfig = {
     },
     async headers() {
         return [
+            ...(NOINDEX
+                ? [{
+                      source: '/:path*',
+                      headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+                  }]
+                : []),
             {
                 /*
                  * Statische Medien sind inhaltsadressiert genug: Bilder und

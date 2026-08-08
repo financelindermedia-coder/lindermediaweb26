@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { SITE_URL } from '@/lib/site'
+import { NOINDEX, SITE_URL } from '@/lib/site'
 
 /**
  * robots.txt (ersetzt die frühere statische Datei in /public).
@@ -7,6 +7,10 @@ import { SITE_URL } from '@/lib/site'
  * Neben den klassischen Suchmaschinen werden die Crawler der KI-/Antwort-Systeme
  * ausdrücklich erlaubt (GEO): nur wer gecrawlt werden darf, kann in ChatGPT,
  * Perplexity, Claude oder den KI-Übersichten von Google als Quelle auftauchen.
+ *
+ * Ausnahme: Auf einer Vorschau-Instanz (NEXT_PUBLIC_NOINDEX, siehe lib/site.ts)
+ * wird stattdessen alles gesperrt – dann auch ohne Sitemap-Verweis, der eine
+ * Indexierung ja gerade anstossen soll.
  */
 const AI_CRAWLERS = [
     'GPTBot',            // OpenAI – Training/Index
@@ -24,6 +28,10 @@ const AI_CRAWLERS = [
 ]
 
 export default function robots(): MetadataRoute.Robots {
+    if (NOINDEX) {
+        return { rules: [{ userAgent: '*', disallow: '/' }] }
+    }
+
     return {
         rules: [
             { userAgent: '*', allow: '/' },

@@ -11,6 +11,27 @@ export const SITE_URL = (
     process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lindermediaweb26.vercel.app'
 ).replace(/\/+$/, '')
 
+/**
+ * Sperrt die Auslieferung fuer Suchmaschinen und KI-Crawler: robots.txt
+ * verbietet dann alles, und jede Seite traegt `noindex, nofollow` im Head.
+ *
+ * Gedacht fuer die Vorschau unter lindermediaweb26.vercel.app. Ohne die Sperre
+ * wuerde die Vorschau indexiert – und die spaetere Live-Domain traete gegen
+ * eine bereits indexierte Kopie ihrer selbst an.
+ *
+ * BEWUSST ALS OPT-OUT: ohne gesetzte Variable ist die Seite indexierbar. Ein
+ * Schalter andersherum („nur indexieren, wenn X gesetzt ist") wuerde beim
+ * Umzug auf den finalen Server genau einmal vergessen – und die Seite bliebe
+ * unsichtbar, ohne dass es jemandem auffaellt. Der Fehlerfall soll die harmlose
+ * Richtung haben.
+ *
+ * Setzen in den Vercel-Projekteinstellungen:  NEXT_PUBLIC_NOINDEX = 1
+ * Danach neu deployen – NEXT_PUBLIC_*-Werte werden beim Build eingesetzt.
+ */
+export const NOINDEX = ['1', 'true'].includes(
+    (process.env.NEXT_PUBLIC_NOINDEX ?? '').trim().toLowerCase(),
+)
+
 export const BUSINESS = {
     name: 'LinderMedia',
     legalName: 'LinderMedia – Andreas Linder',
