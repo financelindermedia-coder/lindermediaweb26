@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import useReveal from '@/components/useReveal'
 import useVideoSource from '@/components/useVideoSource'
+import usePrefersReducedMotion from '@/components/usePrefersReducedMotion'
 import AiBadge from '@/components/AiBadge'
 import CompassOverlay from '@/components/CompassOverlay'
 
@@ -28,8 +29,13 @@ type Props = {
     aiGenerated?: boolean
     /** Zeichnet die zentrierte Kompass-/Leitlinien-Animation über das Video. */
     compassOverlay?: boolean
-    /** Zentraler Play/Pause-Button; standardmäßig sichtbar. */
-    showPlayButton?: boolean
+    /**
+     * Play/Pause in die Ecke statt in die Bildmitte – für Sektionen, in deren
+     * Mitte schon etwas anderes liegt (Kompass-Overlay). Der Button bleibt in
+     * beiden Fällen vorhanden: ein laufendes Vollbildvideo ohne Halt-Möglichkeit
+     * ist für manche Besucher schlicht nicht benutzbar.
+     */
+    cornerPlayButton?: boolean
     /**
      * Hält das Video am Ende für diese Anzahl Sekunden auf dem letzten Frame,
      * bevor es von vorn beginnt (sanfterer Loop statt native `loop`-Attribut).
@@ -50,19 +56,30 @@ export default function Akt2VideoSection({
     poster,
     aiGenerated = false,
     compassOverlay = false,
-    showPlayButton = true,
+    cornerPlayButton = false,
     endHoldSeconds = 0,
 }: Props) {
     const revealRef = useReveal<HTMLElement>({ threshold: 0.3 })
     const sectionRef = useRef<HTMLElement | null>(null)
     const videoRef = useRef<HTMLVideoElement>(null)
-    const [paused, setPaused] = useState(false)
     /** Erst laden, wenn die Sektion in die Naehe des Viewports kommt. */
     const [armed, setArmed] = useState(false)
     /** Desktop- oder Mobil-Schnitt; `null`, solange noch nicht gemessen wurde. */
     const resolvedSrc = useVideoSource(videoSrc)
+    const reduced = usePrefersReducedMotion()
+    /**
+     * Bei „weniger Bewegung" startet nichts von allein; das Poster bleibt als
+     * Standbild stehen. Wer trotzdem sehen will, was sich bewegt, kann es ueber
+     * denselben Button starten – deshalb ist der Anfangszustand dort „pausiert".
+     */
+    const [paused, setPaused] = useState(false)
     /** Vom Nutzer per Button pausiert – dann nicht automatisch weiterspielen. */
     const manuallyPaused = useRef(false)
+    /** Erst nach einem Klick laden, solange „weniger Bewegung" gilt. */
+    const [userStarted, setUserStarted] = useState(false)
+    const autoplay = !reduced || userStarted
+    /** Der Button zeigt „Abspielen", solange nichts laeuft – auch vor dem ersten Start. */
+    const showAsPaused = paused || !autoplay
 
     /**
      * Die drei Fullscreen-Videos wiegen zusammen rund 27 MB (mobil 9 MB). Ohne diesen
@@ -73,7 +90,9 @@ export default function Akt2VideoSection({
      */
     useEffect(() => {
         const el = sectionRef.current
-        if (!el) return
+        // Solange „weniger Bewegung" gilt und niemand auf Start gedrueckt hat,
+        // wird nichts geladen und nichts gestartet – das Poster steht.
+        if (!el || !autoplay) return
 
         const io = new IntersectionObserver(
             ([entry]) => {
@@ -91,7 +110,7 @@ export default function Akt2VideoSection({
         )
         io.observe(el)
         return () => io.disconnect()
-    }, [])
+    }, [autoplay])
 
     /**
      * Statt des nativen `loop`-Attributs (das sofort und übergangslos neu
@@ -120,6 +139,15 @@ export default function Akt2VideoSection({
     }, [endHoldSeconds])
 
     const toggle = () => {
+        // Erster Klick bei „weniger Bewegung": Quelle scharfschalten. Das
+        // eigentliche Abspielen uebernimmt dann der Observer oben.
+        if (!autoplay) {
+            setUserStarted(true)
+            manuallyPaused.current = false
+            setPaused(false)
+            return
+        }
+
         const v = videoRef.current
         if (!v) return
         if (v.paused) {
@@ -148,7 +176,7 @@ export default function Akt2VideoSection({
                 ref={videoRef}
                 className="a2v-video"
                 // Quelle erst setzen, wenn die Sektion in Reichweite ist
-                src={armed && resolvedSrc ? resolvedSrc : undefined}
+                src={armed && autoplay && resolvedSrc ? resolvedSrc : undefined}
                 poster={poster}
                 autoPlay
                 muted
@@ -185,20 +213,21 @@ export default function Akt2VideoSection({
                 </div>
             </div>
 
-            {showPlayButton && (
-                <button
-                    type="button"
-                    className="a2v-play"
-                    onClick={toggle}
-                    aria-label={paused ? 'Video abspielen' : 'Video pausieren'}
-                >
-                    {paused ? (
-                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
-                    ) : (
-                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" /></svg>
-                    )}
-                </button>
-            )}
+            {/* Immer vorhanden: ein laufendes Vollbildvideo ohne Halt-Moeglichkeit
+                ist fuer manche Besucher nicht benutzbar. Wo die Bildmitte schon
+                belegt ist (Kompass), rueckt der Button in die Ecke. */}
+            <button
+                type="button"
+                className={`a2v-play${cornerPlayButton ? ' a2v-play--corner' : ''}`}
+                onClick={toggle}
+                aria-label={showAsPaused ? 'Video abspielen' : 'Video pausieren'}
+            >
+                {showAsPaused ? (
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+                ) : (
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" /></svg>
+                )}
+            </button>
 
             <div className="a2v-foot">
                 <span className="a2v-foot-index">{index}</span>

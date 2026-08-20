@@ -4,11 +4,11 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 
 const NAV_LINKS = [
-    { label: 'Methode',     href: '#methode'    },
-    { label: 'Leistungen',  href: '#leistungen' },
-    { label: 'Projekte',    href: '#projekte'   },
-    { label: 'Über uns',    href: '#ueber-uns'  },
-    { label: 'FAQ',         href: '#faq'        },
+    { label: 'Methode',           href: '#methode'    },
+    { label: 'Leistungen',        href: '#leistungen' },
+    { label: 'Projekte',          href: '#projekte'   },
+    { label: 'Über LinderMedia',  href: '#ueber-uns'  },
+    { label: 'FAQ',               href: '#faq'        },
 ]
 // Desktop: auf beide Seiten des Logos verteilt, statt alle fuenf dicht davor
 // zu ballen. Die Mobil-Liste (weiter unten) durchlaeuft weiterhin NAV_LINKS
@@ -56,7 +56,9 @@ export default function Navbar() {
             const el = document.getElementById('video-scroll')
             if (!el || !navRef.current) return
             const progress  = window.scrollY / el.offsetHeight
-            const wantsDark = progress < 0.1
+            // Bis ~Frame 45 von 289 liegt der helle Nebel im Bild; danach ist
+            // der Hintergrund unter Wasser dunkel. (Siehe SCENES in TextLayer.)
+            const wantsDark = progress < 0.15
 
             if (wantsDark === darkRef.current) return
             darkRef.current = wantsDark

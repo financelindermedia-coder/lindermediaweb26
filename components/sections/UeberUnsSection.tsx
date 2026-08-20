@@ -9,18 +9,22 @@
 export default function UeberUnsSection() {
     return (
         <section id="ueber-uns" className="mfx mfx-about-section" style={{ fontFamily: 'var(--font-barlow), sans-serif' }}>
-            <div className="mfx-bg" aria-hidden="true">
+            {/* Das Portrait liegt gestalterisch im Hintergrund, ist aber kein
+                Dekor: es zeigt die Person, um die es in diesem Abschnitt geht.
+                Deshalb ein echter Alternativtext – nur der Verlaufs-Schleier
+                darüber bleibt vom Vorlesen ausgenommen. */}
+            <div className="mfx-bg">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                     className="mfx-portrait"
                     src="/images/andi.webp"
-                    alt=""
+                    alt="Andreas Linder, Gründer von LinderMedia — Portrait"
                     width={2800}
                     height={853}
                     loading="lazy"
                     decoding="async"
                 />
-                <span className="mfx-veil" />
+                <span className="mfx-veil" aria-hidden="true" />
             </div>
 
             <div className="mfx-inner mfx-inner-about">

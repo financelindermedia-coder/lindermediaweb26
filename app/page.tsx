@@ -27,6 +27,10 @@ import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '@/lib/site'
  * Structured Data der Startseite: die FAQ als FAQPage (identisch zum sichtbaren
  * Text in FragenSection) und die Seite selbst als WebPage der Marken-Entität.
  * Ergänzt den Organization-/Person-Graph aus app/layout.tsx.
+ *
+ * Die FAQ-Auszeichnung kommt aus lib/faq – derselben Quelle, aus der auch die
+ * sichtbare Sektion liest. Damit kann keine Antwort ausgezeichnet werden, die
+ * auf der Seite nicht steht.
  */
 const pageJsonLd = {
     '@context': 'https://schema.org',
@@ -40,7 +44,12 @@ const pageJsonLd = {
             inLanguage: 'de-DE',
             isPartOf: { '@id': `${SITE_URL}/#website` },
             about: { '@id': `${SITE_URL}/#organization` },
-            primaryImageOfPage: `${SITE_URL}/images/og-lindermedia.jpg`,
+            primaryImageOfPage: {
+                '@type': 'ImageObject',
+                url: `${SITE_URL}/images/og-lindermedia.jpg`,
+                width: 1200,
+                height: 630,
+            },
         },
         {
             '@type': 'FAQPage',
@@ -108,7 +117,11 @@ export default function Home() {
                         ctaLabel="Weiter entdecken"
                         ctaHref="#usp"
                     />
-                    <div id="leistungen" className="a2-duo">
+                    {/* Der Anker #leistungen sitzt seit dem Wegfall des
+                        Drei-Bereiche-Teasers an diesem Block: Arbeitsweise und
+                        Einzeldisziplinen sind jetzt das, was unter „Leistungen"
+                        aus Navigation und Fußzeile angesteuert wird. */}
+                    <div className="a2-duo" id="leistungen">
                         <div className="a2-duo-grid">
                             <UspSection />
                             <LeistungenSection />
@@ -124,10 +137,10 @@ export default function Home() {
                         chapter="Kreation & Umsetzung"
                         videoSrc={AKT2_VIDEOS.v2}
                         poster="/video/poster-lm-2.webp"
-                        headline="Aus Ideen werden Erlebnisse."
+                        headline="Aus einer klaren Richtung entsteht ein Auftritt, der funktioniert."
                         text={[
-                            'Strategie. Design. Technologie.',
-                            'Ein Zusammenspiel für Marken, die man spürt.',
+                            'Strategie, Gestaltung und Umsetzung greifen ineinander.',
+                            'Was danach kommt, sind keine Einzelmaßnahmen mehr.',
                         ]}
                         ctaLabel="Projekte ansehen"
                         ctaHref="#projekte"
@@ -152,7 +165,7 @@ export default function Home() {
                         poster="/video/poster-orientierung.webp"
                         aiGenerated
                         compassOverlay
-                        showPlayButton={false}
+                        cornerPlayButton
                         endHoldSeconds={5}
                         headline="Orientierung."
                         text={[
@@ -170,6 +183,8 @@ export default function Home() {
                             src="/video/lighthouse_vid.mp4"
                             poster="/images/lighthouse.webp"
                             aiGenerated
+                            pauseControl
+                            pauseControlClassName="site-closing-pause"
                         />
                         {/* gleiches Leuchtturm-Material wie Video 03 → gleiche Kennzeichnung */}
                         <AiBadge className="site-closing-ai" />

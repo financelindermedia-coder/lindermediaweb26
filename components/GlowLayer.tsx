@@ -26,31 +26,49 @@ const GLOW = {
 
 type Icon = 'web' | 'content' | 'ads' | 'auto' | 'leads' | 'impact'
 
+/*
+ * ⚠️ Auf die SCHLUSSEINSTELLUNG der Eisberg-Sequenz kalibriert: waehrend der
+ * Glow-Strecke steht das Canvas auf dem letzten Frame (public/frames/
+ * frame_0289.webp aus ice.mp4). Dessen Silhouette in Prozent des Viewports:
+ *
+ *   Gipfel        (55 | 12,5)
+ *   y = 26 %      Eis von x 46 bis 59
+ *   y = 40 %      Eis von x 39 bis 63
+ *   y = 50 %      Eis von x 36 bis 67
+ *   y = 60 %      Eis von x 31 bis 70
+ *   y = 70 %      Eis von x 23 bis 75
+ *   Wasserlinie   y ≈ 82 %
+ *
+ * Bei einem neuen Quellvideo diese Werte am letzten Frame neu abnehmen und
+ * Knoten wie Pfad danach setzen – sonst laeuft der Pfad neben dem Berg her
+ * oder endet auf halber Hoehe statt auf der Spitze.
+ */
 const STEPSTONES: {
     num: string; label: string; sub: string; icon: Icon
     x: number; y: number; side: 'left' | 'right'; at: number
 }[] = [
-    { num: '01', label: 'Webdesign',      sub: 'Vertrauen schaffen.',   icon: 'web',     x: 59, y: 84, side: 'right', at: 0.12 },
-    { num: '02', label: 'Content',        sub: 'Relevanz erzeugen.',    icon: 'content', x: 45, y: 76, side: 'left',  at: 0.28 },
-    { num: '03', label: 'Google Ads',     sub: 'Sichtbarkeit steigern.',icon: 'ads',     x: 58, y: 68, side: 'right', at: 0.44 },
-    { num: '04', label: 'Automatisierung',sub: 'Prozesse skalieren.',   icon: 'auto',    x: 45, y: 60, side: 'left',  at: 0.60 },
-    { num: '05', label: 'Leads',          sub: 'Anfragen generieren.',  icon: 'leads',   x: 57, y: 53, side: 'right', at: 0.76 },
-    { num: '06', label: 'Wirkung',        sub: 'Nachhaltig wachsen.',   icon: 'impact',  x: 51, y: 44, side: 'right', at: 0.92 },
+    { num: '01', label: 'Webdesign',      sub: 'Vertrauen schaffen.',   icon: 'web',     x: 50, y: 80, side: 'right', at: 0.12 },
+    { num: '02', label: 'Content',        sub: 'Relevanz erzeugen.',    icon: 'content', x: 42, y: 71, side: 'left',  at: 0.28 },
+    { num: '03', label: 'Google Ads',     sub: 'Sichtbarkeit steigern.',icon: 'ads',     x: 53, y: 60, side: 'right', at: 0.45 },
+    { num: '04', label: 'Automatisierung',sub: 'Prozesse skalieren.',   icon: 'auto',    x: 45, y: 48, side: 'left',  at: 0.62 },
+    { num: '05', label: 'Leads',          sub: 'Anfragen generieren.',  icon: 'leads',   x: 54, y: 36, side: 'right', at: 0.78 },
+    { num: '06', label: 'Wirkung',        sub: 'Nachhaltig wachsen.',   icon: 'impact',  x: 49, y: 24, side: 'left',  at: 0.93 },
 ]
 
-// Pfad, der dem sichtbaren Grat folgt: von der Wasserlinie (unten) den Grat
-// hoch bis GENAU auf die Spitze (letzter Knoten = Gipfel). Knoten sitzen auf
-// den Stepstone-Punkten (x·10 / y·10), viewBox 1000×1000,
-// preserveAspectRatio="none" → 1000-Einheit = 1 % Viewport.
+// Der Pfad steigt aus dem Wasser vor dem Berg auf, laeuft im Zickzack ueber die
+// Eisflaeche und endet GENAU auf der Spitze – der letzte Knoten (06) sitzt
+// knapp darunter, das letzte Segment fuehrt weiter bis zum Gipfel.
+// Knoten sitzen auf den Stepstone-Punkten (x·10 / y·10), viewBox 1000×1000,
+// preserveAspectRatio="none" → 10 Einheiten = 1 % Viewport.
 const PATH_D =
-    'M 620 950 ' +
-    'C 605 900 600 885 590 840 ' +   // → 01 Webdesign (59,84)
-    'C 575 780 460 775 450 760 ' +   // → 02 Content   (45,76)
-    'C 445 720 590 700 580 680 ' +   // → 03 Google Ads(58,68)
-    'C 570 645 455 640 450 600 ' +   // → 04 Automat.  (45,60)
-    'C 448 560 580 565 570 530 ' +   // → 05 Leads     (57,53)
-    'C 562 490 515 480 510 440 ' +   // → 06 Wirkung   (51,44) = Gipfel
-    'L 508 420'
+    'M 440 900 ' +
+    'C 452 875 468 840 500 800 ' +   // → 01 Webdesign (50,80)
+    'C 530 760 424 762 420 710 ' +   // → 02 Content   (42,71)
+    'C 417 660 542 645 530 600 ' +   // → 03 Google Ads(53,60)
+    'C 518 552 446 528 450 480 ' +   // → 04 Automat.  (45,48)
+    'C 454 430 552 408 540 360 ' +   // → 05 Leads     (54,36)
+    'C 528 312 484 290 490 240 ' +   // → 06 Wirkung   (49,24)
+    'C 495 198 532 172 550 125'      // → Gipfel       (55,12.5)
 
 const ICONS: Record<Icon, JSX.Element> = {
     web: <><rect x="3" y="4" width="18" height="13" rx="2" /><path d="M3 8h18M9 21h6M12 17v4" /></>,

@@ -1,14 +1,24 @@
 /**
- * Zentrale Stammdaten für SEO, Structured Data und GEO (Generative Engine
- * Optimization). Alle Schema.org-Blöcke, Sitemap, robots.txt und llms.txt
- * ziehen ihre Werte hier heraus – damit NAP-Daten (Name, Adresse, Kontakt)
- * seitenübergreifend identisch sind. Das ist die Voraussetzung dafür, dass
- * Suchmaschinen und KI-Systeme die Marke als eine Entität erkennen.
+ * Zentrale Stammdaten für SEO und Structured Data. Alle Schema.org-Blöcke,
+ * Sitemap und robots.txt ziehen ihre Werte hier heraus – damit NAP-Daten
+ * (Name, Adresse, Kontakt) seitenübergreifend identisch sind. Das ist die
+ * Voraussetzung dafür, dass Suchmaschinen die Marke als eine Entität erkennen.
+ */
+
+/**
+ * Produktionsdomain. Einzige Quelle für Canonical, Open Graph, JSON-LD-IDs,
+ * Sitemap und den Sitemap-Verweis in der robots.txt.
  *
- * Domain per NEXT_PUBLIC_SITE_URL überschreibbar (z. B. eigene Domain in Vercel).
+ * Der Default ist die finale Domain, NICHT die Vercel-Vorschau: würde die
+ * Vorschauadresse als Fallback stehenbleiben, verwiesen alle kanonischen URLs
+ * nach dem Hostingwechsel weiter auf eine Kopie der Seite. Die Vorschau setzt
+ * stattdessen NEXT_PUBLIC_NOINDEX (siehe unten) und wird gar nicht erst
+ * indexiert.
+ *
+ * Überschreibbar per NEXT_PUBLIC_SITE_URL (siehe .env.example).
  */
 export const SITE_URL = (
-    process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lindermediaweb26.vercel.app'
+    process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lindermedia.de'
 ).replace(/\/+$/, '')
 
 /**
@@ -59,19 +69,47 @@ export const AREA_SERVED = [
     'Deutschland',
 ]
 
-/** Leistungen – Reihenfolge entspricht LeistungskartenSection. */
-export const SERVICES = [
-    { name: 'Markenstrategie', description: 'Klarheit über Position, Botschaft und Ziel – das Fundament jeder Marke.' },
-    { name: 'Corporate Design', description: 'Eine visuelle Identität, die auf jedem Kanal wiedererkennbar bleibt.' },
-    { name: 'Fotografie', description: 'Bilder mit Haltung – die die Marke authentisch spürbar machen.' },
-    { name: 'Filmproduktion', description: 'Bewegtbild, das Emotion transportiert und Geschichten verdichtet.' },
-    { name: 'CGI & 3D-Visualisierung', description: 'Produkte und Welten fotorealistisch inszeniert – ohne Grenzen der Realität.' },
-    { name: 'Webdesign & Websites', description: 'Digitale Auftritte, die führen, überzeugen und konvertieren.' },
-    { name: 'SEO', description: 'Sichtbarkeit dort, wo Kunden aktiv suchen – nachhaltig aufgebaut.' },
-    { name: 'KI-Visualisierung', description: 'Ideen sofort sichtbar – mit KI vom Gedanken zum Bild.' },
-    { name: 'Automatisierung', description: 'Prozesse intelligent verbinden – mehr Wirkung bei weniger Aufwand.' },
+/**
+ * Die drei Hauptbereiche. Speisen den OfferCatalog im Structured Data
+ * (app/layout.tsx).
+ *
+ * ACHTUNG: Seit der Leistungsteaser von der Startseite genommen wurde, stehen
+ * diese Texte nirgends mehr sichtbar auf der Seite – ausgezeichnet wird damit
+ * mehr, als der Besucher zu lesen bekommt. Entweder kommt ein sichtbarer
+ * Leistungsblock zurueck, oder der OfferCatalog geht raus.
+ */
+export const CORE_SERVICES = [
+    {
+        name: 'Strategie',
+        description:
+            'Wir klären, wofür Ihr Unternehmen steht, wen es erreichen soll und welche Botschaft trägt.',
+    },
+    {
+        name: 'Corporate Design',
+        description:
+            'Wir übersetzen eine klare Position in eine visuelle Identität, die wiedererkennbar bleibt und im Alltag funktioniert.',
+    },
+    {
+        name: 'Webdesign & digitale Umsetzung',
+        description:
+            'Wir entwickeln digitale Auftritte, die Inhalte verständlich ordnen, Vertrauen aufbauen und den nächsten Schritt erleichtern.',
+    },
 ]
 
-export const SITE_TITLE = 'LinderMedia — Markenstrategie, Design & Sichtbarkeit aus einer Hand'
+/**
+ * Nachgeordnete Kompetenzfelder – sichtbar in der System-Grafik, aber bewusst
+ * nicht auf derselben Ebene wie die drei Hauptbereiche und deshalb auch nicht
+ * als eigene Offers ausgezeichnet.
+ */
+export const COMPETENCES = [
+    'Fotografie',
+    'Film & Video',
+    '3D & Visualisierung',
+    'Technologie',
+    'SEO',
+    'Automatisierung',
+]
+
+export const SITE_TITLE = 'Markenstrategie, Corporate Design & Webdesign | LinderMedia'
 export const SITE_DESCRIPTION =
-    'LinderMedia entwickelt Marken vom Fundament aus: Strategie, Corporate Design, Film, Webdesign und SEO als ein System. Inhabergeführt aus dem Westerwald – Andreas Linder. Jetzt Strategiegespräch anfragen.'
+    'LinderMedia entwickelt Markenauftritte für Unternehmen, deren Leistung nach außen noch nicht klar genug ankommt — von der Positionierung bis zur digitalen Umsetzung.'

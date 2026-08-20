@@ -2,13 +2,19 @@
 
 import { useEffect, useRef } from 'react'
 
-const TOTAL_FRAMES = 303
+/**
+ * Anzahl der Frames in public/frames – erzeugt aus public/video/ice.mp4
+ * (12,04 s bei 24 fps) mit scripts/extract-ice-frames.ps1. Bei einem neuen
+ * Quellvideo das Skript laufen lassen und die dort ausgegebene Zahl hier
+ * eintragen; die Szenen-Zeiten in TextLayer.tsx haengen ebenfalls daran.
+ */
+const TOTAL_FRAMES = 289
 const SKIP_FRAMES  = 0
 const USE_FRAMES   = TOTAL_FRAMES - SKIP_FRAMES
 
 /**
  * Auf schmalen Viewports laeuft die Sequenz aus /frames-m: halbe Kantenlaenge
- * und nur jeder zweite Frame – 2,8 statt 16,8 MB (scripts/to-mobile-frames.sh).
+ * und nur jeder zweite Frame – 2,2 statt 13 MB (scripts/extract-ice-frames.ps1).
  * Das ist die erste Ladung der Seite ueberhaupt, deshalb faellt sie mobil am
  * staerksten ins Gewicht. Bei 1200vh Scrollweg bleiben 152 Frames fluessig.
  */
@@ -56,10 +62,10 @@ export default function VideoCanvas() {
         }
 
         /**
-         * Frames gestaffelt laden statt alle 303 auf einmal.
+         * Frames gestaffelt laden statt alle auf einmal.
          *
-         * Vorher wurden beim Mount 303 Requests gleichzeitig abgesetzt (rund
-         * 17 MB). Das saettigt die Verbindung und verzoegert genau das Bild,
+         * Vorher wurden beim Mount alle Requests gleichzeitig abgesetzt (rund
+         * 13 MB). Das saettigt die Verbindung und verzoegert genau das Bild,
          * das der Nutzer als erstes sieht. Jetzt: zuerst das Startbild allein,
          * danach der Rest ueber eine kleine Anzahl paralleler Arbeiter – die
          * Reihenfolge bleibt die Abspielreihenfolge, also ist der naechste

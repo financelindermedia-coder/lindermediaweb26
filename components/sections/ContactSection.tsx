@@ -1,26 +1,81 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { BUSINESS } from '@/lib/site'
+import {
+    CONTACT_FIELDS,
+    validateContact,
+    type ContactErrors,
+    type ContactField,
+} from '@/lib/contact'
+
+type Status =
+    | { state: 'idle' }
+    | { state: 'sending' }
+    | { state: 'sent'; message: string }
+    | { state: 'failed'; message: string }
+
+const EMPTY: Record<ContactField, string> = { name: '', company: '', email: '', message: '' }
 
 export default function ContactSection() {
-    const [sent, setSent] = useState(false)
+    const [values, setValues] = useState<Record<ContactField, string>>(EMPTY)
+    const [errors, setErrors] = useState<ContactErrors>({})
+    const [status, setStatus] = useState<Status>({ state: 'idle' })
+    /** Honeypot – siehe .cf-trap in globals.css und die Route unter /api/contact. */
+    const trapRef = useRef<HTMLInputElement>(null)
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault()
-        // Placeholder — wire up backend/Formspree here
-        setSent(true)
+    const set = (field: ContactField, value: string) => {
+        setValues((v) => ({ ...v, [field]: value }))
+        // Fehler verschwindet beim Tippen, nicht erst beim nächsten Absenden.
+        if (errors[field]) setErrors((e) => ({ ...e, [field]: undefined }))
     }
 
-    const fieldStyle: React.CSSProperties = {
-        background: 'rgba(255,255,255,0.05)',
-        border: '1px solid rgba(255,255,255,0.16)',
-        borderRadius: '4px', padding: '0.9rem 1.05rem',
-        color: '#ffffff', fontFamily: 'inherit',
-        fontSize: '0.95rem', fontWeight: 300,
-        outline: 'none',
-        backdropFilter: 'blur(6px)',
-        WebkitBackdropFilter: 'blur(6px)',
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault()
+        if (status.state === 'sending') return
+
+        const found = validateContact(values)
+        setErrors(found)
+        if (Object.keys(found).length > 0) {
+            // Fokus auf das erste beanstandete Feld – sonst muss man suchen.
+            const first = CONTACT_FIELDS.find((f) => found[f.name])
+            if (first) document.getElementById(`cf-${first.name}`)?.focus()
+            setStatus({ state: 'failed', message: 'Bitte prüfen Sie die markierten Felder.' })
+            return
+        }
+
+        setStatus({ state: 'sending' })
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ...values, website: trapRef.current?.value ?? '' }),
+            })
+            const body = (await response.json().catch(() => ({}))) as {
+                ok?: boolean
+                message?: string
+                errors?: ContactErrors
+            }
+
+            if (response.ok && body.ok) {
+                setStatus({ state: 'sent', message: body.message ?? 'Vielen Dank. Wir melden uns in Kürze.' })
+                setValues(EMPTY)
+                return
+            }
+
+            if (body.errors) setErrors(body.errors)
+            setStatus({
+                state: 'failed',
+                message:
+                    body.message ??
+                    `Der Versand hat nicht geklappt. Schreiben Sie uns bitte direkt an ${BUSINESS.email}.`,
+            })
+        } catch {
+            setStatus({
+                state: 'failed',
+                message: `Die Verbindung kam nicht zustande. Schreiben Sie uns bitte direkt an ${BUSINESS.email}.`,
+            })
+        }
     }
 
     return (
@@ -95,67 +150,76 @@ export default function ContactSection() {
 
                 {/* Right — form */}
                 <div>
-                    {sent ? (
-                        <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '1.05rem', fontWeight: 300, lineHeight: 1.8 }}>
-                            Vielen Dank. Wir melden uns in Kürze.
-                        </p>
-                    ) : (
-                        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-                            {[
-                                { name: 'name',    label: 'Name',           type: 'text' },
-                                { name: 'company', label: 'Unternehmen',    type: 'text' },
-                                { name: 'email',   label: 'E-Mail',         type: 'email' },
-                            ].map(field => (
-                                <div key={field.name} style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                    <label style={{ fontSize: '0.65rem', fontWeight: 400, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)' }}>
-                                        {field.label}
-                                    </label>
-                                    <input
-                                        name={field.name} type={field.type} required
-                                        style={fieldStyle}
-                                        onFocus={e => { e.currentTarget.style.borderColor = 'rgba(255,107,53,0.7)' }}
-                                        onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.16)' }}
-                                    />
-                                </div>
-                            ))}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                <label style={{ fontSize: '0.65rem', fontWeight: 400, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)' }}>
-                                    Ihre Situation
-                                </label>
-                                <textarea
-                                    name="message" rows={4} required
-                                    style={{ ...fieldStyle, resize: 'vertical' }}
-                                    onFocus={e => { e.currentTarget.style.borderColor = 'rgba(255,107,53,0.7)' }}
-                                    onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.16)' }}
-                                />
-                            </div>
-                            <button
-                                type="submit"
-                                style={{
-                                    alignSelf: 'flex-start',
-                                    background: '#ff6b35', color: '#0b1820',
-                                    border: 'none', borderRadius: '999px',
-                                    padding: '0.95rem 2.4rem',
-                                    fontSize: '0.7rem', fontWeight: 700,
-                                    letterSpacing: '0.2em', textTransform: 'uppercase',
-                                    cursor: 'pointer', fontFamily: 'inherit',
-                                    marginTop: '0.4rem',
-                                    boxShadow: '0 0 30px rgba(255,107,53,0.4)',
-                                    transition: 'opacity 0.2s',
-                                }}
-                                onMouseEnter={e => { e.currentTarget.style.opacity = '0.88' }}
-                                onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
-                            >
-                                Jetzt Gespräch anfragen
-                            </button>
-                            <p style={{
-                                marginTop: '0.8rem',
-                                fontSize: '0.72rem', fontWeight: 400,
-                                letterSpacing: '0.12em', textTransform: 'uppercase',
-                                color: 'rgba(255,255,255,0.4)',
-                            }}>
-                                Kostenfrei und unverbindlich
+                    {status.state === 'sent' ? (
+                        <div className="cf-done" role="status" aria-live="polite">
+                            <p className="cf-status cf-status--ok">{status.message}</p>
+                            <p>
+                                Wenn es eilt, erreichen Sie uns auch direkt unter{' '}
+                                <a href={`mailto:${BUSINESS.email}`} style={{ color: '#ffffff' }}>{BUSINESS.email}</a>.
                             </p>
+                        </div>
+                    ) : (
+                        <form className="cf" onSubmit={handleSubmit} noValidate>
+                            {CONTACT_FIELDS.map((field) => {
+                                const id = `cf-${field.name}`
+                                const error = errors[field.name]
+                                const shared = {
+                                    id,
+                                    name: field.name,
+                                    className: 'cf-input',
+                                    value: values[field.name],
+                                    autoComplete: field.autoComplete,
+                                    required: field.required,
+                                    'aria-required': field.required,
+                                    'aria-invalid': error ? true : undefined,
+                                    'aria-describedby': error ? `${id}-error` : undefined,
+                                }
+
+                                return (
+                                    <div key={field.name} className="cf-field">
+                                        <label className="cf-label" htmlFor={id}>
+                                            {field.label}
+                                            {!field.required && ' (optional)'}
+                                        </label>
+                                        {field.type === 'textarea' ? (
+                                            <textarea
+                                                {...shared}
+                                                rows={4}
+                                                onChange={(e) => set(field.name, e.currentTarget.value)}
+                                            />
+                                        ) : (
+                                            <input
+                                                {...shared}
+                                                type={field.type}
+                                                onChange={(e) => set(field.name, e.currentTarget.value)}
+                                            />
+                                        )}
+                                        {error && (
+                                            <p className="cf-error" id={`${id}-error`}>{error}</p>
+                                        )}
+                                    </div>
+                                )
+                            })}
+
+                            {/* Honeypot – bleibt leer, ausser ein Bot fuellt ihn aus. */}
+                            <div className="cf-trap" aria-hidden="true">
+                                <label htmlFor="cf-website">Website (bitte frei lassen)</label>
+                                <input id="cf-website" name="website" type="text" ref={trapRef} tabIndex={-1} autoComplete="off" />
+                            </div>
+
+                            <button className="cf-submit" type="submit" disabled={status.state === 'sending'}>
+                                {status.state === 'sending' ? 'Wird gesendet …' : 'Jetzt Gespräch anfragen'}
+                            </button>
+
+                            {/* Live-Region: bleibt im DOM, damit Screenreader die
+                                Aenderung ueberhaupt mitbekommen. */}
+                            <div role="alert" aria-live="assertive">
+                                {status.state === 'failed' && (
+                                    <p className="cf-status cf-status--fail">{status.message}</p>
+                                )}
+                            </div>
+
+                            <p className="cf-note">Kostenfrei und unverbindlich</p>
                         </form>
                     )}
                 </div>

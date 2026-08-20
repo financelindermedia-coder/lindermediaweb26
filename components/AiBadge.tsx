@@ -19,12 +19,18 @@ import { useEffect, useState } from 'react'
 type Props = {
     /** Scroll-Strecke, über die der Hinweis mitläuft. Ohne Angabe: statisch in der Sektion. */
     track?: 'glow'
-    /** Sichtbarer Text – bewusst kurz. */
+    /** Sichtbarer Text – bewusst kurz, siehe Begründung am Default unten. */
     label?: string
     className?: string
 }
 
-export default function AiBadge({ track, label = 'AI generated', className = '' }: Props) {
+/*
+ * Der Text steht bewusst auf Deutsch und benennt das Ausmaß: „teilweise" ist
+ * bei diesem Material die zutreffende Aussage, und ein englisches Label mitten
+ * in einer deutschen Seite liest sich wie ein Fremdkörper aus dem Werkzeug.
+ * Der Hinweis sitzt immer direkt am betroffenen Asset, nie global.
+ */
+export default function AiBadge({ track, label = 'Visual teilweise KI-generiert', className = '' }: Props) {
     const [visible, setVisible] = useState(track !== 'glow')
 
     useEffect(() => {

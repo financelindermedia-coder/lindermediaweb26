@@ -4,10 +4,14 @@ import Image from 'next/image'
 import useReveal from '@/components/useReveal'
 
 /**
- * Radiale System-Grafik „Alles aus einer Hand": LinderMedia im Zentrum, acht
- * Disziplinen ringförmig darum, über feine gepunktete Linien verbunden. Beim
- * Scrollen faden Linien und Nodes ruhig nacheinander ein. Erklärt Zusammenhänge,
- * nicht Leistungen. Mobil: gestapeltes Raster (keine Linien).
+ * Radiale System-Grafik: LinderMedia im Zentrum, acht Disziplinen ringförmig
+ * darum, über feine gepunktete Linien verbunden. Beim Scrollen faden Linien und
+ * Nodes ruhig nacheinander ein. Erklärt Zusammenhänge, nicht Leistungen.
+ * Mobil: gestapeltes Raster (keine Linien).
+ *
+ * Steht bewusst NACH dem Leistungsteaser (KernleistungenSection) und ist ihm
+ * auch typografisch nachgeordnet: die drei Hauptbereiche tragen die Aussage,
+ * die Einzeldisziplinen zeigen nur, was daran alles hängt.
  */
 type Align = 'ct' | 'cb' | 'l' | 'r'
 type Node = { label: string; sub: [string, string]; angle: number; align: Align; icon: JSX.Element }
@@ -48,6 +52,14 @@ export default function LeistungenSection() {
 
     return (
         <section id="system" ref={ref} className="a2 sysr">
+            <div className="sysr-head reveal" data-reveal>
+                <p className="a2-eye">| Weitere Kompetenzfelder</p>
+                <p className="sysr-title sysr-lead">
+                    Alles, was an den drei Bereichen hängt — im selben System gedacht,
+                    nicht als Liste einzeln zugekaufter Gewerke.
+                </p>
+            </div>
+
             <div className="sysr-stage">
                 <svg className="sysr-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                     {PLACED.map((n, i) => (

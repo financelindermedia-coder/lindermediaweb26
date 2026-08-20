@@ -15,24 +15,29 @@ function sceneOpacity(scrollVh: number, start: number, end: number): number {
     return 1
 }
 
-// ⚠️ Kalibriert auf das neue Video `neu_f_ib.mp4` (303 Frames). Arc:
-// Frame 1 = Nebel/Spitze · ~100 = Split-Level (10/90) · ~200 = tiefster,
-// dunkelster Punkt · 303 = wieder aufgetauchter, heller Eisberg.
-// Frame ≈ scrollVh × 0,2525  (bzw. scrollVh ≈ Frame × 3,96).
+// ⚠️ Kalibriert auf `public/video/ice.mp4` → 289 Frames (scripts/extract-ice-frames.ps1).
+// Arc: Frame 1–45 = heller Nebel, Eisberg über Wasser · 45–72 = die Wasserlinie
+// zieht durchs Bild · 75–200 = unter Wasser, zum tiefsten und dunkelsten Punkt ·
+// ab ~215 Aufstieg an der Eiswand · ab ~255 wieder aufgetaucht im Tageslicht.
+// Frame ≈ scrollVh × 0,2408  (bzw. scrollVh ≈ Frame × 4,15).
+//
+// Wichtig beim Nachjustieren: bis Frame ~45 ist der Hintergrund hell, danach
+// dunkel. Szenen mit dunklem Text (tl-glass--light) müssen davor liegen, alles
+// ab der Wasserlinie trägt weißen Text auf dunklem Glas.
 const SCENES = {
-    hero:           { start: -10,  end: 110  },   // Frames ~0–28  · neblige Oberfläche (dunkler Text)
-    erkenntnis:     { start: 140,  end: 290  },   // Frames ~35–73 · Eisberg über Wasser (dunkler Text)
-    wasserlinie:    { start: 315,  end: 430  },   // Frames ~80–108 · Split-Level Wasserlinie (dunkler Text)
-    // Stationen unter Wasser (weißer Text) · früher & enger getaktet · Frames ~111–173
-    mission:        { start: 438,  end: 470  },
-    vision:         { start: 474,  end: 506  },
-    werte:          { start: 510,  end: 542  },
-    positionierung: { start: 546,  end: 578  },
-    identitaet:     { start: 582,  end: 614  },
-    sprache:        { start: 618,  end: 650  },
-    vertrauen:      { start: 654,  end: 686  },
-    tiefster:       { start: 800,  end: 870  },   // Frame ~205–215 · tiefster Punkt, Eis füllt das Bild (weißer Text)
-    sichtbarkeit:   { start: 900,  end: 1015 },   // Frames ~227–256 · beim Aufstieg (weißer Text auf Eiswand)
+    hero:           { start: -10,  end: 122  },   // Frames ~1–30  · neblige Oberfläche (dunkler Text)
+    erkenntnis:     { start: 134,  end: 196  },   // Frames ~33–48 · Eisberg über Wasser (dunkler Text)
+    wasserlinie:    { start: 212,  end: 300  },   // Frames ~52–73 · Wasserlinie zieht durchs Bild (weißer Text)
+    // Stationen unter Wasser (weißer Text) · Frames ~80–184
+    mission:        { start: 330,  end: 385  },
+    vision:         { start: 393,  end: 448  },
+    werte:          { start: 456,  end: 511  },
+    positionierung: { start: 519,  end: 574  },
+    identitaet:     { start: 582,  end: 637  },
+    sprache:        { start: 645,  end: 700  },
+    vertrauen:      { start: 708,  end: 763  },
+    tiefster:       { start: 790,  end: 880  },   // Frames ~191–212 · tiefster Punkt, Eis füllt das Bild
+    sichtbarkeit:   { start: 900,  end: 1010 },   // Frames ~218–244 · beim Aufstieg an der Eiswand
 }
 
 const HL: React.CSSProperties = {
@@ -101,23 +106,36 @@ export default function TextLayer() {
 
             {/* ── 01 HERO ── */}
             <div ref={r('hero')} className="text-scene tl-glass tl-glass--light" style={{ position: 'absolute', top: '50%', left: 'var(--px)', transform: 'translateY(-50%)', maxWidth: 'clamp(320px, 38vw, 600px)', opacity: 0, visibility: 'hidden' }}>
-                <p style={{ ...EYE, color: 'rgba(12,61,102,0.6)' }}>| 01</p>
+                <p className="hero-kicker" style={{ ...EYE, color: 'rgba(12,61,102,0.62)' }}>
+                    Markenstrategie · Gestaltung · Digitale Umsetzung
+                </p>
                 <h1 style={{ ...HL, color: '#0c3d66', textShadow: 'none' }}>
                     Starke Marken entstehen<br />
                     <strong style={{ fontWeight: 900 }}>nicht an der Oberfläche.</strong>
                 </h1>
-                <p style={{ ...BODY, color: 'rgba(12,61,102,0.85)', maxWidth: '42ch' }}>
-                    Viele Unternehmen investieren in Sichtbarkeit.
-                    Doch Sichtbarkeit allein schafft keine starke Marke.
-                    Starke Marken entstehen dort, wo Strategie, Identität
-                    und Kommunikation dieselbe Richtung verfolgen.
+                {/* Der Lead ordnet ein, was die Headline nur andeutet: wer hier
+                    arbeitet, für wen – und wie weit die Arbeit reicht. Bewusst
+                    ohne harte Umbrüche, damit er mobil natürlich umläuft. */}
+                <p style={{ ...BODY, color: 'rgba(12,61,102,0.85)', maxWidth: '44ch' }}>
+                    LinderMedia entwickelt Markenauftritte für Unternehmen, deren Leistung
+                    nach außen noch nicht klar genug ankommt — von der Positionierung bis
+                    zur digitalen Umsetzung.
                 </p>
+                <p className="hero-services">Strategie · Corporate Design · Website</p>
+                {/* Nur diese Zeile nimmt Klicks an – die Karte selbst bleibt
+                    durchlässig, damit sie das Scrollen nicht abfängt. */}
+                <div className="hero-ctas">
+                    <a className="hero-cta hero-cta--primary" href="#contact">Gespräch anfragen</a>
+                    <a className="hero-cta" href="#projekte">
+                        Projekte ansehen <span aria-hidden="true">→</span>
+                    </a>
+                </div>
                 <span className="sr-only">Eine starke Marke entsteht nicht durch Werbung allein. Sie entsteht durch Klarheit.</span>
             </div>
 
             {/* ── 02 ERKENNTNIS ── */}
             <div ref={r('erkenntnis')} className="text-scene tl-glass tl-glass--light tl-glass--right" style={{ position: 'absolute', top: '50%', right: 'var(--px)', transform: 'translateY(-50%)', maxWidth: 'clamp(320px, 38vw, 600px)', textAlign: 'right', opacity: 0, visibility: 'hidden' }}>
-                <p style={{ ...EYE, color: 'rgba(12,61,102,0.6)' }}>02 |</p>
+                <p style={{ ...EYE, color: 'rgba(12,61,102,0.6)' }}>Die Wahrnehmung |</p>
                 <h2 style={{ ...HL, color: '#0c3d66', textShadow: 'none' }}>
                     Die meisten sehen<br />
                     <strong style={{ fontWeight: 900 }}>nur die Spitze.</strong>
@@ -130,13 +148,15 @@ export default function TextLayer() {
             </div>
 
             {/* ── 03 WASSERLINIE ── */}
-            <div ref={r('wasserlinie')} className="text-scene tl-glass tl-glass--light" style={{ position: 'absolute', top: '50%', left: 'var(--px)', transform: 'translateY(-50%)', maxWidth: 'clamp(320px, 38vw, 600px)', opacity: 0, visibility: 'hidden' }}>
-                <p style={{ ...EYE, color: 'rgba(12,61,102,0.6)' }}>| 03 — Schlüsselmoment</p>
-                <h2 style={{ ...HL, color: '#0c3d66', textShadow: 'none' }}>
+            {/* Genau hier zieht die Wasserlinie durchs Bild – ab diesem Moment
+                ist der Hintergrund dunkel, deshalb dunkles Glas mit weißem Text. */}
+            <div ref={r('wasserlinie')} className="text-scene tl-glass tl-glass--dark" style={{ position: 'absolute', top: '50%', left: 'var(--px)', transform: 'translateY(-50%)', maxWidth: 'clamp(320px, 38vw, 600px)', opacity: 0, visibility: 'hidden' }}>
+                <p style={{ ...EYE, textShadow: TS }}>| Schlüsselmoment</p>
+                <h2 style={{ ...HL, textShadow: TS }}>
                     90 % der Wirkung<br />
                     <strong style={{ fontWeight: 900 }}>entstehen darunter.</strong>
                 </h2>
-                <p style={{ ...BODY, color: 'rgba(12,61,102,0.85)', maxWidth: '42ch' }}>
+                <p style={{ ...BODY, color: 'rgba(255,255,255,0.88)', textShadow: TS, maxWidth: '42ch' }}>
                     Was Menschen wahrnehmen, ist nur das Ergebnis dessen, was darunter liegt.
                     Jede starke Marke folgt einer Architektur.
                     Sichtbar und unsichtbar zugleich.

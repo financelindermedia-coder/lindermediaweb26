@@ -44,6 +44,19 @@ Thumbs.db
 /public/video/lindermedia_gedanken.mp4
 # Duplikat von public/images/IB__S3.png
 /public/video/IB__S3.png
+# Schnitt-Master der Case-Videos. Ausgeliefert werden nur die daneben liegenden
+# case-*.mp4 / case-*-m.mp4 aus scripts/encode-web-videos.ps1.
+/public/video/N_swath.mp4
+/public/video/ww_promo.mp4
+/public/video/lc_promo.mp4
+/public/video/re.mp4
+# Quelle der 289 Frames in /public/frames (scripts/extract-ice-frames.ps1)
+/public/video/ice.mp4
+# von keiner Komponente geladen
+/public/video/schaaf.mp4
+
+# Notizzettel mit Kommandozeilen, kein Bestandteil der Seite
+/command*.txt
 /public/images/IB__S1.png
 /public/images/IB__S2.png
 /public/images/IB__S5.png
