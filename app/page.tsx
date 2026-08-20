@@ -7,6 +7,7 @@ import GlowLayer from '@/components/GlowLayer'
 import SectionConnector from '@/components/SectionConnector'
 import Navbar from '@/components/Navbar'
 import ProblemSection from '@/components/sections/ProblemSection'
+import WendeSection from '@/components/sections/WendeSection'
 import MethodeSection from '@/components/sections/MethodeSection'
 import Akt2VideoSection from '@/components/sections/Akt2VideoSection'
 import UspSection from '@/components/sections/UspSection'
@@ -97,6 +98,9 @@ export default function Home() {
                 <div style={{ position: 'relative', zIndex: 2 }}>
                     {/* ── Ende Akt 1: Problemerkennung + So arbeiten wir ── */}
                     <ProblemSection />
+                    {/* Die Wende steht vor dem Reise-Pfad, nicht dahinter: der
+                        Pfad soll weiterhin in die Methode hineinführen. */}
+                    <WendeSection />
                     <SectionConnector />
                     <MethodeSection />
 

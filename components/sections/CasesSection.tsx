@@ -73,7 +73,7 @@ const PROJEKTE: Projekt[] = [
     {
         nr: '03',
         name: 'Wellenwind',
-        leistungen: 'Markenstrategie · E-Commerce · Content',
+        leistungen: 'Markenstrategie · Onlineshop · Content',
         beschreibung:
             'Von der Idee zur eigenständigen Segelmarke – inklusive Shop, Content und visueller Identität.',
         accent: '#f26a2e',
@@ -97,7 +97,7 @@ const PROJEKTE: Projekt[] = [
     {
         nr: '05',
         name: 'Rainer Engel – Ein spektakuläres Leben',
-        leistungen: 'Strategie · Design · Social Media',
+        leistungen: 'Strategie · Design · Onlineshop · Social Media',
         beschreibung:
             'Konzeption und Gestaltung einer digitalen Präsenz zur authentischen Inszenierung einer außergewöhnlichen Lebensgeschichte – mit Fokus auf Storytelling und visuelle Kommunikation.',
         accent: '#c94a1e',
@@ -111,7 +111,7 @@ const PROJEKTE: Projekt[] = [
         // ENTWURF – Text von Andreas noch offen
         nr: '06',
         name: 'LubriCan',
-        leistungen: 'Branding · Produktinszenierung · Content',
+        leistungen: 'Branding · Produktinszenierung · Onlineshop · Content',
         beschreibung:
             'Ein technisches Produkt im Performance-Umfeld – inszeniert für einen Markt, der Leistung sehen will, bevor sie erklärt wird.',
         accent: '#e0561f',

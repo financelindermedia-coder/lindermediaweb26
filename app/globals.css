@@ -1654,6 +1654,79 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     left: auto;
     right: 0;
 }
+/* ── Scroll-Hinweis im ersten Bild ─────────────────────────────────────────
+   Zwei Zeilen und ein senkrechter Strich, in dem ein oranger Abschnitt nach
+   unten wandert – die Bewegung zeigt die Richtung, der Text benennt sie.
+   Dunkel wie die Hero-Schrift, weil der Nebel darunter hell ist. */
+.tl-hint {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.9rem, 1.6vw, 1.3rem);
+}
+.tl-hint-text {
+    text-align: right;
+    font-size: clamp(0.68rem, 0.8vw, 0.78rem);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    line-height: 2;
+    color: rgba(12, 61, 102, 0.72);
+}
+.tl-hint-line {
+    position: relative;
+    display: block;
+    width: 2px;
+    height: clamp(44px, 7vh, 64px);
+    border-radius: 2px;
+    background: rgba(12, 61, 102, 0.2);
+    overflow: hidden;
+}
+.tl-hint-line i {
+    position: absolute;
+    left: 0; right: 0;
+    height: 40%;
+    border-radius: 2px;
+    background: #ff6b35;
+    animation: tlHintRun 2.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@keyframes tlHintRun {
+    0%   { top: -42%; opacity: 0; }
+    20%  { opacity: 1; }
+    75%  { opacity: 1; }
+    100% { top: 102%; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+    /* Ohne Bewegung bleibt der Abschnitt einfach in der Mitte stehen. */
+    .tl-hint-line i { animation: none; top: 30%; }
+}
+
+/* ── Tiefster Punkt: die drei Bedingungen ──────────────────────────────────
+   Kartenformat und Takt der Stationen, nur der Aufbau innen ist eigen: zwei
+   Zeilen im selben Grad, allein das Fettgewicht setzt die Aussage vom Vorsatz
+   ab. Der Grad liegt zwischen Fliesstext und Stationsueberschrift - das sind
+   Aussagen, keine Erlaeuterungen, sie muessen aus der Karte heraustreten.
+
+   Kein Glyphen-Saum: der ist fuer Text gedacht, der frei auf dem Eis steht,
+   hier traegt die Glaskarte den Kontrast. Nebenbei verschwindet damit ein
+   Darstellungsfehler - Chrome zeichnet bei backdrop-filter mit laufender
+   Deckkraft mitunter den Schatten ohne die Buchstaben darueber. */
+.tl-deep { text-shadow: none; }
+.tl-deep-lead,
+.tl-deep-claim {
+    font-size: clamp(1.35rem, 2.2vw, 2rem);
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+}
+.tl-deep-lead {
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0.35rem;
+}
+.tl-deep-claim {
+    font-weight: 800;
+    color: #ffffff;
+}
+
 /* Über Wasser (heller Hintergrund) → helle Milchglas-Karte, dunkler Text */
 .tl-glass--light {
     background: linear-gradient(155deg, rgba(244, 249, 253, 0.26), rgba(226, 238, 248, 0.12));
@@ -2170,6 +2243,50 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 @media (prefers-reduced-motion: reduce) {
     .reveal { opacity: 1; transform: none; transition: none; }
 }
+
+/* ── Wende zwischen Problem und Methode ───────────────────────────────────
+   Ein Satz, sonst nichts. Der Grundton ist der Ausklang der Problem-Sektion
+   (#081c26), damit der Block nicht als eigene Sektion auftritt, sondern als
+   Atempause darin — bevor die Methode mit ihrem helleren Verlauf einsetzt. */
+.wende {
+    position: relative;
+    background: #081c26;
+    padding: clamp(6rem, 12vw, 11rem) var(--px);
+}
+.wende-inner { max-width: 1000px; margin: 0 auto; text-align: center; }
+/* Kurze orange Kante statt einer Eyebrow-Zeile: dieselbe Markierung wie das
+   „|" der Sektionsköpfe, nur ohne Wort daneben. */
+.wende-rule {
+    display: block;
+    width: 42px; height: 2px;
+    margin: 0 auto clamp(1.8rem, 3vw, 2.6rem);
+    background: #ff6b35;
+    box-shadow: 0 0 18px rgba(255, 107, 53, 0.5);
+}
+.wende-head {
+    font-size: clamp(2.3rem, 6vw, 5.4rem);
+    font-weight: 300;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+.wende-head strong { font-weight: 900; }
+.wende-lead {
+    margin-top: clamp(1.6rem, 2.6vw, 2.4rem);
+    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+    font-weight: 400;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.68);
+}
+.wende-claim {
+    margin-top: clamp(1.6rem, 2.8vw, 2.6rem);
+    font-size: clamp(1.15rem, 1.9vw, 1.7rem);
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.42);
+}
+.wende-claim strong { font-weight: 800; color: #ffffff; }
 
 /* Gemeinsamer Sektions-Wrapper: dunkles Teal, großzügiger Weißraum */
 .a2 {

@@ -25,6 +25,9 @@ function sceneOpacity(scrollVh: number, start: number, end: number): number {
 // dunkel. Szenen mit dunklem Text (tl-glass--light) müssen davor liegen, alles
 // ab der Wasserlinie trägt weißen Text auf dunklem Glas.
 const SCENES = {
+    // Der Scroll-Hinweis steht sofort und geht früh wieder: nach knapp einer
+    // halben Bildschirmhöhe hat der Besucher verstanden, dass es weitergeht.
+    scrollhint:     { start: -10,  end: 42   },
     hero:           { start: -10,  end: 122  },   // Frames ~1–30  · neblige Oberfläche (dunkler Text)
     erkenntnis:     { start: 134,  end: 196  },   // Frames ~33–48 · Eisberg über Wasser (dunkler Text)
     wasserlinie:    { start: 212,  end: 300  },   // Frames ~52–73 · Wasserlinie zieht durchs Bild (weißer Text)
@@ -36,8 +39,21 @@ const SCENES = {
     identitaet:     { start: 582,  end: 637  },
     sprache:        { start: 645,  end: 700  },
     vertrauen:      { start: 708,  end: 763  },
-    tiefster:       { start: 790,  end: 880  },   // Frames ~191–212 · tiefster Punkt, Eis füllt das Bild
-    sichtbarkeit:   { start: 900,  end: 1010 },   // Frames ~218–244 · beim Aufstieg an der Eiswand
+    // Tiefster Punkt · Frames ~186–229. Die drei Bedingungen laufen im selben
+    // Takt weiter wie die sieben Stationen davor: 55 Einheiten Standzeit,
+    // 8 Einheiten Pause, abwechselnd links und rechts. Sie sind der Abschluss
+    // der Reihe, keine neue Gestalt.
+    tiefster1:      { start: 771,  end: 826  },
+    tiefster2:      { start: 834,  end: 889  },
+    tiefster3:      { start: 897,  end: 952  },
+    // Frames ~235–262 · Aufstieg und Durchbruch: die Wasserlinie kommt ins Bild,
+    // der Eisberg steht wieder darüber. Das Wort steht dort, wo man zum ersten
+    // Mal wieder etwas über der Oberfläche sieht.
+    //
+    // Weiter darf es nicht laufen: ab Frame ~263 ist das Bild durchgehend hell
+    // (Himmel, weisses Eis), da traegt weisse Schrift nicht mehr. Deshalb ist
+    // die Szene ausgeblendet, bevor der Eisberg ganz frei steht.
+    sichtbarkeit:   { start: 975,  end: 1090 },
 }
 
 const HL: React.CSSProperties = {
@@ -133,6 +149,19 @@ export default function TextLayer() {
                 <span className="sr-only">Eine starke Marke entsteht nicht durch Werbung allein. Sie entsteht durch Klarheit.</span>
             </div>
 
+            {/* ── SCROLL-HINWEIS ──
+                Die Seite beginnt mit einem stehenden Bild; ohne diesen Hinweis
+                ist nicht zu sehen, dass die Reise beim Scrollen weitergeht.
+                Steht unten mittig, weil die Hero-Karte links sitzt, und in der
+                dunklen Hero-Schrift – der Nebel darunter ist hell. */}
+            <div ref={r('scrollhint')} className="tl-hint" style={{
+                position: 'absolute', left: '50%', bottom: 'clamp(1.4rem, 5vh, 3.2rem)',
+                transform: 'translateX(-50%)', opacity: 0, visibility: 'hidden',
+            }}>
+                <p className="tl-hint-text">Scrollen<br />und tiefer schauen</p>
+                <span className="tl-hint-line" aria-hidden="true"><i /></span>
+            </div>
+
             {/* ── 02 ERKENNTNIS ── */}
             <div ref={r('erkenntnis')} className="text-scene tl-glass tl-glass--light tl-glass--right" style={{ position: 'absolute', top: '50%', right: 'var(--px)', transform: 'translateY(-50%)', maxWidth: 'clamp(320px, 38vw, 600px)', textAlign: 'right', opacity: 0, visibility: 'hidden' }}>
                 <p style={{ ...EYE, color: 'rgba(12,61,102,0.6)' }}>Die Wahrnehmung |</p>
@@ -205,26 +234,44 @@ export default function TextLayer() {
                 </h2>
             </div>
 
-            {/* ── TIEFSTER PUNKT ── */}
-            <div ref={r('tiefster')} className="tl-glass tl-glass--dark" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', maxWidth: 'min(54vw, 760px)', opacity: 0, visibility: 'hidden' }}>
-                <h2 style={{ ...HL, fontSize: 'var(--h2)', textShadow: TS, marginBottom: '2.4rem' }}>
-                    Das ist das Fundament,<br />
-                    <strong style={{ fontWeight: 900 }}>das alles trägt.</strong>
-                </h2>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                    {[
-                        ['Bevor Sichtbarkeit entsteht,', 'muss Klarheit entstehen.'],
-                        ['Bevor Menschen vertrauen,', 'muss Identität entstehen.'],
-                        ['Bevor Wachstum entsteht,', 'braucht es ein Fundament.'],
-                    ].map(([a, b], i) => (
-                        <p key={i} style={{ ...BODY, fontSize: 'clamp(1.1rem, 1.6vw, 1.55rem)', textShadow: TS, lineHeight: 1.5 }}>
-                            <span style={{ color: 'rgba(255,255,255,0.42)' }}>{a}</span>{' '}
-                            <span style={{ color: 'rgba(255,255,255,0.92)', fontWeight: 600 }}>{b}</span>
-                        </p>
-                    ))}
-                </div>
-            </div>
+            {/* ── TIEFSTER PUNKT ──
+                Drei Bedingungen, sonst nichts – die frühere Überschrift („Das
+                ist das Fundament, das alles trägt") ist entfallen, sie hat den
+                Aussagen nur die Aufmerksamkeit genommen.
 
+                Sie stehen wie die sieben Stationen davor: gleiche Kartenbreite,
+                gleicher Takt, abwechselnd links und rechts. Nach „Vertrauen"
+                (links) geht der Zickzack rechts weiter. Nur der Aufbau in der
+                Karte ist eigen: zwei Zeilen im selben Grad, die Aussage fett. */}
+            <DeepCard r={r('tiefster1')} align="right"
+                lead="Bevor Sichtbarkeit entsteht," claim="muss Klarheit entstehen." />
+            <DeepCard r={r('tiefster2')} align="left"
+                lead="Bevor Menschen vertrauen," claim="muss Identität entstehen." />
+            <DeepCard r={r('tiefster3')} align="right"
+                lead="Bevor Wachstum entsteht," claim="braucht es ein Fundament." />
+
+        </div>
+    )
+}
+
+/** Eine der drei Bedingungen am tiefsten Punkt – im Kartenformat der Stationen. */
+function DeepCard({ r, lead, claim, align }: {
+    r: (el: HTMLDivElement | null) => void
+    lead: string
+    claim: string
+    align: 'left' | 'right'
+}) {
+    const right = align === 'right'
+    return (
+        <div ref={r} className={`station-scene tl-glass tl-glass--dark tl-deep${right ? ' tl-glass--right' : ''}`} style={{
+            position: 'absolute', top: '50%',
+            ...(right ? { right: 'var(--px)' } : { left: 'var(--px)' }),
+            transform: 'translateY(-50%)', maxWidth: 'clamp(280px, 34vw, 460px)',
+            opacity: 0, visibility: 'hidden',
+            ...(right ? { textAlign: 'right' as const } : {}),
+        }}>
+            <p className="tl-deep-lead">{lead}</p>
+            <p className="tl-deep-claim">{claim}</p>
         </div>
     )
 }
