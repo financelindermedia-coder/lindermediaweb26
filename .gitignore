@@ -44,6 +44,8 @@ Thumbs.db
 /public/video/lindermedia_gedanken.mp4
 # Duplikat von public/images/IB__S3.png
 /public/video/IB__S3.png
+# Schnitt-Master der Schaaf-Renderings, nur Quelle der Standbilder (4 MB).
+/public/video/Studio T15 web.mp4
 # Schnitt-Master der Case-Videos. Ausgeliefert werden nur die daneben liegenden
 # case-*.mp4 / case-*-m.mp4 aus scripts/encode-web-videos.ps1.
 /public/video/N_swath.mp4
@@ -54,6 +56,14 @@ Thumbs.db
 /public/video/ice.mp4
 # von keiner Komponente geladen
 /public/video/schaaf.mp4
+# Video 03 „Orientierung" ist auf Wunsch entfallen; Film und Poster bleiben
+# lokal, falls die Sektion zurueckkommt (CompassOverlay ist noch verdrahtet).
+/public/video/orientierung-flight.mp4
+/public/video/orientierung-flight-m.mp4
+/public/video/poster-orientierung.webp
+/public/video/poster-orientierung.jpg
+# Rohaufnahme, nur Quelle der Standbilder der Schaaf-Fallstudie (59 MB)
+/public/video/VID_20200912_160853683.mp4
 
 # Notizzettel mit Kommandozeilen, kein Bestandteil der Seite
 /command*.txt
@@ -77,4 +87,10 @@ Thumbs.db
 /public/images/lubrican.jpg
 /public/images/lighthouse.jpg
 /public/images/case-solarimpact-*.jpg
+/public/images/case-lubrican-*.jpg
+/public/images/case-wellenwind-*.jpg
+/public/images/case-schaaf-*.jpg
+/public/images/case-marevo-*.jpg
+/public/images/case-novodex-*.jpg
+# Screenshots von schaaf-boats.com liegen nur als .webp vor (keine Originale)
 /public/video/poster-*.jpg

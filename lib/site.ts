@@ -73,26 +73,26 @@ export const AREA_SERVED = [
  * Die drei Hauptbereiche. Speisen den OfferCatalog im Structured Data
  * (app/layout.tsx).
  *
- * ACHTUNG: Seit der Leistungsteaser von der Startseite genommen wurde, stehen
- * diese Texte nirgends mehr sichtbar auf der Seite – ausgezeichnet wird damit
- * mehr, als der Besucher zu lesen bekommt. Entweder kommt ein sichtbarer
- * Leistungsblock zurueck, oder der OfferCatalog geht raus.
+ * Namen und Beschreibungen entsprechen dem, was die System-Grafik auf der
+ * Startseite sichtbar zeigt (components/sections/LeistungenSection.tsx) –
+ * ausgezeichnet wird also genau das, was der Besucher auch liest. Wer dort die
+ * Ebenen aendert, zieht sie hier mit.
  */
 export const CORE_SERVICES = [
     {
         name: 'Strategie',
         description:
-            'Wir klären, wofür Ihr Unternehmen steht, wen es erreichen soll und welche Botschaft trägt.',
+            'Gibt Richtung: Positionierung, Zielgruppe, Botschaft und Markenarchitektur.',
     },
     {
-        name: 'Corporate Design',
+        name: 'Design',
         description:
-            'Wir übersetzen eine klare Position in eine visuelle Identität, die wiedererkennbar bleibt und im Alltag funktioniert.',
+            'Gibt Form: Corporate Design, Art Direction, Identität und Bildwelt.',
     },
     {
-        name: 'Webdesign & digitale Umsetzung',
+        name: 'Markenpräsenz',
         description:
-            'Wir entwickeln digitale Auftritte, die Inhalte verständlich ordnen, Vertrauen aufbauen und den nächsten Schritt erleichtern.',
+            'Macht sichtbar: Website, Fotografie, Film & Video und 3D-Visualisierung.',
     },
 ]
 

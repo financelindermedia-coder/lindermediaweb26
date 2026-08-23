@@ -2,12 +2,24 @@
 
 import { useEffect, useRef } from 'react'
 
-const TOTAL_VH = 1200
+/*
+ * Akt 1 laeuft ueber ZWEI Scroll-Strecken mit einem Halt dazwischen:
+ *
+ *   #video-scroll   Abstieg  – Frames 1–171, TOTAL_DESCENT vh
+ *   (Prozessbereich „Der Weg zur Wirkung" – Frames 171–215, hebt sich mit)
+ *   #video-ascent   Aufstieg – Frames 215–289, TOTAL_ASCENT vh (langsamer als
+ *                   der Abstieg: der Durchbruch soll Zeit bekommen)
+ *
+ * Die Aufteilung muss zu DEEP_FRAME/RISE_FRAME in VideoCanvas.tsx passen. Der
+ * Takt ist in beiden Strecken derselbe wie zuvor: rund 4,15 vh pro Frame.
+ */
+const TOTAL_DESCENT = 710
+const TOTAL_ASCENT  = 420
 
-function sceneOpacity(scrollVh: number, start: number, end: number): number {
+function sceneOpacity(scrollVh: number, start: number, end: number, fadeOutVh?: number): number {
     const dur = end - start
     const fadeIn  = Math.max(dur * 0.08, 4)
-    const fadeOut = Math.max(dur * 0.14, 6)
+    const fadeOut = fadeOutVh ?? Math.max(dur * 0.14, 6)
     if (scrollVh <= start) return 0
     if (scrollVh < start + fadeIn)  return (scrollVh - start) / fadeIn
     if (scrollVh > end) return 0
@@ -17,43 +29,35 @@ function sceneOpacity(scrollVh: number, start: number, end: number): number {
 
 // ⚠️ Kalibriert auf `public/video/ice.mp4` → 289 Frames (scripts/extract-ice-frames.ps1).
 // Arc: Frame 1–45 = heller Nebel, Eisberg über Wasser · 45–72 = die Wasserlinie
-// zieht durchs Bild · 75–200 = unter Wasser, zum tiefsten und dunkelsten Punkt ·
+// zieht durchs Bild · 75–171 = unter Wasser bis zur Wende ·
 // ab ~215 Aufstieg an der Eiswand · ab ~255 wieder aufgetaucht im Tageslicht.
-// Frame ≈ scrollVh × 0,2408  (bzw. scrollVh ≈ Frame × 4,15).
+// Frame ≈ scrollVh × 0,2408 auf der Abstiegsstrecke.
 //
 // Wichtig beim Nachjustieren: bis Frame ~45 ist der Hintergrund hell, danach
 // dunkel. Szenen mit dunklem Text (tl-glass--light) müssen davor liegen, alles
 // ab der Wasserlinie trägt weißen Text auf dunklem Glas.
-const SCENES = {
+const SCENES: Record<string, { start: number; end: number; ascent?: true; fadeOut?: number }> = {
     // Der Scroll-Hinweis steht sofort und geht früh wieder: nach knapp einer
     // halben Bildschirmhöhe hat der Besucher verstanden, dass es weitergeht.
     scrollhint:     { start: -10,  end: 42   },
     hero:           { start: -10,  end: 122  },   // Frames ~1–30  · neblige Oberfläche (dunkler Text)
-    erkenntnis:     { start: 134,  end: 196  },   // Frames ~33–48 · Eisberg über Wasser (dunkler Text)
-    wasserlinie:    { start: 212,  end: 300  },   // Frames ~52–73 · Wasserlinie zieht durchs Bild (weißer Text)
-    // Stationen unter Wasser (weißer Text) · Frames ~80–184
-    mission:        { start: 330,  end: 385  },
-    vision:         { start: 393,  end: 448  },
-    werte:          { start: 456,  end: 511  },
-    positionierung: { start: 519,  end: 574  },
-    identitaet:     { start: 582,  end: 637  },
-    sprache:        { start: 645,  end: 700  },
-    vertrauen:      { start: 708,  end: 763  },
-    // Tiefster Punkt · Frames ~186–229. Die drei Bedingungen laufen im selben
-    // Takt weiter wie die sieben Stationen davor: 55 Einheiten Standzeit,
-    // 8 Einheiten Pause, abwechselnd links und rechts. Sie sind der Abschluss
-    // der Reihe, keine neue Gestalt.
-    tiefster1:      { start: 771,  end: 826  },
-    tiefster2:      { start: 834,  end: 889  },
-    tiefster3:      { start: 897,  end: 952  },
-    // Frames ~235–262 · Aufstieg und Durchbruch: die Wasserlinie kommt ins Bild,
-    // der Eisberg steht wieder darüber. Das Wort steht dort, wo man zum ersten
-    // Mal wieder etwas über der Oberfläche sieht.
-    //
-    // Weiter darf es nicht laufen: ab Frame ~263 ist das Bild durchgehend hell
-    // (Himmel, weisses Eis), da traegt weisse Schrift nicht mehr. Deshalb ist
-    // die Szene ausgeblendet, bevor der Eisberg ganz frei steht.
-    sichtbarkeit:   { start: 975,  end: 1090 },
+    erkenntnis:     { start: 134,  end: 196  },   // Frames ~32–47 · Eisberg über Wasser (dunkler Text)
+    // Ab hier uebernimmt DescentStack: Problem und die drei Ebenen laufen als
+    // verbundene Kette mit dem Bild mit, statt einander zu ueberblenden. Ihre
+    // Positionen stehen dort, nicht in dieser Tabelle.
+
+    // Die Auflösung steht erst, wenn der Berg wieder ganz über der Oberfläche
+    // steht – ohne Nebel, im Tageslicht. Ab Frame ~263 ist das Bild durchgehend
+    // hell, deshalb trägt die Karte hier dunkle Schrift auf hellem Glas wie im
+    // Hero: die Reise endet in derselben Tonlage, in der sie begonnen hat.
+    // Steht praktisch ab dem ersten Bild der Aufstiegsstrecke und haelt bis in
+    // deren Mitte – waehrend des Aufstiegs, aber NOCH UNTER WASSER: der Blick
+    // geht an der Eiswand nach oben, die Oberflaeche ist von unten zu sehen. Deshalb auch
+    // dunkles Glas mit weisser Schrift – helles Glas mit dunkler Schrift wuerde
+    // auf dem tiefblauen Bild nicht lesen. Sie ist weg, bevor der Berg
+    // durchbricht (~Frame 250); der Durchbruch und das helle Schlussbild
+    // stehen danach frei.
+    sichtbarkeit:   { start: -20,  end: 195, ascent: true, fadeOut: 45 },   // Frames ~215–248
 }
 
 const HL: React.CSSProperties = {
@@ -87,21 +91,44 @@ export default function TextLayer() {
     const refs = useRef<Record<string, HTMLDivElement | null>>({})
 
     useEffect(() => {
+        // Beide Strecken einmal vermessen statt bei jedem Scroll-Ereignis:
+        // offsetTop/offsetHeight erzwingen ein Layout.
+        let dTop = 0, dH = 1, aTop = 0, aH = 1
+        function measure() {
+            const d = document.getElementById('video-scroll')
+            const a = document.getElementById('video-ascent')
+            if (d) { dTop = d.offsetTop; dH = d.offsetHeight || 1 }
+            if (a) { aTop = a.offsetTop; aH = a.offsetHeight || 1 }
+        }
+
         function update() {
-            const scrollEl = document.getElementById('video-scroll')
-            const driverH  = scrollEl ? scrollEl.offsetHeight : window.innerHeight * TOTAL_VH
-            const scrollVh = (window.scrollY / driverH) * TOTAL_VH
+            const y = window.scrollY
+            const descentVh = ((y - dTop) / dH) * TOTAL_DESCENT
+            const ascentVh  = ((y - aTop) / aH) * TOTAL_ASCENT
             for (const [id, scene] of Object.entries(SCENES)) {
                 const el = refs.current[id]
                 if (!el) continue
-                const op = sceneOpacity(scrollVh, scene.start, scene.end)
+                const op = sceneOpacity(scene.ascent ? ascentVh : descentVh, scene.start, scene.end, scene.fadeOut)
                 el.style.opacity    = String(op)
                 el.style.visibility = op === 0 ? 'hidden' : 'visible'
             }
         }
-        window.addEventListener('scroll', update, { passive: true })
+
+        function onResize() { measure(); update() }
+
+        measure()
         update()
-        return () => window.removeEventListener('scroll', update)
+        window.addEventListener('scroll', update, { passive: true })
+        window.addEventListener('resize', onResize)
+        // Die Aufstiegsstrecke verschiebt sich, sobald MethodeSection die Hoehe
+        // ihres Pins gesetzt hat – danach noch einmal vermessen.
+        const ro = new ResizeObserver(onResize)
+        ro.observe(document.body)
+        return () => {
+            ro.disconnect()
+            window.removeEventListener('scroll', update)
+            window.removeEventListener('resize', onResize)
+        }
     }, [])
 
     const r = (id: string) => (el: HTMLDivElement | null) => { refs.current[id] = el }
@@ -176,130 +203,21 @@ export default function TextLayer() {
                 </p>
             </div>
 
-            {/* ── 03 WASSERLINIE ── */}
-            {/* Genau hier zieht die Wasserlinie durchs Bild – ab diesem Moment
-                ist der Hintergrund dunkel, deshalb dunkles Glas mit weißem Text. */}
-            <div ref={r('wasserlinie')} className="text-scene tl-glass tl-glass--dark" style={{ position: 'absolute', top: '50%', left: 'var(--px)', transform: 'translateY(-50%)', maxWidth: 'clamp(320px, 38vw, 600px)', opacity: 0, visibility: 'hidden' }}>
-                <p style={{ ...EYE, textShadow: TS }}>| Schlüsselmoment</p>
-                <h2 style={{ ...HL, textShadow: TS }}>
-                    90 % der Wirkung<br />
-                    <strong style={{ fontWeight: 900 }}>entstehen darunter.</strong>
+            {/* ── AUFLÖSUNG (Aufstieg) ── */}
+            {/* Steht auf der Aufstiegsstrecke, unter Wasser, kurz bevor der Berg über
+                der Oberfläche steht – jetzt ohne Nebel. Mittig, weil der Satz die
+                ganze Reise zusammenfasst und keine Seite mehr bevorzugt. */}
+            <div ref={r('sichtbarkeit')} className="text-scene tl-glass tl-glass--dark" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', maxWidth: 'min(760px, 86vw)', opacity: 0, visibility: 'hidden' }}>
+                <h2 style={{ ...HL, textShadow: TS, marginBottom: '1.6rem' }}>
+                    Was darunter trägt,<br />
+                    <strong style={{ fontWeight: 900 }}>wird darüber sichtbar.</strong>
                 </h2>
-                <p style={{ ...BODY, color: 'rgba(255,255,255,0.88)', textShadow: TS, maxWidth: '42ch' }}>
-                    Was Menschen wahrnehmen, ist nur das Ergebnis dessen, was darunter liegt.
-                    Jede starke Marke folgt einer Architektur.
-                    Sichtbar und unsichtbar zugleich.
+                <p style={{ ...BODY, color: 'rgba(255,255,255,0.88)', textShadow: TS, maxWidth: '52ch', margin: '0 auto' }}>
+                    Wenn Strategie, Design und Markenpräsenz zusammenarbeiten,
+                    entsteht ein Auftritt mit Klarheit, Charakter und Wirkung.
                 </p>
             </div>
 
-            {/* ── STATIONEN 01–07 ── */}
-            <Station r={r('mission')}         num="01" label="Mission"         align="left"
-                hl={<>Der Antrieb<br /><strong style={{fontWeight:900}}>der Marke.</strong></>}
-                body="Die Mission beantwortet die Frage, warum ein Unternehmen existiert. Sie beschreibt den Beitrag, den eine Marke für ihre Kunden leisten möchte, und gibt Entscheidungen eine klare Richtung." />
-
-            <Station r={r('vision')}          num="02" label="Vision"          align="right"
-                hl={<>Das Ziel<br /><strong style={{fontWeight:900}}>am Horizont.</strong></>}
-                body="Die Vision beschreibt die Zukunft, die eine Marke erreichen möchte. Sie schafft langfristige Richtung, motiviert intern und macht strategische Entscheidungen nachvollziehbar." />
-
-            <Station r={r('werte')}           num="03" label="Werte"           align="left"
-                hl={<>Der<br /><strong style={{fontWeight:900}}>Kompass.</strong></>}
-                body="Werte bestimmen, wie Entscheidungen getroffen werden. Sie schaffen Verlässlichkeit nach innen und außen — und sorgen dafür, dass Verhalten und Kommunikation glaubwürdig zusammenpassen." />
-
-            <Station r={r('positionierung')}  num="04" label="Positionierung"  align="right"
-                hl={<>Der Platz<br /><strong style={{fontWeight:900}}>im Markt.</strong></>}
-                body="Positionierung beschreibt den Platz, den eine Marke im Bewusstsein ihrer Zielgruppe einnehmen möchte. Sie macht Unterschiede sichtbar, schafft Relevanz und schärft das Profil." />
-
-            <Station r={r('identitaet')}      num="05" label="Identität"       align="left"
-                hl={<>Das Gesicht<br /><strong style={{fontWeight:900}}>der Marke.</strong></>}
-                body="Identität macht eine Marke erkennbar. Sie verbindet Gestaltung, Wirkung und Wiedererkennung zu einem konsistenten Erscheinungsbild, das auf allen Kanälen trägt." />
-
-            <Station r={r('sprache')}         num="06" label="Sprache"         align="right"
-                hl={<>Die Stimme<br /><strong style={{fontWeight:900}}>der Marke.</strong></>}
-                body="Sprache macht Haltung hörbar. Sie entscheidet darüber, wie Menschen eine Marke wahrnehmen, ob Kommunikation glaubwürdig wirkt und ob sie im Gedächtnis bleibt." />
-
-            <Station r={r('vertrauen')}       num="07" label="Vertrauen"       align="left"
-                hl={<>Das Band<br /><strong style={{fontWeight:900}}>der Konsistenz.</strong></>}
-                body="Vertrauen entsteht dort, wo Versprechen und Erlebnisse übereinstimmen. Je konsistenter eine Marke handelt, desto stärker und dauerhafter wird die Bindung zu ihren Kunden." />
-
-            {/* ── SICHTBARKEIT HEADLINE ── */}
-            <div ref={r('sichtbarkeit')} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', opacity: 0, visibility: 'hidden' }}>
-                <h2 style={{
-                    fontSize: 'clamp(2.2rem, 8vw, 8rem)',
-                    fontWeight: 900, lineHeight: 0.9,
-                    letterSpacing: '-0.02em', textTransform: 'uppercase',
-                    color: '#ffffff', textShadow: TS,
-                    maxWidth: '92vw',
-                }}>
-                    Sichtbarkeit.
-                </h2>
-            </div>
-
-            {/* ── TIEFSTER PUNKT ──
-                Drei Bedingungen, sonst nichts – die frühere Überschrift („Das
-                ist das Fundament, das alles trägt") ist entfallen, sie hat den
-                Aussagen nur die Aufmerksamkeit genommen.
-
-                Sie stehen wie die sieben Stationen davor: gleiche Kartenbreite,
-                gleicher Takt, abwechselnd links und rechts. Nach „Vertrauen"
-                (links) geht der Zickzack rechts weiter. Nur der Aufbau in der
-                Karte ist eigen: zwei Zeilen im selben Grad, die Aussage fett. */}
-            <DeepCard r={r('tiefster1')} align="right"
-                lead="Bevor Sichtbarkeit entsteht," claim="muss Klarheit entstehen." />
-            <DeepCard r={r('tiefster2')} align="left"
-                lead="Bevor Menschen vertrauen," claim="muss Identität entstehen." />
-            <DeepCard r={r('tiefster3')} align="right"
-                lead="Bevor Wachstum entsteht," claim="braucht es ein Fundament." />
-
-        </div>
-    )
-}
-
-/** Eine der drei Bedingungen am tiefsten Punkt – im Kartenformat der Stationen. */
-function DeepCard({ r, lead, claim, align }: {
-    r: (el: HTMLDivElement | null) => void
-    lead: string
-    claim: string
-    align: 'left' | 'right'
-}) {
-    const right = align === 'right'
-    return (
-        <div ref={r} className={`station-scene tl-glass tl-glass--dark tl-deep${right ? ' tl-glass--right' : ''}`} style={{
-            position: 'absolute', top: '50%',
-            ...(right ? { right: 'var(--px)' } : { left: 'var(--px)' }),
-            transform: 'translateY(-50%)', maxWidth: 'clamp(280px, 34vw, 460px)',
-            opacity: 0, visibility: 'hidden',
-            ...(right ? { textAlign: 'right' as const } : {}),
-        }}>
-            <p className="tl-deep-lead">{lead}</p>
-            <p className="tl-deep-claim">{claim}</p>
-        </div>
-    )
-}
-
-interface StationProps {
-    r: (el: HTMLDivElement | null) => void
-    num: string; label: string; hl: React.ReactNode; body: string; align: 'left' | 'right'
-}
-
-function Station({ r, num, label, hl, body, align }: StationProps) {
-    const right = align === 'right'
-    return (
-        <div ref={r} className={`station-scene tl-glass tl-glass--dark${right ? ' tl-glass--right' : ''}`} style={{
-            position: 'absolute', top: '50%',
-            ...(right ? { right: 'var(--px)' } : { left: 'var(--px)' }),
-            transform: 'translateY(-50%)', maxWidth: 'clamp(280px, 34vw, 460px)',
-            opacity: 0, visibility: 'hidden',
-            ...(right ? { textAlign: 'right' } : {}),
-        }}>
-            <p style={{ fontSize: 'clamp(0.85rem, 1.1vw, 1rem)', fontWeight: 400, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.72)', textShadow: TS, marginBottom: '0.8rem' }}>
-                {right ? `${label} · ${num}` : `${num} · ${label}`}
-            </p>
-            <h3 style={{ fontSize: 'var(--h2)', fontWeight: 300, lineHeight: 1.1, color: '#ffffff', letterSpacing: '-0.012em', textShadow: TS, marginBottom: '1.2rem', textTransform: 'uppercase' }}>
-                {hl}
-            </h3>
-            <p style={{ fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)', fontWeight: 400, lineHeight: 1.75, color: 'rgba(255,255,255,0.88)', textShadow: TS, maxWidth: '34ch', ...(right ? { marginLeft: 'auto' } : {}) }}>
-                {body}
-            </p>
         </div>
     )
 }

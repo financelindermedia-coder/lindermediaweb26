@@ -13,6 +13,34 @@ const SKIP_FRAMES  = 0
 const USE_FRAMES   = TOTAL_FRAMES - SKIP_FRAMES
 
 /**
+ * Die Reise laeuft ueber DREI Abschnitte, ohne Stillstand dazwischen:
+ *
+ *   #video-scroll   Abstieg        Frames 1 → DEEP_FRAME
+ *   Prozessbereich  „Der Weg zur Wirkung"  DEEP_FRAME → RISE_FRAME
+ *   #video-ascent   Aufstieg       RISE_FRAME → Ende
+ *
+ * RISE_FRAME liegt tief unter der Wasserlinie: die Aufloesungskarte steht noch
+ * unter Wasser (Frames ~222–248), erst danach kommt der Durchbruch an die
+ * Oberflaeche (~250–258) – beides frei auf der Aufstiegsstrecke, nicht hinter
+ * dem Schleier des Prozessbereichs.
+ *
+ * Der mittlere Abschnitt hat keinen eigenen Driver: er ist genau die Strecke
+ * zwischen den beiden Divs, also die Hoehe des gepinnten Scrollers. Waehrend
+ * man dort quer liest, hebt sich das Bild bereits – langsamer als im Abstieg,
+ * aber es steht nicht. So bleibt der Eisberg durchgehend in Bewegung und der
+ * Weg vor dem Scroller wird kuerzer.
+ *
+ * DEEP_FRAME liegt bewusst vor dem allertiefsten Kader: die Wende steht am
+ * Grund, der Rest der Tiefe wird nicht mehr durchgescrollt. Die Szenenzeiten in
+ * TextLayer.tsx und die Kettenpositionen in globals.css (`.dsc`) haengen an
+ * derselben Aufteilung – wer hier dreht, misst dort nach.
+ */
+const DEEP_FRAME = 171
+const RISE_FRAME = 215
+const DEEP_RATIO = DEEP_FRAME / USE_FRAMES
+const RISE_RATIO = RISE_FRAME / USE_FRAMES
+
+/**
  * Auf schmalen Viewports laeuft die Sequenz aus /frames-m: halbe Kantenlaenge
  * und nur jeder zweite Frame – 2,2 statt 13 MB (scripts/extract-ice-frames.ps1).
  * Das ist die erste Ladung der Seite ueberhaupt, deshalb faellt sie mobil am
@@ -110,11 +138,40 @@ export default function VideoCanvas() {
         }
         void preloadFrames()
 
+        /*
+         * Masse der beiden Strecken einmal merken statt pro Bild abfragen:
+         * `offsetTop`/`offsetHeight` erzwingen jeweils ein Layout. Geaendert
+         * werden koennen sie nur durch ein Resize.
+         */
+        let descentTop = 0, descentH = 1, ascentTop = 0, ascentH = 1, hasAscent = false
+        function measure() {
+            const d = document.getElementById('video-scroll')
+            const a = document.getElementById('video-ascent')
+            if (d) { descentTop = d.offsetTop; descentH = d.offsetHeight || 1 }
+            hasAscent = !!a
+            if (a) { ascentTop = a.offsetTop; ascentH = a.offsetHeight || 1 }
+        }
+        measure()
+
+        const clamp01 = (v: number) => Math.min(Math.max(v, 0), 1)
+
+        /** Fortschritt ueber alle drei Abschnitte hinweg. */
+        function progressOf(): number {
+            const y = window.scrollY
+            if (!hasAscent) return clamp01((y - descentTop) / descentH)
+            const descentEnd = descentTop + descentH
+            if (y <= descentEnd) return clamp01((y - descentTop) / descentH) * DEEP_RATIO
+            if (y < ascentTop) {
+                // Prozessbereich: das Bild hebt sich waehrend des Querlaufs.
+                const span = Math.max(ascentTop - descentEnd, 1)
+                return DEEP_RATIO + clamp01((y - descentEnd) / span) * (RISE_RATIO - DEEP_RATIO)
+            }
+            return RISE_RATIO + clamp01((y - ascentTop) / ascentH) * (1 - RISE_RATIO)
+        }
+
         function updateFrame() {
             rafRef.current = null
-            const el = document.getElementById('video-scroll')
-            if (!el) return
-            const progress = Math.min(window.scrollY / el.offsetHeight, 1)
+            const progress = progressOf()
             // Map progress to the usable frame range starting at SKIP_FRAMES
             const offset  = Math.min(Math.floor(progress * USE_FRAMES), USE_FRAMES - 1)
             const fileIdx = snap(SKIP_FRAMES + offset)
@@ -131,14 +188,25 @@ export default function VideoCanvas() {
 
         function onResize() {
             setSize()
+            measure()
             if (currentFrameRef.current >= 0) drawFrame(currentFrameRef.current)
+            updateFrame()
         }
 
         window.addEventListener('scroll', onScroll, { passive: true })
         window.addEventListener('resize', onResize)
 
+        /*
+         * Die Laenge des mittleren Abschnitts haengt an der Pin-Hoehe, die
+         * MethodeSection erst in ihrem eigenen Effekt setzt. Ohne dieses
+         * Nachmessen bliebe die Aufteilung beim ersten Bild stehen.
+         */
+        const ro = new ResizeObserver(() => { measure(); updateFrame() })
+        ro.observe(document.body)
+
         return () => {
             cancelled = true
+            ro.disconnect()
             window.removeEventListener('scroll', onScroll)
             window.removeEventListener('resize', onResize)
             if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)

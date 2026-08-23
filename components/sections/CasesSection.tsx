@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import useVideoSource from '@/components/useVideoSource'
 import usePrefersReducedMotion from '@/components/usePrefersReducedMotion'
 
@@ -41,6 +42,8 @@ type Projekt = {
      * erst auf Klick, sonst blockt der Browser die Wiedergabe ohnehin.
      */
     audio?: boolean
+    /** Route zur Fallstudie – nur gesetzt, wo es eine gibt. */
+    fallstudie?: string
 }
 
 const PROJEKTE: Projekt[] = [
@@ -59,6 +62,7 @@ const PROJEKTE: Projekt[] = [
         // scripts/encode-web-videos.ps1.
         video: '/video/case-solarimpact.mp4',
         audio: true,
+        fallstudie: '/projekte/solar-impact-yacht',
     },
     {
         nr: '02',
@@ -69,6 +73,7 @@ const PROJEKTE: Projekt[] = [
         accent: '#ff7d48',
         visual: '/images/Novodex.webp',
         visualAlt: 'die Wortmarke NOVODEX auf einem Teakdeck neben einer polierten Winsch',
+        fallstudie: '/projekte/novodex',
     },
     {
         nr: '03',
@@ -82,6 +87,7 @@ const PROJEKTE: Projekt[] = [
         // Web-Fassungen aus ww_promo.mp4, erzeugt mit scripts/encode-web-videos.ps1.
         // Kein `audio`: die Tonspur des Masters ist durchgehend still.
         video: '/video/case-wellenwind.mp4',
+        fallstudie: '/projekte/wellenwind',
     },
     {
         // ENTWURF – Text von Andreas noch offen
@@ -93,6 +99,7 @@ const PROJEKTE: Projekt[] = [
         accent: '#ff8f5c',
         visual: '/images/marevo.webp',
         visualAlt: 'eine Segelyacht mit dunklen Segeln in Fahrt, darüber der Schriftzug MARÈVO',
+        fallstudie: '/projekte/marevo',
     },
     {
         nr: '05',
@@ -120,6 +127,20 @@ const PROJEKTE: Projekt[] = [
         // Web-Fassungen aus lc_promo.mp4, erzeugt mit scripts/encode-web-videos.ps1.
         video: '/video/case-lubrican.mp4',
         audio: true,
+        fallstudie: '/projekte/lubrican',
+    },
+    {
+        // ENTWURF – Kurztext von mir, noch nicht freigegeben. Leistungen laut
+        // Andreas: Screendesign und alles Weitere ausser der Programmierung.
+        nr: '07',
+        name: 'Schaaf Tender',
+        leistungen: 'Markenauftritt · Screendesign · Visualisierung · Print',
+        beschreibung:
+            'Markenauftritt für einen Superyacht-Tender, der sich nicht über Größe unterscheidet, sondern über Details.',
+        accent: '#ff7d48',
+        visual: '/images/case-schaaf-hero-2.webp',
+        visualAlt: 'der weiße Schaaf-Tender in Fahrt auf offener See vor einer flachen Küstenlinie',
+        fallstudie: '/projekte/schaaf-tender',
     },
 ]
 
@@ -445,6 +466,11 @@ export default function CasesSection() {
                                         </span>
                                     </span>
                                 </button>
+                                {on && p.fallstudie && (
+                                    <Link className="cases-fallstudie" href={p.fallstudie}>
+                                        <span>Fallstudie ansehen</span><Arrow />
+                                    </Link>
+                                )}
                             </li>
                         )
                     })}
@@ -474,6 +500,11 @@ export default function CasesSection() {
                             <h3 className="cslide-name">{p.name}</h3>
                             <p className="cslide-branche">{p.leistungen}</p>
                             <p className="cslide-desc">{p.beschreibung}</p>
+                            {p.fallstudie && (
+                                <Link className="cslide-btn" href={p.fallstudie}>
+                                    <span>Fallstudie ansehen</span><Arrow />
+                                </Link>
+                            )}
                             {last ? (
                                 <a className="cslide-btn" href="#contact">
                                     <span>Gespräch anfragen</span><Arrow />

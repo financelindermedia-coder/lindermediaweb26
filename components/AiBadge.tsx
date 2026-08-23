@@ -9,16 +9,17 @@ import { useEffect, useState } from 'react'
  * Zwei Betriebsarten:
  * - Standard (`inline`): sitzt in einer Sektion mit `position: relative`
  *   (z. B. eine Videosektion) und wird mit dieser gescrollt.
- * - `track="glow"`: läuft über die gesamte gepinnte Eisberg-/Glow-Strecke mit.
- *   Das Canvas dort ist fixiert, der Hinweis also ebenfalls – er blendet aus,
- *   sobald die Strecke vorbei ist und wieder echte Inhalte darüberliegen.
+ * - `track="iceberg"`: läuft über die gesamte Eisberg-Strecke mit (Abstieg,
+ *   Prozessbereich, Aufstieg). Das Canvas dort ist fixiert, der Hinweis also
+ *   ebenfalls – er blendet aus, sobald die Strecke vorbei ist und wieder echte
+ *   Inhalte darüberliegen.
  *
  * Bewusst klein und ruhig gehalten: dunkles Glas-Pill, das sowohl auf dem
  * hellen Nebel am Anfang als auch auf dunklen Videos lesbar bleibt.
  */
 type Props = {
     /** Scroll-Strecke, über die der Hinweis mitläuft. Ohne Angabe: statisch in der Sektion. */
-    track?: 'glow'
+    track?: 'iceberg'
     /** Sichtbarer Text – bewusst kurz, siehe Begründung am Default unten. */
     label?: string
     className?: string
@@ -31,16 +32,16 @@ type Props = {
  * Der Hinweis sitzt immer direkt am betroffenen Asset, nie global.
  */
 export default function AiBadge({ track, label = 'Visual teilweise KI-generiert', className = '' }: Props) {
-    const [visible, setVisible] = useState(track !== 'glow')
+    const [visible, setVisible] = useState(track !== 'iceberg')
 
     useEffect(() => {
-        if (track !== 'glow') return
+        if (track !== 'iceberg') return
 
         let raf: number | null = null
 
         const update = () => {
             raf = null
-            const el = document.getElementById('glow-scroll')
+            const el = document.getElementById('video-ascent')
             if (!el) return
             // Ende der Canvas-Strecke: danach schieben sich die Sektionen darüber.
             const end = el.offsetTop + el.offsetHeight - window.innerHeight * 0.35
@@ -64,7 +65,7 @@ export default function AiBadge({ track, label = 'Visual teilweise KI-generiert'
 
     return (
         <span
-            className={`ai-badge${track === 'glow' ? ' ai-badge--fixed' : ''}${visible ? ' is-on' : ''} ${className}`.trim()}
+            className={`ai-badge${track === 'iceberg' ? ' ai-badge--fixed' : ''}${visible ? ' is-on' : ''} ${className}`.trim()}
             data-ai-generated="true"
             title="Dieses Bildmaterial wurde ganz oder teilweise mit künstlicher Intelligenz erzeugt."
         >

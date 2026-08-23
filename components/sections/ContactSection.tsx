@@ -105,8 +105,8 @@ export default function ContactSection() {
                         textTransform: 'uppercase',
                         textShadow: '0 2px 24px rgba(0,0,0,0.5)',
                     }}>
-                        Was steckt unter<br />
-                        <strong style={{ fontWeight: 900 }}>der Oberfläche?</strong>
+                        Ein klarer Kurs<br />
+                        <strong style={{ fontWeight: 900 }}>für Ihre Marke.</strong>
                     </h2>
                     <p style={{
                         fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)', fontWeight: 400,

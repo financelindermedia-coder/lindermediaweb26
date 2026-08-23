@@ -4,17 +4,19 @@ import Image from 'next/image'
 import useReveal from '@/components/useReveal'
 
 /**
- * Radiale System-Grafik: LinderMedia im Zentrum, acht Disziplinen ringförmig
+ * Radiale System-Grafik: LinderMedia im Zentrum, die drei Bereiche ringförmig
  * darum, über feine gepunktete Linien verbunden. Beim Scrollen faden Linien und
  * Nodes ruhig nacheinander ein. Erklärt Zusammenhänge, nicht Leistungen.
  * Mobil: gestapeltes Raster (keine Linien).
  *
- * Steht bewusst NACH dem Leistungsteaser (KernleistungenSection) und ist ihm
- * auch typografisch nachgeordnet: die drei Hauptbereiche tragen die Aussage,
- * die Einzeldisziplinen zeigen nur, was daran alles hängt.
+ * Frueher standen hier acht Einzeldisziplinen (Fotografie, Film & Video,
+ * Webdesign, 3D, Technologie, Identität …). Die Grafik ist bewusst auf die
+ * drei Bereiche reduziert, die auch der Abstieg benennt – Strategie, Design,
+ * Markenpräsenz. Die Einzelgewerke haengen daran, sie sind aber nicht die
+ * Aussage.
  */
 type Align = 'ct' | 'cb' | 'l' | 'r'
-type Node = { label: string; sub: [string, string]; angle: number; align: Align; icon: JSX.Element }
+type Node = { label: string; claim: string; bundle: string; angle: number; align: Align; icon: JSX.Element }
 
 const I = (d: JSX.Element) => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -23,25 +25,30 @@ const I = (d: JSX.Element) => (
 )
 
 const NODES: Node[] = [
-    { label: 'Strategie', sub: ['Richtung geben.', 'Klarheit schaffen.'], angle: -90, align: 'ct',
+    // Gleichmaessig verteilt: 120 Grad zwischen den Knoten, damit die
+    // Verbindungslinien alle denselben Winkel zueinander haben. Strategie
+    // steht oben, Design links unten, Markenpraesenz rechts unten – die beiden
+    // liegen auf gleicher Hoehe. Jede Ebene traegt
+    // ihren Satz und darunter, kleiner, was in ihr gebuendelt ist. Ein
+    // Erklaertext dazwischen stand hier auch schon; er machte die Etiketten zu
+    // schwer und ist bewusst wieder raus.
+    { label: 'Strategie', claim: 'Gibt Richtung.',
+      bundle: 'Positionierung · Zielgruppe · Botschaft · Markenarchitektur',
+      angle: -90, align: 'ct',
       icon: I(<><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" /><path d="M12 1v3M12 20v3M1 12h3M20 12h3" /></>) },
-    { label: 'Design', sub: ['Ästhetik gestalten.', 'Bedeutung sichtbar machen.'], angle: -45, align: 'l',
+    { label: 'Design', claim: 'Gibt Form.',
+      bundle: 'Corporate Design · Art Direction · Identität · Bildwelt',
+      angle: 150, align: 'r',
       icon: I(<><path d="M12 20h9" /><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" /></>) },
-    { label: 'Fotografie', sub: ['Momente einfangen.', 'Echt. Ausdrucksstark.'], angle: 0, align: 'l',
-      icon: I(<><rect x="3" y="6" width="18" height="14" rx="2" /><circle cx="12" cy="13" r="4" /><path d="M8 6l1.5-2h5L16 6" /></>) },
-    { label: 'Film & Video', sub: ['Geschichten bewegen.', 'Emotionen erzeugen.'], angle: 45, align: 'l',
-      icon: I(<><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M10 9l5 3-5 3V9z" /></>) },
-    { label: 'Webdesign', sub: ['Digital erlebbar machen.', 'Funktion trifft Ästhetik.'], angle: 90, align: 'cb',
-      icon: I(<><rect x="3" y="4" width="18" height="13" rx="2" /><path d="M8 21h8M12 17v4" /></>) },
-    { label: '3D & Visualisierung', sub: ['Komplexes vereinfachen.', 'Produkte zum Leben erwecken.'], angle: 135, align: 'r',
-      icon: I(<><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z" /><path d="M12 12l9-5M12 12v10M12 12L3 7" /></>) },
-    { label: 'Technologie', sub: ['Erlebnisse entwickeln.', 'Stabil. Schnell. Sicher.'], angle: 180, align: 'r',
-      icon: I(<><path d="M8 8l-4 4 4 4M16 8l4 4-4 4" /></>) },
-    { label: 'Identität', sub: ['Marke formen.', 'Charakter zeigen.'], angle: 225, align: 'r',
-      icon: I(<><path d="M12 2l4.5 6L12 22 7.5 8 12 2z" /><path d="M7.5 8h9" /></>) },
+    { label: 'Markenpräsenz', claim: 'Macht sichtbar.',
+      bundle: 'Website · Fotografie · Film & Video · 3D-Visualisierung',
+      angle: 30, align: 'l',
+      icon: I(<><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z" /><circle cx="12" cy="12" r="3" /></>) },
 ]
 
-const R = 34 // Radius der Icon-Positionen in % der Stage
+const R = 42 // Radius der Icon-Positionen in % der Stage – mit nur drei
+// Knoten darf der Weg vom Zentrum nach aussen laenger sein: erst die Linie,
+// dann das Icon, dann der Text. Das gibt der Grafik ihren Rhythmus.
 const PLACED = NODES.map((n) => {
     const a = n.angle * (Math.PI / 180)
     return { ...n, x: 50 + R * Math.cos(a), y: 50 + R * Math.sin(a) }
@@ -52,14 +59,6 @@ export default function LeistungenSection() {
 
     return (
         <section id="system" ref={ref} className="a2 sysr">
-            <div className="sysr-head reveal" data-reveal>
-                <p className="a2-eye">| Weitere Kompetenzfelder</p>
-                <p className="sysr-title sysr-lead">
-                    Alles, was an den drei Bereichen hängt — im selben System gedacht,
-                    nicht als Liste einzeln zugekaufter Gewerke.
-                </p>
-            </div>
-
             <div className="sysr-stage">
                 <svg className="sysr-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                     {PLACED.map((n, i) => (
@@ -89,7 +88,8 @@ export default function LeistungenSection() {
                         <span className="sysr-ic">{n.icon}</span>
                         <span className="sysr-lbl">
                             <span className="sysr-name">{n.label}</span>
-                            <span className="sysr-sub">{n.sub[0]}<br />{n.sub[1]}</span>
+                            <span className="sysr-claim">{n.claim}</span>
+                            <span className="sysr-bundle">{n.bundle}</span>
                         </span>
                     </div>
                 ))}

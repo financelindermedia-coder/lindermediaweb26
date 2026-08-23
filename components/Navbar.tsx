@@ -56,9 +56,11 @@ export default function Navbar() {
             const el = document.getElementById('video-scroll')
             if (!el || !navRef.current) return
             const progress  = window.scrollY / el.offsetHeight
-            // Bis ~Frame 45 von 289 liegt der helle Nebel im Bild; danach ist
-            // der Hintergrund unter Wasser dunkel. (Siehe SCENES in TextLayer.)
-            const wantsDark = progress < 0.15
+            // Bis ~Frame 45 liegt der helle Nebel im Bild; danach ist der
+            // Hintergrund unter Wasser dunkel. Die Abstiegsstrecke deckt die
+            // Frames 1–205 ab, der Wechsel liegt also bei 45/205. (Siehe
+            // SCENES in TextLayer und DEEP_FRAME in VideoCanvas.)
+            const wantsDark = progress < 0.22
 
             if (wantsDark === darkRef.current) return
             darkRef.current = wantsDark

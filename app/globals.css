@@ -62,116 +62,6 @@ section {
     background-size: 100% 200%;
 }
 
-/* ── Akt 2: Glow-Pfad Stepstones (glasige Karten) ── */
-.gl-stone {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    transform: translate(-50%, -50%);
-    transition: opacity 0.4s ease;
-}
-.gl-stone.gl-left {
-    flex-direction: row-reverse;
-    transform: translate(-100%, -50%);
-}
-/* glowing node on the path */
-.gl-node {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    background: rgba(255, 107, 53, 0.4);
-    box-shadow: 0 0 0 rgba(255, 107, 53, 0);
-    transform: scale(0.6);
-    transition: background 0.6s ease, box-shadow 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-/* glass card */
-.gl-card {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    padding: 0.7rem 1.1rem 0.7rem 0.85rem;
-    border-radius: 12px;
-    background: rgba(6, 20, 32, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-    white-space: nowrap;
-    transition: border-color 0.6s ease, box-shadow 0.6s ease, background 0.6s ease;
-}
-.gl-icon {
-    display: grid;
-    place-items: center;
-    width: 34px;
-    height: 34px;
-    flex-shrink: 0;
-    border-radius: 8px;
-    background: rgba(255, 107, 53, 0.08);
-    color: rgba(255, 107, 53, 0.55);
-    transition: color 0.6s ease, background 0.6s ease;
-}
-.gl-icon svg { width: 18px; height: 18px; }
-.gl-text { display: flex; flex-direction: column; gap: 2px; }
-.gl-label {
-    font-size: clamp(0.85rem, 1.05vw, 1rem);
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    color: rgba(255, 255, 255, 0.5);
-    transition: color 0.6s ease;
-}
-.gl-sub {
-    font-size: clamp(0.68rem, 0.82vw, 0.78rem);
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.32);
-    transition: color 0.6s ease;
-}
-.gl-num {
-    position: absolute;
-    top: -9px;
-    left: 0.85rem;
-    font-size: 0.6rem;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    color: rgba(255, 107, 53, 0.5);
-    background: rgba(6, 20, 32, 0.7);
-    padding: 0 4px;
-    transition: color 0.6s ease;
-}
-/* active state */
-.gl-active .gl-node {
-    background: #ffb27f;
-    box-shadow: 0 0 14px 3px rgba(255, 107, 53, 0.6), 0 0 34px 10px rgba(255, 107, 53, 0.2);
-    transform: scale(1);
-}
-.gl-active .gl-card {
-    background: rgba(8, 26, 40, 0.62);
-    border-color: rgba(255, 107, 53, 0.35);
-    box-shadow: 0 12px 44px rgba(0, 0, 0, 0.45), 0 0 30px rgba(255, 107, 53, 0.12);
-}
-.gl-active .gl-icon  { color: #ffb27f; background: rgba(255, 107, 53, 0.16); }
-.gl-active .gl-label { color: #ffffff; }
-.gl-active .gl-sub   { color: rgba(255, 255, 255, 0.6); }
-.gl-active .gl-num   { color: #ffb27f; }
-.gl-pulse .gl-node { animation: glNodePulse 0.9s ease-out; }
-@keyframes glNodePulse {
-    0%   { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.6); }
-    70%  { box-shadow: 0 0 22px 14px rgba(255, 107, 53, 0); }
-    100% { box-shadow: 0 0 14px 3px rgba(255, 107, 53, 0.6), 0 0 34px 10px rgba(255, 107, 53, 0.2); }
-}
-@media (max-width: 768px) {
-    .gl-sub { display: none; }
-    .gl-card { padding: 0.5rem 0.75rem; gap: 0.55rem; }
-    .gl-icon { width: 26px; height: 26px; border-radius: 7px; }
-    .gl-icon svg { width: 15px; height: 15px; }
-    .gl-label { font-size: 0.8rem; }
-    .gl-stone { gap: 9px; }
-    /* Karten kompakt skalieren, damit die links verankerten (translate(-100%))
-       am schmalen Viewport nicht über den linken Rand hinauslaufen. */
-    .gl-stone.gl-left  { transform: translate(-100%, -50%) scale(0.84); transform-origin: right center; }
-    .gl-stone.gl-right { transform: translate(-50%, -50%) scale(0.84); transform-origin: center center; }
-}
 
 /* Screen-reader only utility (Tailwind sr-only) */
 .sr-only {
@@ -364,7 +254,7 @@ section {
     .um-hint { justify-content: flex-start; }
 }
 
-/* ── ProblemSection: Editorial-Horizontal-Scroller (fette Typo, Frosted-Glass,
+/* ── Editorial-Horizontal-Scroller (fette Typo, Frosted-Glass,
       Orange-Akzent-Panel als Pointe) ── */
 .ped {
     position: relative;
@@ -414,15 +304,6 @@ section {
 .ped-sticky {
     position: sticky; top: 0; height: 100vh; overflow: hidden;
     display: flex; align-items: center;
-}
-.ped-sticky-bg { position: absolute; inset: 0; z-index: 0; }
-.ped-sticky-bg::before {
-    content: ''; position: absolute; inset: 0;
-    background: url('/images/IB__S4.webp') center / cover no-repeat; opacity: 0.42;
-}
-.ped-sticky-bg::after {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(120deg, rgba(8, 24, 34, 0.82) 0%, rgba(8, 24, 34, 0.5) 55%, rgba(8, 24, 34, 0.7) 100%);
 }
 .ped-sticky .ped-track {
     position: relative; z-index: 1;
@@ -474,6 +355,21 @@ section {
 }
 .ped-hc-link svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
 .ped-hc-link:hover svg { transform: translateX(4px); }
+
+/* Verbindungsstueck zwischen den Karten des Prozessbereichs: derselbe Pfad wie
+   im Abstieg, nur waagerecht. Als eigenes Flex-Element zwischen den Panels –
+   ein Pseudo-Element wuerde an `.ped-panel { overflow: hidden }` abgeschnitten. */
+/* Wegstueck zwischen zwei Panels. Traegt jetzt einen Bogen statt eines
+   geraden Strichs (siehe `Wegstueck` in MethodeSection.tsx) – derselbe Schwung
+   wie die senkrechte Kette im Abstieg, nur gekippt. Etwas breiter als der
+   fruehere Strich, sonst bliebe vom Bogen nichts uebrig. Der Schein liegt als
+   Filter darauf, weil `box-shadow` einer SVG-Kurve nicht folgt. */
+.ped-path {
+    flex: 0 0 auto; align-self: center;
+    width: clamp(2.2rem, 3.8vw, 4.4rem); height: 40px;
+    filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.5));
+}
+.ped-path svg { display: block; width: 100%; height: 100%; overflow: visible; }
 
 /* Pfeil-Button unten in jedem Panel */
 .ped-arrow {
@@ -1611,11 +1507,6 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
         margin-left: 0 !important;
         max-width: none !important;
     }
-    /* Akt-2 Intro mobil ausblenden: kollidiert mit den oberen Karten
-       (die auf fixen %-Positionen liegen). Pfad + Karten tragen die Story. */
-    .gl-intro {
-        display: none !important;
-    }
     /* Frosted-Glass-Panels (Akt 1) mobil: kompaktere Polsterung */
     .tl-glass {
         padding: 1.5rem 1.4rem !important;
@@ -1698,33 +1589,6 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 @media (prefers-reduced-motion: reduce) {
     /* Ohne Bewegung bleibt der Abschnitt einfach in der Mitte stehen. */
     .tl-hint-line i { animation: none; top: 30%; }
-}
-
-/* ── Tiefster Punkt: die drei Bedingungen ──────────────────────────────────
-   Kartenformat und Takt der Stationen, nur der Aufbau innen ist eigen: zwei
-   Zeilen im selben Grad, allein das Fettgewicht setzt die Aussage vom Vorsatz
-   ab. Der Grad liegt zwischen Fliesstext und Stationsueberschrift - das sind
-   Aussagen, keine Erlaeuterungen, sie muessen aus der Karte heraustreten.
-
-   Kein Glyphen-Saum: der ist fuer Text gedacht, der frei auf dem Eis steht,
-   hier traegt die Glaskarte den Kontrast. Nebenbei verschwindet damit ein
-   Darstellungsfehler - Chrome zeichnet bei backdrop-filter mit laufender
-   Deckkraft mitunter den Schatten ohne die Buchstaben darueber. */
-.tl-deep { text-shadow: none; }
-.tl-deep-lead,
-.tl-deep-claim {
-    font-size: clamp(1.35rem, 2.2vw, 2rem);
-    line-height: 1.35;
-    letter-spacing: -0.01em;
-}
-.tl-deep-lead {
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 0.35rem;
-}
-.tl-deep-claim {
-    font-weight: 800;
-    color: #ffffff;
 }
 
 /* Über Wasser (heller Hintergrund) → helle Milchglas-Karte, dunkler Text */
@@ -2248,21 +2112,9 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
    Ein Satz, sonst nichts. Der Grundton ist der Ausklang der Problem-Sektion
    (#081c26), damit der Block nicht als eigene Sektion auftritt, sondern als
    Atempause darin — bevor die Methode mit ihrem helleren Verlauf einsetzt. */
-.wende {
-    position: relative;
-    background: #081c26;
-    padding: clamp(6rem, 12vw, 11rem) var(--px);
-}
-.wende-inner { max-width: 1000px; margin: 0 auto; text-align: center; }
-/* Kurze orange Kante statt einer Eyebrow-Zeile: dieselbe Markierung wie das
-   „|" der Sektionsköpfe, nur ohne Wort daneben. */
-.wende-rule {
-    display: block;
-    width: 42px; height: 2px;
-    margin: 0 auto clamp(1.8rem, 3vw, 2.6rem);
-    background: #ff6b35;
-    box-shadow: 0 0 18px rgba(255, 107, 53, 0.5);
-}
+/* Typografie der Wende. Sie steht seit dem Umbau ohne eigenen Hintergrund
+   mitten in der Eisberg-Strecke (siehe DescentStack) – die frueheren Regeln
+   fuer Sektionskasten und Innenbreite sind damit entfallen. */
 .wende-head {
     font-size: clamp(2.3rem, 6vw, 5.4rem);
     font-weight: 300;
@@ -2327,28 +2179,46 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     text-align: left;
 }
 .a2-duo .a2-usp-body { align-items: flex-start; }
+/* Auf denselben Grad wie die Etiketten der System-Grafik daneben und wie die
+   Projektbeschreibung in der Fallliste – nebeneinander fiel der groessere
+   Standardgrad der a2-Sektionen als Bruch auf. */
+.a2-duo .a2-usp-body p { font-size: clamp(1rem, 1.25vw, 1.15rem); }
 .a2-duo .a2-usp-body .a2-usp-emph { text-align: left; }
 /* Grafik an Spaltenbreite anpassen */
-.a2-duo .sysr-head { margin-bottom: clamp(2rem, 3vw, 3rem); }
-.a2-duo .sysr-stage { width: 100%; max-width: 520px; }
-.a2-duo .sysr-lbl { width: 132px; }
-.a2-duo .sysr-node-l .sysr-lbl { left: 40px; }
-.a2-duo .sysr-node-r .sysr-lbl { right: 40px; }
-.a2-duo .sysr-text { margin-top: clamp(2rem, 3.5vw, 3rem); }
+/* Mit nur noch drei Ebenen (oben, links, rechts) ist die Buehnenmitte nicht die
+   optische Mitte: Das Strategie-Etikett steht ueber seinem Icon und ragt rund
+   144px ueber die Buehne hinaus, unter den beiden unteren Etiketten bleiben nur
+   rund 65px. Die Haelfte dieser Differenz ist der Versatz, mit dem der
+   Dreiklang auf gleicher Hoehe wie der Text der Nachbarspalte steht.
+   Bewusst `transform` und nicht `margin-top`: Ein Margin vergroessert das
+   Grid-Item, und `align-items: center` gibt die Haelfte davon sofort wieder
+   zurueck – die Grafik bliebe zu hoch stehen. */
+.a2-duo .sysr-stage {
+    width: 100%; max-width: 520px;
+    aspect-ratio: auto; height: min(420px, 80vw);
+    transform: translateY(105px);
+}
+.a2-duo .sysr-lbl { width: 200px; }
+.a2-duo .sysr-node-l .sysr-lbl { left: 56px; }
+.a2-duo .sysr-node-r .sysr-lbl { right: 56px; }
 /* Sanfte Schatten für zusätzliche Lesbarkeit auf dem Frost-Panel */
 .a2-duo .sysr-name,
-.a2-duo .sysr-sub,
-.a2-duo .sysr-text,
-.a2-duo .sysr-title,
+.a2-duo .sysr-claim,
+.a2-duo .sysr-bundle,
 .a2-duo .a2-eye { text-shadow: 0 1px 14px rgba(3, 12, 20, 0.55); }
-.a2-duo .sysr-sub { color: rgba(255, 165, 120, 0.88); }
-.a2-duo .sysr-text { color: rgba(255, 255, 255, 0.78); }
 
-@media (max-width: 1440px) {
-    /* Zu schmal fürs radiale Nebeneinander → stapeln */
+@media (max-width: 1900px) {
+    /* Zu schmal fürs radiale Nebeneinander → stapeln. Die Schwelle ist zweimal
+       gestiegen: erst durch die ausführlicheren Etiketten der drei Ebenen,
+       dann durch den größeren Radius (mehr Luft zwischen Zentrum, Icon und
+       Text). Darunter berührt das linke Etikett den USP-Text der Nachbarspalte
+       — bei 1800px blieben nur noch 8px. */
     .a2-duo-grid { grid-template-columns: 1fr; gap: clamp(3rem, 7vw, 6rem); }
     .a2-duo .sysr { padding-left: 0; }
-    .a2-duo .sysr-stage { max-width: 680px; margin: 0 auto; }
+    /* Gestapelt steht der Dreiklang allein unter dem Text – hier zaehlt nicht
+       die Mitte einer Nachbarspalte, sondern Abstand nach oben. Der optische
+       Versatz von oben faellt deshalb weg. */
+    .a2-duo .sysr-stage { max-width: 680px; margin: clamp(2rem, 4vw, 3.5rem) auto 0; height: min(480px, 68vw); transform: none; }
 }
 
 /* Gemeinsame Glass-Card */
@@ -2476,7 +2346,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     background: currentColor; opacity: 0.75;
 }
 
-/* Variante für die gepinnte Eisberg-/Glow-Strecke: läuft fixiert mit.
+/* Variante für die Eisberg-Strecke: läuft fixiert mit.
    Safe-Area einrechnen, sonst liegt der Hinweis auf iPhones unter der
    Browserleiste bzw. dem Home-Indikator. */
 .ai-badge--fixed {
@@ -2506,6 +2376,11 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     .mfx-about-section,
     .ped-frost {
         backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    }
+    .ped-pinned.ped-frost .ped-pin::before {
+        backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+        -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 30vh), rgba(0,0,0,0) 100%);
+        mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 30vh), rgba(0,0,0,0) 100%);
     }
     /* Portrait: mobil steht der Text über dem Gesicht – Schleier dichter, und
        das Panorama wird auf die Breite skaliert, deshalb zählt hier die
@@ -2616,8 +2491,6 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 
 /* ── Radiale System-Grafik: die Kompetenzfelder als ein System ── */
 .sysr { text-align: center; }
-.sysr-head { max-width: 900px; margin: 0 auto clamp(3rem, 5vw, 5rem); }
-.sysr-title { display: inline-block; }
 
 .sysr-stage { position: relative; width: min(760px, 84vw); aspect-ratio: 1; margin: 0 auto; }
 /* Der Scrim gehoert nur zum gestapelten Mobil-Layout (Hintergrund dort per
@@ -2668,19 +2541,34 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     box-shadow: 0 0 30px rgba(255, 107, 53, 0.4); transform: translate(-50%, -50%) scale(1.08);
 }
 .sysr-lbl { position: absolute; display: flex; flex-direction: column; gap: 0.25rem; width: 200px; }
-.sysr-name { font-size: clamp(0.82rem, 1vw, 0.96rem); font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: #fff; }
-.sysr-sub { font-size: clamp(0.72rem, 0.82vw, 0.8rem); font-weight: 400; line-height: 1.35; color: rgba(255, 145, 92, 0.62); }
-/* Label-Ausrichtung je Position (Anker = Icon-Mittelpunkt) */
-.sysr-node-l .sysr-lbl  { left: 48px;  top: 0; transform: translateY(-50%); text-align: left;  align-items: flex-start; }
-.sysr-node-r .sysr-lbl  { right: 48px; top: 0; transform: translateY(-50%); text-align: right; align-items: flex-end; }
-.sysr-node-ct .sysr-lbl { left: 0; bottom: 48px; transform: translateX(-50%); text-align: center; align-items: center; }
-.sysr-node-cb .sysr-lbl { left: 0; top: 48px;    transform: translateX(-50%); text-align: center; align-items: center; }
-
-.sysr-text {
-    max-width: 46ch; margin: clamp(3rem, 5vw, 4.5rem) auto 0;
-    font-size: clamp(1.1rem, 1.5vw, 1.32rem); font-weight: 400; line-height: 1.7;
-    color: rgba(255, 255, 255, 0.6);
+/* Dreiklang je Ebene, in der Abstufung der Projektliste: grosser Name, darunter
+   der Satz, darunter die Zeile mit den Gewerken. Vorher lagen Name und Satz auf
+   fast demselben Grad – damit gab es keine Hierarchie, nur zwei Zeilen. */
+.sysr-name {
+    font-size: clamp(1.15rem, 1.5vw, 1.5rem);
+    font-weight: 700; line-height: 1.1; letter-spacing: -0.01em;
+    text-transform: uppercase; color: #fff;
 }
+/* Die Aussage der Ebene in einem Satz – traegt den Grad, nicht der Erklaertext. */
+.sysr-claim {
+    margin-top: 0.35rem;
+    font-size: clamp(0.92rem, 1.1vw, 1.08rem); font-weight: 700; line-height: 1.35;
+    color: #ff8f5c;
+}
+/* Was in der Ebene gebuendelt ist: bewusst kleiner und ruhiger, damit die
+   Einzelgewerke die Aussage nicht ueberlagern. */
+.sysr-bundle {
+    margin-top: 0.15rem; padding-top: 0.45rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: clamp(0.68rem, 0.78vw, 0.78rem); font-weight: 400; line-height: 1.6;
+    letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.45);
+}
+/* Label-Ausrichtung je Position (Anker = Icon-Mittelpunkt) */
+.sysr-node-l .sysr-lbl  { left: 64px;  top: 0; transform: translateY(-50%); text-align: left;  align-items: flex-start; }
+.sysr-node-r .sysr-lbl  { right: 64px; top: 0; transform: translateY(-50%); text-align: right; align-items: flex-end; }
+.sysr-node-ct .sysr-lbl { left: 0; bottom: 64px; transform: translateX(-50%); text-align: center; align-items: center; }
+.sysr-node-cb .sysr-lbl { left: 0; top: 64px;    transform: translateX(-50%); text-align: center; align-items: center; }
+
 
 /* ── Akt-2 Mobile ── */
 @media (max-width: 768px) {
@@ -2695,6 +2583,10 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     .a2v-foot { gap: 0.75rem; }
 }
 @media (max-width: 1440px) {
+    /* Ab hier ist die Buehne ein gestapeltes Raster – die feste Hoehe aus dem
+       Duo-Layout (fuer die radiale Anordnung gedacht) wuerde die Liste
+       abschneiden. Sie hat hoehere Spezifitaet, muss also ausdruecklich zurueck. */
+    .a2-duo .sysr-stage { height: auto; margin-top: clamp(1rem, 3vw, 2rem); }
     /* Radiale Grafik → ruhiges, gestapeltes Raster (keine Linien) */
     .sysr-stage {
         width: 100%; max-width: 680px; aspect-ratio: auto;
@@ -2865,13 +2757,6 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 }
 @media (max-width: 900px) { .lt-grid { grid-template-columns: 1fr; } }
 
-/* Einleitung ueber der System-Grafik – ordnet sie den drei Hauptbereichen unter. */
-.sysr-lead {
-    max-width: 52ch; margin: 0 auto;
-    font-size: clamp(1rem, 1.25vw, 1.15rem); font-weight: 400; line-height: 1.7;
-    color: rgba(255, 255, 255, 0.6);
-}
-
 /* ── Projektliste: eindeutige Aktiv-Markierung ──
    Bisher unterschied nur die Deckkraft aktiv von inaktiv. Das ist zu wenig,
    sobald jemand mit der Tastatur durch die Liste geht. */
@@ -3007,3 +2892,854 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     .lt-card, .hero-cta, .cf-submit, .cf-input, .media-pause { transition: none; }
     .a2v-play--corner:hover { transform: none; }
 }
+
+/* ── Prozessbereich „Der Weg zur Wirkung" (Methode) ──────────────────────── */
+
+/* Die Einleitung ist zweistufig: erst die Haltung als eigene Zeile, darunter
+   der erklaerende Satz. Ohne diesen Zwischengrad liefe beides als ein Absatz
+   zusammen und die Aussage ginge im Fliesstext unter. */
+.ped-hc-claim {
+    font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+    font-weight: 700; line-height: 1.35; letter-spacing: 0.01em;
+    text-transform: uppercase; color: #fff;
+    margin-bottom: 1rem; max-width: 24ch;
+}
+.ped-headcell-right .ped-hc-claim { margin-left: auto; }
+
+/* Der Bereich liegt auf der Eisberg-Strecke, am tiefsten Punkt: statt eigenem
+   Farbverlauf scheint der (dort angehaltene) Canvas weichgezeichnet durch. Die
+   Trennlinien fallen weg, sonst zerschnitten sie das Bild genau an der Stelle. */
+.ped-pinned.ped-frost {
+    border-top: none; border-bottom: none;
+    background: transparent;
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+.ped-pinned.ped-frost .ped-sticky { background: transparent; }
+/* Der Schleier liegt auf dem ganzen Pin-Container, nicht auf dem 100vh-Sticky:
+   nur so kann er an den Enden der Strecke auslaufen statt am Bildschirmrand.
+   Ohne diese weiche Kante schnitte eine harte Linie quer durch den Eisberg,
+   genau an der Stelle, an der er durchlaufen soll. */
+.ped-pinned.ped-frost .ped-pin::before {
+    content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background: rgba(8, 25, 42, 0.78);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 55vh), rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 55vh), rgba(0,0,0,0) 100%);
+}
+/* Nur die Stapelreihenfolge setzen, NICHT die Positionierung: `position` steht
+   in der Basisregel und wird mobil bewusst auf `static` geschaltet (`.ped-stack`).
+   Ein `position: sticky` an dieser Stelle hat hoehere Spezifitaet und wuerde das
+   mobile Stapeln wieder aushebeln. */
+.ped-pinned.ped-frost .ped-sticky { z-index: 1; }
+
+/* Zugeordnete Leistungen im Fuss jeder Schritt-Karte: benennt konkret, was in
+   dieser Etappe passiert, bleibt aber im Grad deutlich unter dem Schritt-Text —
+   die Karten sind Etappen der Marke, keine gleichwertigen Leistungsboxen. */
+.ped-services {
+    margin-top: auto;
+    padding-top: clamp(1rem, 1.6vw, 1.4rem);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: clamp(0.78rem, 0.95vw, 0.88rem);
+    font-weight: 500; line-height: 1.5; letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Mobil wird aus dem gepinnten Querlauf eine klare vertikale Reihenfolge
+   derselben Schritte. Der Pin wird zusaetzlich im Skript stillgelegt
+   (STACK_QUERY in MethodeSection.tsx) – beide Breakpoints muessen gleich sein. */
+@media (max-width: 768px) {
+    /* `.ped { padding: 6rem 0 5rem }` weiter oben im Mobil-Block ueberschreibt
+       `.ped-pinned { padding: 0 }` (gleiche Spezifitaet, spaeter im Dokument).
+       Bei der frosted Variante blieb dadurch oben ein ungeschleierter Streifen
+       stehen, weil der Schleier auf `.ped-pin` liegt und nicht auf der Sektion. */
+    .ped-pinned { padding: 0; }
+    .ped-stack .ped-pin { height: auto !important; }
+    .ped-stack .ped-sticky {
+        position: static; height: auto; display: block;
+        overflow: visible; padding: 5rem 0;
+    }
+    .ped-stack .ped-track {
+        flex-direction: column; align-items: stretch;
+        width: auto; transform: none !important;
+        gap: clamp(1.4rem, 4vw, 2rem);
+    }
+    .ped-stack .ped-headcell { width: auto; padding-bottom: 0.6rem; }
+    /* Rechtsbuendig ergibt nur im Gegenlauf Sinn; gestapelt liest die Spalte links. */
+    .ped-stack .ped-headcell-right { text-align: left; align-items: flex-start; }
+    .ped-stack .ped-headcell-right .ped-hc-claim { margin-left: 0; }
+    .ped-stack .ped-panel { width: auto; height: auto; min-height: clamp(300px, 46vh, 420px); }
+    .ped-stack .ped-path {
+        width: 2px; height: clamp(2.2rem, 7vw, 3.4rem);
+        background: linear-gradient(180deg,
+            rgba(255, 107, 53, 0.15), #ff6b35 45%, #ff6b35 55%, rgba(255, 107, 53, 0.15));
+    }
+}
+
+/* Schleier ab der Wende: derselbe Aufbau wie im Prozessbereich, nur schon eine
+   Etappe frueher. Er endet genau am Ende der Abstiegsstrecke – dort setzt der
+   Schleier des Prozessbereichs ohne Anlauf fort, sonst entstuende an der Naht
+   eine hellere Bahn quer durch den Eisberg. */
+.dsc-veil {
+    position: absolute; z-index: 1; pointer-events: none;
+    left: 0; right: 0; top: 600vh; bottom: 0;
+    background: rgba(8, 25, 42, 0.78);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0, #000 70vh);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0, #000 70vh);
+}
+
+/* ── Abstieg: Kette aus mittigen Karten auf der Eisberg-Strecke ──────────
+   Frueher vier fixierte Szenen, die einander ueberblendet haben. Jetzt laufen
+   die Karten mittig durch das Bild und haengen an einer senkrechten Linie –
+   die Reihenfolge liest sich als Weg, nicht als Folge von Einzelbildern.
+   Positionen: siehe DescentStack.tsx (liegt absolut im 850vh-Driver). */
+.dsc {
+    position: absolute;
+    /* Die Hoehe ist gesetzt, damit die Wende unten am Ende der Abstiegsstrecke
+       haengen kann (siehe `.dsc-turn`) – mit einem Abstand in vh haenge sie an
+       den Kartenhoehen und ruecke auf jedem Viewport woanders hin. */
+    top: 351vh; height: 359vh; left: 0; right: 0;
+    z-index: 2;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0 var(--px);
+    font-family: var(--font-barlow), sans-serif;
+    /* Die Kette liegt nur ueber dem Bild – Klicks und Scrollgesten gehen durch. */
+    pointer-events: none;
+}
+.dsc-chain {
+    position: relative;
+    display: flex; flex-direction: column; align-items: center;
+    /* Feste Hoehe plus `space-between`: die Karten verteilen sich ueber immer
+       dieselbe Scroll-Strecke, egal wie hoch sie auf dem jeweiligen Viewport
+       ausfallen. Mit festem Abstand endete die Kette auf schmalen, hohen
+       Fenstern viel zu frueh und vor der Wende klaffte eine Luecke.
+       `gap` wirkt dabei als Mindestabstand. */
+    height: calc(100% - 72vh);
+    justify-content: space-between;
+    gap: 14vh;
+    width: 100%;
+}
+/* Die Linie laeuft hinter den Karten durch und verbindet die Etappen. Sie endet
+   nicht mit der letzten Karte, sondern laeuft noch ein Stueck weiter und
+   verliert sich kurz vor der Wende – der Weg fuehrt dorthin, statt vorher
+   abzubrechen. */
+/* Der Weg ist ein SVG statt einer geraden Linie (siehe `Pfad` in
+   DescentStack.tsx) – er maeandriert zwischen den Etappen und trifft an jeder
+   wieder die Mitte. Die Breite ist an die Karten gekoppelt: Ueber die volle
+   Sektionsbreite gestreckt schluege der Maeander sonst weit neben die Karten
+   aus. Der Schein liegt als Filter darauf, weil `box-shadow` einer SVG-Kurve
+   nicht folgt. */
+.dsc-path {
+    position: absolute; z-index: 0;
+    left: 50%; top: 0;
+    /* Genau so hoch wie die Kette: Die Kurve rechnet in Prozent der Kette, also
+       muessen viewBox und Kette deckungsgleich sein. Der Auslauf nach unten
+       ragt ueber die Box hinaus – dafuer `overflow: visible`. */
+    width: min(660px, 88%); height: 100%;
+    transform: translateX(-50%);
+    overflow: visible;
+    filter: drop-shadow(0 0 12px rgba(255, 107, 53, 0.5));
+    pointer-events: none;
+}
+.dsc-card {
+    position: relative; z-index: 1;
+    width: min(680px, 100%);
+    padding: clamp(1.6rem, 2.4vw, 2.4rem) clamp(1.6rem, 2.6vw, 2.8rem);
+    border-radius: 18px;
+    text-align: center;
+    background: linear-gradient(155deg, rgba(12, 26, 40, 0.62), rgba(6, 16, 26, 0.44));
+    backdrop-filter: blur(18px) saturate(1.1);
+    -webkit-backdrop-filter: blur(18px) saturate(1.1);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 26px 60px rgba(0, 0, 0, 0.42);
+}
+/* Leuchtender Wegpunkt auf der Linie, an der Oberkante jeder Karte: der Pfad
+   kommt an, die Etappe beginnt. Die beiden Striche links und rechts nehmen die
+   Linie in die Breite auf, damit der Punkt gesetzt wirkt und nicht aufgeklebt. */
+.dsc-node {
+    position: absolute; z-index: 2;
+    left: 50%; top: 0;
+    transform: translate(-50%, -50%);
+    width: 13px; height: 13px; border-radius: 50%;
+    background: #ff6b35;
+    box-shadow:
+        0 0 0 5px rgba(255, 107, 53, 0.18),
+        0 0 20px 5px rgba(255, 107, 53, 0.6);
+}
+.dsc-node::before,
+.dsc-node::after {
+    content: ''; position: absolute; top: 50%;
+    width: 16px; height: 1px;
+    background: rgba(255, 107, 53, 0.55);
+    transform: translateY(-50%);
+}
+.dsc-node::before { right: 100%; margin-right: 9px; }
+.dsc-node::after  { left: 100%;  margin-left: 9px; }
+
+/* Ruhiges Pulsieren – ohne Bewegung fuer alle, die sie abbestellt haben. */
+@media (prefers-reduced-motion: no-preference) {
+    .dsc-node { animation: dscNode 3.2s ease-in-out infinite; }
+}
+@keyframes dscNode {
+    0%, 100% { box-shadow: 0 0 0 5px rgba(255, 107, 53, 0.18), 0 0 20px 5px rgba(255, 107, 53, 0.6); }
+    50%      { box-shadow: 0 0 0 8px rgba(255, 107, 53, 0.10), 0 0 30px 8px rgba(255, 107, 53, 0.8); }
+}
+
+.dsc-kicker {
+    font-size: clamp(0.68rem, 0.8vw, 0.78rem);
+    font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55); margin-bottom: 0.9rem;
+}
+/* Kein Trennstrich: „Einzelmassnahmen" soll in einer Zeile stehen. Dafuer ist
+   die Karte breit genug, dass das laengste Wort bei jeder Viewport-Breite in
+   die Zeile passt (die Schriftgroesse waechst mit vw, die Breite ist gedeckelt).
+   `break-word` bleibt als letzte Sicherung gegen Ueberlauf stehen. */
+.dsc-title {
+    font-size: var(--h2);
+    font-weight: 300; line-height: 1.05; letter-spacing: -0.012em;
+    text-transform: uppercase; color: #fff;
+    overflow-wrap: break-word; hyphens: none;
+}
+.dsc-title strong { font-weight: 900; }
+.dsc-text {
+    font-size: clamp(1.05rem, 1.4vw, 1.28rem);
+    font-weight: 400; line-height: 1.7;
+    color: rgba(255, 255, 255, 0.82);
+    max-width: 46ch; margin: clamp(0.9rem, 1.4vw, 1.3rem) auto 0;
+}
+/* Die Wende am tiefsten Punkt: zentral, ohne Karte – sie gehoert dem Bild,
+   nicht der Kette, deshalb endet die Linie eine Etappe vorher. */
+.dsc-turn {
+    /* Unten verankert: die Wende steht unmittelbar vor dem Prozessbereich,
+       unabhaengig davon, wie hoch die Karten darueber ausfallen. */
+    position: absolute; left: 0; right: 0; bottom: 0;
+    text-align: center;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.92), 0 2px 16px rgba(0, 0, 0, 0.72);
+}
+.dsc-turn-eye {
+    font-size: clamp(0.68rem, 0.8vw, 0.78rem);
+    font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
+    color: #ff6b35; margin-bottom: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .dsc { padding: 0 1.4rem; }
+    /* Mobil steht die Wende frueher, also laeuft auch der Schleier frueher an. */
+    .dsc-veil {
+        top: 500vh;
+        backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0, #000 60vh);
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0, #000 60vh);
+    }
+    .dsc-card { padding: 1.5rem 1.4rem; }
+}
+/* Unter ~400px passt „EINZELMASSNAHMEN" in der Regelgroesse nicht mehr in eine
+   Zeile und wuerde mitten im Wort umbrechen. Lieber etwas kleiner setzen als
+   das Wort zerreissen. */
+@media (max-width: 400px) {
+    .dsc-title { font-size: 6.8vw; }
+}
+
+/* Der Weg auf der Aufstiegsstrecke (components/AufstiegsPfad.tsx). Wie im
+   Abstieg an die Lesebreite gekoppelt, sonst schluege der Maeander ueber die
+   volle Fensterbreite aus. Liegt hinter den Textszenen. */
+.aufpfad {
+    position: absolute; z-index: 0;
+    left: 50%; top: 0; bottom: 0;
+    width: min(560px, 80%); height: 100%;
+    transform: translateX(-50%);
+    overflow: visible;
+    filter: drop-shadow(0 0 12px rgba(255, 107, 53, 0.45));
+    pointer-events: none;
+}
+
+/* Wegmarke: kurzer Anschluss ueber einer Aussage (components/Wegmarke.tsx).
+   Der Schein liegt als Filter darauf, weil `box-shadow` einer SVG-Kurve nicht
+   folgt – dieselbe Behandlung wie beim Pfad im Abstieg. */
+.wegmarke {
+    display: block;
+    width: 40px; height: clamp(70px, 9vh, 118px);
+    overflow: visible;
+    filter: drop-shadow(0 0 12px rgba(255, 107, 53, 0.5));
+}
+/* In der zentrierten Szene auf der Aufstiegsstrecke mittig darueber. */
+.tl-wegmarke { margin: 0 auto clamp(1.2rem, 2.4vw, 2rem); }
+
+/* ── Scroll-Fortschritt ─────────────────────────────────────────────────── */
+/* Duenne Linie am rechten Rand, in der ein heller Abschnitt mitwandert.
+   Die Position kommt aus `--p` (0…1, gesetzt in ScrollFortschritt.tsx); die
+   Rechnung steht hier, damit pro Bild nur eine Zahl geschrieben wird. */
+.sprog {
+    position: fixed; z-index: 40;
+    right: clamp(0.8rem, 2vw, 1.9rem);
+    top: 50%; transform: translateY(-50%);
+    width: 2px; height: clamp(140px, 26vh, 260px);
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.14);
+    pointer-events: none;
+}
+.sprog-lauf {
+    position: absolute; left: 0; width: 100%;
+    height: 24%;
+    border-radius: 2px;
+    background: #ff6b35;
+    box-shadow: 0 0 12px rgba(255, 107, 53, 0.6);
+    /* Der Abschnitt laeuft innerhalb der Linie, deshalb nur ueber die
+       Restdistanz von 76 % der Hoehe. */
+    top: calc(var(--p, 0) * 76%);
+}
+/* Auf Telefonen ist der Rand knapp und der Daumen nah – dort weglassen. */
+@media (max-width: 700px) {
+    .sprog { display: none; }
+}
+
+/* ── Fallstudie (app/projekte/…) ─────────────────────────────────────────
+   Sechs nummerierte Kapitel, jedes mit grossflaechigem Bild. Aufbau und
+   Effekte folgen den Akt-2-Kapiteln der Startseite: dieselbe Typo-Skala,
+   dieselbe Akzentfarbe, dasselbe gestaffelte Einblenden ueber `.reveal`.
+   Das Bild wechselt kapitelweise die Seite (`.csx-flip`); zwei Kapitel laufen
+   ohne seitliches Bild ueber die volle Breite (`.csx-wide`). */
+.csx-page {
+    background: #08192a;
+    font-family: var(--font-barlow), sans-serif;
+    overflow-x: clip;
+}
+
+/* Der Ruecksprung liegt ueber dem Auftaktbild, nicht darueber im Fluss –
+   das Bild soll die Seite ohne Vorspann eroeffnen. */
+.csx-topbar {
+    position: absolute; z-index: 5; top: 0; left: 0; right: 0;
+    padding: clamp(1.6rem, 3vw, 2.6rem) var(--px);
+    pointer-events: none;
+}
+.csx-back, .csx-link {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: #ff6b35; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; text-decoration: none;
+    pointer-events: auto;
+    text-shadow: 0 1px 16px rgba(3, 12, 20, 0.7);
+    transition: color 0.3s ease;
+}
+.csx-back:hover, .csx-link:hover { color: #ffb27f; }
+
+/* ── Kapitelrahmen ──────────────────────────────────────────────────────── */
+.csx {
+    position: relative;
+    display: flex; align-items: center;
+    min-height: clamp(560px, 76vh, 880px);
+    padding: clamp(4.5rem, 9vw, 8rem) 0;
+    overflow: hidden;
+}
+/* Feine Trennlinie zwischen den Kapiteln – dieselbe Kante wie am Frost-Panel
+   der Startseite, damit die Strecke gegliedert bleibt, ohne zu zerfallen. */
+.csx + .csx, .csx-statement + .csx { border-top: 1px solid rgba(255, 255, 255, 0.07); }
+.csx-inner {
+    position: relative; z-index: 2;
+    width: 100%; max-width: 1560px; margin: 0 auto;
+    padding: 0 var(--px);
+}
+.csx-body { max-width: 40rem; }
+/* Bild links → Text nach rechts. */
+.csx-flip .csx-body { margin-left: auto; }
+.csx-wide .csx-body { max-width: none; }
+
+/* ── Bild mit Parallax ──────────────────────────────────────────────────── */
+/* Der Rahmen schneidet, das Bild darin ist groesser als der Rahmen (Skalierung
+   in CaseChapter.tsx) und wird beim Scrollen verschoben. */
+.csx-media {
+    position: absolute; z-index: 0; inset: 0 0 0 auto; width: 54%;
+    /* Zwingend: Das Bild ist fuer den Parallax groesser als sein Rahmen. Ohne
+       diesen Schnitt ragt es seitlich unter dem Scrim hervor und legt einen
+       hellen Streifen genau an die Kante zur Textspalte. */
+    overflow: hidden;
+}
+.csx-flip .csx-media { inset: 0 auto 0 0; }
+.csx-hero .csx-media { width: 100%; }
+.csx-media img {
+    width: 100%; height: 100%; object-fit: cover;
+    will-change: transform;
+}
+/* Blendet das Bild zur Textseite hin in den Seitengrund aus – ohne diese
+   Maske stuende die Schrift auf einer harten Bildkante. */
+/* Der Verlauf blendet frueh aus: Ueber der Textspalte deckt er voll, danach
+   soll das Motiv moeglichst unverfaelscht stehen – es traegt das Kapitel mit.
+   Die Lesbarkeit haengt nicht am Scrim, sondern am `text-shadow` der Schrift. */
+.csx-media-scrim {
+    position: absolute; inset: 0;
+    background:
+        linear-gradient(to right,
+            #08192a 0%, rgba(8, 25, 42, 0.8) 15%,
+            rgba(8, 25, 42, 0.2) 42%, rgba(8, 25, 42, 0) 74%),
+        linear-gradient(to bottom, rgba(8, 25, 42, 0.26), transparent 24%, rgba(8, 25, 42, 0.26));
+}
+.csx-flip .csx-media-scrim {
+    background:
+        linear-gradient(to left,
+            #08192a 0%, rgba(8, 25, 42, 0.8) 15%,
+            rgba(8, 25, 42, 0.2) 42%, rgba(8, 25, 42, 0) 74%),
+        linear-gradient(to bottom, rgba(8, 25, 42, 0.26), transparent 24%, rgba(8, 25, 42, 0.26));
+}
+.csx-hero .csx-media-scrim {
+    background:
+        linear-gradient(to right,
+            rgba(8, 25, 42, 0.92) 0%, rgba(8, 25, 42, 0.6) 36%,
+            rgba(8, 25, 42, 0.08) 68%, rgba(8, 25, 42, 0.2) 100%),
+        linear-gradient(to top, #08192a 0%, rgba(8, 25, 42, 0.14) 40%, transparent 66%);
+}
+
+/* Kapitel ueber die volle Breite mit Bild: Das Bild liegt flaechig hinter
+   Text und Karten, nicht seitlich daneben. Es traegt die Sektion als Grund und
+   wird deshalb deutlich staerker abgedunkelt als ein Kapitelbild – der Text
+   steht direkt darauf, nicht neben ihm. */
+.csx-wide .csx-media,
+.csx-wide.csx-flip .csx-media { inset: 0; width: 100%; }
+.csx-wide .csx-media-scrim,
+.csx-wide.csx-flip .csx-media-scrim {
+    background:
+        linear-gradient(to right, rgba(8, 25, 42, 0.78), rgba(8, 25, 42, 0.42) 55%, rgba(8, 25, 42, 0.64)),
+        linear-gradient(to bottom, #08192a, rgba(8, 25, 42, 0.24) 22%, rgba(8, 25, 42, 0.24) 78%, #08192a);
+}
+
+/* ── Auftakt ────────────────────────────────────────────────────────────── */
+.csx-hero { min-height: min(92vh, 940px); }
+/* Glass-Card wie im Leistungsblock der Startseite. */
+.csx-card {
+    max-width: 34rem;
+    padding: clamp(1.8rem, 3.2vw, 2.8rem);
+    border-radius: 20px;
+    background: rgba(8, 25, 42, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
+}
+.csx-h1 {
+    font-size: clamp(1.9rem, 3.6vw, 3.2rem);
+    font-weight: 300; line-height: 1.06; letter-spacing: -0.02em;
+    text-transform: uppercase; color: #fff;
+    margin-bottom: clamp(1.2rem, 2.2vw, 1.8rem);
+}
+.csx-h1 strong { font-weight: 900; }
+/* Der Auftritt von damals ist nicht mehr erreichbar – der Hinweis steht als
+   eigener, abgesetzter Block, nicht versteckt im Fliesstext. */
+.csx-note {
+    margin-top: clamp(1.2rem, 2.2vw, 1.8rem);
+    padding: 0.9rem 1.1rem; border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.03);
+    font-size: 0.92rem; font-weight: 400; line-height: 1.5;
+    color: rgba(255, 255, 255, 0.6);
+}
+.csx-leistungen {
+    margin-top: clamp(1.4rem, 2.6vw, 2rem);
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.13em;
+    text-transform: uppercase; color: #ff8f5c;
+}
+
+/* ── Kapitelkopf und Text ───────────────────────────────────────────────── */
+.csx-num {
+    display: flex; align-items: center; gap: 0.9rem;
+    font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em;
+    color: #ff6b35; margin-bottom: 1.1rem;
+}
+.csx-num-rule { display: block; width: 54px; height: 1px; background: #ff6b35; opacity: 0.6; }
+.csx-eye {
+    font-size: clamp(0.68rem, 0.8vw, 0.78rem);
+    font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55); margin-bottom: 1.4rem;
+}
+.csx-hero .csx-eye { color: #ff6b35; }
+.csx-h2 {
+    font-size: var(--h2);
+    font-weight: 300; line-height: 1.05; letter-spacing: -0.02em;
+    text-transform: uppercase; color: #fff;
+    margin-bottom: clamp(1.6rem, 2.8vw, 2.4rem);
+}
+.csx-h2 strong { font-weight: 900; }
+.csx-p {
+    font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+    font-weight: 400; line-height: 1.75;
+    color: rgba(255, 255, 255, 0.72);
+    max-width: 56ch;
+    /* Die Gruende stehen bewusst hell – den Kontrast traegt deshalb die Schrift
+       selbst, nicht eine staerkere Abdunklung des Bildes. */
+    text-shadow: 0 1px 3px rgba(3, 12, 20, 0.75), 0 2px 22px rgba(3, 12, 20, 0.65);
+}
+.csx-p + .csx-p { margin-top: 1.4rem; }
+
+/* Gestaffeltes Einblenden – dieselbe Reihenfolge wie in den Akt-2-Kapiteln. */
+.csx-num.reveal  { --d: 0s; }
+.csx-eye.reveal  { --d: 0.08s; }
+.csx-h1.reveal,
+.csx-h2.reveal   { --d: 0.18s; }
+.csx-p.reveal    { --d: 0.3s; }
+.csx-note.reveal { --d: 0.38s; }
+.csx-leistungen.reveal { --d: 0.46s; }
+
+/* ── Statement in voller Breite ─────────────────────────────────────────── */
+.csx-statement {
+    position: relative; overflow: hidden;
+    padding: clamp(6rem, 12vw, 11rem) var(--px);
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+/* Bild bewusst nur als Grund: der Satz traegt das Kapitel, nicht das Motiv. */
+.csx-statement-media {
+    position: absolute; inset: 0; z-index: 0;
+    background: url('/images/case-solarimpact-fundament.webp') center / cover no-repeat;
+    opacity: 0.3;
+}
+.csx-statement::after {
+    content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background:
+        radial-gradient(120% 80% at 50% 50%, rgba(8, 25, 42, 0.55), rgba(8, 25, 42, 0.92) 70%),
+        linear-gradient(to bottom, #08192a, rgba(8, 25, 42, 0) 22%, rgba(8, 25, 42, 0) 78%, #08192a);
+}
+.csx-statement-inner { position: relative; z-index: 2; }
+.csx-rule {
+    display: block; width: 42px; height: 2px;
+    margin: 0 auto clamp(1.8rem, 3vw, 2.6rem);
+    background: #ff6b35;
+    box-shadow: 0 0 18px rgba(255, 107, 53, 0.5);
+}
+.csx-statement-text {
+    font-size: clamp(1.5rem, 3.4vw, 3.1rem);
+    font-weight: 300; line-height: 1.14; letter-spacing: -0.02em;
+    text-transform: uppercase; color: rgba(255, 255, 255, 0.66);
+    max-width: 22ch; margin: 0 auto;
+    text-shadow: 0 2px 30px rgba(3, 12, 20, 0.7);
+}
+.csx-statement-text strong { font-weight: 900; color: #fff; }
+
+/* ── Die drei Saeulen (Kapitel 03) ──────────────────────────────────────── */
+.csx-pillars {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 1.8vw, 1.6rem);
+    margin-top: clamp(2.4rem, 4vw, 3.4rem);
+}
+.csx-pillar {
+    display: flex; flex-direction: column; gap: 0.75rem;
+    padding: clamp(1.4rem, 2.4vw, 2rem);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.028);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: border-color 0.35s ease, background 0.35s ease;
+}
+.csx-pillar:hover { border-color: rgba(255, 107, 53, 0.35); background: rgba(255, 255, 255, 0.045); }
+.csx-pillar-ic { color: #ff6b35; }
+.csx-pillar-ic svg { width: 30px; height: 30px; }
+.csx-pillar-name {
+    font-size: 0.92rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #fff;
+}
+.csx-pillar-text {
+    font-size: 1rem; font-weight: 400; line-height: 1.6;
+    color: rgba(255, 255, 255, 0.62);
+}
+
+/* ── Identitaets-Kacheln (Kapitel 04) ───────────────────────────────────── */
+.csx-tiles {
+    display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: clamp(1rem, 1.8vw, 1.6rem);
+    margin-top: clamp(2.4rem, 4vw, 3.4rem);
+}
+.csx-tile {
+    grid-column: span 1;
+    display: flex; flex-direction: column;
+    padding: clamp(1.2rem, 2vw, 1.7rem);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.028);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+}
+.csx-tile-span { grid-column: span 2; }
+.csx-tile-label {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: rgba(255, 255, 255, 0.45);
+    margin-bottom: 1.1rem;
+}
+.csx-tile-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.csx-tile-img {
+    width: calc(100% + 2 * clamp(1.2rem, 2vw, 1.7rem));
+    margin: 0 calc(-1 * clamp(1.2rem, 2vw, 1.7rem)) calc(-1 * clamp(1.2rem, 2vw, 1.7rem));
+    height: 100%; min-height: 130px; object-fit: cover; display: block;
+}
+
+/* Farbfelder – die Werte stammen aus dem Bildmaterial des Projekts. */
+.csx-swatches { display: flex; gap: 0.5rem; }
+.csx-swatch { flex: 1; display: flex; flex-direction: column; gap: 0.5rem; min-width: 0; }
+.csx-swatch-chip {
+    display: block; height: clamp(52px, 6vw, 78px); border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.csx-swatch-name {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: rgba(255, 255, 255, 0.7);
+}
+.csx-swatch-hex {
+    font-size: 0.66rem; font-weight: 400; letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.38);
+}
+.csx-type-name {
+    font-size: clamp(1.5rem, 2.4vw, 2.1rem); font-weight: 700;
+    letter-spacing: 0.01em; text-transform: uppercase; color: #fff;
+    margin-bottom: 0.7rem;
+}
+.csx-type-set {
+    font-size: clamp(0.72rem, 1vw, 0.86rem); font-weight: 400;
+    letter-spacing: 0.14em; color: rgba(255, 255, 255, 0.45);
+    line-height: 1.7; word-break: break-all;
+}
+
+/* ── Projektzeile im Auftakt ────────────────────────────────────────────── */
+.csx-meta {
+    margin: -0.4rem 0 1.2rem;
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: rgba(255, 255, 255, 0.5);
+}
+
+/* ── Drei Begriffe ──────────────────────────────────────────────────────── */
+/* Schlagworte, keine Inhalte – deshalb eine Zeile und keine Karten. */
+.csx-terms {
+    margin-top: clamp(1.8rem, 3vw, 2.6rem);
+    padding-top: 1.3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 0.85rem; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: rgba(255, 145, 92, 0.9);
+}
+.csx-terms-dot { margin: 0 0.6rem; opacity: 0.45; }
+.csx-terms.reveal { --d: 0.4s; }
+
+/* ── Fokuskarte ─────────────────────────────────────────────────────────── */
+/* Der Ansatz in einem Satz. Steht neben dem Fliesstext, nicht darin: Sie ist
+   die Antwort, nicht die Herleitung – und traegt deshalb die Akzentfarbe. */
+.csx-focus {
+    max-width: 34rem;
+    margin-top: clamp(2rem, 3.5vw, 3rem);
+    padding: clamp(1.4rem, 2.4vw, 2rem);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 107, 53, 0.38);
+    background:
+        linear-gradient(135deg, rgba(255, 107, 53, 0.16), rgba(255, 107, 53, 0.035));
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+.csx-focus.reveal { --d: 0.44s; }
+.csx-focus-label {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #ff8f5c; margin-bottom: 0.9rem;
+}
+.csx-focus-head {
+    font-size: clamp(1.15rem, 1.9vw, 1.6rem);
+    font-weight: 900; line-height: 1.12; letter-spacing: -0.01em;
+    text-transform: uppercase; color: #fff; margin-bottom: 0.8rem;
+}
+.csx-focus-text {
+    font-size: clamp(0.98rem, 1.2vw, 1.1rem);
+    font-weight: 400; line-height: 1.6; color: rgba(255, 255, 255, 0.75);
+}
+
+/* ── Prozesskette ───────────────────────────────────────────────────────── */
+/* Die Phasen laufen als Band durch die Sektion. Die durchgehende Linie sitzt
+   auf Hoehe der Nummern und verbindet sie – der Ablauf soll als Weg lesbar
+   sein, nicht als Aufzaehlung. */
+.csx-process {
+    position: relative;
+    list-style: none; margin: clamp(2.2rem, 4vw, 3.2rem) 0 0; padding: 0;
+    display: grid; gap: clamp(1rem, 1.6vw, 1.6rem);
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+.csx-step {
+    position: relative;
+    display: flex; flex-direction: column; gap: 0.45rem;
+    padding: clamp(1rem, 1.6vw, 1.3rem) 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+/* Markierung auf der Trennlinie, wo die Phase beginnt. */
+.csx-step::before {
+    content: ''; position: absolute; top: -4px; left: 0;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #ff6b35;
+    box-shadow: 0 0 12px rgba(255, 107, 53, 0.6);
+}
+.csx-step-nr {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em;
+    color: rgba(255, 145, 92, 0.85);
+}
+.csx-step-titel {
+    font-size: clamp(0.95rem, 1.2vw, 1.08rem); font-weight: 700;
+    line-height: 1.25; color: #fff;
+}
+.csx-step-zusatz {
+    font-size: 0.85rem; font-weight: 400; line-height: 1.5;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* ── Abbildung in voller Spaltenbreite ──────────────────────────────────── */
+/* Fuer Arbeitsergebnisse, die ganz zu sehen sein muessen (Print, Ausstattung).
+   Kein Beschnitt, kein Parallax – das Bild behaelt sein Seitenverhaeltnis. */
+.csx-figure {
+    margin: clamp(2.2rem, 4vw, 3.4rem) 0 0;
+    max-width: 1180px;
+}
+.csx-figure img {
+    display: block; width: 100%; height: auto;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
+}
+.csx-figure figcaption {
+    margin-top: 1rem;
+    font-size: 0.82rem; font-weight: 400; line-height: 1.6;
+    letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.45);
+}
+.csx-figure.reveal { --d: 0.34s; }
+/* Mehrere Abbildungen untereinander bekommen denselben Abstand wie zur ersten. */
+.csx-figure + .csx-figure { margin-top: clamp(1.4rem, 2.4vw, 2.2rem); }
+
+/* Randlos: bricht aus dem Gutter der Sektion aus und laeuft an allen Kanten
+   aus. Grafiken mit eigenem Hintergrund stehen sonst als fremdfarbiger Kasten
+   auf der Seite – so gehen sie in den Seitengrund ueber wie die Kapitelbilder.
+   Die zwei Masken werden verschnitten, damit alle vier Kanten weich sind. */
+.csx-figure--bleed {
+    max-width: none;
+    margin-left: calc(-1 * var(--px));
+    margin-right: calc(-1 * var(--px));
+}
+.csx-figure--bleed img {
+    border: none; border-radius: 0; box-shadow: none;
+    -webkit-mask-image:
+        linear-gradient(to right, transparent, #000 14%, #000 86%, transparent),
+        linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+    mask-image:
+        linear-gradient(to right, transparent, #000 14%, #000 86%, transparent),
+        linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+}
+.csx-figure--bleed figcaption {
+    margin-left: var(--px);
+    margin-right: var(--px);
+}
+
+/* ── Fehlendes Bildmaterial ─────────────────────────────────────────────── */
+/* Sichtbar als Platzhalter ausgezeichnet – kein Blindbild, das versehentlich
+   live geht. 16:9 wie die echten Bilder, damit das Layout beim Einsetzen steht. */
+.csx-figure-todo {
+    margin-top: clamp(2rem, 3.5vw, 3rem);
+    max-width: 40rem;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    background:
+        repeating-linear-gradient(135deg,
+            rgba(255, 255, 255, 0.018) 0 14px,
+            rgba(255, 255, 255, 0) 14px 28px),
+        rgba(255, 255, 255, 0.02);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.9rem; padding: 1.5rem; text-align: center;
+    color: rgba(255, 255, 255, 0.34);
+}
+.csx-figure-todo svg { width: clamp(28px, 4vw, 40px); height: auto; }
+.csx-figure-todo span {
+    font-size: 0.74rem; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; line-height: 1.6;
+}
+
+/* Bildnachweis: steht bewusst auf der Seite und nicht nur im Quelltext –
+   KI-generierte Stimmungsbilder duerfen nicht als Projektaufnahmen gelesen
+   werden. Leise gesetzt, aber lesbar. */
+.csx-bildnachweis {
+    margin-top: clamp(2rem, 3.5vw, 3rem);
+    padding-top: 1.2rem;
+    max-width: 62ch;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.82rem; font-weight: 400; line-height: 1.6;
+    color: rgba(255, 255, 255, 0.42);
+}
+
+/* ── Abschluss ──────────────────────────────────────────────────────────── */
+/* Auf allen Fallstudien gleich: zurueck, weiter zur naechsten, ins Gespraech. */
+.csx-outro {
+    display: flex; flex-direction: column; align-items: flex-start;
+    gap: clamp(1.2rem, 2.2vw, 1.8rem);
+    margin-top: clamp(2.4rem, 4vw, 3.4rem);
+}
+.csx-outro-back {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; text-decoration: none;
+    transition: color 0.3s ease;
+}
+.csx-outro-back:hover { color: #ff8f5c; }
+.csx-outro-back svg { width: 16px; height: 16px; }
+/* Der Weiterverweis ist der eigentliche Sog am Seitenende – deshalb bekommt er
+   eine eigene Flaeche statt nur eine weitere Textzeile zu sein. */
+.csx-outro-next {
+    display: flex; flex-direction: column; gap: 0.4rem;
+    padding: clamp(1rem, 1.8vw, 1.4rem) clamp(1.2rem, 2vw, 1.7rem);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+    text-decoration: none;
+    transition: border-color 0.35s ease, background 0.35s ease;
+}
+.csx-outro-next:hover { border-color: rgba(255, 107, 53, 0.4); background: rgba(255, 255, 255, 0.05); }
+.csx-outro-next-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(255, 255, 255, 0.45);
+}
+.csx-outro-next-name {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-size: clamp(1.1rem, 1.8vw, 1.5rem); font-weight: 900;
+    letter-spacing: -0.01em; text-transform: uppercase; color: #fff;
+}
+.csx-outro-next-name svg { width: 20px; height: 20px; color: #ff6b35; transition: transform 0.3s ease; }
+.csx-outro-next:hover .csx-outro-next-name svg { transform: translateX(5px); }
+.csx-cta {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    padding: 0.95rem 1.8rem; border-radius: 999px;
+    background: #ff6b35; color: #0b1820;
+    font-size: 0.82rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; text-decoration: none;
+    transition: background 0.3s ease;
+}
+.csx-cta:hover { background: #ffb27f; }
+.csx-cta svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
+.csx-cta:hover svg { transform: translateX(5px); }
+
+/* ── Schmale Schirme ────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+    .csx-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .csx-tile-span { grid-column: span 2; }
+    .csx-tile { grid-column: span 2; }
+}
+@media (max-width: 900px) {
+    /* Nebeneinander ist hier zu eng: das Bild wandert hinter den Text und
+       traegt die Sektion als Grund, der Scrim wird entsprechend dichter. */
+    .csx { min-height: clamp(480px, 68vh, 720px); }
+    .csx-media, .csx-flip .csx-media { inset: 0; width: 100%; }
+    .csx-media-scrim,
+    .csx-flip .csx-media-scrim {
+        background:
+            linear-gradient(to right, rgba(8, 25, 42, 0.93), rgba(8, 25, 42, 0.82)),
+            linear-gradient(to bottom, #08192a, rgba(8, 25, 42, 0.35) 30%, rgba(8, 25, 42, 0.35) 70%, #08192a);
+    }
+    .csx-flip .csx-body { margin-left: 0; }
+    .csx-pillars { grid-template-columns: 1fr; }
+    .csx-card { max-width: none; }
+}
+@media (max-width: 620px) {
+    .csx-swatches { flex-wrap: wrap; }
+    .csx-swatch { flex: 0 0 calc(33.333% - 0.34rem); }
+}
+/* Verweis auf die Fallstudie in der Projektliste */
+.cases-fallstudie {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    margin: 0.2rem 0 1.4rem calc(clamp(2.6rem, 4vw, 3.6rem) + 1.2rem);
+    color: #ff6b35; font-size: 0.76rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; text-decoration: none;
+}
+.cases-fallstudie:hover { color: #ffb27f; }
