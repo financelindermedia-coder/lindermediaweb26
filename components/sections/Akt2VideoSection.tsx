@@ -27,6 +27,8 @@ type Props = {
     poster?: string
     /** KI-generiertes Material: blendet den Transparenzhinweis unten rechts ein. */
     aiGenerated?: boolean
+    /** Material ist am Rechner gebaut (CGI/3D), aber nicht KI-generiert. */
+    cgiGenerated?: boolean
     /** Zeichnet die zentrierte Kompass-/Leitlinien-Animation über das Video. */
     compassOverlay?: boolean
     /**
@@ -55,6 +57,7 @@ export default function Akt2VideoSection({
     videoSrc,
     poster,
     aiGenerated = false,
+    cgiGenerated = false,
     compassOverlay = false,
     cornerPlayButton = false,
     endHoldSeconds = 0,
@@ -235,6 +238,7 @@ export default function Akt2VideoSection({
             </div>
 
             {aiGenerated && <AiBadge className="a2v-ai" />}
+            {cgiGenerated && <AiBadge art="cgi" className="a2v-ai" />}
         </section>
     )
 }

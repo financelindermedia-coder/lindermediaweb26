@@ -153,6 +153,7 @@ export default function Home() {
                         index="02"
                         kicker="Wie aus Konzept Gestaltung wird"
                         chapter="Kreation & Umsetzung"
+                        cgiGenerated
                         videoSrc={AKT2_VIDEOS.v2}
                         poster="/video/poster-lm-2.webp"
                         headline="Aus einer klaren Richtung entsteht ein Auftritt, der funktioniert."
