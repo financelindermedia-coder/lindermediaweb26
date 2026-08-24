@@ -11,10 +11,11 @@ import useVisibleRaf from '@/components/useVisibleRaf'
  * beim Herunterscrollen nach rechts, sodass die Schritte von links hereinkommen
  * (row-reverse + umgekehrte Translation).
  *
- * Mobil greift das nicht: dort wird derselbe Inhalt zu einer schlichten
- * vertikalen Reihenfolge (`.ped-stack`), kein Karussell. Der Pin und die
- * Translation werden dafuer auch im Skript stillgelegt, sonst bekaeme der
- * Container weiter eine gerechnete Hoehe.
+ * Auf schmalen ODER flachen Viewports greift das nicht: dort wird derselbe
+ * Inhalt zu einer schlichten vertikalen Reihenfolge (`.ped-stack`), kein
+ * Karussell. Der Pin und die Translation werden dafuer auch im Skript
+ * stillgelegt, sonst bekaeme der Container weiter eine gerechnete Hoehe.
+ * Siehe STACK_QUERY.
  */
 
 const ARROW = (
@@ -51,7 +52,20 @@ const STEPS = [
     },
 ]
 
-const STACK_QUERY = '(max-width: 768px)'
+/**
+ * Wann aus dem Querlauf eine gestapelte Spalte wird.
+ *
+ * Nicht nur nach Breite: Eine Karte ist mindestens 400px hoch
+ * (`.ped-panel { height: clamp(400px, 66vh, 540px) }`), der gepinnte Bereich
+ * aber genau 100vh. Auf einem quer gehaltenen Handy (844x390) passt die Karte
+ * deshalb nicht in den Ausschnitt und wird oben wie unten abgeschnitten – der
+ * Querlauf laeuft zwar, ist aber unlesbar. Unter 620px Hoehe wird darum
+ * ebenfalls gestapelt.
+ *
+ * MUSS mit der Media-Query der `.ped-stack`-Regeln in globals.css
+ * uebereinstimmen.
+ */
+const STACK_QUERY = '(max-width: 768px), (max-height: 620px)'
 
 const splitTitle = (t: string) => t.split('\n').map((l, j) => <span key={j}>{l}<br /></span>)
 

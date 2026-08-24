@@ -390,3 +390,161 @@ export function CaseProcess({
         </ol>
     )
 }
+
+/**
+ * Die strategische Wende – der Baustein, der eine Fallstudie von einem
+ * Portfolioeintrag unterscheidet.
+ *
+ * Steht bewusst zwischen Ausgangslage und Umsetzung, in voller Breite und mit
+ * eigenem Grund: Hier wird nicht gezeigt, was gemacht wurde, sondern warum es
+ * so und nicht anders gemacht wurde. Der Aufbau ist auf allen Fallstudien
+ * gleich – erst die Frage, die das Projekt zu beantworten hatte, dann die
+ * Entscheidung als Gegensatz („nicht … sondern …"), dann die Begruendung und
+ * das, was daraus folgte.
+ *
+ * Das „nicht" ist keine Abwertung des Kunden, sondern der naheliegende Weg,
+ * den fast jeder im Markt geht. Erst dadurch wird die Entscheidung eine.
+ */
+export function CaseTurn({
+    frage,
+    nicht,
+    sondern,
+    begruendung,
+    folgen,
+    image,
+}: {
+    /** Die strategische Frage des Projekts – als Frage formuliert, nicht als Aufgabe. */
+    frage: React.ReactNode
+    /** Der naheliegende Weg, der bewusst nicht gegangen wurde. */
+    nicht: React.ReactNode
+    /** Die getroffene Entscheidung. */
+    sondern: React.ReactNode
+    begruendung?: string
+    /** Was aus der Entscheidung folgte – die Bruecke in die Umsetzungskapitel. */
+    folgen?: string[]
+    /** Grossflaechiges Motiv als Grund, stark abgedunkelt. Optional. */
+    image?: string
+}) {
+    const ref = useReveal<HTMLElement>({ threshold: 0.12 })
+
+    return (
+        <section className="csx-turn" ref={ref}>
+            {image && (
+                <span
+                    className="csx-turn-media"
+                    aria-hidden="true"
+                    style={{ backgroundImage: `url('${image}')` }}
+                />
+            )}
+            <div className="csx-turn-inner">
+                <div className="csx-turn-frage-block">
+                    <p className="csx-turn-label reveal" data-reveal>Die strategische Herausforderung</p>
+                    <span className="csx-rule csx-rule--left reveal" data-reveal aria-hidden="true" />
+                    <p className="csx-turn-frage reveal" data-reveal>{frage}</p>
+                </div>
+
+                <div className="csx-turn-entscheidung">
+                    <p className="csx-turn-label csx-turn-label--akzent reveal" data-reveal>
+                        Die strategische Entscheidung
+                    </p>
+                    <p className="csx-turn-nicht reveal" data-reveal>
+                        <span className="csx-turn-marker">Nicht</span> {nicht}
+                    </p>
+                    <p className="csx-turn-sondern reveal" data-reveal>
+                        <span className="csx-turn-marker">Sondern</span> {sondern}
+                    </p>
+                    {begruendung && (
+                        <p className="csx-turn-text reveal" data-reveal>{begruendung}</p>
+                    )}
+                    {folgen && folgen.length > 0 && (
+                        <ul className="csx-turn-folgen">
+                            {folgen.map((f, i) => (
+                                <li
+                                    className="csx-turn-folge reveal"
+                                    data-reveal
+                                    key={f.slice(0, 24)}
+                                    style={{ ['--d' as string]: `${0.5 + i * 0.07}s` } as React.CSSProperties}
+                                >
+                                    {f}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            </div>
+        </section>
+    )
+}
+
+/**
+ * Wirkung: Ziel → Strategie → Massnahmen → Wirkung als eine Kette.
+ *
+ * Steht im Ergebniskapitel und beantwortet die Frage, die ein Portfolio offen
+ * laesst: Was hat sich dadurch veraendert?
+ *
+ * BEWUSST OHNE KENNZAHLEN. Fuer keines der Projekte liegen belastbare Werte zu
+ * Reichweite, Conversion oder Anfragen vor, und eine erfundene Prozentzahl
+ * beschaedigt genau die Glaubwuerdigkeit, die diese Seite aufbaut. Die Wirkung
+ * ist deshalb qualitativ beschrieben. Sobald echte Zahlen vorliegen, gehoeren
+ * sie in `kennzahlen` – der Baustein nimmt sie auf, ohne dass sich das Layout
+ * der uebrigen Fallstudien aendert.
+ */
+export function CaseImpact({
+    ziel,
+    strategie,
+    massnahmen,
+    wirkung,
+    kennzahlen,
+}: {
+    ziel: string
+    strategie: string
+    massnahmen: string[]
+    wirkung: string
+    /** Belegte Werte, falls vorhanden – z. B. { wert: '+38 %', label: 'Reichweite' }. */
+    kennzahlen?: { wert: string; label: string }[]
+}) {
+    const kette = [
+        { label: 'Ziel', text: ziel },
+        { label: 'Strategie', text: strategie },
+        { label: 'Maßnahmen', text: massnahmen.join(' · ') },
+    ]
+
+    return (
+        <div className="csx-impact">
+            <p className="csx-impact-label reveal" data-reveal>Was sich verändert hat</p>
+
+            <ol className="csx-impact-kette">
+                {kette.map((s, i) => (
+                    <li
+                        className="csx-impact-glied reveal"
+                        data-reveal
+                        key={s.label}
+                        style={{ ['--d' as string]: `${0.14 + i * 0.08}s` } as React.CSSProperties}
+                    >
+                        <span className="csx-impact-glied-label">{s.label}</span>
+                        <span className="csx-impact-glied-text">{s.text}</span>
+                    </li>
+                ))}
+                <li
+                    className="csx-impact-glied csx-impact-glied--wirkung reveal"
+                    data-reveal
+                    style={{ ['--d' as string]: '0.38s' } as React.CSSProperties}
+                >
+                    <span className="csx-impact-glied-label">Wirkung</span>
+                    <span className="csx-impact-glied-text">{wirkung}</span>
+                </li>
+            </ol>
+
+            {kennzahlen && kennzahlen.length > 0 && (
+                <dl className="csx-impact-zahlen reveal" data-reveal>
+                    {kennzahlen.map((k) => (
+                        <div className="csx-impact-zahl" key={k.label}>
+                            <dt className="csx-impact-zahl-wert">{k.wert}</dt>
+                            <dd className="csx-impact-zahl-label">{k.label}</dd>
+                        </div>
+                    ))}
+                </dl>
+            )}
+        </div>
+    )
+}

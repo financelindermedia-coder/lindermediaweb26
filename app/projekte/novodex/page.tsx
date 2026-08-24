@@ -4,9 +4,11 @@ import CaseChapter, {
     CaseFigure,
     CaseFocus,
     CaseHero,
+    CaseImpact,
     CaseOutro,
     CaseProcess,
     CaseTerms,
+    CaseTurn,
 } from '@/components/sections/CaseChapter'
 import { SITE_URL } from '@/lib/site'
 
@@ -86,6 +88,22 @@ export default function NovodexPage() {
                 image="/images/case-novodex-ausgangslage-bg.webp"
                 alt=""
                 wide
+            />
+
+            {/* Ohne Grundbild: Die übrigen Hintergründe dieser Seite sind
+                KI-Stimmungsbilder, und ausgerechnet unter der strategischen
+                Entscheidung hat ein erfundenes Motiv nichts zu suchen. */}
+            <CaseTurn
+                frage={<>Wie wird aus einer<br />handwerklichen Leistung eine Marke,<br /><strong>die nicht über den Preis verglichen wird?</strong></>}
+                nicht="ein weiterer Anbieter für Yachtdecks sein."
+                sondern={<>der Partner für<br />den gesamten Refit-Prozess.</>}
+                begruendung="Wer ein Deck anbietet, wird mit anderen Decks verglichen – über Material, Quadratmeter und Preis. Wer einen Prozess verantwortet, wird über Verlässlichkeit verglichen. Das ist ein anderer Wettbewerb, und es ist der, in dem Novodex seine Stärken überhaupt zeigen kann."
+                folgen={[
+                    'Der Prozess wird zum Produkt: sieben Phasen von der Beratung bis zur Nachbetreuung.',
+                    'Digitale Technik als Beleg für Präzision – 3D-Scan und CNC sind Argumente, kein Selbstzweck.',
+                    'Ein Kundenportal, das Fortschritt, Entscheidungen und Unterlagen an einem Ort hält.',
+                    'Eine Anfrage in zwei Schritten – und daneben steht, was danach passiert.',
+                ]}
             />
 
             <CaseChapter
@@ -171,6 +189,12 @@ export default function NovodexPage() {
                 alt=""
                 wide
             >
+                <CaseImpact
+                    ziel="Aus dem Vergleich über Material und Preis heraus – hinein in einen Vergleich über Prozesssicherheit."
+                    strategie="Nicht das Ergebnis verkaufen, sondern den Weg dorthin nachvollziehbar machen."
+                    massnahmen={['Markenentwicklung', 'Prozessdefinition', 'Kundenportal', 'Visualisierung', 'Design']}
+                    wirkung="Der Eigner entscheidet nicht mehr nur über ein Deck, sondern über einen kontrollierten Refit. Damit verschiebt sich das Gespräch vom Preis zur Verantwortung – und die läuft bei Novodex an einer Stelle zusammen."
+                />
                 <p className="csx-bildnachweis">
                     Die flächigen Hintergrundbilder dieser Seite sind KI-generierte
                     Stimmungsbilder und zeigen keine ausgeführten Arbeiten. Portal- und

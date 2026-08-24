@@ -3,8 +3,10 @@ import Link from 'next/link'
 import CaseChapter, {
     CaseFocus,
     CaseHero,
+    CaseImpact,
     CaseOutro,
     CaseTerms,
+    CaseTurn,
 } from '@/components/sections/CaseChapter'
 import { SITE_URL } from '@/lib/site'
 
@@ -69,6 +71,19 @@ export default function LubriCanPage() {
                 alt="Kolben und Pleuel eines Motors in Nahaufnahme, freigestellt vor dunklem Grund."
             />
 
+            <CaseTurn
+                frage={<>Wie wird technische Leistung<br />verständlich,<br /><strong>bevor sie erklärt werden muss?</strong></>}
+                nicht="das Produkt über seine Eigenschaften erklären."
+                sondern={<>die Leistung zeigen,<br />bevor sie erklärt wird.</>}
+                begruendung="Technische Produkte werden meist über Datenblätter verkauft. Das funktioniert bei denen, die schon wissen, wonach sie suchen – und verliert alle anderen. Deshalb steht am Anfang das Bild der Wirkung, und die technische Tiefe folgt dort, wo sie gebraucht wird."
+                folgen={[
+                    'Produktinszenierung im Performance-Umfeld statt vor weißem Grund.',
+                    'Eine gemeinsame Logik für Marke, Produktbild und Shop.',
+                    'Der Shop führt vom ersten Eindruck zur passenden Lösung, nicht zur Kategorienliste.',
+                    'Die technische Tiefe bleibt – sie steht nur nicht mehr am Anfang.',
+                ]}
+            />
+
             <CaseChapter
                 index="02"
                 eyebrow="Die Strategie"
@@ -123,6 +138,12 @@ export default function LubriCanPage() {
                 image="/images/case-lubrican-ergebnis.webp"
                 alt="Die LubriCan-Wortmarke als Leuchtschrift vor dunklem, geprägtem Grund."
             >
+                <CaseImpact
+                    ziel="Orientierung schaffen, ohne technische Tiefe aufzugeben."
+                    strategie="Wirkung vor Erklärung: erst einordnen lassen, dann informieren."
+                    massnahmen={['Branding', 'Produktinszenierung', 'Onlineshop', 'Content']}
+                    wirkung="Aus einer Produktliste wurde ein Auftritt, der die Entscheidung Schritt für Schritt trägt. Wer den Shop betritt, muss nicht bereits wissen, wonach er sucht, um fündig zu werden."
+                />
                 <CaseOutro slug="lubrican" />
             </CaseChapter>
         </main>

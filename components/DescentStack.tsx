@@ -29,7 +29,11 @@ const STATIONS: Station[] = [
     {
         id: 'wasserlinie',
         kicker: 'Schlüsselmoment',
-        title: <>90 % der Wirkung<br /><strong>entstehen darunter.</strong></>,
+        /* Bewusst ohne Prozentzahl: Eine Zahl an dieser Stelle liest sich wie
+           eine Studie, und es gibt keine. Die Seite argumentiert sonst durchweg
+           belegbar – eine frei gegriffene Quote würde genau die Glaubwürdigkeit
+           kosten, die der Abstieg aufbaut. Die Aussage bleibt dieselbe. */
+        title: <>Der größte Teil der Wirkung<br /><strong>entsteht darunter.</strong></>,
         text: 'Was Menschen wahrnehmen, ist nur das Ergebnis dessen, was darunter liegt. Jede starke Marke folgt einer Architektur. Sichtbar und unsichtbar zugleich.',
     },
     {

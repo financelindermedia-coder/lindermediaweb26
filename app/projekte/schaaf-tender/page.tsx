@@ -4,8 +4,10 @@ import CaseChapter, {
     CaseFigure,
     CaseFocus,
     CaseHero,
+    CaseImpact,
     CaseOutro,
     CaseTerms,
+    CaseTurn,
 } from '@/components/sections/CaseChapter'
 import { SITE_URL } from '@/lib/site'
 
@@ -78,6 +80,19 @@ export default function SchaafPage() {
                 image="/images/case-schaaf-ausgangslage-2.webp"
                 alt="Blick vom Teakdeck einer Superyacht: Der Tender fährt längsseits vorbei, im Hintergrund liegt eine weitere Yacht vor der bewaldeten Küste."
                 flip
+            />
+
+            <CaseTurn
+                frage={<>Wie verkauft man einen Unterschied,<br /><strong>den man erst beim zweiten Blick bemerkt?</strong></>}
+                nicht="über Größe, Leistung und Ausstattung konkurrieren."
+                sondern={<>die Details so genau zeigen,<br />dass sie zum Argument werden.</>}
+                begruendung="Ein Tender wird meist wie Zubehör ausgewählt – nach Maß, Gewicht und Motorisierung. Der Unterschied bei Schaaf liegt woanders: in der umlaufenden Kufe, in den anpassbaren Carbonteilen, in der Wahl des Antriebs. Solche Details verschwinden in einer Aufzählung. Sie brauchen Raum."
+                folgen={[
+                    'Weißraum als Mittel: ein Boot, kein Katalog.',
+                    'Ein eigener Abschnitt für die Kufe statt einer Zeile im Datenblatt.',
+                    'Farbkombinationen als sechs Ansichten, nicht als sechs Farbfelder.',
+                    'Visualisierung, bevor das Boot im Wasser lag – damit früh darüber entschieden werden kann.',
+                ]}
             />
 
             <CaseChapter
@@ -169,6 +184,12 @@ export default function SchaafPage() {
                 image="/images/case-schaaf-ergebnis-2.webp"
                 alt="Der weiße Tender in Fahrt vor der Küste, eine Person steht aufrecht am Steuer."
             >
+                <CaseImpact
+                    ziel="Den Tender aus der Zubehör-Logik lösen."
+                    strategie="Nicht lauter, genauer: Jedes Detail bekommt den Raum, in dem es überhaupt wirken kann."
+                    massnahmen={['Markenauftritt', 'Screendesign', 'Visualisierung', 'Verkaufsbroschüre', 'Manual']}
+                    wirkung="Der Auftritt macht die Details früh genug sichtbar, um darüber zu sprechen – auch über Modelle, die noch nicht gebaut waren. Verkauf und Betrieb sprechen dieselbe Sprache, vom ersten Bild bis zum Handbuch."
+                />
                 <CaseOutro slug="schaaf-tender" />
             </CaseChapter>
         </main>

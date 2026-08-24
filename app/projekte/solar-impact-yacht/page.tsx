@@ -3,9 +3,11 @@ import Link from 'next/link'
 import CaseChapter, {
     CaseFigure,
     CaseHero,
+    CaseImpact,
     CaseOutro,
     CasePillars,
     CaseTile,
+    CaseTurn,
 } from '@/components/sections/CaseChapter'
 import { SITE_URL } from '@/lib/site'
 
@@ -106,19 +108,23 @@ export default function SolarImpactPage() {
                 alt="Unterwasseraufnahme der beiden SWATH-Rümpfe: Der eigentliche Auftrieb liegt vollständig unter der Wasseroberfläche."
             />
 
-            {/* Der Satz traegt die Haltung des Projekts – deshalb steht er allein,
-                in voller Breite, zwischen Ausgangslage und Fundament. */}
-            <section className="csx-statement">
-                <span className="csx-statement-media" aria-hidden="true" />
-                <div className="csx-statement-inner">
-                    <span className="csx-rule" aria-hidden="true" />
-                    <p className="csx-statement-text">
-                        Nicht die Technologie<br />
-                        sollte im Mittelpunkt stehen.<br />
-                        <strong>Sondern die Veränderung,<br />die sie ermöglichen kann.</strong>
-                    </p>
-                </div>
-            </section>
+            {/* Die Wende des Projekts: erst die Frage, die zu beantworten war,
+                dann die Entscheidung, aus der alles Weitere folgt. Sie steht
+                zwischen Ausgangslage und Fundament, weil ab hier nicht mehr das
+                Problem beschrieben wird, sondern der Weg heraus. */}
+            <CaseTurn
+                image="/images/case-solarimpact-fundament.webp"
+                frage={<>Wie wird aus einer Technologie,<br />die kaum jemand kennt,<br /><strong>eine Marke, der man vertraut?</strong></>}
+                nicht="die Technologie in den Mittelpunkt stellen und sie erklären."
+                sondern={<>die Veränderung zeigen,<br />die sie möglich macht.</>}
+                begruendung="SWATH lässt sich erklären. Aber eine Erklärung schafft noch kein Vertrauen – sie setzt voraus, dass jemand lange genug zuhört. Deshalb steht am Anfang nicht die Bauart, sondern das, was sie für die Zukunft der Schifffahrt bedeutet. Die Technik folgt dort, wo sie die Aussage belegt."
+                folgen={[
+                    'Positionierung als Technologieunternehmen, nicht als Yachtbauer.',
+                    'Die Bauart wird belegt statt behauptet – im direkten Vergleich zu Katamaran und Einrumpfboot.',
+                    'Visuelle Reduktion: Die Ruhe des Auftritts ist derselbe Beleg wie die Ruhe des Schiffs.',
+                    'Print und Digital tragen dieselbe Zurückhaltung – auch das, was nach dem Gespräch dableibt.',
+                ]}
+            />
 
             <CaseChapter
                 index="03"
@@ -231,6 +237,12 @@ export default function SolarImpactPage() {
                 image="/images/case-solarimpact-ergebnis-2.webp"
                 alt="Die Yacht liegt im letzten Licht des Tages ruhig vor einer flachen Bergkette."
             >
+                <CaseImpact
+                    ziel="Als technologischer Vorreiter wahrgenommen werden – nicht als weiterer Anbieter im Premium-Segment."
+                    strategie="Die Technologie nicht über Datenblätter erklären, sondern über die Zukunft, die sie möglich macht."
+                    massnahmen={['Positionierung', 'Corporate Design', 'Bildwelt', 'Webdesign', 'Geschäftsausstattung', 'Broschüre']}
+                    wirkung="Eine erklärungsbedürftige Bauart wurde in wenigen Sekunden verständlich – und die Marke dahinter als eigenständige Position im Markt lesbar, statt als technisches Detail."
+                />
                 <CaseOutro slug="solar-impact-yacht" />
             </CaseChapter>
         </main>

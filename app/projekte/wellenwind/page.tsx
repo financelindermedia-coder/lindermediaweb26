@@ -1,10 +1,13 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import CaseChapter, {
+    CaseFigure,
     CaseFocus,
     CaseHero,
+    CaseImpact,
     CaseOutro,
     CaseTerms,
+    CaseTurn,
 } from '@/components/sections/CaseChapter'
 import { SITE_URL } from '@/lib/site'
 
@@ -68,6 +71,19 @@ export default function WellenwindPage() {
                 alt="Zwei Segler am Steuerrad einer Yacht in Fahrt, Gischt schlägt über die Bordwand."
             />
 
+            <CaseTurn
+                frage={<>Wie behauptet sich eine neue Marke<br />zwischen etablierten Segelmarken,<br /><strong>ohne über den Preis zu konkurrieren?</strong></>}
+                nicht="eine weitere Marke für Segelbekleidung sein."
+                sondern={<>eine Haltung,<br />die auch an Land trägt.</>}
+                begruendung="Über Produktmerkmale lässt sich in diesem Markt nichts gewinnen – Material, Schnitt und Preis sind vergleichbar. Ein Lebensgefühl ist es nicht. Deshalb stand am Anfang nicht das Kleidungsstück, sondern die Frage, welche Momente die Marke miteinander verbinden."
+                folgen={[
+                    'Küstengeist statt Segelsport: Die Marke funktioniert auch abseits des Wassers.',
+                    'Eine Bildwelt aus Momenten statt aus Produktaufnahmen.',
+                    'Shop, Kampagne und Social Content entstehen aus derselben Quelle.',
+                    'Ein Rahmen, der neue Produkte aufnimmt, ohne sich jedes Mal neu erklären zu müssen.',
+                ]}
+            />
+
             <CaseChapter
                 index="02"
                 eyebrow="Die Strategie"
@@ -108,10 +124,20 @@ export default function WellenwindPage() {
                     'Shop, Kampagnenmotive und Bewegtbild greifen dieselbe Bildsprache auf. Ein Motiv am Hafen, ein vertikales Social-Video oder ein Produkt im Shop gehören sichtbar zur selben Marke.',
                     'Dadurch kann Wellenwind in unterschiedlichen Formaten präsent sein, ohne sich mit jeder neuen Maßnahme neu erklären zu müssen.',
                 ]}
-                image="/images/case-wellenwind-kampagne-2.webp"
-                alt="Startseite des Wellenwind-Onlineshops mit großflächigem Motiv und der Navigation zu den Kollektionen."
-                flip
-            />
+                // Grund ist der Instagram-Auftritt der Marke, perspektivisch
+                // angeschnitten – das Kapitel handelt genau davon, dass dieselbe
+                // Bildsprache in jedem Format wiederkehrt. Aufgenommen von
+                // instagram.com/wellenwind.shop (siehe Bildnachweis unten).
+                image="/images/case-wellenwind-social-bg.webp"
+                alt=""
+                wide
+            >
+                <CaseFigure
+                    src="/images/case-wellenwind-kampagne-2.webp"
+                    alt="Startseite des Wellenwind-Onlineshops mit großflächigem Motiv und der Navigation zu den Kollektionen."
+                    caption="Der Onlineshop – dieselbe Bildsprache wie im Feed, nur in einem anderen Format."
+                />
+            </CaseChapter>
 
             <CaseChapter
                 index="05"
@@ -123,8 +149,24 @@ export default function WellenwindPage() {
                 ]}
                 image="/images/case-wellenwind-ergebnis-2.webp"
                 alt="Eine Seglerin im Hoodie mit dem Motiv Sea of Life an Bord, dahinter glitzert das Wasser."
+                // Die Seglerin steht bei rund 78 % der Bildbreite. Der Rahmen ist
+                // deutlich schmaler als das 16:9-Material, mittig zugeschnitten
+                // blieb von ihr nur die Schulter am rechten Rand.
+                imagePosition="85% center"
             >
                 <CaseTerms items={['Eine Marke, die sich nach Meer anfühlt – und bleibt']} />
+                <CaseImpact
+                    ziel="Wiedererkennbar werden, bevor das Sortiment wächst."
+                    strategie="Content nicht als Produktwerbung führen, sondern als wiedererkennbare Themenwelt."
+                    massnahmen={['Markenstrategie', 'Bildwelt', 'Onlineshop', 'Kampagnenmotive', 'Social Content']}
+                    wirkung="Produkt, Shop und Content gehören sichtbar zur selben Marke. Jede neue Maßnahme zahlt auf das Bestehende ein, statt bei null anzufangen – die Marke wird mit jedem Motiv erkennbarer statt beliebiger."
+                />
+                <p className="csx-bildnachweis">
+                    Der flächige Grund im Kapitel „Kampagne &amp; Content“ ist eine
+                    Aufnahme des Instagram-Auftritts der Marke
+                    (instagram.com/wellenwind.shop, August 2026); die Beiträge
+                    stammen aus dem Projekt, die Oberfläche darum von Instagram.
+                </p>
                 <CaseOutro slug="wellenwind" />
             </CaseChapter>
         </main>

@@ -27,8 +27,16 @@ import usePrefersReducedMotion from '@/components/usePrefersReducedMotion'
 type Projekt = {
     nr: string
     name: string
-    /** Disziplinen-Zeile, z. B. „Branding · Webdesign · Positionierung". */
-    leistungen: string
+    /**
+     * Was das Projekt geloest hat – NICHT, welche Disziplinen dafuer noetig
+     * waren.
+     *
+     * Die Disziplinen stehen im Kicker der jeweiligen Fallstudie. Hier zaehlt
+     * die Frage, die ein Besucher an die Uebersicht stellt: „Hatten die schon
+     * mal mein Problem?" – „Branding · Webdesign · Positionierung" beantwortet
+     * das nicht, „Positionierung · Technologie-Vermittlung" schon.
+     */
+    problem: string
     beschreibung: string
     accent: string
     /** Key-Visual der Marke, 16:9. */
@@ -50,7 +58,7 @@ const PROJEKTE: Projekt[] = [
     {
         nr: '01',
         name: 'Solar Impact Yacht',
-        leistungen: 'Branding · Webdesign · Positionierung',
+        problem: 'Positionierung · Technologie-Vermittlung',
         beschreibung:
             'Markenauftritt für ein Hightech-Startup, das innovative SWATH-Technologie und solarbetriebene Schifffahrt sichtbar macht.',
         accent: '#ff6b35',
@@ -67,7 +75,7 @@ const PROJEKTE: Projekt[] = [
     {
         nr: '02',
         name: 'Novodex',
-        leistungen: 'Markenentwicklung · Visualisierung · Design',
+        problem: 'Premium-Positionierung · Prozess-Sicherheit',
         beschreibung:
             'Eine Premium-Marke für individuelle Yachtdecks – klar positioniert und visuell auf den Punkt gebracht.',
         accent: '#ff7d48',
@@ -78,7 +86,7 @@ const PROJEKTE: Projekt[] = [
     {
         nr: '03',
         name: 'Wellenwind',
-        leistungen: 'Markenstrategie · Onlineshop · Content',
+        problem: 'Markenaufbau · Content-System · E-Commerce',
         beschreibung:
             'Von der Idee zur eigenständigen Segelmarke – inklusive Shop, Content und visueller Identität.',
         accent: '#f26a2e',
@@ -93,7 +101,7 @@ const PROJEKTE: Projekt[] = [
         // ENTWURF – Text von Andreas noch offen
         nr: '04',
         name: 'Marèvo',
-        leistungen: 'Markenentwicklung · Design · Bildwelt',
+        problem: 'Premium-Wahrnehmung · Differenzierung',
         beschreibung:
             'Eine Premium-Marke im Yachting-Segment – zurückhaltend, hochwertig und vom ersten Moment an unverwechselbar.',
         accent: '#ff8f5c',
@@ -104,7 +112,7 @@ const PROJEKTE: Projekt[] = [
     {
         nr: '05',
         name: 'Rainer Engel – Ein spektakuläres Leben',
-        leistungen: 'Strategie · Design · Onlineshop · Social Media',
+        problem: 'Storytelling · Reichweite · Community',
         beschreibung:
             'Konzeption und Gestaltung einer digitalen Präsenz zur authentischen Inszenierung einer außergewöhnlichen Lebensgeschichte – mit Fokus auf Storytelling und visuelle Kommunikation.',
         accent: '#c94a1e',
@@ -118,7 +126,7 @@ const PROJEKTE: Projekt[] = [
         // ENTWURF – Text von Andreas noch offen
         nr: '06',
         name: 'LubriCan',
-        leistungen: 'Branding · Produktinszenierung · Onlineshop · Content',
+        problem: 'Produktverständnis · E-Commerce',
         beschreibung:
             'Ein technisches Produkt im Performance-Umfeld – inszeniert für einen Markt, der Leistung sehen will, bevor sie erklärt wird.',
         accent: '#e0561f',
@@ -134,7 +142,7 @@ const PROJEKTE: Projekt[] = [
         // Andreas: Screendesign und alles Weitere ausser der Programmierung.
         nr: '07',
         name: 'Schaaf Tender',
-        leistungen: 'Markenauftritt · Screendesign · Visualisierung · Print',
+        problem: 'Differenzierung · Premium-Wahrnehmung',
         beschreibung:
             'Markenauftritt für einen Superyacht-Tender, der sich nicht über Größe unterscheidet, sondern über Details.',
         accent: '#ff7d48',
@@ -458,7 +466,7 @@ export default function CasesSection() {
                                     <span className="cases-num">{p.nr}</span>
                                     <span className="cases-item-main">
                                         <span className="cases-name">{p.name}</span>
-                                        <span className="cases-branche">{p.leistungen}</span>
+                                        <span className="cases-branche">{p.problem}</span>
                                         <span className="cases-detail">
                                             <span className="cases-detail-inner">
                                                 <span className="cases-desc">{p.beschreibung}</span>
@@ -498,7 +506,7 @@ export default function CasesSection() {
                             </KeyVisualFrame>
                             <span className="cslide-nr">{p.nr} — Projekt</span>
                             <h3 className="cslide-name">{p.name}</h3>
-                            <p className="cslide-branche">{p.leistungen}</p>
+                            <p className="cslide-branche">{p.problem}</p>
                             <p className="cslide-desc">{p.beschreibung}</p>
                             {p.fallstudie && (
                                 <Link className="cslide-btn" href={p.fallstudie}>

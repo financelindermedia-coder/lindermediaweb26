@@ -48,6 +48,22 @@ const RISE_RATIO = RISE_FRAME / USE_FRAMES
  */
 const NARROW_QUERY = '(max-width: 820px)'
 
+/**
+ * Wie viel Kaderbreite mindestens im Bild stehen bleiben muss.
+ *
+ * Der Eisberg nimmt rund 62 % der Breite ein. Formatfuellend (`cover`) ist das
+ * auf einem Rechner kein Problem, auf einem hochkanten Handy aber schon: Bei
+ * 390x844 zeigt `cover` nur noch 26 % der Breite – zu sehen ist blaue Textur,
+ * nicht der Berg. Damit geht mobil die ganze Erzaehlung verloren, denn der
+ * Abstieg lebt davon, dass man sieht, wie viel unter der Oberflaeche liegt.
+ *
+ * Deshalb wird auf solchen Formaten so weit herausgezoomt, dass mindestens
+ * dieser Anteil der Breite steht. Der Kader fuellt die Hoehe dann nicht mehr;
+ * was frei bleibt, wird mit der Randzone des Kaders weitergezogen (siehe
+ * drawFrame). Auf Rechnern und im Querformat aendert sich nichts.
+ */
+const MIN_BILDBREITE = 0.66
+
 export default function VideoCanvas() {
     const canvasRef       = useRef<HTMLCanvasElement>(null)
     const framesRef       = useRef<(HTMLImageElement | null)[]>(new Array(TOTAL_FRAMES).fill(null))
@@ -67,6 +83,32 @@ export default function VideoCanvas() {
         /** Naechster tatsaechlich vorhandener Frame zu einem Wunsch-Index. */
         const snap = (i: number) => i - (i % step)
 
+        /*
+         * Winziger Zwischenpuffer fuer die ausgezogenen Raender.
+         *
+         * Die Randzone direkt aufzuziehen schmiert jedes Detail zu senkrechten
+         * Streifen – im Wasser unter dem Berg ist das deutlich zu sehen. Der
+         * Umweg ueber 8x2 Pixel wirft dieses Detail vorher weg: Was bleibt, ist
+         * die Farbe der Zone als weicher Verlauf. Das ist ein Weichzeichner zum
+         * Nulltarif, ohne `ctx.filter`, das auf Handys teuer ist.
+         */
+        const rand = document.createElement('canvas')
+        rand.width = 8
+        rand.height = 2
+        const randCtx = rand.getContext('2d')
+
+        /** Eine Randzone des Kaders als Verlauf in die freie Flaeche ziehen. */
+        function zieheRand(
+            frame: HTMLImageElement,
+            sy: number, sh: number, sw: number,
+            dx: number, dy: number, dw: number, dh: number,
+        ) {
+            if (!randCtx || !ctx || dh <= 0) return
+            randCtx.clearRect(0, 0, rand.width, rand.height)
+            randCtx.drawImage(frame, 0, sy, sw, sh, 0, 0, rand.width, rand.height)
+            ctx.drawImage(rand, 0, 0, rand.width, rand.height, dx, dy, dw, dh)
+        }
+
         function setSize() {
             if (!canvas) return
             canvas.width  = window.innerWidth
@@ -81,12 +123,40 @@ export default function VideoCanvas() {
         function drawFrame(fileIdx: number) {
             const frame = framesRef.current[fileIdx]
             if (!frame || !ctx || !canvas) return
-            const scale = Math.max(canvas.width / 1920, canvas.height / 1080)
-            const dw = 1920 * scale
-            const dh = 1080 * scale
+
+            // Aus dem Bild selbst, nicht fest verdrahtet: /frames liefert
+            // 1920x1080, /frames-m 960x540 – dasselbe Format, halbe Kante.
+            const sw = frame.naturalWidth || 1920
+            const sh = frame.naturalHeight || 1080
+
+            const cover = Math.max(canvas.width / sw, canvas.height / sh)
+            const fit   = canvas.width / sw
+            // `cover` laesst `fit / cover` der Breite stehen. Faellt das unter
+            // die Grenze, wird nur so weit gezoomt, dass die Grenze haelt.
+            const scale = Math.min(cover, fit / MIN_BILDBREITE)
+
+            const dw = sw * scale
+            const dh = sh * scale
             const dx = (canvas.width - dw) / 2
             const dy = (canvas.height - dh) / 2
+
             ctx.drawImage(frame, dx, dy, dw, dh)
+
+            // Die Breite ist immer gedeckt (scale >= fit), frei bleiben kann nur
+            // oben und unten. Dort wird die aeusserste Zone des Kaders
+            // ausgezogen: Nebel oben, Wasser unten sind waagerecht nahezu
+            // einfarbig, die Naht ist deshalb nicht zu sehen. Ein Band statt
+            // einer einzelnen Zeile, damit ein Verlauf entsteht und keine Kante.
+            if (dy > 0) {
+                const band = Math.min(24, sh)
+                // Die eine Pixelzeile Ueberlappung verhindert eine Haarlinie
+                // an der Naht, wenn dy auf einem halben Geraetepixel landet.
+                zieheRand(frame, 0, band, sw, dx, 0, dw, dy + 1)
+                zieheRand(
+                    frame, sh - band, band, sw,
+                    dx, dy + dh - 1, dw, canvas.height - (dy + dh) + 1,
+                )
+            }
         }
 
         /**

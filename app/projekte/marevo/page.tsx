@@ -4,9 +4,11 @@ import CaseChapter, {
     CaseFigure,
     CaseFocus,
     CaseHero,
+    CaseImpact,
     CaseOutro,
     CasePillars,
     CaseTerms,
+    CaseTurn,
 } from '@/components/sections/CaseChapter'
 import { SITE_URL } from '@/lib/site'
 
@@ -111,6 +113,21 @@ export default function MarevoPage() {
                 wide
             />
 
+            {/* Screendesign: „Not faster at any cost. Further, because everything
+                aligns." – aus dieser Zeile stammt die Entscheidung. */}
+            <CaseTurn
+                frage={<>Wie unterscheidet sich eine Yacht<br />in einem Segment, in dem alle<br /><strong>mit denselben Zahlen werben?</strong></>}
+                nicht="lauter behaupten, was ohnehin alle behaupten."
+                sondern={<>den Maßstab wechseln.</>}
+                begruendung="Länge, Fläche und Tempo sind vergleichbar – wer so spricht, muss den Vergleich in Zahlen gewinnen. Stimmigkeit ist nicht vergleichbar. Sie verschiebt die Frage von „Wie schnell?“ zu „Wie weit, ohne sich zu verausgaben?“ – und diese Frage hat außer Marèvo niemand gestellt."
+                folgen={[
+                    'Drei Versprechen statt eines Datenblatts.',
+                    'Die Zahlen bleiben – aber in einer schlichten Tabelle, nicht in Kacheln.',
+                    'Die Bildstrecke ist nach Licht gebaut, nicht nach Ausstattung.',
+                    'Der Abschluss lädt nicht zum Kauf ein, sondern zum Kurs.',
+                ]}
+            />
+
             {/* Screendesign: „Not faster at any cost. Further, because everything aligns." */}
             <CaseChapter
                 index="02"
@@ -194,6 +211,12 @@ export default function MarevoPage() {
                 alt=""
                 wide
             >
+                <CaseImpact
+                    ziel="Innerhalb weniger Sekunden als hochwertig wahrgenommen werden – ohne Superlative."
+                    strategie="Reduktion statt Aufzählung: weniger zeigen, damit das Gezeigte trägt."
+                    massnahmen={['Markenentwicklung', 'Leitidee', 'Bildwelt', 'Screendesign']}
+                    wirkung="Premium wird nicht behauptet, sondern im Tempo des Entwurfs erfahrbar. Was bleibt, sind keine Kennwerte, sondern eine Richtung."
+                />
                 <CaseOutro slug="marevo" />
             </CaseChapter>
         </main>

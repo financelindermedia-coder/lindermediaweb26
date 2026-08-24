@@ -9,8 +9,13 @@
  * ueber den Eisberg.
  *
  * Wo die Oberfläche durchbrochen wird, ist gemessen: Bei rund 70 % der Strecke
- * taucht der Berg auf. Dort endet der Pfad (y=680) und ist davor schon
- * ausgeblendet. Ueber Wasser traegt das Bild allein.
+ * taucht der Berg auf. Der Pfad laeuft zeichnerisch bis y=680, ist aber schon
+ * bei y=585 vollstaendig ausgeblendet – er endet also nicht AN der Wasserlinie,
+ * sondern verliert sich davor. Ueber Wasser traegt das Bild allein.
+ *
+ * Am Anfang derselbe Auslauf wie im Abstieg (`Pfad` in DescentStack.tsx): erst
+ * unsichtbar, dann eingeblendet. Sonst steht direkt hinter dem Seitwaerts-
+ * Scroller eine harte Linienkante im Bild.
  *
  * Der Maeander ist flacher als im Abstieg – auf dieser Laenge wirkt derselbe
  * Ausschlag unruhig, und die Strecke soll ruhiger werden, nicht bewegter.
@@ -32,10 +37,18 @@ export default function AufstiegsPfad() {
                     gradientUnits="userSpaceOnUse"
                     x1="0" y1="0" x2="0" y2="680"
                 >
-                    <stop offset="0%" stopColor="#ff6b35" stopOpacity="0.9" />
-                    <stop offset="55%" stopColor="#ff6b35" stopOpacity="0.85" />
-                    <stop offset="84%" stopColor="#ff6b35" stopOpacity="0.45" />
-                    {/* Wasseroberfläche: hier ist Schluss. */}
+                    {/* Anfang wie im Abstieg: Der Weg setzt nicht mit einer
+                        Kante ein, sondern taucht aus dem Wasser auf. Ohne das
+                        beginnt direkt hinter dem Scroller eine harte Linie. */}
+                    <stop offset="0%" stopColor="#ff6b35" stopOpacity="0" />
+                    <stop offset="7%" stopColor="#ff6b35" stopOpacity="0.9" />
+                    <stop offset="52%" stopColor="#ff6b35" stopOpacity="0.85" />
+                    <stop offset="72%" stopColor="#ff6b35" stopOpacity="0.35" />
+                    {/* Ausgeblendet, BEVOR die Oberfläche kommt: Der Weg endet
+                        nicht an der Wasserlinie, er verliert sich davor. Bei
+                        y=585 ist nichts mehr zu sehen, der Durchbruch bei y=680
+                        gehoert dann allein dem Bild. */}
+                    <stop offset="86%" stopColor="#ff6b35" stopOpacity="0" />
                     <stop offset="100%" stopColor="#ff6b35" stopOpacity="0" />
                 </linearGradient>
             </defs>
