@@ -1345,12 +1345,53 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     gap: 1rem;
     padding-top: 1.2rem;
 }
+/* Der Teaser steht über der Beschreibung und trägt einen Grad mehr Gewicht:
+   Er sagt, WAS das Projekt beantwortet hat – die Beschreibung darunter, wie.
+   Ohne diesen Unterschied lesen sich beide Sätze als ein Absatz. */
+.cases-teaser {
+    font-size: clamp(1.06rem, 1.35vw, 1.24rem);
+    font-weight: 700;
+    line-height: 1.45;
+    color: #fff;
+    max-width: 40ch;
+}
 .cases-desc {
     font-size: clamp(1rem, 1.25vw, 1.15rem);
     font-weight: 400;
     line-height: 1.7;
     color: rgba(255, 255, 255, 0.6);
     max-width: 42ch;
+}
+/* Einleitung unter der Sektions-Headline. */
+.cases-intro {
+    margin-top: clamp(1.6rem, 2.6vw, 2.2rem);
+    max-width: 62ch;
+    font-size: clamp(1.05rem, 1.35vw, 1.24rem);
+    font-weight: 400; line-height: 1.75;
+    color: rgba(255, 255, 255, 0.62);
+}
+/* Abschluss der Projektstrecke: zentriert, groß, mit Luft – er schließt die
+   Liste ab, statt eine weitere Karte zu sein. */
+/* Die Lesebreite steht an den Absaetzen, nicht am Block: `var(--px)` ist bis zu
+   300px pro Seite – zusammen mit einer Deckelung von 760px blieben in der Mitte
+   nur 160px uebrig und der Schluss lief als schmale Saeule aus. */
+.cases-outro {
+    margin: clamp(4rem, 8vw, 8rem) auto 0;
+    padding: 0 var(--px);
+    text-align: center;
+}
+.cases-outro-head {
+    max-width: 34ch; margin: 0 auto;
+    font-size: clamp(1.4rem, 2.4vw, 2.1rem);
+    font-weight: 800; line-height: 1.3; letter-spacing: -0.01em;
+    color: #fff;
+}
+.cases-outro-text {
+    max-width: 52ch;
+    margin: clamp(0.8rem, 1.4vw, 1.2rem) auto 0;
+    font-size: clamp(1.05rem, 1.35vw, 1.24rem);
+    font-weight: 400; line-height: 1.7;
+    color: rgba(255, 255, 255, 0.6);
 }
 .cases-ergebnis {
     font-size: clamp(1rem, 1.25vw, 1.15rem);
@@ -1502,6 +1543,15 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
         right: 1.4rem !important;
         max-width: calc(100vw - 2.8rem) !important;
         text-align: left !important;
+    }
+    /* Die Aufloesungs-Szene („Was darunter traegt") sitzt am Rechner mittig:
+       `left: 50%` und `translate(-50%, -50%)` inline. Mobil wird `left` hier
+       oben auf 1.4rem gezwungen – der WAAGERECHTE Teil der Verschiebung zieht
+       die Karte dann zusaetzlich um ihre halbe Breite nach links, also aus der
+       Mitte heraus. Alle drei Szenen wollen mobil dasselbe: nur senkrecht
+       zentriert, waagerecht in den gesetzten Raendern. */
+    .text-scene {
+        transform: translateY(-50%) !important;
     }
     .station-scene p:last-child {
         margin-left: 0 !important;
@@ -1667,6 +1717,40 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     letter-spacing: -0.005em;
     color: rgba(255, 255, 255, 0.9);
 }
+/* Das Zitat als Figur: Anfuehrungszeichen darueber, Zuschreibung darunter.
+   Das Zeichen ist gross und sehr leise gesetzt – es markiert den Abschnitt als
+   Zitat, ohne ihm Aufmerksamkeit wegzunehmen. */
+.stq-figure { margin: 0; }
+.stq-mark {
+    display: block;
+    font-size: clamp(3.6rem, 7vw, 6rem);
+    line-height: 0.6;
+    font-weight: 900;
+    color: rgba(255, 107, 53, 0.34);
+    margin-bottom: clamp(0.6rem, 1.4vw, 1rem);
+}
+.stq-figure .stq-text { font-style: normal; }
+/* Zuschreibung: Rolle und Branche. Klarer abgesetzt als der Herkunftshinweis
+   darunter – sie gehoert zum Zitat, der Hinweis kommentiert es. */
+.stq-figure .stq-sub {
+    font-weight: 600; letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.72);
+}
+/* Kennzeichnet den Abschnitt als Erzaehltes, nicht als Protokoll – die
+   Einordnung muss VOR dem Satz stehen, nicht erst darunter. */
+.stq-eye {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(255, 145, 92, 0.9);
+    margin-bottom: clamp(1.4rem, 2.6vw, 2rem);
+}
+/* Die Erkenntnis traegt weniger Gewicht als die Lage: Erst die Frage des
+   Kunden, dann die Antwort – nicht umgekehrt. */
+.stq-sub {
+    margin-top: clamp(1.6rem, 3vw, 2.4rem);
+    max-width: 58ch; margin-left: auto; margin-right: auto;
+    font-size: clamp(1.02rem, 1.3vw, 1.2rem);
+    font-weight: 400; line-height: 1.7; color: rgba(255, 255, 255, 0.6);
+}
 .stq-attr {
     margin-top: clamp(2rem, 4vw, 2.8rem);
     font-size: clamp(0.82rem, 0.95vw, 0.92rem);
@@ -1819,6 +1903,58 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 .mfx-about-grid .mfx-showreel { margin-bottom: 0; }
 
 /* FAQ: ruhiger dunkler Hintergrund (kein Video), zentriert begrenzte Breite */
+/* Der Name schliesst den Abschnitt ab, statt ihn zu eroeffnen: Erst die Haltung,
+   dann die Unterschrift. */
+.mfx-about-text .mfx-name { margin-top: clamp(1.4rem, 2.4vw, 2rem); margin-bottom: 0; }
+
+/* ── Zielgruppe: „Für wen wir arbeiten" ──────────────────────────────────
+   Liegt zwischen der Personensektion (Portrait) und der FAQ (#061722) und
+   ueberbrueckt beide Toene, ohne eine eigene Farbwelt aufzumachen. */
+.zg {
+    position: relative;
+    background: linear-gradient(to bottom, #0a1c2b 0%, #061722 100%);
+    padding: clamp(5rem, 10vw, 10rem) var(--px);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+.zg-inner { max-width: 780px; margin: 0 auto; }
+.zg-eye {
+    font-size: clamp(0.68rem, 0.8vw, 0.78rem);
+    font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
+    color: #ff6b35; margin-bottom: 1.8rem;
+}
+.zg-head {
+    font-size: var(--h2);
+    font-weight: 300; line-height: 1.05; letter-spacing: -0.02em;
+    text-transform: uppercase; color: #fff;
+    margin-bottom: clamp(1.8rem, 3vw, 2.6rem);
+}
+.zg-head span { font-weight: 900; }
+/* Der Satz, der die Zielgruppe am genauesten trifft – deshalb der hoechste
+   Grad im Fliesstext dieses Abschnitts. */
+.zg-lead {
+    font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+    font-weight: 400; line-height: 1.7;
+    color: rgba(255, 255, 255, 0.92);
+    max-width: 52ch;
+    padding-left: clamp(1rem, 2vw, 1.6rem);
+    border-left: 2px solid rgba(255, 107, 53, 0.7);
+}
+.zg-text {
+    margin-top: clamp(1.4rem, 2.4vw, 2rem);
+    font-size: clamp(1.05rem, 1.35vw, 1.24rem);
+    font-weight: 400; line-height: 1.75;
+    color: rgba(255, 255, 255, 0.62);
+    max-width: 56ch;
+}
+/* Die Frage, auf die der Abschnitt hinauslaeuft. Traegt den Grad einer
+   Zwischenheadline, ohne eine zu sein. */
+.zg-frage {
+    margin-top: clamp(2.2rem, 4vw, 3.2rem);
+    font-size: clamp(1.35rem, 2.3vw, 2rem);
+    font-weight: 800; line-height: 1.3; letter-spacing: -0.01em;
+    color: #fff;
+}
+
 .mfx-faq-section { background: #061722; }
 .mfx-inner-faq { display: block; max-width: 900px; }
 .mfx-inner-faq .mfx-steps { margin-top: clamp(2rem, 4vw, 3rem); }
@@ -2059,6 +2195,10 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
         font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
         color: rgba(255, 255, 255, 0.4); margin-bottom: 1.1rem;
     }
+    .cslide-teaser {
+        font-size: 1.12rem; font-weight: 700; line-height: 1.45; color: #fff;
+        margin-bottom: 0.8rem;
+    }
     .cslide-desc {
         font-size: 1.05rem; font-weight: 400; line-height: 1.6; color: rgba(255, 255, 255, 0.72);
         margin-bottom: 1rem;
@@ -2076,6 +2216,23 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
         text-decoration: none; border: none; cursor: pointer;
     }
     .cslide-btn svg { width: 18px; height: 18px; }
+    /* Zwei Schaltflaechen stossen sonst ohne Luft aneinander – `.cslide` hat
+       bewusst kein `gap`, weil die Textbloecke darueber eigene Abstaende
+       tragen. */
+    .cslide-btn + .cslide-btn { margin-top: 0.9rem; }
+    /* „Weiter" blaettert nur weiter, es ist keine Handlung. Als zweite
+       gefuellte Flaeche direkt unter „Fallstudie ansehen" zog sie denselben
+       Blick auf sich und beide verloren. Offener Rahmen: gleiche Groesse,
+       anderes Gewicht. Die Randfarbe ist die Projektfarbe, nicht pauschal
+       Orange – so bleibt die Slide bei ihrem Akzent.
+       Das „Gespraech anfragen" der letzten Slide bleibt gefuellt: Das IST die
+       Handlung, auf die alles zulaeuft. */
+    .cslide-btn--weiter {
+        background: transparent;
+        color: var(--acc, #ff6b35);
+        border: 1px solid currentColor;
+        padding: calc(0.85rem - 1px) calc(1.5rem - 1px);
+    }
 
     .cslide-dots {
         display: flex; justify-content: center; gap: 0.6rem;
@@ -2183,7 +2340,26 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
    Projektbeschreibung in der Fallliste – nebeneinander fiel der groessere
    Standardgrad der a2-Sektionen als Bruch auf. */
 .a2-duo .a2-usp-body p { font-size: clamp(1rem, 1.25vw, 1.15rem); }
-.a2-duo .a2-usp-body .a2-usp-emph { text-align: left; }
+/* Die drei Zeilen sind der Schluss des Gedankengangs und sollen als Headline
+   stehen, nicht als weiterer Absatz.
+   Sie brauchen die Ausnahme ausdruecklich: `.a2-duo .a2-usp-body p` (0,2,1) ist
+   spezifischer als `.a2-usp-body .a2-usp-emph` (0,2,0) und hat das Statement auf
+   Fliesstextgrad heruntergezogen – im Duo also genau dort, wo es sichtbar ist. */
+.a2-duo .a2-usp-body .a2-usp-emph {
+    text-align: left;
+    margin-top: clamp(1.4rem, 2.4vw, 2.2rem);
+    font-size: clamp(1.55rem, 2.5vw, 2.3rem);
+    font-weight: 900; line-height: 1.12; letter-spacing: -0.015em;
+    color: #fff;
+}
+/* Der Satz, der auf das Statement zulaeuft – eine Stufe ueber dem Fliesstext,
+   damit die Kette Absatz → Hinfuehrung → Statement lesbar bleibt. */
+.a2-duo .a2-usp-body .a2-usp-lead {
+    font-size: clamp(1.08rem, 1.4vw, 1.28rem);
+    color: rgba(255, 255, 255, 0.92);
+}
+/* Steht direkt unter der Headline und bleibt bewusst leise. */
+.a2-duo .a2-usp-body .a2-usp-quiet { margin-top: 0.2rem; }
 /* Grafik an Spaltenbreite anpassen */
 /* Mit nur noch drei Ebenen (oben, links, rechts) ist die Buehnenmitte nicht die
    optische Mitte: Das Strategie-Etikett steht ueber seinem Icon und ragt rund
@@ -2419,6 +2595,30 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     font-size: clamp(1rem, 1.3vw, 1.2rem); color: rgba(255, 255, 255, 0.45);
     font-style: italic;
 }
+/* Die vier Verneinungen, die auf den Schlusssatz zulaufen. Untereinander statt
+   als Absatz: Die Wiederholung IST die Argumentation, im Fliesstext ginge sie
+   verloren. Bewusst ohne Aufzaehlungszeichen – es ist ein Gedankengang, keine
+   Liste; nur eine kurze orange Marke setzt die Zeilen ab. */
+.a2-usp-liste {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 0.7rem;
+    margin: 0.2rem auto;
+    max-width: 54ch; text-align: left;
+}
+/* Im Duo steht die Sektion linksbuendig (`.a2-duo .a2-usp`). Die zentrierende
+   Aussenmarge der Liste zoege sie dort als einzigen Block nach innen ein. */
+.a2-duo .a2-usp-liste { margin-left: 0; margin-right: 0; }
+.a2-usp-liste li {
+    position: relative; padding-left: 1.5rem;
+    font-size: clamp(1.02rem, 1.3vw, 1.18rem);
+    line-height: 1.6; color: rgba(255, 255, 255, 0.7);
+}
+.a2-usp-liste li::before {
+    content: ''; position: absolute;
+    left: 0; top: 0.72em;
+    width: 12px; height: 1px;
+    background: rgba(255, 107, 53, 0.7);
+}
 
 /* ── Statement (reduziert, große Typo) ── */
 .a2-statement-section { padding-top: clamp(6rem, 11vw, 11rem); padding-bottom: clamp(6rem, 11vw, 11rem); }
@@ -2428,11 +2628,52 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     background: transparent; border: none; box-shadow: none;
     backdrop-filter: none; -webkit-backdrop-filter: none; border-radius: 0;
 }
+/* Die Frage ist die Headline dieser Sektion und traegt deshalb denselben Grad
+   wie jede andere: `var(--h2)`, 300 fuer die erste Zeile, 900 fuer die zweite,
+   in Versalien. Sie stand als einzige Sektionsheadline der Seite kleiner
+   (2,6rem statt 3,6rem) und in gemischter Schreibung – das las sich nicht als
+   ruhiger Moment, sondern als vergessene Stelle. */
 .a2-statement p {
-    font-size: clamp(1.5rem, 3vw, 2.6rem); font-weight: 300; line-height: 1.28;
-    letter-spacing: -0.015em; color: rgba(255, 255, 255, 0.86);
+    font-size: var(--h2); font-weight: 300; line-height: 1.05;
+    letter-spacing: -0.012em; text-transform: uppercase; color: #fff;
 }
-.a2-statement .a2-statement-emph { margin-top: 1.2rem; font-weight: 800; color: #fff; }
+/* Kein Abstand zwischen den beiden Zeilen: Sie sind eine Headline, nicht zwei
+   Absaetze – andernorts steht dafuer ein <br> in derselben Ueberschrift. */
+.a2-statement .a2-statement-emph { margin-top: 0; font-weight: 900; color: #fff; }
+/* Der Abschnitt traegt seit der Textueberarbeitung eine Frage statt einer
+   Behauptung – Eyebrow und Angebote darunter bleiben im selben ruhigen Grad. */
+/* Muss den Grad ausdruecklich zuruecksetzen: `.a2-statement p` (0,1,1) ist
+   spezifischer als `.a2-eye` (0,1,0) und setzte das Etikett sonst in der
+   Groesse der Statement-Zeilen. */
+.a2-statement .a2-statement-eye {
+    font-size: clamp(0.68rem, 0.8vw, 0.78rem);
+    font-weight: 400; line-height: 1.4; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #ff6b35;
+    margin-bottom: clamp(1.6rem, 2.6vw, 2.4rem);
+}
+.a2-statement-liste {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 0.75rem;
+    max-width: 56ch; margin: clamp(2.2rem, 4vw, 3.4rem) auto 0;
+    text-align: left;
+}
+.a2-statement-liste li {
+    position: relative; padding-left: 1.5rem;
+    font-size: clamp(1.02rem, 1.3vw, 1.18rem);
+    font-weight: 400; line-height: 1.65;
+    color: rgba(255, 255, 255, 0.58);
+}
+.a2-statement-liste li::before {
+    content: ''; position: absolute;
+    left: 0; top: 0.75em;
+    width: 12px; height: 1px;
+    background: rgba(255, 107, 53, 0.6);
+}
+.a2-statement .a2-statement-schluss {
+    margin-top: clamp(1.8rem, 3vw, 2.6rem);
+    font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+    font-weight: 400; color: rgba(255, 255, 255, 0.9);
+}
 
 /* ── Leistungskarten (9 Disziplinen, bestehender Kartenstil) ── */
 .lk { padding-top: clamp(5rem, 9vw, 9rem); }
@@ -2712,6 +2953,23 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     box-shadow: 0 0 26px rgba(255, 107, 53, 0.32);
 }
 .hero-cta--primary:hover { background: #ff7d4e; border-color: #ff7d4e; color: #0b1820; }
+/* Vertrauenszeile unter den Buttons: beantwortet die naechste Frage nach dem
+   Klick-Impuls („Wer macht das eigentlich alles?"), ohne den CTA zu ueberlagern.
+   Deshalb bewusst leiser als die Leistungszeile darueber. */
+.hero-trust {
+    margin-top: 1.1rem;
+    font-size: clamp(0.82rem, 1vw, 0.94rem);
+    font-weight: 400; line-height: 1.6;
+    color: rgba(12, 61, 102, 0.62);
+}
+/* Uebergangszeile am Ende einer Textszene: drei Schritte in einer Zeile, im
+   selben Grad wie die Leistungszeile im Hero. */
+.tl-step {
+    margin-top: 1.3rem;
+    font-size: clamp(0.72rem, 0.9vw, 0.84rem);
+    font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(12, 61, 102, 0.7);
+}
 
 @media (max-width: 768px) {
     .hero-ctas { gap: 0.55rem; margin-top: 1.5rem; }
@@ -2845,6 +3103,49 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     display: flex; flex-direction: column; gap: 0.9rem;
     color: rgba(255, 255, 255, 0.85); font-size: 1.05rem; font-weight: 300; line-height: 1.8;
 }
+/* Die Bestaetigung fuehrt mit dem Ergebnis, nicht mit einer Hoeflichkeitsformel:
+   Wer gerade abgeschickt hat, will zuerst wissen, ob es angekommen ist. */
+.cf-done-head {
+    font-size: var(--h2);
+    font-weight: 300; line-height: 1.05; letter-spacing: -0.012em;
+    text-transform: uppercase; color: #fff;
+    margin-bottom: 0.4rem;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* Auswahlfeld „Wobei koennen wir helfen?". Native Liste, aber ohne die
+   Systemoptik: `appearance: none` plus eigener Pfeil, damit das Feld neben den
+   Eingabefeldern nicht als Fremdkoerper steht. `color-scheme: dark` sorgt
+   dafuer, dass auch die aufgeklappte Liste des Betriebssystems dunkel bleibt. */
+.cf-select {
+    appearance: none; -webkit-appearance: none;
+    color-scheme: dark;
+    padding-right: 2.6rem;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-opacity='0.7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 16px 16px;
+}
+/* Nichts gewaehlt: gleiche Farbe wie die Platzhalter der Textfelder. Ohne das
+   steht „Bitte waehlen" in vollem Weiss und sieht aus wie ein Wert. */
+.cf-select--leer { color: rgba(255, 255, 255, 0.45); }
+/* Die aufgeklappte Liste zeichnet das Betriebssystem. `color-scheme: dark` oben
+   sorgt fuer den dunklen Grund; diese beiden Regeln setzen die Farben dort, wo
+   der Browser sie vom Element uebernimmt (Firefox, Chrome unter Windows) –
+   sonst steht die Liste hell unter einem dunklen Feld. */
+.cf-select option { background: #0b1c2a; color: #ffffff; }
+.cf-select option[value=''] { color: rgba(255, 255, 255, 0.5); }
+
+/* Datenschutzhinweis vor dem Absenden – Pflicht nach Art. 13 DSGVO und an
+   dieser Stelle auch die einzige, an der er gelesen wird. */
+.cf-privacy {
+    margin-top: 0.2rem;
+    font-size: 0.76rem; font-weight: 400; line-height: 1.6;
+    color: rgba(255, 255, 255, 0.42);
+}
+.cf-privacy a { color: rgba(255, 255, 255, 0.72); text-decoration: underline; }
+.cf-privacy a:hover { color: #ff8f5c; }
 
 /* ── Play/Pause an Hintergrundvideos ──
    Jedes automatisch laufende Video braucht einen erreichbaren Halt. Wo die
@@ -2942,6 +3243,37 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     font-size: clamp(0.78rem, 0.95vw, 0.88rem);
     font-weight: 500; line-height: 1.5; letter-spacing: 0.04em;
     color: rgba(255, 255, 255, 0.5);
+}
+
+/* Die Erklaerung unter dem Einordnungssatz. Ein Grad leiser als `.ped-quote`:
+   Der erste Satz ist die Aussage der Etappe, dieser Absatz die Begruendung. */
+.ped-steptext {
+    margin-top: clamp(0.7rem, 1.1vw, 1rem);
+    font-size: clamp(0.92rem, 1.1vw, 1.02rem);
+    font-weight: 400; line-height: 1.6;
+    color: rgba(255, 255, 255, 0.5);
+}
+/* Verweis auf die zugehoerige Leistungsseite. Steht unter den Leistungen, damit
+   die Karte erst die Etappe erklaert und dann weiterfuehrt. */
+.ped-steplink {
+    display: inline-flex; align-items: center; gap: 0.55rem; width: fit-content;
+    margin-top: clamp(0.9rem, 1.4vw, 1.2rem);
+    color: #ff6b35; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; text-decoration: none;
+}
+.ped-steplink svg { width: 16px; height: 16px; transition: transform 0.3s ease; }
+.ped-steplink:hover svg { transform: translateX(4px); }
+
+/* Die Schritt-Karten tragen seit der Textueberarbeitung mehr Inhalt (Einordnung,
+   Erklaerung, Leistungen, Verweis) als in die feste Panelhoehe passt – bei
+   `overflow: hidden` faellt sonst der Verweis unten heraus. Im Prozessbereich
+   waechst die Karte deshalb mit ihrem Inhalt; `align-items: stretch` des Tracks
+   gleicht alle Panels auf die hoechste an, sodass die Reihe ruhig bleibt.
+   Die Deckelung haelt sie im gepinnten 100vh-Ausschnitt. */
+.ped-frost .ped-panel {
+    height: auto;
+    min-height: clamp(430px, 60vh, 600px);
+    max-height: 88vh;
 }
 
 /* Mobil wird aus dem gepinnten Querlauf eine klare vertikale Reihenfolge
@@ -3095,10 +3427,11 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
     color: rgba(255, 255, 255, 0.55); margin-bottom: 0.9rem;
 }
-/* Kein Trennstrich: „Einzelmassnahmen" soll in einer Zeile stehen. Dafuer ist
-   die Karte breit genug, dass das laengste Wort bei jeder Viewport-Breite in
-   die Zeile passt (die Schriftgroesse waechst mit vw, die Breite ist gedeckelt).
-   `break-word` bleibt als letzte Sicherung gegen Ueberlauf stehen. */
+/* Kein Trennstrich: lange Woerter wie „WAHRNEHMUNG" oder „MARKENPRAESENZ"
+   duerfen nicht getrennt werden. Dafuer ist die Karte breit genug, dass das
+   laengste Wort bei jeder Viewport-Breite in die Zeile passt (die
+   Schriftgroesse waechst mit vw, die Breite ist gedeckelt). `break-word`
+   bleibt als letzte Sicherung gegen Ueberlauf stehen. */
 .dsc-title {
     font-size: var(--h2);
     font-weight: 300; line-height: 1.05; letter-spacing: -0.012em;
@@ -3111,6 +3444,29 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     font-weight: 400; line-height: 1.7;
     color: rgba(255, 255, 255, 0.82);
     max-width: 46ch; margin: clamp(0.9rem, 1.4vw, 1.3rem) auto 0;
+}
+/* Die vier Fragen der ersten Etappe. Als eigener Grad zwischen den Absaetzen –
+   sie sind der Kern der Aussage und sollen nicht im Fliesstext verschwinden.
+   Bewusst ohne Aufzaehlungszeichen: eine Liste von Fragen liest sich als
+   Checkliste, hier sind es Ueberlegungen. */
+.dsc-fragen {
+    list-style: none;
+    max-width: 46ch; margin: clamp(1rem, 1.6vw, 1.5rem) auto;
+    display: flex; flex-direction: column; gap: 0.35rem;
+    font-size: clamp(1rem, 1.3vw, 1.18rem);
+    font-weight: 600; line-height: 1.5;
+    color: rgba(255, 255, 255, 0.94);
+}
+/* Der Satz, auf den die Etappe hinauslaeuft. Akzentfarbe und Haarlinie darueber
+   setzen ihn ab, ohne eine zweite Karte im Kasten zu eroeffnen. */
+.dsc-schluss {
+    max-width: 46ch;
+    margin: clamp(1.2rem, 1.8vw, 1.7rem) auto 0;
+    padding-top: clamp(0.9rem, 1.4vw, 1.3rem);
+    border-top: 1px solid rgba(255, 107, 53, 0.35);
+    font-size: clamp(1.05rem, 1.35vw, 1.24rem);
+    font-weight: 700; line-height: 1.5;
+    color: #ff8f5c;
 }
 /* Die Wende am tiefsten Punkt: zentral, ohne Karte – sie gehoert dem Bild,
    nicht der Kette, deshalb endet die Linie eine Etappe vorher. */
@@ -3138,7 +3494,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     }
     .dsc-card { padding: 1.5rem 1.4rem; }
 }
-/* Unter ~400px passt „EINZELMASSNAHMEN" in der Regelgroesse nicht mehr in eine
+/* Unter ~400px passt das laengste Wort in der Regelgroesse nicht mehr in eine
    Zeile und wuerde mitten im Wort umbrechen. Lieber etwas kleiner setzen als
    das Wort zerreissen. */
 @media (max-width: 400px) {
@@ -3317,8 +3673,11 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     box-shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
 }
+/* Derselbe Token wie jede Sektions-Headline der Startseite: Die groesste
+   Ueberschrift einer Unterseite darf nicht kleiner ausfallen als eine
+   Zwischenueberschrift auf der Startseite. */
 .csx-h1 {
-    font-size: clamp(1.9rem, 3.6vw, 3.2rem);
+    font-size: var(--h2);
     font-weight: 300; line-height: 1.06; letter-spacing: -0.02em;
     text-transform: uppercase; color: #fff;
     margin-bottom: clamp(1.2rem, 2.2vw, 1.8rem);
@@ -3331,7 +3690,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     padding: 0.9rem 1.1rem; border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.12);
     background: rgba(255, 255, 255, 0.03);
-    font-size: 0.92rem; font-weight: 400; line-height: 1.5;
+    font-size: clamp(0.92rem, 1.1vw, 1.02rem); font-weight: 400; line-height: 1.55;
     color: rgba(255, 255, 255, 0.6);
 }
 .csx-leistungen {
@@ -3475,7 +3834,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 .csx-turn-text {
     margin-top: clamp(1.4rem, 2.4vw, 2rem);
     max-width: 52ch;
-    font-size: clamp(0.98rem, 1.15vw, 1.08rem);
+    font-size: clamp(1rem, 1.25vw, 1.15rem);
     font-weight: 400; line-height: 1.7; color: rgba(255, 255, 255, 0.62);
 }
 .csx-turn-text.reveal { --d: 0.36s; }
@@ -3487,7 +3846,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 }
 .csx-turn-folge {
     position: relative; padding-left: 1.6rem;
-    font-size: clamp(0.92rem, 1.05vw, 1rem); font-weight: 400; line-height: 1.55;
+    font-size: clamp(1rem, 1.2vw, 1.12rem); font-weight: 400; line-height: 1.6;
     color: rgba(255, 255, 255, 0.72);
 }
 .csx-turn-folge::before {
@@ -3537,7 +3896,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 }
 .csx-impact-glied--wirkung .csx-impact-glied-label { color: #ff8f5c; }
 .csx-impact-glied-text {
-    font-size: clamp(0.92rem, 1.05vw, 1rem); font-weight: 400; line-height: 1.6;
+    font-size: clamp(1rem, 1.25vw, 1.15rem); font-weight: 400; line-height: 1.6;
     color: rgba(255, 255, 255, 0.6);
 }
 .csx-impact-glied--wirkung .csx-impact-glied-text {
@@ -3579,11 +3938,11 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 .csx-pillar-ic { color: #ff6b35; }
 .csx-pillar-ic svg { width: 30px; height: 30px; }
 .csx-pillar-name {
-    font-size: 0.92rem; font-weight: 700; letter-spacing: 0.12em;
+    font-size: clamp(0.9rem, 1.05vw, 1rem); font-weight: 700; letter-spacing: 0.12em;
     text-transform: uppercase; color: #fff;
 }
 .csx-pillar-text {
-    font-size: 1rem; font-weight: 400; line-height: 1.6;
+    font-size: clamp(1rem, 1.25vw, 1.15rem); font-weight: 400; line-height: 1.7;
     color: rgba(255, 255, 255, 0.62);
 }
 
@@ -3644,7 +4003,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 /* ── Projektzeile im Auftakt ────────────────────────────────────────────── */
 .csx-meta {
     margin: -0.4rem 0 1.2rem;
-    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.16em;
+    font-size: clamp(0.82rem, 0.95vw, 0.92rem); font-weight: 700; letter-spacing: 0.16em;
     text-transform: uppercase; color: rgba(255, 255, 255, 0.5);
 }
 
@@ -3654,7 +4013,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     margin-top: clamp(1.8rem, 3vw, 2.6rem);
     padding-top: 1.3rem;
     border-top: 1px solid rgba(255, 255, 255, 0.12);
-    font-size: 0.85rem; font-weight: 700; letter-spacing: 0.16em;
+    font-size: clamp(0.82rem, 0.95vw, 0.92rem); font-weight: 700; letter-spacing: 0.16em;
     text-transform: uppercase; color: rgba(255, 145, 92, 0.9);
 }
 .csx-terms-dot { margin: 0 0.6rem; opacity: 0.45; }
@@ -3684,7 +4043,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     text-transform: uppercase; color: #fff; margin-bottom: 0.8rem;
 }
 .csx-focus-text {
-    font-size: clamp(0.98rem, 1.2vw, 1.1rem);
+    font-size: clamp(1rem, 1.25vw, 1.15rem);
     font-weight: 400; line-height: 1.6; color: rgba(255, 255, 255, 0.75);
 }
 
@@ -3716,11 +4075,11 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     color: rgba(255, 145, 92, 0.85);
 }
 .csx-step-titel {
-    font-size: clamp(0.95rem, 1.2vw, 1.08rem); font-weight: 700;
+    font-size: clamp(1rem, 1.25vw, 1.15rem); font-weight: 700;
     line-height: 1.25; color: #fff;
 }
 .csx-step-zusatz {
-    font-size: 0.85rem; font-weight: 400; line-height: 1.5;
+    font-size: clamp(0.82rem, 0.95vw, 0.92rem); font-weight: 400; line-height: 1.5;
     color: rgba(255, 255, 255, 0.5);
 }
 
@@ -3739,7 +4098,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 }
 .csx-figure figcaption {
     margin-top: 1rem;
-    font-size: 0.82rem; font-weight: 400; line-height: 1.6;
+    font-size: clamp(0.82rem, 0.95vw, 0.92rem); font-weight: 400; line-height: 1.6;
     letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.45);
 }
 .csx-figure.reveal { --d: 0.34s; }
@@ -3803,7 +4162,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     padding-top: 1.2rem;
     max-width: 62ch;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 0.82rem; font-weight: 400; line-height: 1.6;
+    font-size: clamp(0.82rem, 0.95vw, 0.92rem); font-weight: 400; line-height: 1.6;
     color: rgba(255, 255, 255, 0.42);
 }
 
@@ -3894,3 +4253,312 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     text-transform: uppercase; text-decoration: none;
 }
 .cases-fallstudie:hover { color: #ffb27f; }
+
+/* ── Leistungsseiten (app/leistungen/[slug]) ─────────────────────────────────
+   Bewusst dieselbe Sprache wie die Fallstudien: dunkler Grund, nummerierte
+   Kapitel, `.csx-*`-Typografie. Nur die Bausteine, die es dort nicht gibt,
+   bekommen eigene Regeln – ein zweiter Unterseiten-Stil waere der schnellste
+   Weg, die Marke auseinanderfallen zu lassen.
+
+   Ohne Kapitelbilder braucht die Seite zwei Korrekturen an den geerbten
+   Regeln: Der Ruecksprung kann nicht mehr absolut ueber einem Bild liegen, und
+   die 76vh-Mindesthoehe der Kapitel wuerde bei kurzen Listen leere Flaechen
+   erzeugen. */
+/* Dieselbe Geometrie wie `.csx-inner` (max-width + Gutter), sonst steht der
+   Ruecksprung 20px links neben der Textspalte darunter – auf breiten Schirmen
+   sichtbar als schiefe Kante. Gilt genauso fuer Leitgedanke und Abschluss. */
+.lst-topbar {
+    position: static;
+    max-width: 1560px; margin: 0 auto;
+    padding-top: clamp(2rem, 4vw, 3rem);
+    padding-bottom: 0;
+}
+.lst-hero {
+    min-height: 0;
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+    padding-bottom: clamp(4rem, 8vw, 7rem);
+}
+.lst-umfang,
+.lst-verweise {
+    min-height: 0;
+    padding: clamp(4rem, 7vw, 6.5rem) 0;
+}
+/* Lesespalte: breiter als die Fallstudien-Spalte (dort steht ein Bild daneben),
+   aber weit unter der Sektionsbreite – sonst laufen die Zeilen zu lang. */
+.lst-body { max-width: 62rem; }
+.lst-eye { color: #ff6b35; }
+/* Der Einordnungssatz unter der H1. Traegt den hoechsten Grad im Fliesstext:
+   Wer nur ihn liest, hat die Seite verstanden. */
+.lst-intro {
+    max-width: 46ch;
+    margin-bottom: clamp(1.4rem, 2.4vw, 2rem);
+    font-size: clamp(1.3rem, 2.1vw, 1.85rem);
+    font-weight: 300; line-height: 1.4; letter-spacing: -0.01em;
+    color: #fff;
+}
+
+/* Leistungsumfang: dieselbe Kachel wie die Schritt-Panels im Prozessbereich
+   (`.ped-panel.ped-glass`) – Milchglas mit dem 155-Grad-Verlauf, 20px Radius und
+   der grossen Geisterziffer in der Ecke. Bewusst kein eigener Kartentyp: Der
+   Abschnitt beantwortet auf der Unterseite dieselbe Frage wie der Scroller auf
+   der Startseite („Woraus besteht das?"), also traegt er dieselbe Form.
+
+   Keine orange Kante: Im Prozessbereich ist Orange der EINEN Fokuskarte
+   vorbehalten. Neun orange gesaeumte Kacheln nebeneinander nehmen dem Akzent
+   genau die Bedeutung, die er dort hat. */
+.lst-karten {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: clamp(1rem, 1.8vw, 1.6rem);
+    margin-top: clamp(1.6rem, 3vw, 2.6rem);
+}
+.lst-karte {
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+    padding: clamp(1.5rem, 2.2vw, 2.2rem);
+    border-radius: 20px;
+    background: linear-gradient(155deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015));
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    transition: border-color 0.35s ease, background 0.35s ease;
+}
+.lst-karte:hover {
+    border-color: rgba(255, 107, 53, 0.35);
+    background: linear-gradient(155deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.025));
+}
+/* Geisterziffer wie `.ped-num`: gross, fast unsichtbar, gibt der Kachel Tiefe
+   ohne eine zweite Information zu behaupten. Deshalb aria-hidden im Markup. */
+.lst-karte-nr {
+    position: absolute;
+    top: clamp(0.6rem, 1vw, 0.9rem); right: clamp(0.9rem, 1.5vw, 1.3rem);
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    font-weight: 900; line-height: 1; letter-spacing: -0.03em;
+    color: rgba(255, 255, 255, 0.06);
+    pointer-events: none;
+}
+/* Name im Grad der Panel-Titel, nur kleiner: `.ped-title` traegt zwei Worte,
+   hier stehen bis zu neun Kacheln nebeneinander. */
+/* Die Ziffer sitzt oben rechts, der Name beginnt oben links – ohne
+   reservierten Platz laeuft „MARKENARCHITEKTUR" mitten hindurch. Im Original
+   entsteht der Abstand von selbst, weil `.ped-title { margin-top: auto }` den
+   Titel an den Fuss der Karte schiebt; diese Kacheln sind dafuer zu flach. */
+.lst-karte-name {
+    position: relative;
+    padding-right: clamp(2.8rem, 4.4vw, 4rem);
+    font-size: clamp(1.08rem, 1.45vw, 1.32rem);
+    font-weight: 800; line-height: 1.12; letter-spacing: -0.01em;
+    text-transform: uppercase; color: #fff;
+    /* Deutsche Komposita haben keine Umbruchstelle und liefen unter
+       `overflow: hidden` aus der Kachel heraus. Getrennt wird deshalb an den
+       weichen Trennzeichen, die in lib/leistungen an den Wortfugen stehen –
+       `manual`, NICHT `auto`: Die automatische Silbentrennung schrieb
+       „GESCHAEFTSAUS-STATTUNG" statt „GESCHAEFTS-AUSSTATTUNG".
+       `break-word` bleibt die letzte Sicherung gegen Ueberlauf. */
+    overflow-wrap: break-word;
+    hyphens: manual;
+}
+.lst-karte-text {
+    margin-top: clamp(0.8rem, 1.2vw, 1.05rem);
+    font-size: clamp(1rem, 1.25vw, 1.15rem);
+    font-weight: 400; line-height: 1.7;
+    color: rgba(255, 255, 255, 0.62);
+}
+
+/* Kompakte Dichte: dieselbe Kachel ohne Textzeile. Acht der neun Seiten fuehren
+   nur Schlagworte – dafuer erfundene Erklaersaetze zu schreiben waere der
+   schlechtere Weg zur Einheitlichkeit gewesen. Die Kachel traegt auch ohne sie. */
+.lst-karten--kompakt {
+    grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+    gap: clamp(0.8rem, 1.4vw, 1.2rem);
+}
+/* Ziffer oben, Name unten – genau wie im Prozessbereich, wo `.ped-num` oben
+   rechts sitzt und `.ped-title` per `margin-top: auto` am Fuss steht. Der Name
+   bekommt dadurch die volle Kachelbreite: mit reserviertem Platz neben der
+   Ziffer musste „GESCHAEFTSAUSSTATTUNG" dreimal getrennt werden. */
+.lst-karten--kompakt .lst-karte {
+    justify-content: flex-end;
+    min-height: clamp(148px, 12vw, 178px);
+}
+.lst-karten--kompakt .lst-karte-nr { font-size: clamp(1.9rem, 2.8vw, 2.5rem); }
+/* Kleinere Ziffer heisst auch weniger reservierter Platz – die Namen sind hier
+   die einzige Zeile und sollen so wenig wie moeglich umbrechen. */
+.lst-karten--kompakt .lst-karte-name {
+    padding-right: 0;
+    font-size: clamp(1rem, 1.3vw, 1.18rem);
+}
+
+/* Der Leitgedanke: eigene Flaeche, abgesetzt in der Akzentfarbe. Er ist die
+   Haltung zur Disziplin und keine weitere Aufzaehlung. */
+.lst-leit {
+    padding: clamp(3.5rem, 7vw, 6rem) 0;
+    background: rgba(255, 107, 53, 0.06);
+    border-top: 1px solid rgba(255, 107, 53, 0.22);
+    border-bottom: 1px solid rgba(255, 107, 53, 0.22);
+}
+.lst-leit-inner { max-width: 1560px; margin: 0 auto; padding: 0 var(--px); }
+.lst-leit-label {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #ff6b35; margin-bottom: 1.2rem;
+}
+.lst-leit-head {
+    max-width: 26ch;
+    font-size: clamp(1.5rem, 2.6vw, 2.3rem);
+    font-weight: 800; line-height: 1.25; letter-spacing: -0.012em;
+    color: #fff; margin-bottom: 1rem;
+}
+.lst-leit-text {
+    max-width: 58ch;
+    font-size: clamp(1.05rem, 1.35vw, 1.24rem);
+    font-weight: 400; line-height: 1.75;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+/* Fallstudien zur Leistung. Grosse Zeilen mit Trennlinie – dieselbe Anmutung
+   wie die Projektliste der Startseite, nur ohne Bildrahmen. */
+.lst-cases {
+    list-style: none;
+    margin-top: clamp(1.4rem, 2.6vw, 2.2rem);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.lst-cases li { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+.lst-cases a {
+    display: flex; align-items: center; justify-content: space-between; gap: 1.2rem;
+    padding: clamp(1rem, 1.8vw, 1.5rem) 0;
+    text-decoration: none;
+    font-size: clamp(1.15rem, 1.9vw, 1.6rem); font-weight: 700;
+    letter-spacing: -0.01em; text-transform: uppercase; color: #fff;
+    transition: color 0.3s ease;
+}
+.lst-cases a svg { width: 22px; height: 22px; color: #ff6b35; transition: transform 0.3s ease; }
+.lst-cases a:hover { color: #ffb27f; }
+.lst-cases a:hover svg { transform: translateX(6px); }
+
+/* Die uebrigen Disziplinen. Steht auf jeder Leistungsseite: Wer eine liest, hat
+   oft die Nachbardisziplin im Sinn – ohne diesen Block fuehrte der einzige Weg
+   dorthin ueber die Startseite zurueck. */
+.lst-andere {
+    margin-top: clamp(2.6rem, 5vw, 4rem);
+    padding-top: clamp(1.6rem, 2.6vw, 2.2rem);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.lst-andere-label {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 1.1rem;
+}
+.lst-andere-liste {
+    list-style: none;
+    display: flex; flex-wrap: wrap; gap: 0.6rem 0.7rem;
+}
+.lst-andere-liste a {
+    display: inline-flex; align-items: center;
+    padding: 0.5rem 1rem; border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    font-size: clamp(0.82rem, 0.95vw, 0.92rem); font-weight: 600; letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.72); text-decoration: none;
+    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+}
+.lst-andere-liste a:hover {
+    border-color: rgba(255, 107, 53, 0.5);
+    background: rgba(255, 107, 53, 0.08);
+    color: #fff;
+}
+
+/* Abschluss der Leistungsseite. Erbt das Layout des Fallstudien-Abschlusses,
+   stellt aber die Frage voran – der CTA beantwortet sie dann. */
+.lst-outro {
+    max-width: 1560px;
+    margin: 0 auto;
+    padding: clamp(4rem, 8vw, 7rem) var(--px) clamp(5rem, 9vw, 8rem);
+}
+.lst-outro-frage {
+    font-size: clamp(1.5rem, 3vw, 2.6rem);
+    font-weight: 300; line-height: 1.25; letter-spacing: -0.015em;
+    color: #fff;
+    max-width: 22ch;
+}
+
+@media (max-width: 768px) {
+    .lst-body { max-width: none; }
+    /* Volle Kacheln einspaltig; die kompakten vertragen mobil noch zwei
+       Spalten – als einzelne Reihe waeren neun Schlagworte eine sehr lange
+       Kolonne aus fast leeren Kaesten. */
+    .lst-karten { grid-template-columns: 1fr; }
+    .lst-karten--kompakt { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ── Disziplinen unter der System-Grafik ─────────────────────────────────────
+   Die neun Leistungsseiten als Wege, geordnet nach den vier Schritten der
+   Methode. Vorher stand hier eine Reihe gleich grosser Pillen: Als Schlagwort-
+   wolke war nicht zu sehen, dass Markenstrategie am Anfang steht und
+   Automatisierung ganz am Ende – und genau das ist die Aussage der Seite.
+
+   Liegt im Block `#leistungen`, unter dem Duo aus Arbeitsweise und Grafik,
+   deshalb derselbe Gutter wie `.a2-duo-grid` und keine eigene Flaeche. */
+.lgl {
+    margin-top: clamp(3rem, 6vw, 5.5rem);
+    padding: 0 var(--px);
+}
+/* Die Haarlinie sitzt am Etikett, nicht am Block: Auf `.lgl` liefe sie durch
+   die Gutter bis an den Panelrand und stuende neben dem Inhalt statt darueber. */
+.lgl-label {
+    padding-top: clamp(1.8rem, 2.8vw, 2.4rem);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(255, 255, 255, 0.45);
+    margin-bottom: clamp(2rem, 3.5vw, 3rem);
+}
+.lgl-grid {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(1.6rem, 3vw, 3rem);
+}
+/* Jede Spalte beginnt mit derselben Marke wie ein Kapitel der Fallstudien:
+   Nummer, kurze orange Linie, Name. Der Schritt ist die Ueberschrift, die
+   Disziplinen darunter sind seine Werkzeuge. */
+.lgl-spalte { display: flex; flex-direction: column; }
+.lgl-nr {
+    display: flex; align-items: center; gap: 0.7rem;
+    font-size: 0.76rem; font-weight: 700; letter-spacing: 0.1em;
+    color: #ff6b35; margin-bottom: 0.7rem;
+}
+.lgl-nr-rule { display: block; flex: 1; height: 1px; background: #ff6b35; opacity: 0.45; }
+.lgl-stufe {
+    font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+    font-weight: 800; line-height: 1.15; letter-spacing: -0.01em;
+    text-transform: uppercase; color: #fff;
+    margin-bottom: clamp(0.9rem, 1.4vw, 1.2rem);
+}
+.lgl-links { list-style: none; display: flex; flex-direction: column; }
+/* Grundlinie unter JEDEM Eintrag, nicht nur zwischen zweien: Die Spalten 01 und
+   02 tragen nur eine Disziplin – ohne Linie stuende ihr Pfeil frei in der Spalte,
+   waehrend er in 03 und 04 auf einer Kante sitzt. */
+.lgl-links li { border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+.lgl-links a {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 0.8rem;
+    padding: 0.6rem 0;
+    font-size: clamp(0.95rem, 1.15vw, 1.06rem);
+    font-weight: 600; line-height: 1.35;
+    color: rgba(255, 255, 255, 0.76); text-decoration: none;
+    transition: color 0.25s ease;
+}
+.lgl-links a:hover { color: #ff8f5c; }
+/* Der Pfeil liegt ruhig da und ruckt beim Zeigen nach vorn – dieselbe
+   Ruecksprache wie bei `.ped-steplink` und `.lst-cases`. */
+.lgl-pfeil {
+    color: #ff6b35; opacity: 0.4;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.lgl-links a:hover .lgl-pfeil { opacity: 1; transform: translateX(3px); }
+
+/* Vier Spalten brauchen Breite. Darunter zwei, auf dem Telefon eine – die
+   Reihenfolge der Schritte bleibt in jeder Aufteilung lesbar. */
+@media (max-width: 1100px) {
+    .lgl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.2rem 2.4rem; }
+}
+@media (max-width: 560px) {
+    .lgl-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* Navigationslinks im Fuss. Der Farbwechsel liegt hier und nicht in
+   Ereignisbehandlern, damit der Fuss ein Server-Component bleiben kann. */
+.footer-link { transition: color 0.2s ease; }
+.footer-link:hover { color: #ff6b35; }

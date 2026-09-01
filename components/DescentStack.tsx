@@ -23,24 +23,42 @@ type Station = {
     kicker?: string
     title: React.ReactNode
     text: string
+    /**
+     * Vier Fragen als eigener Grad zwischen den Absätzen – kein Fließtext.
+     * Nur die erste Karte trägt sie: Sie sind der Kern der Aussage, nicht ihre
+     * Ausschmückung.
+     */
+    fragen?: string[]
+    /** Zweiter Absatz nach dem Zwischengrad. */
+    nachsatz?: string
+    /** Der Satz, auf den die Karte hinausläuft – abgesetzt in der Akzentfarbe. */
+    schluss?: string
 }
 
 const STATIONS: Station[] = [
     {
-        id: 'wasserlinie',
-        kicker: 'Schlüsselmoment',
-        /* Bewusst ohne Prozentzahl: Eine Zahl an dieser Stelle liest sich wie
-           eine Studie, und es gibt keine. Die Seite argumentiert sonst durchweg
-           belegbar – eine frei gegriffene Quote würde genau die Glaubwürdigkeit
-           kosten, die der Abstieg aufbaut. Die Aussage bleibt dieselbe. */
-        title: <>Der größte Teil der Wirkung<br /><strong>entsteht darunter.</strong></>,
-        text: 'Was Menschen wahrnehmen, ist nur das Ergebnis dessen, was darunter liegt. Jede starke Marke folgt einer Architektur. Sichtbar und unsichtbar zugleich.',
+        /* Steht genau dort, wo die Wasserlinie durchs Bild zieht: die Spitze
+           trennt sich sichtbar von der Masse darunter. Deshalb liegt hier „Die
+           meisten sehen nur die Spitze" und nicht mehr im fixierten TextLayer
+           über Wasser – Bild und Aussage fallen so zusammen. */
+        id: 'spitze',
+        kicker: 'Die Wahrnehmung',
+        title: <>Die meisten sehen<br /><strong>nur die Spitze.</strong></>,
+        text: 'Websites. Logos. Kampagnen. Social Media. Alles, was eine Marke sichtbar macht, ist nur der Teil, den Menschen am Ende wahrnehmen. Darunter liegen die Entscheidungen, die diesen Auftritt tragen:',
+        fragen: [
+            'Wofür steht das Unternehmen?',
+            'Für wen ist es relevant?',
+            'Was macht es anders?',
+            'Warum sollte jemand genau hier kaufen, anfragen oder bleiben?',
+        ],
+        nachsatz: 'Erst wenn diese Fragen klar sind, kann Gestaltung mehr sein als Oberfläche.',
     },
     {
         id: 'problem',
-        kicker: 'Was oft sichtbar wird',
-        title: <>Einzelmaßnahmen<br /><strong>scheitern.</strong></>,
-        text: 'Website, Werbung und Content können gut gemacht sein – und trotzdem keine gemeinsame Geschichte erzählen.',
+        kicker: 'Das eigentliche Problem',
+        title: <>Wenn die Leistung besser ist<br /><strong>als ihre Wahrnehmung.</strong></>,
+        text: 'Viele Unternehmen sind in ihrer Sache hervorragend und werden von außen trotzdem nicht so wahrgenommen. Der Wettbewerb sieht ähnlich aus, die Website erklärt zu viel oder zu wenig, Marketing bringt Aufmerksamkeit, aber nicht die richtigen Anfragen. Das Problem liegt dann selten in der Leistung selbst – sondern darin, dass sie nicht klar genug sichtbar wird.',
+        schluss: 'Genau diese Lücke schließen wir.',
     },
     {
         id: 'markenpraesenz',
@@ -73,7 +91,7 @@ export default function DescentStack() {
 
 function Chain() {
     return (
-        <div className="dsc" aria-label="Der Abstieg: vom Sichtbaren zur Strategie">
+        <div className="dsc" aria-label="Der Abstieg: von der Wahrnehmung zur Strategie">
             <div className="dsc-chain">
                 <Pfad />
                 {STATIONS.map((s) => (
@@ -188,6 +206,13 @@ function Card({ station }: { station: Station }) {
             {station.kicker && <p className="dsc-kicker">{station.kicker}</p>}
             <h2 className="dsc-title">{station.title}</h2>
             <p className="dsc-text">{station.text}</p>
+            {station.fragen && (
+                <ul className="dsc-fragen">
+                    {station.fragen.map((f) => <li key={f}>{f}</li>)}
+                </ul>
+            )}
+            {station.nachsatz && <p className="dsc-text">{station.nachsatz}</p>}
+            {station.schluss && <p className="dsc-schluss">{station.schluss}</p>}
         </article>
     )
 }

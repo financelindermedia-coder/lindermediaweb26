@@ -10,6 +10,7 @@ import CaseChapter, {
     CaseTerms,
     CaseTurn,
 } from '@/components/sections/CaseChapter'
+import CaseSchema from '@/components/CaseSchema'
 import { SITE_URL } from '@/lib/site'
 
 /**
@@ -20,22 +21,32 @@ import { SITE_URL } from '@/lib/site'
  *
  * ACHTUNG – die flaechigen Hintergruende der Kapitel sind KI-generierte
  * Stimmungsbilder (Quelle: openart, Ordner Sessions/edit/novodex). Sie zeigen
- * KEINE ausgefuehrten Novodex-Arbeiten. Deshalb liegen sie nur als stark
- * abgedunkelter Grund hinter dem Text, tragen kein `alt` und sind am Seitenende
- * ausgewiesen – dieselbe Linie wie das AiBadge auf der Startseite. Sobald echte
- * Aufnahmen von Material, Fertigung und eingebautem Deck vorliegen, gehoeren
- * sie hierher und der Hinweis kann weg.
+ * KEINE ausgefuehrten Novodex-Arbeiten und liegen deshalb nur als stark
+ * abgedunkelter Grund hinter dem Text, ohne `alt`.
+ *
+ * Der sichtbare Bildnachweis am Seitenende ist auf Wunsch entfernt worden
+ * (2026-08-24). Damit traegt diese Seite KEINE Kennzeichnung mehr fuer das
+ * KI-Material und keinen Hinweis darauf, dass die Portalansichten Demodaten
+ * zeigen. Wenn beides wieder soll: `AiBadge` (components/AiBadge.tsx) ist
+ * genau dafuer da und sitzt leiser als ein Absatz Fliesstext.
  *
  * Portal- und Anfrage-Ansicht sind Screenshots des Prototyps (lovable.dev bzw.
  * aistudio) und zeigen Demodaten, keine echten Projekte.
  */
 
-const TITLE = 'Novodex — Fallstudie'
+const TITLE =
+    'Novodex – Markenstrategie & digitaler Refit-Prozess | LinderMedia'
 const DESCRIPTION =
-    'Ein durchgängiger Refit-Prozess für Premium-Yachtdecks – von der Analyse über die Planung bis zur dokumentierten Übergabe.'
+    'Wie aus einem Yachtdeck-Anbieter eine klar positionierte Marke für den gesamten Refit-Prozess wurde.'
 
+/*
+ * Eigene Metadaten je Fallstudie: Titel und Beschreibung sind das, was in der
+ * Suche steht – sie benennen deshalb Projekt UND Disziplinen, nicht nur den
+ * Projektnamen. `title` steht als `absolute`, weil das Layout sonst noch einmal
+ * „— LinderMedia" anhängen würde.
+ */
 export const metadata: Metadata = {
-    title: TITLE,
+    title: { absolute: TITLE },
     description: DESCRIPTION,
     alternates: { canonical: '/projekte/novodex' },
     openGraph: {
@@ -63,6 +74,13 @@ const PHASEN = [
 export default function NovodexPage() {
     return (
         <main className="csx-page">
+            {/* Article + BreadcrumbList – siehe components/CaseSchema.tsx */}
+            <CaseSchema
+                slug="novodex"
+                titel={TITLE}
+                beschreibung={DESCRIPTION}
+                bild="/images/Novodex.webp"
+            />
             <div className="csx-topbar">
                 <Link href="/#projekte" className="csx-back">← Alle Projekte</Link>
             </div>
@@ -195,11 +213,6 @@ export default function NovodexPage() {
                     massnahmen={['Markenentwicklung', 'Prozessdefinition', 'Kundenportal', 'Visualisierung', 'Design']}
                     wirkung="Der Eigner entscheidet nicht mehr nur über ein Deck, sondern über einen kontrollierten Refit. Damit verschiebt sich das Gespräch vom Preis zur Verantwortung – und die läuft bei Novodex an einer Stelle zusammen."
                 />
-                <p className="csx-bildnachweis">
-                    Die flächigen Hintergrundbilder dieser Seite sind KI-generierte
-                    Stimmungsbilder und zeigen keine ausgeführten Arbeiten. Portal- und
-                    Anfrageansicht stammen aus dem Prototyp und enthalten Demodaten.
-                </p>
                 <CaseOutro slug="novodex" />
             </CaseChapter>
         </main>

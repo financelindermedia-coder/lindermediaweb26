@@ -79,7 +79,7 @@ export async function POST(request: Request) {
      * ein Bot am Werk. Wir antworten bewusst mit 200 – wer eine Ablehnung
      * sieht, probiert es anders herum noch einmal.
      */
-    if ((data.website ?? '').trim() !== '') {
+    if ((data.betreff ?? '').trim() !== '') {
         return NextResponse.json({ ok: true, message: 'Vielen Dank. Wir melden uns in Kürze.' })
     }
 
@@ -106,6 +106,8 @@ export async function POST(request: Request) {
     const name = oneLine((data.name ?? '').trim())
     const company = oneLine((data.company ?? '').trim())
     const email = oneLine((data.email ?? '').trim())
+    const topic = oneLine((data.topic ?? '').trim())
+    const website = oneLine((data.website ?? '').trim())
     const message = (data.message ?? '').trim()
 
     const to = process.env.CONTACT_TO ?? BUSINESS.email
@@ -117,6 +119,8 @@ export async function POST(request: Request) {
         `Name:        ${name}`,
         `Unternehmen: ${company || '—'}`,
         `E-Mail:      ${email}`,
+        `Website:     ${website || '—'}`,
+        `Thema:       ${topic || '—'}`,
         '',
         message,
     ]
@@ -126,7 +130,7 @@ export async function POST(request: Request) {
             from,
             to,
             replyTo: `${name} <${email}>`,
-            subject: `Kontaktanfrage über lindermedia.de — ${name}${company ? `, ${company}` : ''}`,
+            subject: `Kontaktanfrage über lindermedia.de — ${name}${company ? `, ${company}` : ''}${topic ? ` (${topic})` : ''}`,
             text: lines.join('\n'),
         })
     } catch (error) {

@@ -111,8 +111,30 @@ export default function VideoCanvas() {
 
         function setSize() {
             if (!canvas) return
-            canvas.width  = window.innerWidth
-            canvas.height = window.innerHeight
+            /*
+             * Die Groesse kommt aus dem ELEMENT, nicht aus dem Fenster.
+             *
+             * Das Canvas ist per CSS so gross wie die Ansicht. Auf Handys ist
+             * `100vh` aber die GROSSE Ansichtshoehe – gerechnet, als waere die
+             * Adressleiste eingeklappt –, waehrend `window.innerHeight` die
+             * gerade sichtbare Hoehe liefert. Beides ist auf einem Telefon
+             * verschieden, oft um 100px und mehr.
+             *
+             * Die Folge war eine zu kleine Bitmap, die der Browser in die
+             * groessere Flaeche zog: Der Eisberg war senkrecht gestreckt, und
+             * die Zuschnitts-Rechnung in drawFrame lief gegen eine Hoehe, die
+             * es auf dem Schirm gar nicht gab. Aus dem Element gelesen stimmen
+             * Bitmap und Flaeche immer ueberein – egal, welche Einheit das CSS
+             * gerade aufloest und wie weit die Adressleiste eingefahren ist.
+             */
+            const b = canvas.getBoundingClientRect()
+            const w = Math.max(1, Math.round(b.width))
+            const h = Math.max(1, Math.round(b.height))
+            // width/height zu setzen loescht die Flaeche – nur bei echter
+            // Aenderung anfassen, sonst blitzt es bei jedem Scroll-Resize.
+            if (canvas.width === w && canvas.height === h) return
+            canvas.width  = w
+            canvas.height = h
         }
         setSize()
 
@@ -288,7 +310,7 @@ export default function VideoCanvas() {
             ref={canvasRef}
             aria-hidden="true"
             data-ai-generated="true"
-            style={{ position: 'fixed', inset: 0, width: '100vw', height: '100vh', zIndex: 0, display: 'block' }}
+            style={{ position: 'fixed', inset: 0, width: '100%', height: '100vh', zIndex: 0, display: 'block' }}
         />
     )
 }

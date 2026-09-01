@@ -161,18 +161,23 @@ export default function TextLayer() {
                     ohne harte Umbrüche, damit er mobil natürlich umläuft. */}
                 <p style={{ ...BODY, color: 'rgba(12,61,102,0.85)', maxWidth: '44ch' }}>
                     LinderMedia entwickelt Markenauftritte für Unternehmen, deren Leistung
-                    nach außen noch nicht klar genug ankommt — von der Positionierung bis
-                    zur digitalen Umsetzung.
+                    nach außen noch nicht klar genug ankommt — von der Positionierung über
+                    das Design bis zur digitalen Umsetzung.
                 </p>
-                <p className="hero-services">Strategie · Corporate Design · Website</p>
+                {/* Die Leistungszeile benennt in einem Blick die ganze Spannweite:
+                    Wer nach fünf Sekunden weiterliest, weiß, was hier gemacht wird. */}
+                <p className="hero-services">
+                    Positionierung · Corporate Design · Website · Content · Sichtbarkeit
+                </p>
                 {/* Nur diese Zeile nimmt Klicks an – die Karte selbst bleibt
                     durchlässig, damit sie das Scrollen nicht abfängt. */}
                 <div className="hero-ctas">
-                    <a className="hero-cta hero-cta--primary" href="#contact">Gespräch anfragen</a>
+                    <a className="hero-cta hero-cta--primary" href="#contact">Projekt besprechen</a>
                     <a className="hero-cta" href="#projekte">
                         Projekte ansehen <span aria-hidden="true">→</span>
                     </a>
                 </div>
+                <p className="hero-trust">Strategie, Gestaltung und digitale Umsetzung aus einer Hand.</p>
                 <span className="sr-only">Eine starke Marke entsteht nicht durch Werbung allein. Sie entsteht durch Klarheit.</span>
             </div>
 
@@ -189,18 +194,28 @@ export default function TextLayer() {
                 <span className="tl-hint-line" aria-hidden="true"><i /></span>
             </div>
 
-            {/* ── 02 ERKENNTNIS ── */}
+            {/* ── 02 EINORDNUNG ──
+                Noch über Wasser, direkt nach dem Hero: die Aussage, die den
+                Besucher einordnet, bevor die Reise nach unten beginnt. „Die
+                meisten sehen nur die Spitze" steht jetzt eine Etappe später –
+                als erste Karte der Kette, genau dort, wo die Wasserlinie durchs
+                Bild zieht (siehe DescentStack). */}
             <div ref={r('erkenntnis')} className="text-scene tl-glass tl-glass--light tl-glass--right" style={{ position: 'absolute', top: '50%', right: 'var(--px)', transform: 'translateY(-50%)', maxWidth: 'clamp(320px, 38vw, 600px)', textAlign: 'right', opacity: 0, visibility: 'hidden' }}>
-                <p style={{ ...EYE, color: 'rgba(12,61,102,0.6)' }}>Die Wahrnehmung |</p>
+                <p style={{ ...EYE, color: 'rgba(12,61,102,0.6)' }}>Der Ausgangspunkt |</p>
                 <h2 style={{ ...HL, color: '#0c3d66', textShadow: 'none' }}>
-                    Die meisten sehen<br />
-                    <strong style={{ fontWeight: 900 }}>nur die Spitze.</strong>
+                    Gute Unternehmen brauchen<br />
+                    <strong style={{ fontWeight: 900 }}>nicht immer mehr Marketing.</strong>
                 </h2>
-                <p style={{ ...BODY, color: 'rgba(12,61,102,0.85)', maxWidth: '42ch' }}>
-                    Websites. Logos. Kampagnen. Social Media.
-                    All das ist sichtbar. Doch es ist nur ein kleiner Teil
-                    dessen, was eine Marke tatsächlich trägt.
+                <p style={{ ...BODY, color: 'rgba(12,61,102,0.85)', maxWidth: '42ch', marginLeft: 'auto' }}>
+                    Oft liegt das Problem früher. Wenn Kunden den Unterschied nicht
+                    erkennen, Leistungen über den Preis verglichen werden oder Website,
+                    Social Media und Werbung jeweils etwas anderes erzählen, fehlt nicht
+                    unbedingt Sichtbarkeit.
                 </p>
+                <p style={{ ...BODY, color: 'rgba(12,61,102,0.85)', maxWidth: '42ch', marginLeft: 'auto', marginTop: '0.9rem' }}>
+                    Es fehlt eine klare Richtung. Genau dort beginnt unsere Arbeit.
+                </p>
+                <p className="tl-step">Erst verstehen. Dann gestalten. Dann sichtbar machen.</p>
             </div>
 
             {/* ── AUFLÖSUNG (Aufstieg) ── */}
@@ -208,13 +223,19 @@ export default function TextLayer() {
                 der Oberfläche steht – jetzt ohne Nebel. Mittig, weil der Satz die
                 ganze Reise zusammenfasst und keine Seite mehr bevorzugt. */}
             <div ref={r('sichtbarkeit')} className="text-scene tl-glass tl-glass--dark" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', maxWidth: 'min(760px, 86vw)', opacity: 0, visibility: 'hidden' }}>
+                <p style={{ ...EYE, color: 'rgba(255,255,255,0.6)', textShadow: TS }}>Schlüsselmoment</p>
                 <h2 style={{ ...HL, textShadow: TS, marginBottom: '1.6rem' }}>
                     Was darunter trägt,<br />
                     <strong style={{ fontWeight: 900 }}>wird darüber sichtbar.</strong>
                 </h2>
-                <p style={{ ...BODY, color: 'rgba(255,255,255,0.88)', textShadow: TS, maxWidth: '52ch', margin: '0 auto' }}>
-                    Wenn Strategie, Design und Markenpräsenz zusammenarbeiten,
-                    entsteht ein Auftritt mit Klarheit, Charakter und Wirkung.
+                <p style={{ ...BODY, color: 'rgba(255,255,255,0.88)', textShadow: TS, maxWidth: '54ch', margin: '0 auto' }}>
+                    Strategie gibt Richtung. Design gibt ihr eine erkennbare Form.
+                    Website, Fotografie, Film und digitale Kommunikation bringen diese
+                    Richtung nach außen.
+                </p>
+                <p style={{ ...BODY, color: 'rgba(255,255,255,0.88)', textShadow: TS, maxWidth: '54ch', margin: '0.9rem auto 0' }}>
+                    So entsteht kein Nebeneinander einzelner Maßnahmen, sondern ein
+                    Auftritt, der sich überall nach derselben Marke anfühlt.
                 </p>
             </div>
 

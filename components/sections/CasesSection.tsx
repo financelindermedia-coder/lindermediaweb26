@@ -37,6 +37,12 @@ type Projekt = {
      * das nicht, „Positionierung · Technologie-Vermittlung" schon.
      */
     problem: string
+    /**
+     * Ein Satz, der sagt, WAS das Projekt beantwortet hat – vor der
+     * Beschreibung, wie es aussah. Die Projektliste soll nicht zeigen, was
+     * gemacht wurde, sondern warum es relevant ist.
+     */
+    teaser: string
     beschreibung: string
     accent: string
     /** Key-Visual der Marke, 16:9. */
@@ -59,8 +65,10 @@ const PROJEKTE: Projekt[] = [
         nr: '01',
         name: 'Solar Impact Yacht',
         problem: 'Positionierung · Technologie-Vermittlung',
+        teaser:
+            'Wie aus komplexer Technologie eine verständliche Marke wurde.',
         beschreibung:
-            'Markenauftritt für ein Hightech-Startup, das innovative SWATH-Technologie und solarbetriebene Schifffahrt sichtbar macht.',
+            'Eine innovative SWATH-Technologie sollte nicht über technische Komplexität kommuniziert werden, sondern über die Veränderung, die sie für die Zukunft der Schifffahrt möglich macht.',
         accent: '#ff6b35',
         // Bleibt JPG: das Original ist bereits stark komprimiert, WebP kam bei
         // jeder Qualitaetsstufe groesser heraus (142K JPG vs. 231K bei q62).
@@ -76,8 +84,10 @@ const PROJEKTE: Projekt[] = [
         nr: '02',
         name: 'Novodex',
         problem: 'Premium-Positionierung · Prozess-Sicherheit',
+        teaser:
+            'Wie aus einem Yachtdeck ein planbarer Refit-Prozess wurde.',
         beschreibung:
-            'Eine Premium-Marke für individuelle Yachtdecks – klar positioniert und visuell auf den Punkt gebracht.',
+            'Statt über Material und Quadratmeterpreis zu konkurrieren, wurde der gesamte Refit-Prozess zum eigentlichen Produkt.',
         accent: '#ff7d48',
         visual: '/images/Novodex.webp',
         visualAlt: 'die Wortmarke NOVODEX auf einem Teakdeck neben einer polierten Winsch',
@@ -87,8 +97,10 @@ const PROJEKTE: Projekt[] = [
         nr: '03',
         name: 'Wellenwind',
         problem: 'Markenaufbau · Content-System · E-Commerce',
+        teaser:
+            'Wie aus Produkten eine eigenständige Marke mit Haltung wurde.',
         beschreibung:
-            'Von der Idee zur eigenständigen Segelmarke – inklusive Shop, Content und visueller Identität.',
+            'Marke, Onlineshop und Content wurden aus einer gemeinsamen strategischen Richtung entwickelt – damit Produkt, Kampagne und Social Content dieselbe Geschichte erzählen.',
         accent: '#f26a2e',
         visual: '/images/wellenwind.webp',
         visualAlt: 'drei Hoodies in Hellblau, Weiß und Türkis vor dunklem Grund, daneben die Wellenwind-Wortmarke',
@@ -102,8 +114,10 @@ const PROJEKTE: Projekt[] = [
         nr: '04',
         name: 'Marèvo',
         problem: 'Premium-Wahrnehmung · Differenzierung',
+        teaser:
+            'Wie eine Premium-Marke ihren eigenen Maßstab findet.',
         beschreibung:
-            'Eine Premium-Marke im Yachting-Segment – zurückhaltend, hochwertig und vom ersten Moment an unverwechselbar.',
+            'Statt im üblichen Wettbewerb aus Länge, Tempo und Ausstattung mitzuspielen, wurde eine andere Frage zum Kern der Marke: Wie weit trägt Stimmigkeit?',
         accent: '#ff8f5c',
         visual: '/images/marevo.webp',
         visualAlt: 'eine Segelyacht mit dunklen Segeln in Fahrt, darüber der Schriftzug MARÈVO',
@@ -113,8 +127,10 @@ const PROJEKTE: Projekt[] = [
         nr: '05',
         name: 'Rainer Engel – Ein spektakuläres Leben',
         problem: 'Storytelling · Reichweite · Community',
+        teaser:
+            'Wie aus einer außergewöhnlichen Lebensgeschichte eine digitale Erzählung wird.',
         beschreibung:
-            'Konzeption und Gestaltung einer digitalen Präsenz zur authentischen Inszenierung einer außergewöhnlichen Lebensgeschichte – mit Fokus auf Storytelling und visuelle Kommunikation.',
+            'Eine visuelle und digitale Präsenz, die nicht nur Informationen vermittelt, sondern Persönlichkeit, Geschichte und Charakter in den Mittelpunkt stellt.',
         accent: '#c94a1e',
         visual: '/images/RE.webp',
         visualAlt: 'das aufgeschlagene Buch „A Spectacular Life" wird in die Kamera gehalten, daneben Titelzeile und Bezugsquellen',
@@ -127,8 +143,10 @@ const PROJEKTE: Projekt[] = [
         nr: '06',
         name: 'LubriCan',
         problem: 'Produktverständnis · E-Commerce',
+        teaser:
+            'Wie technische Leistung sichtbar wird, bevor sie erklärt werden muss.',
         beschreibung:
-            'Ein technisches Produkt im Performance-Umfeld – inszeniert für einen Markt, der Leistung sehen will, bevor sie erklärt wird.',
+            'Marke, Produktinszenierung und Onlineshop wurden zu einem System verbunden, das Orientierung schafft, ohne technische Tiefe zu verlieren.',
         accent: '#e0561f',
         visual: '/images/lubrican.webp',
         visualAlt: 'zwei LubriCan-Flaschen vor einem roten Sportwagen in einer Werkstatt, oben die Wortmarke',
@@ -143,8 +161,10 @@ const PROJEKTE: Projekt[] = [
         nr: '07',
         name: 'Schaaf Tender',
         problem: 'Differenzierung · Premium-Wahrnehmung',
+        teaser:
+            'Wie Details zum eigentlichen Verkaufsargument werden.',
         beschreibung:
-            'Markenauftritt für einen Superyacht-Tender, der sich nicht über Größe unterscheidet, sondern über Details.',
+            'Statt über Größe und Ausstattung zu konkurrieren, bekommt jedes Detail den Raum, in dem seine Qualität sichtbar werden kann.',
         accent: '#ff7d48',
         visual: '/images/case-schaaf-hero-2.webp',
         visualAlt: 'der weiße Schaaf-Tender in Fahrt auf offener See vor einer flachen Küstenlinie',
@@ -424,6 +444,13 @@ export default function CasesSection() {
                 }}>
                     wirklich wird.
                 </h2>
+                {/* Ordnet ein, wofür die Liste steht: nicht „Arbeiten“, sondern
+                    Belege dafür, dass die Arbeitsweise darüber etwas ändert. */}
+                <p className="cases-intro">
+                    Strategie wird erst dann interessant, wenn sie etwas verändert.
+                    Die folgenden Projekte zeigen, wie aus unterschiedlichen Ausgangslagen
+                    klare Marken, digitale Systeme und visuelle Auftritte entstanden sind.
+                </p>
             </div>
 
             {/* ── Desktop: großzügiger Bildrahmen links, Liste rechts (weicher Fade) ── */}
@@ -469,6 +496,7 @@ export default function CasesSection() {
                                         <span className="cases-branche">{p.problem}</span>
                                         <span className="cases-detail">
                                             <span className="cases-detail-inner">
+                                                <span className="cases-teaser">{p.teaser}</span>
                                                 <span className="cases-desc">{p.beschreibung}</span>
                                             </span>
                                         </span>
@@ -507,6 +535,7 @@ export default function CasesSection() {
                             <span className="cslide-nr">{p.nr} — Projekt</span>
                             <h3 className="cslide-name">{p.name}</h3>
                             <p className="cslide-branche">{p.problem}</p>
+                            <p className="cslide-teaser">{p.teaser}</p>
                             <p className="cslide-desc">{p.beschreibung}</p>
                             {p.fallstudie && (
                                 <Link className="cslide-btn" href={p.fallstudie}>
@@ -518,7 +547,7 @@ export default function CasesSection() {
                                     <span>Gespräch anfragen</span><Arrow />
                                 </a>
                             ) : (
-                                <button type="button" className="cslide-btn" onClick={() => goTo(i + 1)}>
+                                <button type="button" className="cslide-btn cslide-btn--weiter" onClick={() => goTo(i + 1)}>
                                     <span>Weiter</span><Arrow />
                                 </button>
                             )}
@@ -537,6 +566,16 @@ export default function CasesSection() {
                         aria-current={i === slide ? 'true' : undefined}
                     />
                 ))}
+            </div>
+
+            {/* Der Schluss der Projektstrecke: sagt, was die sieben Projekte
+                gemeinsam haben, ohne sie zu einer Methode zu glätten. */}
+            <div className="cases-outro">
+                <p className="cases-outro-head">Nicht jedes Projekt beginnt mit derselben Frage.</p>
+                <p className="cases-outro-text">
+                    Aber jedes beginnt mit dem Versuch, herauszufinden, was wirklich
+                    sichtbar werden muss.
+                </p>
             </div>
 
         </section>

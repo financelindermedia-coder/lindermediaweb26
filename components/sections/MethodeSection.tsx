@@ -1,6 +1,7 @@
 'use client'
 
 import { Fragment, useEffect, useRef } from 'react'
+import Link from 'next/link'
 import useVisibleRaf from '@/components/useVisibleRaf'
 
 /**
@@ -22,33 +23,49 @@ const ARROW = (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
 )
 
-// Vier Schritte, nicht fuenf: Klarheit → Charakter → Praesenz → Wirkung. Die
-// zugeordneten Leistungen stehen im Fuss jeder Karte, damit der Schritt eine
-// Etappe bleibt und nicht zur Leistungsbox wird.
+// Vier Schritte, nicht fuenf: Klarheit → Charakter → Praesenz → Wirkung.
+//
+// Aufbau je Karte: Nummer, Titel, ein Satz Einordnung (`intro`), die Erklaerung
+// (`text`), die zugeordneten Leistungen im Fuss und ein Verweis auf die
+// zugehoerige Leistungsseite. Der Schritt bleibt damit eine Etappe der Marke
+// und wird nicht zur Leistungsbox – die Leistungen stehen bewusst im kleinsten
+// Grad ganz unten.
 const STEPS = [
     {
         num: '01',
         title: 'Klarheit\nschaffen',
-        text: 'Wofür Sie stehen. Wen Sie erreichen. Warum Sie gewählt werden.',
-        services: 'Markenstrategie, Positionierung, Zielgruppe, Botschaft.',
+        intro: 'Wofür Sie stehen. Wen Sie erreichen. Warum Sie gewählt werden.',
+        text: 'Wir schärfen Positionierung, Zielgruppe, Botschaft und Markenarchitektur – nicht als theoretisches Konzept, sondern als Grundlage für alles, was danach sichtbar wird.',
+        services: 'Markenstrategie · Positionierung · Zielgruppen · Botschaften · Markenarchitektur',
+        href: '/leistungen/markenstrategie',
+        linkLabel: 'Mehr über Markenstrategie',
     },
     {
         num: '02',
         title: 'Charakter\ngestalten',
-        text: 'Eine erkennbare Form für Haltung, Sprache und Bildwelt.',
-        services: 'Corporate Design, Identität, Art Direction.',
+        intro: 'Eine erkennbare Form für Haltung, Sprache und Bildwelt.',
+        text: 'Aus der strategischen Richtung entsteht eine visuelle Identität, die wiedererkennbar ist und über alle Berührungspunkte funktioniert.',
+        services: 'Corporate Design · Art Direction · Identität · Bildwelt · Gestaltung',
+        href: '/leistungen/corporate-design',
+        linkLabel: 'Mehr über Corporate Design',
     },
     {
         num: '03',
         title: 'Präsenz\naufbauen',
-        text: 'Website, Fotografie, Film und 3D bringen die Marke nach außen.',
-        services: 'Webdesign, Fotografie, Film & Video, 3D.',
+        intro: 'Die Marke muss nicht nur existieren. Sie muss sichtbar werden.',
+        text: 'Websites, Fotografie, Film, Video und 3D übersetzen die Marke in konkrete Erlebnisse – digital, räumlich und visuell.',
+        services: 'Webdesign · Websites · Fotografie · Film & Video · 3D-Visualisierung',
+        href: '/leistungen/webdesign',
+        linkLabel: 'Mehr über digitale Präsenz',
     },
     {
         num: '04',
         title: 'Wirkung\nverstärken',
-        text: 'Die richtige Botschaft erreicht die richtigen Menschen.',
-        services: 'Marketing, Ads, Reichweite, Automatisierung.',
+        intro: 'Die richtige Botschaft muss die richtigen Menschen erreichen.',
+        text: 'Wenn Fundament und Auftritt stimmen, können Marketing, SEO, Content, Ads und Automatisierung darauf aufbauen.',
+        services: 'SEO · Content · Marketing · Ads · Automatisierung',
+        href: '/leistungen/seo',
+        linkLabel: 'Mehr über Sichtbarkeit',
     },
 ]
 
@@ -163,7 +180,8 @@ export default function MethodeSection() {
                             <h3 className="ped-title">{splitTitle('Ein System,\nkein Zufall.')}</h3>
                             <p className="ped-desc">
                                 Strategie, Design und Markenpräsenz greifen ineinander.
-                                Was darüber sichtbar wird, beginnt darunter.
+                                Was später sichtbar wird, beginnt mit Entscheidungen,
+                                die vorher getroffen werden.
                             </p>
                             <a className="ped-arrow" href="#leistungen" aria-label="Die Lösung">{ARROW}</a>
                         </article>
@@ -176,8 +194,12 @@ export default function MethodeSection() {
                             <article className="ped-panel ped-glass">
                                 <span className="ped-num">{s.num}</span>
                                 <h3 className="ped-title">{splitTitle(s.title)}</h3>
-                                <p className="ped-quote">{s.text}</p>
+                                <p className="ped-quote">{s.intro}</p>
+                                <p className="ped-steptext">{s.text}</p>
                                 <p className="ped-services">{s.services}</p>
+                                <Link className="ped-steplink" href={s.href}>
+                                    <span>{s.linkLabel}</span>{ARROW}
+                                </Link>
                             </article>
                             </Fragment>
                         ))}

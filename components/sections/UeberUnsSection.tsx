@@ -31,19 +31,33 @@ export default function UeberUnsSection() {
                 <div className="mfx-about-head">
                     <p className="mfx-eye">| Hinter LinderMedia</p>
                     <h2 className="mfx-headline">
-                        Die Menschen<br /><span>hinter der Arbeit.</span>
+                        Eine Person. Kurze Wege.<br /><span>Klare Verantwortung.</span>
                     </h2>
                 </div>
 
                 <div className="mfx-about-text">
-                    <p className="mfx-name">Andreas Linder <span>· Gründer</span></p>
                     <p className="mfx-about-p">
-                        Kein Konzern mit Account-Managern. Sie sprechen direkt mit der Person, die
-                        Ihre Website baut, Ihre Strategie entwickelt, Ihre Kampagnen schaltet.
+                        LinderMedia ist keine Agentur mit mehreren Ebenen zwischen Idee und
+                        Umsetzung. Sie sprechen direkt mit Andreas Linder – von der ersten
+                        strategischen Frage bis zur fertigen Website, Kampagne oder visuellen
+                        Umsetzung.
+                    </p>
+                    <p className="mfx-about-p">
+                        Das bedeutet weniger Übergaben, weniger Abstimmungsschleifen und vor
+                        allem: eine Person, die den Zusammenhang des gesamten Projekts kennt.
+                    </p>
+                    {/* Wechsel in die erste Person: Ab hier spricht Andreas selbst –
+                        der Abschnitt soll persönlich enden, nicht als Firmenprofil. */}
+                    <p className="mfx-about-p">
+                        Ich verbinde Markenstrategie, Gestaltung, Fotografie, Film, 3D und
+                        digitale Umsetzung, weil gute Kommunikation selten an einer einzelnen
+                        Disziplin scheitert. Sie scheitert häufiger daran, dass die einzelnen
+                        Teile keine gemeinsame Richtung haben.
                     </p>
                     <p className="mfx-about-p mfx-about-strong">
                         Gute Unternehmen verdienen gute Sichtbarkeit. Nicht mehr Lärm – mehr Klarheit.
                     </p>
+                    <p className="mfx-name">Andreas Linder <span>· Gründer · LinderMedia</span></p>
                 </div>
             </div>
         </section>

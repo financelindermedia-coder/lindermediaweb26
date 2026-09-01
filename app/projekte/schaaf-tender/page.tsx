@@ -9,6 +9,7 @@ import CaseChapter, {
     CaseTerms,
     CaseTurn,
 } from '@/components/sections/CaseChapter'
+import CaseSchema from '@/components/CaseSchema'
 import { SITE_URL } from '@/lib/site'
 
 /**
@@ -35,12 +36,19 @@ import { SITE_URL } from '@/lib/site'
  * aufnehmen.
  */
 
-const TITLE = 'Schaaf Tender — Fallstudie'
+const TITLE =
+    'Schaaf Tender – Markenauftritt, 3D-Visualisierung & Webdesign | LinderMedia'
 const DESCRIPTION =
-    'Markenauftritt für einen Superyacht-Tender: Screendesign, Visualisierung und Print für ein Boot, das sich über Details unterscheidet.'
+    'Wie Details, Visualisierung und ein reduzierter Markenauftritt die Differenzierung eines Superyacht-Tenders sichtbar machen.'
 
+/*
+ * Eigene Metadaten je Fallstudie: Titel und Beschreibung sind das, was in der
+ * Suche steht – sie benennen deshalb Projekt UND Disziplinen, nicht nur den
+ * Projektnamen. `title` steht als `absolute`, weil das Layout sonst noch einmal
+ * „— LinderMedia" anhängen würde.
+ */
 export const metadata: Metadata = {
-    title: TITLE,
+    title: { absolute: TITLE },
     description: DESCRIPTION,
     alternates: { canonical: '/projekte/schaaf-tender' },
     openGraph: {
@@ -55,6 +63,13 @@ export const metadata: Metadata = {
 export default function SchaafPage() {
     return (
         <main className="csx-page">
+            {/* Article + BreadcrumbList – siehe components/CaseSchema.tsx */}
+            <CaseSchema
+                slug="schaaf-tender"
+                titel={TITLE}
+                beschreibung={DESCRIPTION}
+                bild="/images/case-schaaf-hero-2.webp"
+            />
             <div className="csx-topbar">
                 <Link href="/#projekte" className="csx-back">← Alle Projekte</Link>
             </div>

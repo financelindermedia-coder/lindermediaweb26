@@ -9,6 +9,7 @@ import CaseChapter, {
     CaseTile,
     CaseTurn,
 } from '@/components/sections/CaseChapter'
+import CaseSchema from '@/components/CaseSchema'
 import { SITE_URL } from '@/lib/site'
 
 /**
@@ -26,12 +27,19 @@ import { SITE_URL } from '@/lib/site'
  * Der Hinweis dazu steht im Auftakt.
  */
 
-const TITLE = 'Solar Impact Yacht — Fallstudie'
+const TITLE =
+    'Solar Impact Yacht – Markenstrategie & Webdesign | LinderMedia'
 const DESCRIPTION =
-    'Wie aus einer komplexen SWATH-Technologie ein Markenauftritt wurde, der Präzision, Innovation und Zukunftsperspektive verbindet.'
+    'Wie LinderMedia komplexe SWATH-Technologie in eine klare Markenpositionierung, visuelle Identität und digitale Präsenz übersetzt hat.'
 
+/*
+ * Eigene Metadaten je Fallstudie: Titel und Beschreibung sind das, was in der
+ * Suche steht – sie benennen deshalb Projekt UND Disziplinen, nicht nur den
+ * Projektnamen. `title` steht als `absolute`, weil das Layout sonst noch einmal
+ * „— LinderMedia" anhängen würde.
+ */
 export const metadata: Metadata = {
-    title: TITLE,
+    title: { absolute: TITLE },
     description: DESCRIPTION,
     alternates: { canonical: '/projekte/solar-impact-yacht' },
     openGraph: {
@@ -81,6 +89,13 @@ const FARBWELT = [
 export default function SolarImpactPage() {
     return (
         <main className="csx-page">
+            {/* Article + BreadcrumbList – siehe components/CaseSchema.tsx */}
+            <CaseSchema
+                slug="solar-impact-yacht"
+                titel={TITLE}
+                beschreibung={DESCRIPTION}
+                bild="/images/case-solarimpact-hero-2.webp"
+            />
             <div className="csx-topbar">
                 <Link href="/#projekte" className="csx-back">← Alle Projekte</Link>
             </div>

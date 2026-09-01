@@ -15,7 +15,9 @@ type Status =
     | { state: 'sent'; message: string }
     | { state: 'failed'; message: string }
 
-const EMPTY: Record<ContactField, string> = { name: '', company: '', email: '', message: '' }
+const EMPTY: Record<ContactField, string> = {
+    name: '', company: '', email: '', topic: '', message: '', website: '',
+}
 
 export default function ContactSection() {
     const [values, setValues] = useState<Record<ContactField, string>>(EMPTY)
@@ -49,7 +51,7 @@ export default function ContactSection() {
             const response = await fetch('/api/contact', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...values, website: trapRef.current?.value ?? '' }),
+                body: JSON.stringify({ ...values, betreff: trapRef.current?.value ?? '' }),
             })
             const body = (await response.json().catch(() => ({}))) as {
                 ok?: boolean
@@ -113,17 +115,15 @@ export default function ContactSection() {
                         lineHeight: 1.75, color: 'rgba(255,255,255,0.82)',
                         marginBottom: '1.8rem', textShadow: '0 1px 12px rgba(0,0,0,0.4)',
                     }}>
-                        Nicht jedes Unternehmen braucht mehr Marketing.<br />
-                        Manchmal braucht es die richtige Richtung.
+                        Erzählen Sie uns, wo Ihr Unternehmen heute steht.
                     </p>
                     <p style={{
                         fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)', fontWeight: 400,
                         lineHeight: 1.75, color: 'rgba(255,255,255,0.6)',
                         textShadow: '0 1px 12px rgba(0,0,0,0.4)',
                     }}>
-                        Erzählen Sie uns, wo Ihr Unternehmen heute steht.<br />
-                        In einem ersten Gespräch – ohne Agenda, ohne Verkaufsdruck –<br />
-                        finden wir gemeinsam heraus, wo die Arbeit wirklich beginnen sollte.
+                        In einem ersten Gespräch – ohne Verkaufsdruck – finden wir
+                        gemeinsam heraus, wo die Arbeit wirklich beginnen sollte.
                     </p>
                 </div>
 
@@ -131,7 +131,14 @@ export default function ContactSection() {
                 <div>
                     {status.state === 'sent' ? (
                         <div className="cf-done" role="status" aria-live="polite">
-                            <p className="cf-status cf-status--ok">{status.message}</p>
+                            {/* Die Bestätigung sagt zuerst, dass es geklappt hat, und
+                                erst danach, wie es weitergeht – in dieser Reihenfolge
+                                wird sie gelesen. */}
+                            <p className="cf-done-head">Anfrage angekommen.</p>
+                            <p>
+                                Vielen Dank für Ihre Nachricht. Wir schauen uns Ihre
+                                Situation an und melden uns persönlich bei Ihnen.
+                            </p>
                             <p>
                                 Wenn es eilt, erreichen Sie uns auch direkt unter{' '}
                                 <a href={`mailto:${BUSINESS.email}`} style={{ color: '#ffffff' }}>{BUSINESS.email}</a>.
@@ -164,12 +171,34 @@ export default function ContactSection() {
                                             <textarea
                                                 {...shared}
                                                 rows={4}
+                                                placeholder={field.placeholder}
                                                 onChange={(e) => set(field.name, e.currentTarget.value)}
                                             />
+                                        ) : field.type === 'select' ? (
+                                            /* Ohne Vorauswahl: Eine gesetzte Voreinstellung
+                                               wird mitgeschickt, auch wenn sie niemand
+                                               bewusst gewaehlt hat – und faerbt dann die
+                                               Vorbereitung des Gespraechs falsch ein. */
+                                            <select
+                                                {...shared}
+                                                /* Solange nichts gewaehlt ist, soll das Feld
+                                                   aussehen wie die leeren Textfelder daneben –
+                                                   sonst liest sich „Bitte waehlen" als bereits
+                                                   getroffene Wahl. `:invalid` greift dafuer
+                                                   nicht: Das Feld ist optional. */
+                                                className={`cf-input cf-select${values[field.name] === '' ? ' cf-select--leer' : ''}`}
+                                                onChange={(e) => set(field.name, e.currentTarget.value)}
+                                            >
+                                                <option value="">Bitte wählen</option>
+                                                {field.options?.map((o) => (
+                                                    <option key={o} value={o}>{o}</option>
+                                                ))}
+                                            </select>
                                         ) : (
                                             <input
                                                 {...shared}
                                                 type={field.type}
+                                                placeholder={field.placeholder}
                                                 onChange={(e) => set(field.name, e.currentTarget.value)}
                                             />
                                         )}
@@ -180,14 +209,16 @@ export default function ContactSection() {
                                 )
                             })}
 
-                            {/* Honeypot – bleibt leer, ausser ein Bot fuellt ihn aus. */}
+                            {/* Honeypot – bleibt leer, ausser ein Bot fuellt ihn aus.
+                                Heisst `betreff`: `website` ist seit der Erweiterung ein
+                                echtes, sichtbares Feld. */}
                             <div className="cf-trap" aria-hidden="true">
-                                <label htmlFor="cf-website">Website (bitte frei lassen)</label>
-                                <input id="cf-website" name="website" type="text" ref={trapRef} tabIndex={-1} autoComplete="off" />
+                                <label htmlFor="cf-betreff">Betreff (bitte frei lassen)</label>
+                                <input id="cf-betreff" name="betreff" type="text" ref={trapRef} tabIndex={-1} autoComplete="off" />
                             </div>
 
                             <button className="cf-submit" type="submit" disabled={status.state === 'sending'}>
-                                {status.state === 'sending' ? 'Wird gesendet …' : 'Jetzt Gespräch anfragen'}
+                                {status.state === 'sending' ? 'Wird gesendet …' : 'Projekt besprechen'}
                             </button>
 
                             {/* Live-Region: bleibt im DOM, damit Screenreader die
@@ -198,7 +229,14 @@ export default function ContactSection() {
                                 )}
                             </div>
 
-                            <p className="cf-note">Kostenfrei und unverbindlich</p>
+                            <p className="cf-note">Kostenfrei und unverbindlich.</p>
+                            {/* Hinweis nach Art. 13 DSGVO: Wofuer die Angaben verwendet
+                                werden, steht vor dem Absenden – nicht erst danach. */}
+                            <p className="cf-privacy">
+                                Ihre Angaben verwenden wir ausschließlich, um Ihre Anfrage
+                                zu beantworten. Näheres in der{' '}
+                                <a href="/datenschutz">Datenschutzerklärung</a>.
+                            </p>
                         </form>
                     )}
                 </div>

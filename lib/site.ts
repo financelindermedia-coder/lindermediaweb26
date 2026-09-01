@@ -111,5 +111,10 @@ export const COMPETENCES = [
 ]
 
 export const SITE_TITLE = 'Markenstrategie, Corporate Design & Webdesign | LinderMedia'
+/*
+ * Wortgleich mit dem Lead im Hero. Eine Beschreibung, die in der Suche etwas
+ * anderes verspricht als die Seite im ersten Satz sagt, kostet genau den
+ * Vertrauensvorschuss, den sie gewinnen soll.
+ */
 export const SITE_DESCRIPTION =
-    'LinderMedia entwickelt Markenauftritte für Unternehmen, deren Leistung nach außen noch nicht klar genug ankommt — von der Positionierung bis zur digitalen Umsetzung.'
+    'LinderMedia entwickelt Markenauftritte für Unternehmen, deren Leistung nach außen noch nicht klar genug ankommt — von der Positionierung über das Design bis zur digitalen Umsetzung.'

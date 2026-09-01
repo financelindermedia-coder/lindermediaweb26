@@ -10,10 +10,12 @@ import MethodeSection from '@/components/sections/MethodeSection'
 import Akt2VideoSection from '@/components/sections/Akt2VideoSection'
 import UspSection from '@/components/sections/UspSection'
 import LeistungenSection from '@/components/sections/LeistungenSection'
+import LeistungenLinks from '@/components/sections/LeistungenLinks'
 import CasesSection from '@/components/sections/CasesSection'
 import StatementSection from '@/components/sections/StatementSection'
 import StimmenSection from '@/components/sections/StimmenSection'
 import UeberUnsSection from '@/components/sections/UeberUnsSection'
+import ZielgruppeSection from '@/components/sections/ZielgruppeSection'
 import FragenSection from '@/components/sections/FragenSection'
 import ContactSection from '@/components/sections/ContactSection'
 import Footer from '@/components/Footer'
@@ -89,8 +91,12 @@ export default function Home() {
             <Navbar />
             <ScrollFortschritt />
             <TextLayer />
-            {/* Kennzeichnung für die KI-generierte Eisberg-Strecke – läuft mit und blendet danach aus */}
-            <AiBadge track="iceberg" />
+            {/* Kennzeichnung für die Eisberg-Strecke – läuft mit und blendet danach
+                aus. Der Text benennt, was das Material ist: eine
+                Konzeptvisualisierung, kein aufgenommenes Bild. Das ist die
+                zutreffende Angabe und zugleich die leiseste – ein breites
+                „KI-generiert“ über der ganzen Strecke las sich wie eine Warnung. */}
+            <AiBadge track="iceberg" label="Konzeptvisualisierung · KI-generiert" />
 
             <main style={{ position: 'relative' }}>
                 {/* Akt 1 – Abstieg: Eisberg → Wasserlinie → Problem →
@@ -144,6 +150,11 @@ export default function Home() {
                             <UspSection />
                             <LeistungenSection />
                         </div>
+                        {/* Die Grafik zeigt den Zusammenhang der drei Ebenen,
+                            diese Zeile die einzelnen Disziplinen – sie ist der
+                            einzige Weg von der Startseite auf alle neun
+                            Leistungsseiten. */}
+                        <LeistungenLinks />
                     </div>
 
                     {/* ── Akt 2 · Phase 2: Erleben ── */}
@@ -156,7 +167,7 @@ export default function Home() {
                         cgiGenerated
                         videoSrc={AKT2_VIDEOS.v2}
                         poster="/video/poster-lm-2.webp"
-                        headline="Aus einer klaren Richtung entsteht ein Auftritt, der funktioniert."
+                        headline="Aus Ideen werden Erlebnisse."
                         text={[
                             'Strategie, Gestaltung und Umsetzung greifen ineinander.',
                             'Was danach kommt, sind keine Einzelmaßnahmen mehr.',
@@ -168,8 +179,10 @@ export default function Home() {
                     {/* Beweiskette: erst die Arbeit (Cases), direkt danach die Stimmen dazu */}
                     <StimmenSection />
 
-                    {/* Vertrauen in die Person, danach die letzten Einwände (FAQ) */}
+                    {/* Vertrauen in die Person, dann die Frage „Bin ich gemeint?“,
+                        zuletzt die verbleibenden Einwände (FAQ). */}
                     <UeberUnsSection />
+                    <ZielgruppeSection />
                     <FragenSection />
 
                     {/* ── Akt 2 · Phase 3: Vertrauen ── */}
@@ -187,7 +200,7 @@ export default function Home() {
                             pauseControlClassName="site-closing-pause"
                         />
                         {/* KI-generiertes Leuchtturm-Material → Kennzeichnung */}
-                        <AiBadge className="site-closing-ai" />
+                        <AiBadge className="site-closing-ai" label="Konzeptvisualisierung · KI-generiert" />
                         <ContactSection />
                         <Footer />
                     </div>

@@ -1,10 +1,21 @@
 import Image from 'next/image'
 import type { CSSProperties } from 'react'
 
+/*
+ * Dieselben Sprungmarken wie in der Kopfleiste, nur ausgeschrieben: Wer unten
+ * ankommt, sucht keine Kurzform mehr, sondern eine Uebersicht. Deshalb steht
+ * hier „Ueber LinderMedia" und oben nur „Ueber".
+ *
+ * Die Wege sind absolut (`/#…`) statt reiner Fragmente: Der Fuss steht auch
+ * unter den Fallstudien und den Leistungsseiten – dort fuehrte `#methode` sonst
+ * ins Leere.
+ */
 const NAV = [
-    { label: 'Markenarchitektur', href: '#video-scroll' },
-    { label: 'Leistungen',        href: '#leistungen'   },
-    { label: 'FAQ',               href: '#faq'          },
+    { label: 'Methode',           href: '/#methode'    },
+    { label: 'Leistungen',        href: '/#leistungen' },
+    { label: 'Projekte',          href: '/#projekte'   },
+    { label: 'Über LinderMedia',  href: '/#ueber-uns'  },
+    { label: 'FAQ',               href: '/#faq'        },
 ]
 
 const LABEL: CSSProperties = {
@@ -59,7 +70,7 @@ export default function Footer() {
                         LinderMedia
                     </p>
                     <p style={{ ...MUTED, letterSpacing: '0.06em', color: 'rgba(255,255,255,0.35)' }}>
-                        Markenarchitektur & Sichtbarkeit
+                        Markenstrategie · Design · Digitale Umsetzung
                     </p>
                 </div>
 
@@ -67,24 +78,23 @@ export default function Footer() {
                 <div>
                     <p style={LABEL}>Navigation</p>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
+                        {/* Hover steht in CSS (`.footer-link`), nicht als
+                            onMouseEnter/onMouseLeave: Mit Ereignisbehandlern
+                            waere der Fuss ein Client-Component – und er steht
+                            auch unter den Leistungsseiten, die bewusst auf dem
+                            Server gerendert werden. */}
                         {NAV.map(l => (
-                            <a key={l.href} href={l.href} style={{
-                                ...VALUE, textDecoration: 'none',
-                                transition: 'color 0.2s',
-                            }}
-                                onMouseEnter={e => { e.currentTarget.style.color = '#ff6b35' }}
-                                onMouseLeave={e => { e.currentTarget.style.color = '#ffffff' }}
-                            >
+                            <a key={l.href} href={l.href} className="footer-link" style={{ ...VALUE, textDecoration: 'none' }}>
                                 {l.label}
                             </a>
                         ))}
-                        <a href="#contact" style={{
+                        <a href="/#contact" style={{
                             marginTop: '0.8rem',
                             fontSize: '0.78rem', fontWeight: 600, letterSpacing: '0.14em',
                             textTransform: 'uppercase', color: '#ff6b35',
                             textDecoration: 'none',
                         }}>
-                            Gespräch beginnen →
+                            Projekt besprechen →
                         </a>
                     </div>
                 </div>

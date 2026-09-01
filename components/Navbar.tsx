@@ -3,12 +3,17 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 
+/*
+ * Fünf Punkte, kurz beschriftet. „Über LinderMedia“ hieß früher so und war der
+ * längste Eintrag der Leiste – „Über“ sagt an dieser Stelle dasselbe und hält
+ * die Navigation ruhig. Der CTA steht getrennt davon rechts.
+ */
 const NAV_LINKS = [
-    { label: 'Methode',           href: '#methode'    },
-    { label: 'Leistungen',        href: '#leistungen' },
-    { label: 'Projekte',          href: '#projekte'   },
-    { label: 'Über LinderMedia',  href: '#ueber-uns'  },
-    { label: 'FAQ',               href: '#faq'        },
+    { label: 'Methode',    href: '#methode'    },
+    { label: 'Leistungen', href: '#leistungen' },
+    { label: 'Projekte',   href: '#projekte'   },
+    { label: 'Über',       href: '#ueber-uns'  },
+    { label: 'FAQ',        href: '#faq'        },
 ]
 // Desktop: auf beide Seiten des Logos verteilt, statt alle fuenf dicht davor
 // zu ballen. Die Mobil-Liste (weiter unten) durchlaeuft weiterhin NAV_LINKS
@@ -202,7 +207,7 @@ export default function Navbar() {
                         transition: 'all 0.3s ease',
                     }}
                 >
-                    Gespräch anfragen
+                    Projekt besprechen
                 </a>
             </div>
 
@@ -238,7 +243,7 @@ export default function Navbar() {
                 {NAV_LINKS.map(link => (
                     <a key={link.href} data-mobilelink href={link.href} onClick={() => setMenuOpen(false)}>{link.label}</a>
                 ))}
-                <a className="nav-mobile-cta" href="#contact" onClick={() => setMenuOpen(false)}>Gespräch anfragen</a>
+                <a className="nav-mobile-cta" href="#contact" onClick={() => setMenuOpen(false)}>Projekt besprechen</a>
             </div>
         </nav>
     )

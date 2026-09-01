@@ -8,6 +8,7 @@ import CaseChapter, {
     CaseTerms,
     CaseTurn,
 } from '@/components/sections/CaseChapter'
+import CaseSchema from '@/components/CaseSchema'
 import { SITE_URL } from '@/lib/site'
 
 /**
@@ -25,12 +26,19 @@ import { SITE_URL } from '@/lib/site'
  * lassen; die Seite bleibt unveraendert.
  */
 
-const TITLE = 'LubriCan — Fallstudie'
+const TITLE =
+    'LubriCan – Branding, Produktinszenierung & Onlineshop | LinderMedia'
 const DESCRIPTION =
-    'Ein klarer Marken- und Shopauftritt für ein technisches Produkt: Qualität, Orientierung und Vertrauen gehören von Anfang an zusammen.'
+    'Wie Marke, Produktinszenierung und Onlineshop für ein technisches Performance-Produkt zu einem verständlichen System verbunden wurden.'
 
+/*
+ * Eigene Metadaten je Fallstudie: Titel und Beschreibung sind das, was in der
+ * Suche steht – sie benennen deshalb Projekt UND Disziplinen, nicht nur den
+ * Projektnamen. `title` steht als `absolute`, weil das Layout sonst noch einmal
+ * „— LinderMedia" anhängen würde.
+ */
 export const metadata: Metadata = {
-    title: TITLE,
+    title: { absolute: TITLE },
     description: DESCRIPTION,
     alternates: { canonical: '/projekte/lubrican' },
     openGraph: {
@@ -45,6 +53,13 @@ export const metadata: Metadata = {
 export default function LubriCanPage() {
     return (
         <main className="csx-page">
+            {/* Article + BreadcrumbList – siehe components/CaseSchema.tsx */}
+            <CaseSchema
+                slug="lubrican"
+                titel={TITLE}
+                beschreibung={DESCRIPTION}
+                bild="/images/lubrican.webp"
+            />
             <div className="csx-topbar">
                 <Link href="/#projekte" className="csx-back">← Alle Projekte</Link>
             </div>

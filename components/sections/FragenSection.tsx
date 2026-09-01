@@ -38,7 +38,12 @@ export default function FragenSection() {
                                     <span className="mfx-step-label">{item.q}</span>
                                     <span className="mfx-step-plus">+</span>
                                 </button>
-                                <div className="mfx-step-a" style={{ maxHeight: on ? '460px' : '0' }}>
+                                {/* Die Hoehe ist gedeckelt, nicht gemessen – der
+                                    Wert muss die laengste Antwort auf dem
+                                    schmalsten Viewport tragen, sonst wird sie
+                                    abgeschnitten. Seit der Erweiterung auf acht
+                                    ausfuehrlichere Fragen reichen 460px nicht mehr. */}
+                                <div className="mfx-step-a" style={{ maxHeight: on ? '760px' : '0' }}>
                                     <p>{item.a}</p>
                                 </div>
                             </div>

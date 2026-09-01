@@ -9,6 +9,7 @@ import CaseChapter, {
     CaseTerms,
     CaseTurn,
 } from '@/components/sections/CaseChapter'
+import CaseSchema from '@/components/CaseSchema'
 import { SITE_URL } from '@/lib/site'
 
 /**
@@ -24,12 +25,19 @@ import { SITE_URL } from '@/lib/site'
  * sie doppeln. Der Master liegt nur in 800x450 vor.
  */
 
-const TITLE = 'Wellenwind — Fallstudie'
+const TITLE =
+    'Wellenwind – Markenaufbau, Onlineshop & Content | LinderMedia'
 const DESCRIPTION =
-    'Markenstrategie, Onlineshop und Content für eine Marke mit Küstengeist – eine Bildwelt, die Produkt und Lebensgefühl verbindet.'
+    'Markenstrategie, Bildwelt, Onlineshop und Content-System für die maritime Lifestyle-Marke Wellenwind.'
 
+/*
+ * Eigene Metadaten je Fallstudie: Titel und Beschreibung sind das, was in der
+ * Suche steht – sie benennen deshalb Projekt UND Disziplinen, nicht nur den
+ * Projektnamen. `title` steht als `absolute`, weil das Layout sonst noch einmal
+ * „— LinderMedia" anhängen würde.
+ */
 export const metadata: Metadata = {
-    title: TITLE,
+    title: { absolute: TITLE },
     description: DESCRIPTION,
     alternates: { canonical: '/projekte/wellenwind' },
     openGraph: {
@@ -44,6 +52,13 @@ export const metadata: Metadata = {
 export default function WellenwindPage() {
     return (
         <main className="csx-page">
+            {/* Article + BreadcrumbList – siehe components/CaseSchema.tsx */}
+            <CaseSchema
+                slug="wellenwind"
+                titel={TITLE}
+                beschreibung={DESCRIPTION}
+                bild="/images/wellenwind.webp"
+            />
             <div className="csx-topbar">
                 <Link href="/#projekte" className="csx-back">← Alle Projekte</Link>
             </div>

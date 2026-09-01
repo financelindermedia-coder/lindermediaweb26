@@ -10,6 +10,7 @@ import CaseChapter, {
     CaseTerms,
     CaseTurn,
 } from '@/components/sections/CaseChapter'
+import CaseSchema from '@/components/CaseSchema'
 import { SITE_URL } from '@/lib/site'
 
 /**
@@ -38,12 +39,19 @@ import { SITE_URL } from '@/lib/site'
  * Die vier Renderings der Yacht liegen weiterhin nicht als Dateien vor.
  */
 
-const TITLE = 'Marèvo — Fallstudie'
+const TITLE =
+    'Marèvo – Premium-Markenentwicklung & Screendesign | LinderMedia'
 const DESCRIPTION =
-    'Markenentwicklung und Screendesign für eine Segelyacht, deren Anspruch nicht Tempo ist, sondern Stimmigkeit.'
+    'Wie eine Premium-Yachtmarke über Haltung, Reduktion und einen eigenen Maßstab differenziert wurde.'
 
+/*
+ * Eigene Metadaten je Fallstudie: Titel und Beschreibung sind das, was in der
+ * Suche steht – sie benennen deshalb Projekt UND Disziplinen, nicht nur den
+ * Projektnamen. `title` steht als `absolute`, weil das Layout sonst noch einmal
+ * „— LinderMedia" anhängen würde.
+ */
 export const metadata: Metadata = {
-    title: TITLE,
+    title: { absolute: TITLE },
     description: DESCRIPTION,
     alternates: { canonical: '/projekte/marevo' },
     openGraph: {
@@ -85,6 +93,13 @@ const PILLARS = [
 export default function MarevoPage() {
     return (
         <main className="csx-page">
+            {/* Article + BreadcrumbList – siehe components/CaseSchema.tsx */}
+            <CaseSchema
+                slug="marevo"
+                titel={TITLE}
+                beschreibung={DESCRIPTION}
+                bild="/images/case-marevo-hero.webp"
+            />
             <div className="csx-topbar">
                 <Link href="/#projekte" className="csx-back">← Alle Projekte</Link>
             </div>
