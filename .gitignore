@@ -64,6 +64,10 @@ Thumbs.db
 /public/video/poster-orientierung.jpg
 # Rohaufnahme, nur Quelle der Standbilder der Schaaf-Fallstudie (59 MB)
 /public/video/VID_20200912_160853683.mp4
+# Rohfassungen des mobilen 9:16-Eisbergvideos (6 Mbit/s, je ~6 MB). Ausgeliefert
+# wird allein iceberg-mobile.mp4 (CRF 29, ~480 KB, siehe VideoCanvas.tsx).
+/public/video/mobile/iceberg_1.mp4
+/public/video/mobile/iceberg_2.mp4
 
 # Notizzettel mit Kommandozeilen, kein Bestandteil der Seite
 /command*.txt

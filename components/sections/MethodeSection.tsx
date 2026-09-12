@@ -72,17 +72,20 @@ const STEPS = [
 /**
  * Wann aus dem Querlauf eine gestapelte Spalte wird.
  *
- * Nicht nur nach Breite: Eine Karte ist mindestens 400px hoch
- * (`.ped-panel { height: clamp(400px, 66vh, 540px) }`), der gepinnte Bereich
- * aber genau 100vh. Auf einem quer gehaltenen Handy (844x390) passt die Karte
- * deshalb nicht in den Ausschnitt und wird oben wie unten abgeschnitten – der
- * Querlauf laeuft zwar, ist aber unlesbar. Unter 620px Hoehe wird darum
- * ebenfalls gestapelt.
+ * Allein nach Hoehe, nicht nach Breite: Der Querlauf soll auf Hochformat-
+ * Handys laufen, das ist dort die gewuenschte Erzaehlform („Ein System, kein
+ * Zufall.“ zieht bewusst mit rein). Das Problem war nie die schmale Breite,
+ * sondern zu wenig Hoehe – eine Karte ist mindestens 430px hoch
+ * (`.ped-frost .ped-panel { min-height: clamp(430px, 60vh, 600px) }`), der
+ * gepinnte Bereich aber genau 100vh. Auf einem quer gehaltenen Handy
+ * (844x390) passt die Karte deshalb nicht in den Ausschnitt und wird oben wie
+ * unten abgeschnitten – der Querlauf laeuft zwar, ist aber unlesbar. Unter
+ * 620px Hoehe wird darum weiterhin gestapelt.
  *
  * MUSS mit der Media-Query der `.ped-stack`-Regeln in globals.css
  * uebereinstimmen.
  */
-const STACK_QUERY = '(max-width: 768px), (max-height: 620px)'
+const STACK_QUERY = '(max-height: 620px)'
 
 const splitTitle = (t: string) => t.split('\n').map((l, j) => <span key={j}>{l}<br /></span>)
 
