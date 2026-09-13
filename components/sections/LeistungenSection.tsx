@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { useEffect, useRef, useState } from 'react'
 import useReveal from '@/components/useReveal'
 
 /**
@@ -54,6 +55,87 @@ const PLACED = NODES.map((n) => {
     return { ...n, x: 50 + R * Math.cos(a), y: 50 + R * Math.sin(a) }
 })
 
+/**
+ * Verbindung fuer das gestapelte Mobil-Layout: Badge und Icon-Kreise liegen
+ * dort auf verschiedenen Achsen (Badge horizontal zentriert, Icons folgen dem
+ * Textblock) – ohne Linie wirken sie wie lose Kreise ohne Zusammenhang.
+ *
+ * Wie ein Baumdiagramm: die Linie laeuft nur in den Luecken zwischen den
+ * Kreisen, von der Unterkante des einen zur Oberkante des naechsten – nicht
+ * durch die Icons hindurch. Dafuer aus den tatsaechlichen Rechtecken von
+ * Badge und Icons gemessen (Positionen haengen vom Textumbruch der Labels ab
+ * und stehen erst nach dem Layout fest, gleiches Prinzip wie `Pfad` in
+ * DescentStack.tsx). Nur ueber CSS auf den gestapelten Breakpoint beschraenkt
+ * (siehe `.sysr-mpath`); im radialen Desktop-Layout uebernehmen weiterhin die
+ * gepunkteten `.sysr-lines`.
+ */
+function MobilPfad() {
+    const ref = useRef<SVGSVGElement>(null)
+    const [d, setD] = useState('')
+
+    useEffect(() => {
+        const berechnen = () => {
+            const svg = ref.current
+            const stage = svg?.parentElement
+            if (!svg || !stage) return
+            const kr = stage.getBoundingClientRect()
+            if (kr.width === 0 || kr.height === 0) return
+
+            const anker = [stage.querySelector('.sysr-badge'), ...stage.querySelectorAll('.sysr-ic')]
+                .filter((el): el is Element => !!el)
+                .map((el) => {
+                    const r = el.getBoundingClientRect()
+                    return {
+                        cx: ((r.left + r.width / 2 - kr.left) / kr.width) * 100,
+                        top: ((r.top - kr.top) / kr.height) * 100,
+                        bottom: ((r.bottom - kr.top) / kr.height) * 100,
+                    }
+                })
+            if (anker.length < 2) return
+
+            // Nur die Strecke zwischen Unterkante und naechster Oberkante –
+            // jedes Paar ein eigenes Segment, damit keine Linie ueber einen
+            // Kreis hinweg zum uebernaechsten laeuft.
+            const segmente = anker.slice(1).map((b, i) => {
+                const a = anker[i]
+                return `M${a.cx.toFixed(1)},${a.bottom.toFixed(1)} L${b.cx.toFixed(1)},${b.top.toFixed(1)}`
+            })
+            setD(segmente.join(' '))
+        }
+
+        berechnen()
+        const ro = new ResizeObserver(berechnen)
+        if (ref.current?.parentElement) ro.observe(ref.current.parentElement)
+        window.addEventListener('resize', berechnen)
+        return () => {
+            ro.disconnect()
+            window.removeEventListener('resize', berechnen)
+        }
+    }, [])
+
+    return (
+        <svg ref={ref} className="sysr-mpath" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+                <linearGradient id="sysr-verlauf" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#ff6b35" stopOpacity="0.9" />
+                    <stop offset="100%" stopColor="#ff6b35" stopOpacity="0.35" />
+                </linearGradient>
+            </defs>
+            {d && (
+                <path
+                    d={d}
+                    fill="none"
+                    stroke="url(#sysr-verlauf)"
+                    strokeWidth="1.4"
+                    strokeDasharray="1.3 3.6"
+                    strokeLinecap="round"
+                    vectorEffect="non-scaling-stroke"
+                />
+            )}
+        </svg>
+    )
+}
+
 export default function LeistungenSection() {
     const ref = useReveal<HTMLElement>({ threshold: 0.2 })
 
@@ -69,6 +151,7 @@ export default function LeistungenSection() {
                         />
                     ))}
                 </svg>
+                <MobilPfad />
 
                 <span className="sysr-ring" aria-hidden="true" />
 

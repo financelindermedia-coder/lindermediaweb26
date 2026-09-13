@@ -30,30 +30,50 @@ export default function LeistungenLinks() {
             <p className="lgl-label reveal" data-reveal>Die Disziplinen im Einzelnen</p>
 
             <div className="lgl-grid">
-                {STUFEN.map((stufe, i) => (
-                    <div
-                        className="lgl-spalte reveal"
-                        data-reveal
-                        key={stufe.nr}
-                        style={{ ['--d' as string]: `${0.1 + i * 0.08}s` } as React.CSSProperties}
-                    >
-                        <p className="lgl-nr">
-                            {stufe.nr}
-                            <span className="lgl-nr-rule" aria-hidden="true" />
-                        </p>
-                        <p className="lgl-stufe">{stufe.name}</p>
-                        <ul className="lgl-links">
-                            {leistungenDerStufe(stufe.nr).map((l) => (
-                                <li key={l.slug}>
-                                    <Link href={`/leistungen/${l.slug}`}>
-                                        <span>{l.name}</span>
+                {STUFEN.map((stufe, i) => {
+                    const leistungen = leistungenDerStufe(stufe.nr)
+
+                    return (
+                        <div
+                            className="lgl-spalte reveal"
+                            data-reveal
+                            key={stufe.nr}
+                            style={{ ['--d' as string]: `${0.1 + i * 0.08}s` } as React.CSSProperties}
+                        >
+                            <p className="lgl-nr">
+                                {stufe.nr}
+                                <span className="lgl-nr-rule" aria-hidden="true" />
+                            </p>
+                            <p className="lgl-stufe">{stufe.name}</p>
+
+                            {leistungen.length === 1 ? (
+                                <ul className="lgl-links">
+                                    <li>
+                                        <Link href={`/leistungen/${leistungen[0].slug}`}>
+                                            <span>{leistungen[0].name}</span>
+                                            <span className="lgl-pfeil" aria-hidden="true">→</span>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            ) : (
+                                // Mehrere Disziplinen: eine Zeile Namen statt einer
+                                // vollen Liste einzelner Zeilen – die Reihenfolge
+                                // bleibt die aus lib/leistungen, der Link fuehrt auf
+                                // die erste Disziplin der Gruppe (dasselbe Ziel, das
+                                // MethodeSection fuer denselben Schritt verwendet).
+                                <div className="lgl-gruppe">
+                                    <p className="lgl-summe">
+                                        {leistungen.map((l) => l.name).join(' · ')}
+                                    </p>
+                                    <Link className="lgl-mehr" href={`/leistungen/${leistungen[0].slug}`}>
+                                        <span>Leistungen ansehen</span>
                                         <span className="lgl-pfeil" aria-hidden="true">→</span>
                                     </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                ))}
+                                </div>
+                            )}
+                        </div>
+                    )
+                })}
             </div>
         </div>
     )

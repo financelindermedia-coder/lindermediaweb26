@@ -9,9 +9,56 @@ import {
     LeistungUmfang,
     LeistungVerweise,
 } from '@/components/sections/LeistungBausteine'
+import LeistungCaseFeature from '@/components/sections/LeistungCaseFeature'
+import LeistungDetail from '@/components/sections/LeistungDetail'
+import LeistungProzess from '@/components/sections/LeistungProzess'
+import LeistungSystem, { type SystemKante, type SystemKnoten } from '@/components/sections/LeistungSystem'
 import { FALLSTUDIEN } from '@/lib/cases'
 import { LEISTUNGEN, andereLeistungen, findeLeistung } from '@/lib/leistungen'
 import { BUSINESS, SITE_URL } from '@/lib/site'
+
+/**
+ * Prototyp des neuen Leistungssystems – nur fuer /leistungen/webdesign
+ * (Phase 1 des Umbau-Auftrags, siehe Plan "Leistungsseite Webdesign: von
+ * Kachelgrid zu Editorial-System"). Zeigt, WIE die Disziplinen zusammen-
+ * haengen, statt sie als gleich gewichtete Kacheln nebeneinanderzustellen.
+ * Fest verdrahtet statt generisch aus lib/leistungen.ts modelliert – erst
+ * wenn der Prototyp sich bewaehrt hat, bekommt jede Methodenstufe (Phase 2)
+ * ihr eigenes grafisches Prinzip, ein gemeinsames Schema waere jetzt verfrueht.
+ */
+const WEBDESIGN_SYSTEM: { reihen: SystemKnoten[][]; kanten: SystemKante[] } = {
+    reihen: [
+        [{ id: 'strategie', label: 'Strategie' }],
+        [{ id: 'ia', label: 'Informationsarchitektur' }],
+        [{ id: 'ux', label: 'UX' }, { id: 'ui', label: 'UI Design' }],
+        [{ id: 'responsive', label: 'Responsive Design' }],
+        [{ id: 'entwicklung', label: 'Entwicklung' }],
+        [{ id: 'cms', label: 'CMS' }, { id: 'content', label: 'Content' }],
+        [{ id: 'seo', label: 'SEO + Technik' }],
+        [{ id: 'performance', label: 'Performance' }],
+    ],
+    kanten: [
+        { from: 'strategie', to: 'ia' },
+        { from: 'ia', to: 'ux' },
+        { from: 'ia', to: 'ui' },
+        { from: 'ux', to: 'responsive' },
+        { from: 'ui', to: 'responsive' },
+        { from: 'responsive', to: 'entwicklung' },
+        { from: 'entwicklung', to: 'cms' },
+        { from: 'entwicklung', to: 'content' },
+        { from: 'cms', to: 'seo' },
+        { from: 'content', to: 'seo' },
+        { from: 'seo', to: 'performance' },
+    ],
+}
+
+const PROZESS_SCHRITTE = [
+    { nr: '01', label: 'Verstehen' },
+    { nr: '02', label: 'Strukturieren' },
+    { nr: '03', label: 'Gestalten' },
+    { nr: '04', label: 'Entwickeln' },
+    { nr: '05', label: 'Verbessern' },
+]
 
 /**
  * Die Leistungsseiten unter /leistungen/….
@@ -141,20 +188,44 @@ export default function LeistungPage({ params }: { params: { slug: string } }) {
                 text={leistung.text}
             />
 
-            <LeistungUmfang index="01" titel={leistung.umfangTitel} punkte={leistung.umfang} />
+            {leistung.slug === 'webdesign' ? (
+                <>
+                    <LeistungSystem
+                        index="01"
+                        titel={leistung.umfangTitel}
+                        reihen={WEBDESIGN_SYSTEM.reihen}
+                        kanten={WEBDESIGN_SYSTEM.kanten}
+                    />
+                    <LeistungDetail index="02" titel="Im Einzelnen." eintraege={leistung.umfang} />
+                    <LeistungCaseFeature index="03" cases={cases.slice(0, 2)} />
+                    <LeistungProzess
+                        headline={['Von der Idee', 'zur Wirkung.']}
+                        schritte={PROZESS_SCHRITTE}
+                    />
+                    <LeistungVerweise
+                        index="04"
+                        cases={cases.slice(2)}
+                        andere={andereLeistungen(leistung.slug)}
+                    />
+                </>
+            ) : (
+                <>
+                    <LeistungUmfang index="01" titel={leistung.umfangTitel} punkte={leistung.umfang} />
 
-            {leistung.leitgedanke && (
-                <LeistungLeitgedanke
-                    headline={leistung.leitgedanke.headline}
-                    text={leistung.leitgedanke.text}
-                />
+                    {leistung.leitgedanke && (
+                        <LeistungLeitgedanke
+                            headline={leistung.leitgedanke.headline}
+                            text={leistung.leitgedanke.text}
+                        />
+                    )}
+
+                    <LeistungVerweise
+                        index="02"
+                        cases={cases}
+                        andere={andereLeistungen(leistung.slug)}
+                    />
+                </>
             )}
-
-            <LeistungVerweise
-                index="02"
-                cases={cases}
-                andere={andereLeistungen(leistung.slug)}
-            />
 
             <LeistungOutro frage={leistung.ctaFrage} label={leistung.ctaLabel} />
 

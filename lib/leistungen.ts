@@ -169,9 +169,12 @@ export const LEISTUNGEN: Leistung[] = [
         ],
         umfangTitel: 'Was dazugehört.',
         umfang: [
-            { name: 'Informations­architektur' },
-            { name: 'UX' },
-            { name: 'UI Design' },
+            {
+                name: 'Informations­architektur',
+                text: 'Aus Inhalten wird Orientierung. Wir strukturieren Inhalte so, dass Menschen schnell verstehen, wo sie sind, was relevant ist und welchen nächsten Schritt sie gehen können.',
+            },
+            { name: 'UX', text: 'Gute Nutzerführung fühlt sich selbstverständlich an.' },
+            { name: 'UI Design', text: 'Die Oberfläche macht die Marke sichtbar.' },
             { name: 'Responsive Webdesign' },
             { name: 'Entwicklung' },
             { name: 'CMS' },
