@@ -17,6 +17,33 @@ const nextConfig = {
     images: {
         formats: ['image/avif', 'image/webp'],
     },
+    /*
+     * Die neun frueheren Einzelseiten je Disziplin sind zu einer Seite
+     * zusammengelegt (app/leistungen/page.tsx), jede Disziplin hat dort einen
+     * Anker auf ihrer Methodenstufe statt einer eigenen Route. Alte Links,
+     * Lesezeichen und bereits von Google indexierte URLs sollen deshalb nicht
+     * ins Leere laufen. Explizite Zuordnung statt eines generischen
+     * `:slug`-Musters, weil die Anker (klarheit/charakter/praesenz/wirkung)
+     * nicht mit den bisherigen Slugs uebereinstimmen.
+     */
+    async redirects() {
+        const stufe = {
+            markenstrategie: 'klarheit',
+            'corporate-design': 'charakter',
+            webdesign: 'praesenz',
+            fotografie: 'praesenz',
+            filmproduktion: 'praesenz',
+            '3d-visualisierung': 'praesenz',
+            seo: 'wirkung',
+            marketing: 'wirkung',
+            automatisierung: 'wirkung',
+        }
+        return Object.entries(stufe).map(([slug, anker]) => ({
+            source: `/leistungen/${slug}`,
+            destination: `/leistungen#${anker}`,
+            permanent: true,
+        }))
+    },
     async headers() {
         return [
             ...(NOINDEX

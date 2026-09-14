@@ -14,13 +14,13 @@ export type Fallstudie = {
     /** Wie das Projekt in der Navigation genannt wird. */
     name: string
     /**
-     * Was das Projekt geloest hat, Key-Visual und Route – fuer kompakte
-     * Case-Feature-Bloecke auf den Leistungsseiten (siehe
-     * components/sections/LeistungCaseFeature.tsx). Dieselben Werte stehen
-     * auch in der Projektliste der Startseite (CasesSection.tsx); die kleine
-     * Dopplung besteht dort bereits beim Namen und ist bewusst in Kauf
-     * genommen, statt die groessere, interaktive Startseiten-Komponente fuer
-     * einen zweiten, viel kleineren Verwendungszweck umzubauen.
+     * Was das Projekt geloest hat, Key-Visual und Route – fuer die kompakten
+     * Portfolio-Karten auf /referenzen (siehe app/referenzen/page.tsx).
+     * Dieselben Werte stehen auch in der Projektliste der Startseite
+     * (CasesSection.tsx); die kleine Dopplung besteht dort bereits beim Namen
+     * und ist bewusst in Kauf genommen, statt die groessere, interaktive
+     * Startseiten-Komponente fuer einen zweiten, viel kleineren
+     * Verwendungszweck umzubauen.
      */
     problem: string
     teaser: string

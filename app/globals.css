@@ -3305,11 +3305,16 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
    waechst die Karte deshalb mit ihrem Inhalt; `align-items: stretch` des Tracks
    gleicht alle Panels auf die hoechste an, sodass die Reihe ruhig bleibt.
    Die Deckelung haelt sie im gepinnten 100vh-Ausschnitt. */
-.ped-frost .ped-panel {
+.ped-frost .ped-panel,
+.lps .ped-panel {
     height: auto;
     min-height: clamp(430px, 60vh, 600px);
     max-height: 88vh;
 }
+/* LeistungenScroller.tsx: derselbe Querlauf wie der Prozessbereich, aber ohne
+   Frost-Hintergrund (dort blurt er einen Videohintergrund weg, den es auf
+   /leistungen nicht gibt) und in normaler statt gespiegelter Leserichtung. */
+.lps { padding: clamp(4rem, 8vw, 6.5rem) 0; }
 
 /* Nur bei zu wenig Hoehe wird aus dem gepinnten Querlauf eine vertikale
    Reihenfolge derselben Schritte – auf Hochformat-Handys bleibt der Querlauf
@@ -4290,7 +4295,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 }
 .cases-fallstudie:hover { color: #ffb27f; }
 
-/* ── Leistungsseiten (app/leistungen/[slug]) ─────────────────────────────────
+/* ── Leistungsseite (app/leistungen/page.tsx) ────────────────────────────────
    Bewusst dieselbe Sprache wie die Fallstudien: dunkler Grund, nummerierte
    Kapitel, `.csx-*`-Typografie. Nur die Bausteine, die es dort nicht gibt,
    bekommen eigene Regeln – ein zweiter Unterseiten-Stil waere der schnellste
@@ -4314,11 +4319,6 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     padding-top: clamp(2.5rem, 5vw, 4rem);
     padding-bottom: clamp(4rem, 8vw, 7rem);
 }
-.lst-umfang,
-.lst-verweise {
-    min-height: 0;
-    padding: clamp(4rem, 7vw, 6.5rem) 0;
-}
 /* Lesespalte: breiter als die Fallstudien-Spalte (dort steht ein Bild daneben),
    aber weit unter der Sektionsbreite – sonst laufen die Zeilen zu lang. */
 .lst-body { max-width: 62rem; }
@@ -4333,93 +4333,46 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     color: #fff;
 }
 
-/* Leistungsumfang: dieselbe Kachel wie die Schritt-Panels im Prozessbereich
-   (`.ped-panel.ped-glass`) – Milchglas mit dem 155-Grad-Verlauf, 20px Radius und
-   der grossen Geisterziffer in der Ecke. Bewusst kein eigener Kartentyp: Der
-   Abschnitt beantwortet auf der Unterseite dieselbe Frage wie der Scroller auf
-   der Startseite („Woraus besteht das?"), also traegt er dieselbe Form.
-
-   Keine orange Kante: Im Prozessbereich ist Orange der EINEN Fokuskarte
-   vorbehalten. Neun orange gesaeumte Kacheln nebeneinander nehmen dem Akzent
-   genau die Bedeutung, die er dort hat. */
-.lst-karten {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: clamp(1rem, 1.8vw, 1.6rem);
-    margin-top: clamp(1.6rem, 3vw, 2.6rem);
-}
-.lst-karte {
-    position: relative; overflow: hidden;
-    display: flex; flex-direction: column;
-    padding: clamp(1.5rem, 2.2vw, 2.2rem);
-    border-radius: 20px;
-    background: linear-gradient(155deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015));
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-    transition: border-color 0.35s ease, background 0.35s ease;
-}
-.lst-karte:hover {
-    border-color: rgba(255, 107, 53, 0.35);
-    background: linear-gradient(155deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.025));
-}
-/* Geisterziffer wie `.ped-num`: gross, fast unsichtbar, gibt der Kachel Tiefe
-   ohne eine zweite Information zu behaupten. Deshalb aria-hidden im Markup. */
-.lst-karte-nr {
-    position: absolute;
-    top: clamp(0.6rem, 1vw, 0.9rem); right: clamp(0.9rem, 1.5vw, 1.3rem);
-    font-size: clamp(2rem, 3vw, 2.8rem);
-    font-weight: 900; line-height: 1; letter-spacing: -0.03em;
-    color: rgba(255, 255, 255, 0.06);
-    pointer-events: none;
-}
-/* Name im Grad der Panel-Titel, nur kleiner: `.ped-title` traegt zwei Worte,
-   hier stehen bis zu neun Kacheln nebeneinander. */
-/* Die Ziffer sitzt oben rechts, der Name beginnt oben links – ohne
-   reservierten Platz laeuft „MARKENARCHITEKTUR" mitten hindurch. Im Original
-   entsteht der Abstand von selbst, weil `.ped-title { margin-top: auto }` den
-   Titel an den Fuss der Karte schiebt; diese Kacheln sind dafuer zu flach. */
-.lst-karte-name {
-    position: relative;
-    padding-right: clamp(2.8rem, 4.4vw, 4rem);
-    font-size: clamp(1.08rem, 1.45vw, 1.32rem);
-    font-weight: 800; line-height: 1.12; letter-spacing: -0.01em;
-    text-transform: uppercase; color: #fff;
-    /* Deutsche Komposita haben keine Umbruchstelle und liefen unter
-       `overflow: hidden` aus der Kachel heraus. Getrennt wird deshalb an den
-       weichen Trennzeichen, die in lib/leistungen an den Wortfugen stehen –
-       `manual`, NICHT `auto`: Die automatische Silbentrennung schrieb
-       „GESCHAEFTSAUS-STATTUNG" statt „GESCHAEFTS-AUSSTATTUNG".
-       `break-word` bleibt die letzte Sicherung gegen Ueberlauf. */
-    overflow-wrap: break-word;
-    hyphens: manual;
-}
-.lst-karte-text {
-    margin-top: clamp(0.8rem, 1.2vw, 1.05rem);
-    font-size: clamp(1rem, 1.25vw, 1.15rem);
-    font-weight: 400; line-height: 1.7;
-    color: rgba(255, 255, 255, 0.62);
-}
-
-/* Kompakte Dichte: dieselbe Kachel ohne Textzeile. Acht der neun Seiten fuehren
-   nur Schlagworte – dafuer erfundene Erklaersaetze zu schreiben waere der
-   schlechtere Weg zur Einheitlichkeit gewesen. Die Kachel traegt auch ohne sie. */
-.lst-karten--kompakt {
-    grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
-    gap: clamp(0.8rem, 1.4vw, 1.2rem);
-}
-/* Ziffer oben, Name unten – genau wie im Prozessbereich, wo `.ped-num` oben
-   rechts sitzt und `.ped-title` per `margin-top: auto` am Fuss steht. Der Name
-   bekommt dadurch die volle Kachelbreite: mit reserviertem Platz neben der
-   Ziffer musste „GESCHAEFTSAUSSTATTUNG" dreimal getrennt werden. */
-.lst-karten--kompakt .lst-karte {
-    justify-content: flex-end;
-    min-height: clamp(148px, 12vw, 178px);
-}
-.lst-karten--kompakt .lst-karte-nr { font-size: clamp(1.9rem, 2.8vw, 2.5rem); }
-
-/* ── Leistungssystem: Graph statt Kachelgrid (nur /leistungen/webdesign,
-   Prototyp) ───────────────────────────────────────────────────────────────
+/* ── Leistungssystem: Graph statt Kachelgrid ──────────────────────────────
    Reine Typografie + duenne orange Linie statt Icons/Kacheln/Business-
-   Infografik. Siehe components/sections/LeistungSystem.tsx. */
+   Infografik. Siehe components/sections/LeistungSystem.tsx. Traegt sowohl
+   den Webdesign-Prototyp als auch die vier Stufen-Graphen auf /leistungen.
+
+   Kompakter als ein gewoehnliches `.csx`-Kapitel: Vier Stufen hintereinander
+   sollen als EIN System wirken, nicht als vier grosse Einzelkapitel mit den
+   dafuer gedachten 76vh-Mindesthoehen. */
+.lsy { min-height: 0; padding: clamp(2.2rem, 4.5vw, 3.5rem) 0; }
+.lsy-lead { margin-top: clamp(0.8rem, 1.5vw, 1.1rem); }
+/* Docking-Punkt zwischen zwei Stufen-Graphen: waechst beim Erreichen kurz
+   ein (siehe LeistungDock in LeistungSystem.tsx) – zeigt Kontinuitaet, ohne
+   eine Kantenmessung ueber mehrere Komponenten-Instanzen hinweg zu bauen. */
+.lsy-dock {
+    display: flex; justify-content: center;
+    padding: clamp(0.3rem, 1vw, 0.6rem) 0;
+}
+.lsy-dock-linie {
+    width: 1px; height: clamp(1.6rem, 4vw, 2.6rem);
+    background: linear-gradient(to bottom, rgba(255, 107, 53, 0), rgba(255, 107, 53, 0.6), rgba(255, 107, 53, 0));
+    transform: scaleY(0); transform-origin: top;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.lsy-dock.is-in .lsy-dock-linie { transform: scaleY(1); }
+
+/* Eine durchgehende Linie hinter allen vier Stufen (siehe `.lsy-system` in
+   app/leistungen/page.tsx) – macht sichtbar, dass Klarheit, Charakter,
+   Praesenz und Wirkung ein zusammenhaengendes System sind, nicht vier
+   getrennte Abschnitte. Laeuft auf derselben Achse wie die zentrierten
+   Wurzelknoten. Sehr blass, damit sie hinter Text und Knoten nicht stoert –
+   die eigentliche Struktur zeigen weiter die gemessenen Kanten je Graph. */
+.lsy-system { position: relative; }
+.lsy-system::before {
+    content: ''; position: absolute; z-index: 0; pointer-events: none;
+    left: 50%; top: 3rem; bottom: 3rem; width: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom, rgba(255, 107, 53, 0), rgba(255, 107, 53, 0.16) 8%, rgba(255, 107, 53, 0.16) 92%, rgba(255, 107, 53, 0));
+}
+.lsy-system > * { position: relative; z-index: 1; }
+
 .lsy-graph {
     position: relative;
     display: flex; flex-direction: column;
@@ -4428,212 +4381,83 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     padding: clamp(1rem, 2vw, 2rem) 0;
 }
 .lsy-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 0; pointer-events: none; }
-.lsy-lines path {
-    opacity: 0; transition: opacity 0.8s ease; transition-delay: var(--d, 0s);
-}
-.lsy.is-in .lsy-lines path { opacity: 1; }
+/* Anfangszustand vor dem ersten Bild der Scroll-Schleife (siehe
+   `useVisibleRaf` in LeistungSystem.tsx) bzw. vollstaendiger Endzustand bei
+   `prefers-reduced-motion: reduce`, wo die Schleife gar nicht erst laeuft. */
+.lsy-lines path { opacity: 0; stroke-dasharray: 0.018 0.05; stroke-dashoffset: 1; }
+.lsy.is-in .lsy-lines path { opacity: 1; stroke-dashoffset: 0; }
 
 .lsy-row {
     position: relative; z-index: 1;
     display: flex; justify-content: center; flex-wrap: wrap;
-    gap: clamp(1.2rem, 4vw, 4.5rem);
+    align-items: flex-start;
+    gap: clamp(1.4rem, 4vw, 4.8rem);
 }
-/* Asymmetrische Ausrichtung bei einzelnen Knoten (Punkt 6) – Verzweigungs-
-   reihen (zwei Knoten) bleiben immer zentriert, sonst wuerde die Astoptik
-   kippen. */
-.lsy-row:not(.lsy-row--verzweigt):nth-of-type(odd) { justify-content: flex-start; padding-left: clamp(0px, 8vw, 9rem); }
-.lsy-row:not(.lsy-row--verzweigt):nth-of-type(even) { justify-content: flex-end; padding-right: clamp(0px, 8vw, 9rem); }
 
 .lsy-node { display: flex; flex-direction: column; align-items: center; text-align: center; min-width: 120px; }
 .lsy-node-in {
-    display: flex; flex-direction: column; align-items: center; gap: 0.7rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.9rem;
     opacity: 0; transform: translateY(14px) scale(0.97);
     transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
     transition-delay: var(--d, 0s);
 }
 .lsy.is-in .lsy-node-in { opacity: 1; transform: none; }
-.lsy-node-dot {
-    width: 9px; height: 9px; border-radius: 50%;
-    background: #ff6b35; box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.14);
+
+/* Bausteine: kleinere Icon-Kreise im Stil der radialen System-Grafik der
+   Startseite (`.sysr-ic`) – derselbe Glow, dieselbe Formsprache. */
+.lsy-ic {
+    width: 46px; height: 46px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: rgba(6, 18, 30, 0.9); border: 1px solid rgba(255, 107, 53, 0.45);
+    box-shadow: 0 0 18px rgba(255, 107, 53, 0.14), 0 6px 16px rgba(0, 0, 0, 0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
+.lsy-ic-dot { width: 8px; height: 8px; border-radius: 50%; background: #ff6b35; }
+
+/* Wurzelknoten: dasselbe Badge wie `.sysr-badge` im Zentrum der Startseiten-
+   Grafik – hier trotzdem in der Reihe, nicht radial freigestellt, damit der
+   Graph auf jeder Breite ohne feste Buehnengroesse funktioniert. */
+.lsy-badge {
+    width: clamp(72px, 8vw, 92px); height: clamp(72px, 8vw, 92px); border-radius: 50%;
+    display: grid; place-items: center;
+    background: rgba(6, 20, 32, 0.6); border: 1px solid rgba(255, 107, 53, 0.42);
+    box-shadow: 0 0 0 8px rgba(255, 107, 53, 0.05), 0 0 44px rgba(255, 107, 53, 0.2);
+    transition: box-shadow 0.3s ease;
+}
+.lsy-badge img { width: 46%; height: auto; }
+
 .lsy-node-label {
     font-size: clamp(1rem, 1.25vw, 1.15rem);
     font-weight: 700; letter-spacing: 0.01em; line-height: 1.2;
     text-transform: uppercase; color: rgba(255, 255, 255, 0.88);
+    transition: color 0.3s ease;
 }
-/* Start- und Endknoten des Systems tragen etwas mehr Gewicht – sie rahmen die
-   Kette (Strategie → … → Performance), ohne Kacheln oder Farbe zu brauchen. */
-.lsy-row:first-of-type .lsy-node-label,
-.lsy-row:last-of-type .lsy-node-label {
+/* Leichtes Aufleben beim Zeigen. Nur auf Geraeten mit echtem Zeiger, sonst
+   bleibt der Tap-Zustand auf Mobile haengen. */
+@media (hover: hover) {
+    .lsy-node:hover .lsy-ic {
+        transform: scale(1.1);
+        border-color: rgba(255, 107, 53, 0.8);
+        box-shadow: 0 0 26px rgba(255, 107, 53, 0.32), 0 6px 16px rgba(0, 0, 0, 0.35);
+    }
+    .lsy-node:hover .lsy-badge { box-shadow: 0 0 0 8px rgba(255, 107, 53, 0.08), 0 0 60px rgba(255, 107, 53, 0.3); }
+    .lsy-node:hover .lsy-node-label { color: #fff; }
+}
+/* Der Startknoten (die Methodenstufe selbst, z. B. "Klarheit") traegt mehr
+   Gewicht als die Bausteine, die daraus verzweigen – er ist die Wurzel des
+   Graphen, kein gleichrangiges Element. Zentriert wie die Bausteinreihe
+   darunter, damit alle vier Wurzelknoten auf derselben Achse liegen – dort
+   laeuft die durchgehende Linie aus `.lsy-system` entlang. */
+.lsy-row:first-of-type .lsy-node-label {
     font-size: clamp(1.25rem, 1.8vw, 1.7rem);
     font-weight: 800;
     color: #fff;
 }
 
 @media (max-width: 640px) {
-    /* Mobile: reine vertikale Kette, keine Asymmetrie und keine horizontale
-       Ueberbreite (Punkt 17) – Verzweigungsreihen bleiben nebeneinander,
-       bekommen aber weniger Abstand. */
-    .lsy-row,
-    .lsy-row:not(.lsy-row--verzweigt):nth-of-type(odd),
-    .lsy-row:not(.lsy-row--verzweigt):nth-of-type(even) {
-        justify-content: center; padding-left: 0; padding-right: 0;
-    }
     .lsy-row--verzweigt { gap: clamp(1.4rem, 8vw, 2.2rem); }
     .lsy-graph { gap: clamp(2rem, 8vw, 2.8rem); }
 }
-/* Kleinere Ziffer heisst auch weniger reservierter Platz – die Namen sind hier
-   die einzige Zeile und sollen so wenig wie moeglich umbrechen. */
-.lst-karten--kompakt .lst-karte-name {
-    padding-right: 0;
-    font-size: clamp(1rem, 1.3vw, 1.18rem);
-}
-
-/* ── Editorial-Detailbereich: ersetzt die Kachel je Disziplin ────────────────
-   Siehe components/sections/LeistungDetail.tsx. Drei Layout-Varianten fuer
-   rhythmischen Wechsel (Punkt 10), kompakte Sammelzeilen fuer Eintraege ohne
-   Fliesstext (Punkt 11), duenne Linie zwischen den vollen Abschnitten
-   (Punkt 12) statt zwischen jedem Eintrag. */
-.led-liste { margin-top: clamp(2rem, 4vw, 3rem); }
-
-.led-voll { position: relative; max-width: 46rem; padding: clamp(1.8rem, 3.5vw, 3rem) 0; }
-.led-mit-linie::after {
-    content: ''; position: absolute; left: 0; bottom: 0;
-    width: 2.5rem; height: 1px; background: rgba(255, 107, 53, 0.35);
-}
-.led-nr {
-    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em;
-    color: #ff6b35; margin-bottom: 0.8rem;
-}
-.led-titel {
-    font-size: clamp(1.6rem, 2.6vw, 2.3rem);
-    font-weight: 800; line-height: 1.08; letter-spacing: -0.01em;
-    text-transform: uppercase; color: #fff;
-    margin-bottom: clamp(0.9rem, 1.4vw, 1.2rem);
-    overflow-wrap: break-word; hyphens: manual;
-}
-.led-text {
-    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
-    font-weight: 400; line-height: 1.75;
-    color: rgba(255, 255, 255, 0.66);
-    max-width: 34rem;
-}
-
-/* Variante A: Grundform, linksbuendig. */
-.led-a { margin-left: 0; }
-/* Variante B: mittig gesetzt, schmalere Spalte – bricht den Lesefluss auf. */
-.led-b { margin: 0 auto; text-align: center; max-width: 38rem; }
-.led-b .led-text { margin: 0 auto; }
-.led-b.led-mit-linie::after { left: 50%; transform: translateX(-50%); }
-/* Variante C: rechts verankert – die zweite Asymmetrie neben den Reihen im
-   Leistungssystem darueber (Punkt 6). */
-.led-c { margin-left: auto; text-align: right; }
-.led-c .led-text { margin-left: auto; }
-.led-c.led-mit-linie::after { left: auto; right: 0; }
-
-.led-voll { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
-.led-voll.is-in { opacity: 1; transform: none; }
-
-/* Kompakte Sammelzeile: mehrere Disziplinen ohne eigenen Fliesstext in einer
-   ruhigen Zeile statt als eigene Sektionen – Groesse und Farbe bewusst unter
-   `.led-titel`, damit die Hierarchie zu den vollen Abschnitten stimmt. */
-.led-kompakt {
-    display: flex; flex-wrap: wrap; gap: 0.5rem 1.6rem;
-    padding: clamp(1rem, 2vw, 1.6rem) 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    opacity: 0; transform: translateY(10px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.led-kompakt.is-in { opacity: 1; transform: none; }
-.led-kompakt-item {
-    font-size: clamp(0.95rem, 1.1vw, 1.06rem);
-    font-weight: 600; color: rgba(255, 255, 255, 0.5);
-}
-
-@media (max-width: 640px) {
-    /* Keine erzwungene Asymmetrie auf schmalen Screens – rechts/mittig
-       verankerte Bloecke wuerden dort nur den Lesefluss stoeren. */
-    .led-b, .led-c { margin: 0; text-align: left; max-width: none; }
-    .led-b .led-text, .led-c .led-text { margin: 0; }
-    .led-b.led-mit-linie::after, .led-c.led-mit-linie::after { left: 0; right: auto; transform: none; }
-}
-
-/* ── Prozessblock am Seitenende: "Von der Idee zur Wirkung." ─────────────────
-   Siehe components/sections/LeistungProzess.tsx. Bewusst normaler Dokument-
-   fluss (Reihe/Spalte), kein Pin, kein Scroll-Jacking. */
-.lpz-liste {
-    list-style: none; display: flex; flex-wrap: wrap;
-    gap: clamp(1.6rem, 3.5vw, 3rem);
-    margin-top: clamp(2.2rem, 4.5vw, 3.5rem);
-}
-.lpz-schritt {
-    display: flex; align-items: baseline; gap: 0.9rem;
-    flex: 1 1 170px; padding-bottom: 1.1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    opacity: 0; transform: translateY(12px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-    transition-delay: var(--d, 0s);
-}
-.lpz-schritt.is-in { opacity: 1; transform: none; }
-.lpz-nr {
-    font-size: clamp(0.95rem, 1.2vw, 1.1rem);
-    font-weight: 800; color: #ff6b35; letter-spacing: 0.04em;
-}
-.lpz-label {
-    font-size: clamp(0.95rem, 1.15vw, 1.06rem);
-    font-weight: 700; letter-spacing: 0.02em;
-    text-transform: uppercase; color: rgba(255, 255, 255, 0.85);
-}
-@media (max-width: 640px) {
-    .lpz-liste { flex-direction: column; gap: 0; }
-    .lpz-schritt { flex: none; }
-}
-
-/* ── Case-Feature: "Theorie → Praxis" ─────────────────────────────────────
-   Siehe components/sections/LeistungCaseFeature.tsx. Nutzt `.kvframe`/
-   `.kvframe-screen`/`.cm-img` aus dem Projekte-Bereich weiter (kein neuer
-   Bildrahmen), nur die Textzeile und der Abstand sind eigens. */
-.lcf-liste {
-    display: flex; flex-direction: column;
-    gap: clamp(3rem, 6vw, 5rem);
-    margin-top: clamp(2.2rem, 4.5vw, 3.5rem);
-}
-.lcf-case {
-    opacity: 0; transform: translateY(20px);
-    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-    transition-delay: var(--d, 0s);
-}
-.lcf-case.is-in { opacity: 1; transform: none; }
-.lcf-frame {
-    display: block; margin-bottom: clamp(1.2rem, 2.2vw, 1.7rem);
-    transition: box-shadow 0.3s ease;
-}
-.lcf-frame:hover { box-shadow: 0 30px 90px rgba(255, 107, 53, 0.14); }
-.lcf-frame .cm-img { transition: transform 0.6s ease; }
-.lcf-frame:hover .cm-img { transform: scale(1.03); }
-.lcf-meta { max-width: 42rem; }
-.lcf-name {
-    font-size: clamp(1.3rem, 2vw, 1.8rem);
-    font-weight: 800; text-transform: uppercase; color: #fff;
-    margin-bottom: 0.4rem; letter-spacing: -0.01em;
-}
-.lcf-problem {
-    font-size: clamp(0.78rem, 0.9vw, 0.88rem);
-    font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-    color: rgba(255, 107, 53, 0.85); margin-bottom: 0.7rem;
-}
-.lcf-teaser {
-    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
-    line-height: 1.75; color: rgba(255, 255, 255, 0.68);
-    margin-bottom: 1.1rem;
-}
-.lcf-link {
-    display: inline-flex; align-items: center; gap: 0.6rem;
-    font-weight: 700; color: #fff; text-decoration: none;
-}
-.lcf-link svg { width: 18px; height: 18px; color: #ff6b35; transition: transform 0.25s ease; }
-.lcf-link:hover svg { transform: translateX(4px); }
-
 /* Der Leitgedanke: eigene Flaeche, abgesetzt in der Akzentfarbe. Er ist die
    Haltung zur Disziplin und keine weitere Aufzaehlung. */
 .lst-leit {
@@ -4660,57 +4484,6 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     color: rgba(255, 255, 255, 0.72);
 }
 
-/* Fallstudien zur Leistung. Grosse Zeilen mit Trennlinie – dieselbe Anmutung
-   wie die Projektliste der Startseite, nur ohne Bildrahmen. */
-.lst-cases {
-    list-style: none;
-    margin-top: clamp(1.4rem, 2.6vw, 2.2rem);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-.lst-cases li { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
-.lst-cases a {
-    display: flex; align-items: center; justify-content: space-between; gap: 1.2rem;
-    padding: clamp(1rem, 1.8vw, 1.5rem) 0;
-    text-decoration: none;
-    font-size: clamp(1.15rem, 1.9vw, 1.6rem); font-weight: 700;
-    letter-spacing: -0.01em; text-transform: uppercase; color: #fff;
-    transition: color 0.3s ease;
-}
-.lst-cases a svg { width: 22px; height: 22px; color: #ff6b35; transition: transform 0.3s ease; }
-.lst-cases a:hover { color: #ffb27f; }
-.lst-cases a:hover svg { transform: translateX(6px); }
-
-/* Die uebrigen Disziplinen. Steht auf jeder Leistungsseite: Wer eine liest, hat
-   oft die Nachbardisziplin im Sinn – ohne diesen Block fuehrte der einzige Weg
-   dorthin ueber die Startseite zurueck. */
-.lst-andere {
-    margin-top: clamp(2.6rem, 5vw, 4rem);
-    padding-top: clamp(1.6rem, 2.6vw, 2.2rem);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-.lst-andere-label {
-    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em;
-    text-transform: uppercase; color: rgba(255, 255, 255, 0.4);
-    margin-bottom: 1.1rem;
-}
-.lst-andere-liste {
-    list-style: none;
-    display: flex; flex-wrap: wrap; gap: 0.6rem 0.7rem;
-}
-.lst-andere-liste a {
-    display: inline-flex; align-items: center;
-    padding: 0.5rem 1rem; border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    font-size: clamp(0.82rem, 0.95vw, 0.92rem); font-weight: 600; letter-spacing: 0.04em;
-    color: rgba(255, 255, 255, 0.72); text-decoration: none;
-    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
-}
-.lst-andere-liste a:hover {
-    border-color: rgba(255, 107, 53, 0.5);
-    background: rgba(255, 107, 53, 0.08);
-    color: #fff;
-}
-
 /* Abschluss der Leistungsseite. Erbt das Layout des Fallstudien-Abschlusses,
    stellt aber die Frage voran – der CTA beantwortet sie dann. */
 .lst-outro {
@@ -4727,11 +4500,6 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 
 @media (max-width: 768px) {
     .lst-body { max-width: none; }
-    /* Volle Kacheln einspaltig; die kompakten vertragen mobil noch zwei
-       Spalten – als einzelne Reihe waeren neun Schlagworte eine sehr lange
-       Kolonne aus fast leeren Kaesten. */
-    .lst-karten { grid-template-columns: 1fr; }
-    .lst-karten--kompakt { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 /* ── Disziplinen unter der System-Grafik ─────────────────────────────────────
@@ -4759,10 +4527,10 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: clamp(1rem, 1.8vw, 1.6rem);
 }
-/* Jede Spalte als eigene Kachel – dieselbe Sprache wie `.lst-karte` auf den
-   Leistungsseiten (Glasflaeche, orange Kante beim Zeigen), damit die vier
-   Schritte als eigenstaendige Felder wirken statt als vier Listen ohne
-   sichtbare Grenze. Nummer, kurze orange Linie, Name bleiben die Kopfzeile. */
+/* Jede Spalte als eigene Kachel (Glasflaeche, orange Kante beim Zeigen),
+   damit die vier Schritte als eigenstaendige Felder wirken statt als vier
+   Listen ohne sichtbare Grenze. Nummer, kurze orange Linie, Name bleiben die
+   Kopfzeile. */
 .lgl-spalte {
     display: flex; flex-direction: column;
     padding: clamp(1.4rem, 2vw, 1.9rem);
@@ -4798,7 +4566,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 }
 .lgl-links a:hover { color: #ff8f5c; }
 /* Der Pfeil liegt ruhig da und ruckt beim Zeigen nach vorn – dieselbe
-   Ruecksprache wie bei `.ped-steplink` und `.lst-cases`. */
+   Ruecksprache wie bei `.ped-steplink`. */
 .lgl-pfeil {
     color: #ff6b35; opacity: 0.4;
     transition: transform 0.25s ease, opacity 0.25s ease;
@@ -4829,6 +4597,52 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 }
 @media (max-width: 560px) {
     .lgl-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* ── Referenzen: "Nicht lesen. Schauen." ──────────────────────────────────
+   Siehe components/sections/Referenzen.tsx. Nutzt `.kvframe`/`.cm-img`
+   weiter (kein neuer Bildrahmen). Jede dritte Karte ueber die volle Breite
+   fuer leichte editoriale Varianz – kein Masonry. */
+.ref-grid {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2.2rem, 4.5vw, 3.8rem);
+}
+.ref-karte--gross { grid-column: 1 / -1; }
+.ref-karte--gross .kvframe-screen { aspect-ratio: 21 / 9; }
+.ref-karte {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ref-karte.is-in { opacity: 1; transform: none; }
+.ref-frame { display: block; margin-bottom: clamp(1rem, 2vw, 1.4rem); transition: box-shadow 0.3s ease; }
+.ref-frame:hover { box-shadow: 0 30px 90px rgba(255, 107, 53, 0.14); }
+.ref-frame .cm-img { transition: transform 0.6s ease; }
+.ref-frame:hover .cm-img { transform: scale(1.03); }
+.ref-name {
+    font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+    font-weight: 800; text-transform: uppercase; color: #fff;
+    margin-bottom: 0.3rem; letter-spacing: -0.01em;
+}
+.ref-branche {
+    font-size: clamp(0.78rem, 0.9vw, 0.88rem);
+    font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    color: rgba(255, 107, 53, 0.85); margin-bottom: 0.6rem;
+}
+.ref-teaser {
+    font-size: clamp(1rem, 1.2vw, 1.15rem);
+    color: rgba(255, 255, 255, 0.68); line-height: 1.6;
+    margin-bottom: 0.9rem;
+}
+.ref-link {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-weight: 700; color: #fff; text-decoration: none;
+}
+.ref-link svg { width: 16px; height: 16px; color: #ff6b35; transition: transform 0.25s ease; }
+.ref-link:hover svg { transform: translateX(4px); }
+
+@media (max-width: 768px) {
+    .ref-grid { grid-template-columns: 1fr; }
+    .ref-karte--gross .kvframe-screen { aspect-ratio: 16 / 9; }
 }
 
 /* Navigationslinks im Fuss. Der Farbwechsel liegt hier und nicht in

@@ -2,7 +2,15 @@
 
 import Link from 'next/link'
 import useReveal from '@/components/useReveal'
-import { STUFEN, leistungenDerStufe } from '@/lib/leistungen'
+import { STUFEN, leistungenDerStufe, type StufenNr } from '@/lib/leistungen'
+
+/** Ankerbezeichner der Stufen auf /leistungen (siehe app/leistungen/page.tsx). */
+const STUFE_ANKER: Record<StufenNr, string> = {
+    '01': 'klarheit',
+    '02': 'charakter',
+    '03': 'praesenz',
+    '04': 'wirkung',
+}
 
 /**
  * Die neun Disziplinen als Wege zu ihren eigenen Seiten.
@@ -49,7 +57,7 @@ export default function LeistungenLinks() {
                             {leistungen.length === 1 ? (
                                 <ul className="lgl-links">
                                     <li>
-                                        <Link href={`/leistungen/${leistungen[0].slug}`}>
+                                        <Link href={`/leistungen#${STUFE_ANKER[stufe.nr]}`}>
                                             <span>{leistungen[0].name}</span>
                                             <span className="lgl-pfeil" aria-hidden="true">→</span>
                                         </Link>
@@ -59,13 +67,13 @@ export default function LeistungenLinks() {
                                 // Mehrere Disziplinen: eine Zeile Namen statt einer
                                 // vollen Liste einzelner Zeilen – die Reihenfolge
                                 // bleibt die aus lib/leistungen, der Link fuehrt auf
-                                // die erste Disziplin der Gruppe (dasselbe Ziel, das
-                                // MethodeSection fuer denselben Schritt verwendet).
+                                // den Stufen-Abschnitt der Gesamtseite (dort stehen
+                                // alle Disziplinen der Gruppe im Zusammenhang).
                                 <div className="lgl-gruppe">
                                     <p className="lgl-summe">
                                         {leistungen.map((l) => l.name).join(' · ')}
                                     </p>
-                                    <Link className="lgl-mehr" href={`/leistungen/${leistungen[0].slug}`}>
+                                    <Link className="lgl-mehr" href={`/leistungen#${STUFE_ANKER[stufe.nr]}`}>
                                         <span>Leistungen ansehen</span>
                                         <span className="lgl-pfeil" aria-hidden="true">→</span>
                                     </Link>

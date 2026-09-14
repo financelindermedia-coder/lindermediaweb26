@@ -37,7 +37,7 @@ const STEPS = [
         intro: 'Wofür Sie stehen. Wen Sie erreichen. Warum Sie gewählt werden.',
         text: 'Wir schärfen Positionierung, Zielgruppe, Botschaft und Markenarchitektur – nicht als theoretisches Konzept, sondern als Grundlage für alles, was danach sichtbar wird.',
         services: 'Markenstrategie · Positionierung · Zielgruppen · Botschaften · Markenarchitektur',
-        href: '/leistungen/markenstrategie',
+        href: '/leistungen#klarheit',
         linkLabel: 'Mehr über Markenstrategie',
     },
     {
@@ -46,7 +46,7 @@ const STEPS = [
         intro: 'Eine erkennbare Form für Haltung, Sprache und Bildwelt.',
         text: 'Aus der strategischen Richtung entsteht eine visuelle Identität, die wiedererkennbar ist und über alle Berührungspunkte funktioniert.',
         services: 'Corporate Design · Art Direction · Identität · Bildwelt · Gestaltung',
-        href: '/leistungen/corporate-design',
+        href: '/leistungen#charakter',
         linkLabel: 'Mehr über Corporate Design',
     },
     {
@@ -55,7 +55,7 @@ const STEPS = [
         intro: 'Die Marke muss nicht nur existieren. Sie muss sichtbar werden.',
         text: 'Websites, Fotografie, Film, Video und 3D übersetzen die Marke in konkrete Erlebnisse – digital, räumlich und visuell.',
         services: 'Webdesign · Websites · Fotografie · Film & Video · 3D-Visualisierung',
-        href: '/leistungen/webdesign',
+        href: '/leistungen#praesenz',
         linkLabel: 'Mehr über digitale Präsenz',
     },
     {
@@ -64,7 +64,7 @@ const STEPS = [
         intro: 'Die richtige Botschaft muss die richtigen Menschen erreichen.',
         text: 'Wenn Fundament und Auftritt stimmen, können Marketing, SEO, Content, Ads und Automatisierung darauf aufbauen.',
         services: 'SEO · Content · Marketing · Ads · Automatisierung',
-        href: '/leistungen/seo',
+        href: '/leistungen#wirkung',
         linkLabel: 'Mehr über Sichtbarkeit',
     },
 ]

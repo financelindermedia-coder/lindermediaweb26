@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import useReveal from '@/components/useReveal'
-import type { LeistungsPunkt } from '@/lib/leistungen'
 
 /**
  * Bausteine der Leistungsseiten.
@@ -62,138 +61,28 @@ export function LeistungHero({
 }
 
 /**
- * Der Leistungsumfang – auf allen neun Seiten dasselbe Kachelraster.
- *
- * Zwei Dichten aus einer Datenquelle, aber EIN Element: Punkte mit Erklärung
- * bekommen die volle Kachel, reine Schlagworte eine kompakte (`--kompakt`).
- * Fläche, Rahmen und die orange Oberkante sind identisch – nur die Textzeile
- * entfällt, wo es keine gibt.
- *
- * Vorher war die zweite Sorte eine Strichliste. Inhaltlich ließ sich das
- * begründen, in der Abfolge der Seiten war es aber schlicht ein Bruch: Wer von
- * der Markenstrategie zum Corporate Design klickt, sieht denselben Abschnitt in
- * einer anderen Form. Erfundene Erklärsätze für 60 Schlagworte wären der
- * schlechtere Weg zur Einheitlichkeit gewesen – die Kachel trägt auch ohne sie.
+ * Der Leitgedanke: woran wir uns halten, oder – auf /leistungen – die
+ * Schluss-Aussage des Gesamtsystems. Steht abgesetzt in der Akzentfarbe – er
+ * ist die Antwort, nicht die Herleitung.
  */
-export function LeistungUmfang({
-    index,
-    titel,
-    punkte,
+export function LeistungLeitgedanke({
+    label = 'Der Leitgedanke',
+    headline,
+    text,
 }: {
-    index: string
-    titel: string
-    punkte: LeistungsPunkt[]
+    /** Z. B. "Klarheit. Charakter. Präsenz. Wirkung.", wenn die Fläche als Schluss-Aussage statt als Leitgedanke dient. */
+    label?: string
+    headline: string
+    text: string
 }) {
-    const ref = useReveal<HTMLElement>({ threshold: 0.15 })
-    const mitText = punkte.some((p) => p.text)
-
-    return (
-        <section className="csx csx-chapter csx-wide lst-umfang" ref={ref}>
-            <div className="csx-inner">
-                <div className="csx-body lst-body">
-                    <p className="csx-num reveal" data-reveal>
-                        {index}
-                        <span className="csx-num-rule" aria-hidden="true" />
-                    </p>
-                    <h2 className="csx-h2 reveal" data-reveal>{titel}</h2>
-
-                    <div className={`lst-karten${mitText ? '' : ' lst-karten--kompakt'}`}>
-                        {punkte.map((p, i) => (
-                            <div
-                                className="lst-karte reveal"
-                                data-reveal
-                                key={p.name}
-                                // Die kompakte Fassung staffelt enger: neun Kacheln
-                                // in 0,07er-Schritten liefen sonst über eine halbe
-                                // Sekunde nach.
-                                style={{ ['--d' as string]: `${0.1 + i * (mitText ? 0.07 : 0.04)}s` } as React.CSSProperties}
-                            >
-                                {/* Geisterziffer wie in den Schritt-Panels: sie gibt
-                                    der Kachel Tiefe, ist aber keine Information –
-                                    die Punkte sind nicht durchnummeriert gemeint. */}
-                                <span className="lst-karte-nr" aria-hidden="true">
-                                    {String(i + 1).padStart(2, '0')}
-                                </span>
-                                <p className="lst-karte-name">{p.name}</p>
-                                {p.text && <p className="lst-karte-text">{p.text}</p>}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </section>
-    )
-}
-
-/**
- * Der Leitgedanke: woran wir uns in dieser Disziplin halten. Steht abgesetzt in
- * der Akzentfarbe – er ist die Antwort, nicht die Herleitung.
- */
-export function LeistungLeitgedanke({ headline, text }: { headline: string; text: string }) {
     const ref = useReveal<HTMLElement>({ threshold: 0.2 })
 
     return (
         <section className="lst-leit" ref={ref}>
             <div className="lst-leit-inner">
-                <p className="lst-leit-label reveal" data-reveal>Der Leitgedanke</p>
+                <p className="lst-leit-label reveal" data-reveal>{label}</p>
                 <p className="lst-leit-head reveal" data-reveal>{headline}</p>
                 <p className="lst-leit-text reveal" data-reveal>{text}</p>
-            </div>
-        </section>
-    )
-}
-
-/** Verweisblock: Fallstudien zu dieser Leistung und die übrigen Disziplinen. */
-export function LeistungVerweise({
-    index,
-    cases,
-    andere,
-}: {
-    index: string
-    cases: { slug: string; name: string }[]
-    andere: { slug: string; name: string }[]
-}) {
-    const ref = useReveal<HTMLElement>({ threshold: 0.12 })
-
-    return (
-        <section className="csx csx-chapter csx-wide lst-verweise" ref={ref}>
-            <div className="csx-inner">
-                <div className="csx-body lst-body">
-                    {cases.length > 0 && (
-                        <>
-                            <p className="csx-num reveal" data-reveal>
-                                {index}
-                                <span className="csx-num-rule" aria-hidden="true" />
-                            </p>
-                            <h2 className="csx-h2 reveal" data-reveal>Wo das zu sehen ist.</h2>
-                            <ul className="lst-cases">
-                                {cases.map((c, i) => (
-                                    <li
-                                        className="reveal"
-                                        data-reveal
-                                        key={c.slug}
-                                        style={{ ['--d' as string]: `${0.12 + i * 0.07}s` } as React.CSSProperties}
-                                    >
-                                        <Link href={`/projekte/${c.slug}`}>
-                                            <span>{c.name}</span>{PFEIL}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </>
-                    )}
-
-                    <div className="lst-andere reveal" data-reveal>
-                        <p className="lst-andere-label">Weitere Leistungen</p>
-                        <ul className="lst-andere-liste">
-                            {andere.map((a) => (
-                                <li key={a.slug}>
-                                    <Link href={`/leistungen/${a.slug}`}>{a.name}</Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
             </div>
         </section>
     )
@@ -207,8 +96,8 @@ export function LeistungOutro({ frage, label }: { frage: string; label: string }
             <Link href="/#contact" className="csx-cta">
                 {label} {PFEIL}
             </Link>
-            <Link href="/#leistungen" className="csx-outro-back">
-                Zurück zur Übersicht {PFEIL}
+            <Link href="/" className="csx-outro-back">
+                Zurück zur Startseite {PFEIL}
             </Link>
         </nav>
     )
