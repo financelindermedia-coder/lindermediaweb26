@@ -1,23 +1,32 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import useReveal from '@/components/useReveal'
 
 /**
- * Radiale System-Grafik: LinderMedia im Zentrum, die drei Bereiche ringförmig
+ * Radiale System-Grafik: LinderMedia im Zentrum, die vier Bereiche ringförmig
  * darum, über feine gepunktete Linien verbunden. Beim Scrollen faden Linien und
  * Nodes ruhig nacheinander ein. Erklärt Zusammenhänge, nicht Leistungen.
  * Mobil: gestapeltes Raster (keine Linien).
  *
  * Frueher standen hier acht Einzeldisziplinen (Fotografie, Film & Video,
- * Webdesign, 3D, Technologie, Identität …). Die Grafik ist bewusst auf die
- * drei Bereiche reduziert, die auch der Abstieg benennt – Strategie, Design,
- * Markenpräsenz. Die Einzelgewerke haengen daran, sie sind aber nicht die
- * Aussage.
+ * Webdesign, 3D, Technologie, Identität …), dann drei gebuendelte Bereiche
+ * (Strategie/Design/Markenpraesenz). Jetzt vier, angeglichen an die vier
+ * Stufen von /leistungen (Klarheit/Charakter/Praesenz/Wirkung – hier mit den
+ * erzaehlerischeren Namen der Startseite). Die Knoten sind deshalb Links: sie
+ * ersetzen LeistungenLinks als einzigen Klickpfad von der Startseite zu den
+ * neun Einzeldisziplinen, verweisen aber nur auf die Stufen-Abschnitte, nicht
+ * auf jede Einzelseite – dieselbe Flughoehe wie die Grafik selbst.
+ *
+ * Traegt keine eigene Kopfzeile mehr – die steht jetzt in LeistungenIntro.tsx
+ * als eigener Block darueber (Headline + Fliesstext statt Grafik). Diese
+ * Sektion sitzt danach neben UspSection ("Handschrift") in einem eigenen,
+ * zweiten Block (siehe app/page.tsx, `.a2-duo-grid`).
  */
 type Align = 'ct' | 'cb' | 'l' | 'r'
-type Node = { label: string; claim: string; bundle: string; angle: number; align: Align; icon: JSX.Element }
+type Node = { label: string; claim: string; bundle: string; href: string; angle: number; align: Align; icon: JSX.Element }
 
 const I = (d: JSX.Element) => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -26,30 +35,35 @@ const I = (d: JSX.Element) => (
 )
 
 const NODES: Node[] = [
-    // Gleichmaessig verteilt: 120 Grad zwischen den Knoten, damit die
-    // Verbindungslinien alle denselben Winkel zueinander haben. Strategie
-    // steht oben, Design links unten, Markenpraesenz rechts unten – die beiden
-    // liegen auf gleicher Hoehe. Jede Ebene traegt
-    // ihren Satz und darunter, kleiner, was in ihr gebuendelt ist. Ein
-    // Erklaertext dazwischen stand hier auch schon; er machte die Etiketten zu
-    // schwer und ist bewusst wieder raus.
+    // Gleichmaessig verteilt: 90 Grad zwischen den Knoten, im Uhrzeigersinn in
+    // der Reihenfolge des tatsaechlichen Ablaufs (oben → rechts → unten →
+    // links) – wer der Linie folgt, liest den Prozess. Jede Ebene traegt ihren
+    // Satz und darunter, kleiner, was in ihr gebuendelt ist. Ein Erklaertext
+    // dazwischen stand hier auch schon; er machte die Etiketten zu schwer und
+    // ist bewusst wieder raus.
     { label: 'Strategie', claim: 'Gibt Richtung.',
       bundle: 'Positionierung · Zielgruppe · Botschaft · Markenarchitektur',
+      href: '/leistungen#klarheit',
       angle: -90, align: 'ct',
       icon: I(<><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" /><path d="M12 1v3M12 20v3M1 12h3M20 12h3" /></>) },
-    { label: 'Design', claim: 'Gibt Form.',
+    { label: 'Charakter', claim: 'Gibt Form.',
       bundle: 'Corporate Design · Art Direction · Identität · Bildwelt',
-      angle: 150, align: 'r',
+      href: '/leistungen#charakter',
+      angle: 0, align: 'l',
       icon: I(<><path d="M12 20h9" /><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" /></>) },
     { label: 'Markenpräsenz', claim: 'Macht sichtbar.',
       bundle: 'Website · Fotografie · Film & Video · 3D-Visualisierung',
-      angle: 30, align: 'l',
+      href: '/leistungen#praesenz',
+      angle: 90, align: 'cb',
       icon: I(<><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z" /><circle cx="12" cy="12" r="3" /></>) },
+    { label: 'Wirkung', claim: 'Bringt Ergebnisse.',
+      bundle: 'SEO · Content · Marketing · Automatisierung',
+      href: '/leistungen#wirkung',
+      angle: 180, align: 'r',
+      icon: I(<><path d="M3 3v18h18" /><path d="M7 15l4-5 3 3 5-7" /></>) },
 ]
 
-const R = 42 // Radius der Icon-Positionen in % der Stage – mit nur drei
-// Knoten darf der Weg vom Zentrum nach aussen laenger sein: erst die Linie,
-// dann das Icon, dann der Text. Das gibt der Grafik ihren Rhythmus.
+const R = 42 // Radius der Icon-Positionen in % der Stage.
 const PLACED = NODES.map((n) => {
     const a = n.angle * (Math.PI / 180)
     return { ...n, x: 50 + R * Math.cos(a), y: 50 + R * Math.sin(a) }
@@ -162,8 +176,9 @@ export default function LeistungenSection() {
                 </div>
 
                 {PLACED.map((n, i) => (
-                    <div
+                    <Link
                         key={n.label}
+                        href={n.href}
                         className={`sysr-node sysr-node-${n.align} reveal`}
                         data-reveal
                         style={{ left: `${n.x}%`, top: `${n.y}%`, ['--d' as string]: `${0.3 + i * 0.1}s` } as React.CSSProperties}
@@ -174,7 +189,7 @@ export default function LeistungenSection() {
                             <span className="sysr-claim">{n.claim}</span>
                             <span className="sysr-bundle">{n.bundle}</span>
                         </span>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </section>

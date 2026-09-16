@@ -7,10 +7,12 @@ import useReveal from '@/components/useReveal'
  * Strategie, Gestaltung und Umsetzung hier nicht getrennt eingekauft werden –
  * nicht, welche Leistungen es gibt. Die stehen in der System-Grafik daneben.
  *
- * Der Aufbau ist eine Kette von Verneinungen, die auf einen Satz zuläuft: Erst
- * was NICHT unabhängig voneinander entsteht, dann der Schluss daraus. Deshalb
- * stehen die vier Sätze untereinander und nicht als Absatz – die Wiederholung
- * ist die Argumentation.
+ * Der Aufbau ist eine Kette von Verneinungen: Erst was NICHT unabhängig
+ * voneinander entsteht, dann der Schluss daraus. Deshalb stehen die vier
+ * Sätze untereinander und nicht als Absatz – die Wiederholung ist die
+ * Argumentation. Die frühere Schlusszeile „Eine Strategie. Eine Handschrift.
+ * Ein System." ist jetzt die Headline der System-Grafik daneben
+ * (LeistungenSection.tsx) – stand hier doppelt.
  */
 export default function UspSection() {
     const ref = useReveal<HTMLElement>()
@@ -36,11 +38,6 @@ export default function UspSection() {
                     <p className="a2-usp-lead">
                         Deshalb verbinden wir Strategie, Gestaltung und Umsetzung
                         von Anfang an.
-                    </p>
-                    <p className="a2-usp-emph">
-                        Eine Strategie.<br />
-                        Eine Handschrift.<br />
-                        Ein System.
                     </p>
                     <p className="a2-usp-quiet">
                         Vom ersten Gedanken bis zum letzten Bild.

@@ -10,7 +10,7 @@ import MethodeSection from '@/components/sections/MethodeSection'
 import Akt2VideoSection from '@/components/sections/Akt2VideoSection'
 import UspSection from '@/components/sections/UspSection'
 import LeistungenSection from '@/components/sections/LeistungenSection'
-import LeistungenLinks from '@/components/sections/LeistungenLinks'
+import LeistungenIntro from '@/components/sections/LeistungenIntro'
 import CasesSection from '@/components/sections/CasesSection'
 import StatementSection from '@/components/sections/StatementSection'
 import StimmenSection from '@/components/sections/StimmenSection'
@@ -165,17 +165,21 @@ export default function Home() {
                     {/* Der Anker #leistungen sitzt seit dem Wegfall des
                         Drei-Bereiche-Teasers an diesem Block: Arbeitsweise und
                         Einzeldisziplinen sind jetzt das, was unter „Leistungen"
-                        aus Navigation und Fußzeile angesteuert wird. */}
-                    <div className="a2-duo" id="leistungen">
+                        aus Navigation und Fußzeile angesteuert wird (Anker
+                        liegt jetzt auf LeistungenIntro, dem Blockanfang).
+                        Aufbau: erst die Kopfzeile mit Fließtext, eigene
+                        Sektion, kein Glas-Panel – danach Handschrift
+                        (UspSection) und die System-Grafik (LeistungenSection)
+                        nebeneinander in einem eigenen, zweiten Block (dem
+                        Glas-Panel `.a2-duo`). Die vier Grafik-Knoten verlinken
+                        auf /leistungen und sind damit der Klickpfad zu den
+                        Einzeldisziplinen – LeistungenLinks entfaellt dadurch. */}
+                    <LeistungenIntro />
+                    <div className="a2-duo">
                         <div className="a2-duo-grid">
                             <UspSection />
                             <LeistungenSection />
                         </div>
-                        {/* Die Grafik zeigt den Zusammenhang der drei Ebenen,
-                            diese Zeile die einzelnen Disziplinen – sie ist der
-                            einzige Weg von der Startseite auf alle neun
-                            Leistungsseiten. */}
-                        <LeistungenLinks />
                     </div>
 
                     {/* ── Akt 2 · Phase 2: Erleben ── */}

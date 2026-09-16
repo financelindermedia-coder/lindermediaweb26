@@ -2395,18 +2395,6 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
    Projektbeschreibung in der Fallliste – nebeneinander fiel der groessere
    Standardgrad der a2-Sektionen als Bruch auf. */
 .a2-duo .a2-usp-body p { font-size: clamp(1rem, 1.25vw, 1.15rem); }
-/* Die drei Zeilen sind der Schluss des Gedankengangs und sollen als Headline
-   stehen, nicht als weiterer Absatz.
-   Sie brauchen die Ausnahme ausdruecklich: `.a2-duo .a2-usp-body p` (0,2,1) ist
-   spezifischer als `.a2-usp-body .a2-usp-emph` (0,2,0) und hat das Statement auf
-   Fliesstextgrad heruntergezogen – im Duo also genau dort, wo es sichtbar ist. */
-.a2-duo .a2-usp-body .a2-usp-emph {
-    text-align: left;
-    margin-top: clamp(1.4rem, 2.4vw, 2.2rem);
-    font-size: clamp(1.55rem, 2.5vw, 2.3rem);
-    font-weight: 900; line-height: 1.12; letter-spacing: -0.015em;
-    color: #fff;
-}
 /* Der Satz, der auf das Statement zulaeuft – eine Stufe ueber dem Fliesstext,
    damit die Kette Absatz → Hinfuehrung → Statement lesbar bleibt. */
 .a2-duo .a2-usp-body .a2-usp-lead {
@@ -2642,10 +2630,6 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     color: rgba(255, 255, 255, 0.92); font-weight: 400;
     font-size: clamp(1.15rem, 1.6vw, 1.4rem);
 }
-.a2-usp-body .a2-usp-emph {
-    font-size: clamp(1.5rem, 2.6vw, 2.4rem); font-weight: 800; line-height: 1.25;
-    letter-spacing: -0.01em; color: #fff; margin: 0.6rem 0;
-}
 .a2-usp-body .a2-usp-quiet {
     font-size: clamp(1rem, 1.3vw, 1.2rem); color: rgba(255, 255, 255, 0.45);
     font-style: italic;
@@ -2787,6 +2771,24 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 
 /* ── Radiale System-Grafik: die Kompetenzfelder als ein System ── */
 .sysr { text-align: center; }
+.sysr-head {
+    font-size: var(--h2);
+    font-weight: 300; line-height: 1.1; letter-spacing: -0.012em;
+    color: #fff;
+    margin: 0 auto clamp(2rem, 4vw, 3.2rem);
+    max-width: 20ch;
+}
+/* Kopfzeile ueber der Grafik (LeistungenIntro.tsx) – eigener Block, volle
+   Breite, kein Duo-Raster. Bei ihr sitzt der Anchor `#leistungen`. */
+.sysr-intro { padding: clamp(5rem, 9vw, 8rem) var(--px) 0; }
+.sysr-intro .sysr-head { margin-bottom: clamp(1.2rem, 2.2vw, 1.8rem); }
+.sysr-intro-text {
+    max-width: 56ch; margin: 0 auto;
+    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+    font-weight: 400; line-height: 1.6;
+    color: rgba(255, 255, 255, 0.72);
+}
+.sysr-intro-text strong { color: #fff; font-weight: 700; }
 
 .sysr-stage { position: relative; width: min(760px, 84vw); aspect-ratio: 1; margin: 0 auto; }
 /* Der Scrim gehoert nur zum gestapelten Mobil-Layout (Hintergrund dort per
@@ -2826,8 +2828,15 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 }
 .sysr-badge img { width: 52%; height: auto; }
 
-/* Node = Nullpunkt-Anker auf dem Kreis; Icon & Label werden davon aus positioniert */
-.sysr-node { position: absolute; z-index: 2; width: 0; height: 0; }
+/* Node = Nullpunkt-Anker auf dem Kreis; Icon & Label werden davon aus
+   positioniert. Jetzt ein Link (fuehrt zur passenden Stufe auf /leistungen,
+   ersetzt LeistungenLinks als Klickpfad) – display/Farbe/Unterstreichung
+   zuruecksetzen, `.sysr-name`/`.sysr-claim`/`.sysr-bundle` tragen ihre
+   eigene Farbe schon. */
+.sysr-node {
+    position: absolute; z-index: 2; width: 0; height: 0;
+    display: block; color: inherit; text-decoration: none;
+}
 .sysr-ic {
     position: absolute; left: 0; top: 0; transform: translate(-50%, -50%);
     width: 62px; height: 62px; border-radius: 50%;
@@ -2875,7 +2884,6 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 @media (max-width: 768px) {
     .a2 { padding-left: var(--px); padding-right: var(--px); }
     .lk-grid { grid-template-columns: 1fr; }
-    .a2-usp-body .a2-usp-emph { font-size: 1.6rem; }
     /* Fullscreen-Video: Text weiter oben, Play etwas höher, Foot kompakt */
     .a2v { align-items: flex-start; padding-top: clamp(7rem, 22vh, 12rem); }
     .a2v-content { max-width: 100%; }
@@ -4630,103 +4638,6 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 
 @media (max-width: 768px) {
     .lst-body { max-width: none; }
-}
-
-/* ── Disziplinen unter der System-Grafik ─────────────────────────────────────
-   Die neun Leistungsseiten als Wege, geordnet nach den vier Schritten der
-   Methode. Vorher stand hier eine Reihe gleich grosser Pillen: Als Schlagwort-
-   wolke war nicht zu sehen, dass Markenstrategie am Anfang steht und
-   Automatisierung ganz am Ende – und genau das ist die Aussage der Seite.
-
-   Liegt im Block `#leistungen`, unter dem Duo aus Arbeitsweise und Grafik,
-   deshalb derselbe Gutter wie `.a2-duo-grid` und keine eigene Flaeche. */
-.lgl {
-    margin-top: clamp(3rem, 6vw, 5.5rem);
-    padding: 0 var(--px);
-}
-/* Die Haarlinie sitzt am Etikett, nicht am Block: Auf `.lgl` liefe sie durch
-   die Gutter bis an den Panelrand und stuende neben dem Inhalt statt darueber. */
-.lgl-label {
-    padding-top: clamp(1.8rem, 2.8vw, 2.4rem);
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em;
-    text-transform: uppercase; color: rgba(255, 255, 255, 0.45);
-    margin-bottom: clamp(2rem, 3.5vw, 3rem);
-}
-.lgl-grid {
-    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(1rem, 1.8vw, 1.6rem);
-}
-/* Jede Spalte als eigene Kachel (Glasflaeche, orange Kante beim Zeigen),
-   damit die vier Schritte als eigenstaendige Felder wirken statt als vier
-   Listen ohne sichtbare Grenze. Nummer, kurze orange Linie, Name bleiben die
-   Kopfzeile. */
-.lgl-spalte {
-    display: flex; flex-direction: column;
-    padding: clamp(1.4rem, 2vw, 1.9rem);
-    border-radius: 20px;
-    background: linear-gradient(155deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015));
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-    transition: border-color 0.35s ease, background 0.35s ease;
-}
-.lgl-spalte:hover {
-    border-color: rgba(255, 107, 53, 0.35);
-    background: linear-gradient(155deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.025));
-}
-.lgl-nr {
-    display: flex; align-items: center; gap: 0.7rem;
-    font-size: 0.76rem; font-weight: 700; letter-spacing: 0.1em;
-    color: #ff6b35; margin-bottom: 0.7rem;
-}
-.lgl-nr-rule { display: block; flex: 1; height: 1px; background: #ff6b35; opacity: 0.45; }
-.lgl-stufe {
-    font-size: clamp(1.15rem, 1.6vw, 1.45rem);
-    font-weight: 800; line-height: 1.15; letter-spacing: -0.01em;
-    text-transform: uppercase; color: #fff;
-    margin-bottom: clamp(0.9rem, 1.4vw, 1.2rem);
-}
-.lgl-links { list-style: none; display: flex; flex-direction: column; }
-.lgl-links a {
-    display: flex; align-items: baseline; justify-content: space-between; gap: 0.8rem;
-    font-size: clamp(0.95rem, 1.15vw, 1.06rem);
-    font-weight: 600; line-height: 1.35;
-    color: rgba(255, 255, 255, 0.76); text-decoration: none;
-    transition: color 0.25s ease;
-}
-.lgl-links a:hover { color: #ff8f5c; }
-/* Der Pfeil liegt ruhig da und ruckt beim Zeigen nach vorn – dieselbe
-   Ruecksprache wie bei `.ped-steplink`. */
-.lgl-pfeil {
-    color: #ff6b35; opacity: 0.4;
-    transition: transform 0.25s ease, opacity 0.25s ease;
-}
-.lgl-links a:hover .lgl-pfeil { opacity: 1; transform: translateX(3px); }
-
-/* Mehrere Disziplinen in einer Spalte (03 Praesenz, 04 Wirkung): eine Zeile
-   Namen statt einer vollen Liste einzelner Zeilen – sonst waere die Spalte auf
-   dem Telefon so lang wie die uebrigen drei Spalten zusammen. */
-.lgl-summe {
-    font-size: clamp(0.92rem, 1.1vw, 1rem);
-    line-height: 1.5; color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 0.7rem;
-}
-.lgl-mehr {
-    display: inline-flex; align-items: baseline; gap: 0.5rem;
-    font-size: clamp(0.95rem, 1.15vw, 1.06rem);
-    font-weight: 600; color: rgba(255, 255, 255, 0.9); text-decoration: none;
-    transition: color 0.25s ease;
-}
-.lgl-mehr:hover { color: #ff8f5c; }
-.lgl-mehr:hover .lgl-pfeil { opacity: 1; transform: translateX(3px); }
-
-/* Vier Spalten brauchen Breite. Darunter zwei, auf dem Telefon eine – die
-   Reihenfolge der Schritte bleibt in jeder Aufteilung lesbar. */
-@media (max-width: 1100px) {
-    .lgl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.2rem 2.4rem; }
-}
-@media (max-width: 560px) {
-    .lgl-grid { grid-template-columns: 1fr; gap: 2rem; }
 }
 
 /* ── Referenzen: "Nicht lesen. Schauen." ──────────────────────────────────
