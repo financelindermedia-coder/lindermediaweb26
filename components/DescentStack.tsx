@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import useReveal from '@/components/useReveal'
+import HeroSplitBoxes from '@/components/HeroSplitBoxes'
 
 /**
  * Der Abstieg als durchlaufende Kette.
@@ -94,6 +95,7 @@ function Chain() {
         <div className="dsc" aria-label="Der Abstieg: von der Wahrnehmung zur Strategie">
             <div className="dsc-chain">
                 <Pfad />
+                <HeroSplitBoxes />
                 {STATIONS.map((s) => (
                     <Card key={s.id} station={s} />
                 ))}

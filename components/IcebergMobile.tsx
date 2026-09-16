@@ -3,33 +3,29 @@
 import { useEffect, useRef, type RefObject } from 'react'
 
 /**
- * Mobiler Splitscreen fuer den Eisberg: oben ein feststehendes Kaderfenster
- * (sticky), unten die Boxen im normalen Fluss (DescentStack/AufloesungCard).
- * Ersetzt die fruehere eigene 9:16-Kaderserie mit Zoom-Krop – die zeigte auf
- * schmalen Screens zu wenig vom Berg (siehe Git-Historie VideoCanvas.tsx).
- * Genutzt wird stattdessen dieselbe Kamerafahrt wie am Desktop, nur aus
+ * Mobiler Splitscreen fuer den Eisberg, von der ersten Sekunde an: oben ein
+ * feststehendes Kaderfenster (sticky), unten alle Boxen im normalen Fluss
+ * (Held, Ausgangspunkt, DescentStack-Kette, AufloesungCard). Ersetzt die
+ * fruehere eigene 9:16-Kaderserie mit Zoom-Krop – die zeigte auf schmalen
+ * Screens zu wenig vom Berg (siehe Git-Historie VideoCanvas.tsx). Genutzt
+ * wird stattdessen dieselbe Kamerafahrt wie am Desktop, nur aus
  * `public/frames-m`: jeder zweite Kader der 289er-Sequenz, halbe Aufloesung
  * (960x540, 2,6 MB gesamt statt 14 MB) – fuer ein Handy reicht das.
  *
- * Drei Fenster teilen sich denselben Kader-Cache, sind aber sonst eigene,
+ * Zwei Fenster teilen sich denselben Kader-Cache, sind aber sonst eigene,
  * einfache Komponenten – kein Teilen mit VideoCanvas.tsx (Desktop bleibt ein
  * eigener Zweig, siehe Kommentar dort: gemeinsame Abstraktion haette staendige
  * Fallunterscheidungen im heissen Pfad bedeutet, fuer zwei Dinge, die sich nur
  * das Rechenmodell teilen, nicht den Code drumherum).
  *
- *   Held (voller Bildschirm, sticky)     Frames 0 → SPLIT_START_FRAME
- *   Abstiegsfenster (Splitscreen, oben)  Frames SPLIT_START_FRAME → DEEP_FRAME
+ *   Abstiegsfenster (Splitscreen, oben)  Frames 0 → DEEP_FRAME
  *   Aufstiegsfenster (Splitscreen, oben) Frames RISE_FRAME → letzter Kader
  *
- * SPLIT_START_FRAME/DEEP_FRAME/RISE_FRAME muessen zu VideoCanvas.tsx passen
- * (dort dieselben Werte fuer den Desktop-Zweig) – wer dort dreht, dreht auch
- * hier.
+ * DEEP_FRAME/RISE_FRAME muessen zu VideoCanvas.tsx passen (dort dieselben
+ * Werte fuer den Desktop-Zweig) – wer dort dreht, dreht auch hier.
  */
 const NARROW_QUERY = '(max-width: 820px)'
 const TOTAL_FRAMES = 289
-/** Deckt sich mit `.dsc { top: 351vh }` in globals.css (Skala 710vh) – dort
- *  beginnt am Desktop die erste Karte der Kette. */
-const SPLIT_START_FRAME = 85
 const DEEP_FRAME = 171
 const RISE_FRAME = 215
 const LAST_FRAME = TOTAL_FRAMES - 1
@@ -100,19 +96,7 @@ function zieheRand(
     return `${p[0]},${p[1]},${p[2]}`
 }
 
-/**
- * `vAnchor` verteilt die frei bleibende Hoehe (siehe MIN_BILDBREITE): 0.5
- * mittig (Splitscreen-Fenster, die Luecke ist dort klein), 1 unten – die
- * ganze Luecke wandert nach oben, das Bild sitzt buendig auf der Unterkante.
- * Genutzt vom Heldenfenster: es ist mit 100vh auf einem hochkantigen Handy
- * extrem gestreckt (viel mehr Luecke als die 42vh-Fenster), und genau seine
- * UNTERKANTE ist die Naht zum Splitscreen-Fenster darunter. Mittig gerechnet
- * stand dort ein Band aus ausgezogener, texturloser Kante – mit `vAnchor=1`
- * trifft dort echter Bildinhalt auf echten Bildinhalt, die Luecke faellt an
- * den Rand zur Navigationsleiste, wo sie ohnehin von der Held-Karte
- * ueberdeckt wird.
- */
-function drawCover(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, frame: HTMLImageElement, vAnchor = 0.5) {
+function drawCover(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, frame: HTMLImageElement) {
     const sw = frame.naturalWidth || 1920
     const sh = frame.naturalHeight || 1080
     const cover = Math.max(canvas.width / sw, canvas.height / sh)
@@ -122,7 +106,7 @@ function drawCover(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, fra
     const dw = sw * scale
     const dh = sh * scale
     const dx = (canvas.width - dw) / 2
-    const dy = (canvas.height - dh) * vAnchor
+    const dy = (canvas.height - dh) / 2
     ctx.drawImage(frame, dx, dy, dw, dh)
 
     const gapTop = dy
@@ -155,25 +139,12 @@ function drawCover(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, fra
 
 const clamp01 = (v: number) => Math.min(Math.max(v, 0), 1)
 
-/** Fortschritt der Heldenszene: 0 am Seitenanfang, 1 am Ende der
- *  `.ms-hero-runway` (siehe globals.css) – dort haengt der Splitscreen an. */
-function heroProgress(): number {
-    const driver = document.getElementById('video-scroll')
-    const runway = driver?.querySelector<HTMLElement>('.ms-hero-runway')
-    if (!driver || !runway) return 0
-    return clamp01((window.scrollY - driver.offsetTop) / (runway.offsetHeight || 1))
-}
-
-/** Fortschritt des Abstiegsfensters: beginnt dort, wo die Heldenszene endet,
- *  laeuft bis zum Ende von `#video-scroll` (Ende der Kartenkette). */
+/** Fortschritt des Abstiegsfensters: die ganze Strecke `#video-scroll`, vom
+ *  Held bis zur Wende am Ende der Kartenkette. */
 function descentSplitProgress(): number {
     const driver = document.getElementById('video-scroll')
     if (!driver) return 0
-    const runway = driver.querySelector<HTMLElement>('.ms-hero-runway')
-    const heroH = runway?.offsetHeight || 0
-    const start = driver.offsetTop + heroH
-    const total = Math.max((driver.offsetHeight || 0) - heroH, 1)
-    return clamp01((window.scrollY - start) / total)
+    return clamp01((window.scrollY - driver.offsetTop) / (driver.offsetHeight || 1))
 }
 
 /** Fortschritt des Aufstiegsfensters: die ganze Strecke `#video-ascent`. */
@@ -188,7 +159,6 @@ function usePane(
     getProgress: () => number,
     frameFrom: number,
     frameTo: number,
-    vAnchor = 0.5,
 ) {
     const rafRef = useRef<number | null>(null)
 
@@ -218,9 +188,20 @@ function usePane(
             const img = getFrame(idx)
             if (!img.complete || img.naturalWidth === 0) {
                 img.onload = () => { if (currentIdx === idx) draw(idx) }
+                // Schlaegt eine Anfrage fehl (Netz weg, Server neu gestartet),
+                // bleibt das Fenster sonst dauerhaft leer, weil `onload` nie
+                // feuert – ein Versuch mit frischer URL statt Totalausfall.
+                img.onerror = () => {
+                    if (currentIdx !== idx) return
+                    const retry = new Image()
+                    retry.decoding = 'async'
+                    retry.onload = () => { if (currentIdx === idx) draw(idx) }
+                    retry.src = `${img.src.split('?')[0]}?retry=${Date.now()}`
+                    frameCache.set(frameFileNum(idx), retry)
+                }
                 return
             }
-            drawCover(ctx, canvas, img, vAnchor)
+            drawCover(ctx, canvas, img)
         }
 
         function update() {
@@ -255,17 +236,9 @@ function usePane(
     }, [])
 }
 
-export function IcebergHeroCanvas() {
-    const ref = useRef<HTMLCanvasElement>(null)
-    // vAnchor=1: das Bild sitzt buendig auf der Unterkante – dort ist die
-    // Naht zum Splitscreen-Fenster, siehe Kommentar bei drawCover.
-    usePane(ref, heroProgress, 0, SPLIT_START_FRAME, 1)
-    return <canvas ref={ref} aria-hidden="true" data-ai-generated="true" className="ms-hero-canvas" />
-}
-
 export function IcebergDescentCanvas() {
     const ref = useRef<HTMLCanvasElement>(null)
-    usePane(ref, descentSplitProgress, SPLIT_START_FRAME, DEEP_FRAME)
+    usePane(ref, descentSplitProgress, 0, DEEP_FRAME)
     return <canvas ref={ref} aria-hidden="true" data-ai-generated="true" className="ms-split-canvas" />
 }
 

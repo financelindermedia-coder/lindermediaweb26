@@ -23,7 +23,7 @@ import AiBadge from '@/components/AiBadge'
 import LazyVideo from '@/components/LazyVideo'
 import DescentStack from '@/components/DescentStack'
 import AufstiegsPfad from '@/components/AufstiegsPfad'
-import { IcebergHeroCanvas, IcebergDescentCanvas, IcebergAscentCanvas } from '@/components/IcebergMobile'
+import { IcebergDescentCanvas, IcebergAscentCanvas } from '@/components/IcebergMobile'
 import AufloesungCard from '@/components/AufloesungCard'
 import { FAQ } from '@/lib/faq'
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '@/lib/site'
@@ -108,13 +108,14 @@ export default function Home() {
                     der Splitscreen-Kartenweg (siehe unten) organisch waechst. */}
                 <div id="video-scroll" style={{ position: 'relative', zIndex: 1 }}>
                     {/* Mobiler Splitscreen, nur ≤820px sichtbar (siehe
-                        IcebergMobile.tsx + .ms-hero-runway/.ms-split-canvas in
-                        globals.css): oben sticky Kaderfenster, unten die Karten
-                        im normalen Fluss. Am Desktop unveraendert – dort zeigt
-                        VideoCanvas weiter die volle Sequenz im Hintergrund. */}
-                    <div className="ms-hero-runway">
-                        <IcebergHeroCanvas />
-                    </div>
+                        IcebergMobile.tsx + .ms-split-canvas in globals.css):
+                        oben ein sticky Kaderfenster ueber der GANZEN Strecke,
+                        unten Held, Ausgangspunkt und Kartenkette im normalen
+                        Fluss (HeroSplitBoxes wird von DescentStack aus vor den
+                        Stationen eingehaengt). Am Desktop unveraendert – dort
+                        zeigt VideoCanvas weiter die volle Sequenz im
+                        Hintergrund, Held/Ausgangspunkt stehen als fixierte
+                        Szenen in TextLayer. */}
                     <IcebergDescentCanvas />
                     <DescentStack />
                 </div>

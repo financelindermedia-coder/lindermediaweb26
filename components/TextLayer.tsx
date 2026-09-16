@@ -148,7 +148,7 @@ export default function TextLayer() {
             }} />
 
             {/* ── 01 HERO ── */}
-            <div ref={r('hero')} className="text-scene tl-glass tl-glass--light" style={{ position: 'absolute', top: '50%', left: 'var(--px)', transform: 'translateY(-50%)', maxWidth: 'clamp(320px, 38vw, 600px)', opacity: 0, visibility: 'hidden' }}>
+            <div ref={r('hero')} className="text-scene tl-glass tl-glass--light tl-scene--hero" style={{ position: 'absolute', top: '50%', left: 'var(--px)', transform: 'translateY(-50%)', maxWidth: 'clamp(320px, 38vw, 600px)', opacity: 0, visibility: 'hidden' }}>
                 <p className="hero-kicker" style={{ ...EYE, color: 'rgba(12,61,102,0.62)' }}>
                     Markenstrategie · Gestaltung · Digitale Umsetzung
                 </p>
@@ -186,7 +186,7 @@ export default function TextLayer() {
                 ist nicht zu sehen, dass die Reise beim Scrollen weitergeht.
                 Steht unten mittig, weil die Hero-Karte links sitzt, und in der
                 dunklen Hero-Schrift – der Nebel darunter ist hell. */}
-            <div ref={r('scrollhint')} className="tl-hint" style={{
+            <div ref={r('scrollhint')} className="tl-hint tl-scene--scrollhint" style={{
                 position: 'absolute', left: '50%', bottom: 'clamp(1.4rem, 5vh, 3.2rem)',
                 transform: 'translateX(-50%)', opacity: 0, visibility: 'hidden',
             }}>
@@ -200,7 +200,7 @@ export default function TextLayer() {
                 meisten sehen nur die Spitze" steht jetzt eine Etappe später –
                 als erste Karte der Kette, genau dort, wo die Wasserlinie durchs
                 Bild zieht (siehe DescentStack). */}
-            <div ref={r('erkenntnis')} className="text-scene tl-glass tl-glass--light tl-glass--right" style={{ position: 'absolute', top: '50%', right: 'var(--px)', transform: 'translateY(-50%)', maxWidth: 'clamp(320px, 38vw, 600px)', textAlign: 'right', opacity: 0, visibility: 'hidden' }}>
+            <div ref={r('erkenntnis')} className="text-scene tl-glass tl-glass--light tl-glass--right tl-scene--erkenntnis" style={{ position: 'absolute', top: '50%', right: 'var(--px)', transform: 'translateY(-50%)', maxWidth: 'clamp(320px, 38vw, 600px)', textAlign: 'right', opacity: 0, visibility: 'hidden' }}>
                 <p style={{ ...EYE, color: 'rgba(12,61,102,0.6)' }}>Der Ausgangspunkt |</p>
                 <h2 style={{ ...HL, color: '#0c3d66', textShadow: 'none' }}>
                     Gute Unternehmen brauchen<br />
