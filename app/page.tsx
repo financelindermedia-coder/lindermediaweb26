@@ -23,6 +23,8 @@ import AiBadge from '@/components/AiBadge'
 import LazyVideo from '@/components/LazyVideo'
 import DescentStack from '@/components/DescentStack'
 import AufstiegsPfad from '@/components/AufstiegsPfad'
+import { IcebergHeroCanvas, IcebergDescentCanvas, IcebergAscentCanvas } from '@/components/IcebergMobile'
+import AufloesungCard from '@/components/AufloesungCard'
 import { FAQ } from '@/lib/faq'
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '@/lib/site'
 
@@ -100,8 +102,20 @@ export default function Home() {
 
             <main style={{ position: 'relative' }}>
                 {/* Akt 1 – Abstieg: Eisberg → Wasserlinie → Problem →
-                    Markenpräsenz · Design · Strategie → tiefster Punkt */}
-                <div id="video-scroll" style={{ height: '710vh', position: 'relative', zIndex: 1 }}>
+                    Markenpräsenz · Design · Strategie → tiefster Punkt.
+                    Hoehe kommt aus CSS (#video-scroll in globals.css), nicht
+                    mehr inline – mobil ist sie `auto` statt fester 710vh, weil
+                    der Splitscreen-Kartenweg (siehe unten) organisch waechst. */}
+                <div id="video-scroll" style={{ position: 'relative', zIndex: 1 }}>
+                    {/* Mobiler Splitscreen, nur ≤820px sichtbar (siehe
+                        IcebergMobile.tsx + .ms-hero-runway/.ms-split-canvas in
+                        globals.css): oben sticky Kaderfenster, unten die Karten
+                        im normalen Fluss. Am Desktop unveraendert – dort zeigt
+                        VideoCanvas weiter die volle Sequenz im Hintergrund. */}
+                    <div className="ms-hero-runway">
+                        <IcebergHeroCanvas />
+                    </div>
+                    <IcebergDescentCanvas />
                     <DescentStack />
                 </div>
 
@@ -116,9 +130,15 @@ export default function Home() {
                 {/* Akt 1 – Wiederaufstieg: Wasser und Licht werden heller, der
                     Berg steht wieder über der Oberfläche, jetzt ohne Nebel. */}
                 {/* Der Weg laeuft weiter: von unten aus der Tiefe bis zur
-                    Wasserlinie, wo der Berg wieder auftaucht. */}
-                <div id="video-ascent" style={{ height: '420vh', position: 'relative', zIndex: 1 }}>
+                    Wasserlinie, wo der Berg wieder auftaucht. Hoehe wieder aus
+                    CSS (siehe #video-scroll oben). */}
+                <div id="video-ascent" style={{ position: 'relative', zIndex: 1 }}>
+                    <IcebergAscentCanvas />
                     <AufstiegsPfad />
+                    {/* Mobiler Splitscreen: dieselbe Aussage wie die
+                        "sichtbarkeit"-Szene in TextLayer, hier als Box im
+                        unteren Fensterbereich statt als Vollbild-Ueberlagerung. */}
+                    <AufloesungCard />
                 </div>
 
                 <div style={{ position: 'relative', zIndex: 2 }}>

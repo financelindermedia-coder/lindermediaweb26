@@ -22,16 +22,69 @@
     }
 }
 
-/* VideoCanvas.tsx: Desktop zeichnet die 289-Kader-Sequenz auf .vcv-canvas,
-   ab 820px uebernimmt die kurze 17-Kader-Sequenz (eigenes 9:16-Rohmaterial)
-   auf .vcv-mobile-canvas – nur eines der beiden ist je Breite sichtbar,
-   geladen wird ohnehin erst im Skript. Dieselbe Schwelle wie NARROW_QUERY in
-   VideoCanvas.tsx und useVideoSource.ts – muss uebereinstimmen. */
+/* VideoCanvas.tsx: Desktop zeichnet die 289-Kader-Sequenz auf .vcv-canvas als
+   volles Hintergrundbild. Ab 820px uebernimmt der mobile Splitscreen (siehe
+   IcebergMobile.tsx, .ms-hero-runway/.ms-split-canvas weiter unten) – dieses
+   Canvas wird dort ausgeblendet. Dieselbe Schwelle wie NARROW_QUERY in
+   VideoCanvas.tsx/IcebergMobile.tsx – muss uebereinstimmen. */
 .vcv-canvas { display: block; }
-.vcv-mobile-canvas { display: none; }
 @media (max-width: 820px) {
     .vcv-canvas { display: none; }
-    .vcv-mobile-canvas { display: block; }
+}
+
+/* ── Mobiler Eisberg-Splitscreen (IcebergMobile.tsx, AufloesungCard.tsx) ──
+   #video-scroll/#video-ascent tragen die Hoehe der Reise. Am Desktop feste
+   vh-Werte (Kader-Fortschritt haengt daran, siehe VideoCanvas.tsx); mobil
+   `auto`, weil der Splitscreen-Kartenweg organisch aus dem Karteninhalt
+   waechst statt eine feste Strecke abzuzirkeln. */
+#video-scroll { height: 710vh; }
+#video-ascent { height: 420vh; }
+@media (max-width: 820px) {
+    #video-scroll,
+    #video-ascent {
+        height: auto;
+    }
+}
+
+/* Laufstrecke fuer die Heldenszene (Headline/CTA, siehe TextLayer.tsx) – ihr
+   Vollbild-Kader bleibt sticky, waehrend diese Strecke durchscrollt wird,
+   und gibt danach den Platz fuer den Kartenweg-Splitscreen frei. Nur mobil
+   vorhanden: am Desktop deckt VideoCanvas die ganze Seite ab, hier gibt es
+   keinen eigenen Laeufer. Die Hoehe (351vh) entspricht `.dsc { top: 351vh }`
+   weiter unten – dort beginnt heute schon die erste Karte der Kette. */
+.ms-hero-runway { display: none; }
+.ms-hero-canvas { display: none; }
+@media (max-width: 820px) {
+    .ms-hero-runway {
+        display: block;
+        position: relative;
+        height: 351vh;
+    }
+    .ms-hero-canvas {
+        display: block;
+        position: sticky;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: 1;
+    }
+}
+
+/* Oberes Fenster im Splitscreen (Abstieg wie Aufstieg): bleibt stehen,
+   waehrend die Karten/Box darunter im normalen Fluss durchlaufen. Braucht
+   einen eigenen Stapelkontext ueber `.dsc`/`.ms-aufloesung` (z-index 1 statt
+   auto) – sonst malt deren undurchsichtiger Grund das Fenster zu, sobald eine
+   Karte beim Scrollen an ihm vorbeiwandert. */
+.ms-split-canvas { display: none; }
+@media (max-width: 820px) {
+    .ms-split-canvas {
+        display: block;
+        position: sticky;
+        top: 0;
+        width: 100%;
+        height: 42vh;
+        z-index: 1;
+    }
 }
 
 * {
@@ -3524,9 +3577,45 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     color: #ff6b35; margin-bottom: 1.2rem;
 }
 
+/* Splitscreen-Umbau: die Kette liegt nicht mehr absolut ueber einem
+   Vollbild-Hintergrund, sondern im normalen Fluss unter dem sticky
+   Kaderfenster (`.ms-split-canvas`) – eigene, blickdichte Flaeche statt
+   durchscheinendem Glas auf bewegtem Bild. Deshalb hier dunkler Grund place
+   der Karten UND Text bleibt in derselben Farbe wie am Desktop (weiss/orange
+   auf Dunkel), nur die Flaeche darunter ist jetzt echt, nicht durchsichtig. */
+@media (max-width: 820px) {
+    .dsc {
+        position: relative;
+        top: auto; height: auto; left: auto; right: auto;
+        /* Niedriger als `.ms-split-canvas` (z-index: 1) – sonst deckt der
+           undurchsichtige Grund hier das sticky Kaderfenster zu, sobald eine
+           Karte beim Scrollen daran vorbeiwandert. */
+        z-index: 0;
+        padding: 3rem 1.4rem 4.5rem;
+        background: linear-gradient(180deg, rgba(8, 20, 32, 0.98), rgba(4, 12, 20, 0.98));
+        /* Am Desktop liegt `.dsc` als Overlay ueber dem Bild und laesst Klicks/
+           Scrollgesten durch (`pointer-events: none` in der Grundregel). Mobil
+           ist die Flaeche echter Inhalt im Fluss, kein Overlay mehr. */
+        pointer-events: auto;
+    }
+    .dsc-chain {
+        position: relative;
+        height: auto;
+        justify-content: flex-start;
+        gap: 5rem;
+    }
+    .dsc-turn {
+        position: relative;
+        left: auto; right: auto; bottom: auto;
+        margin-top: 4rem;
+    }
+    .dsc-veil { display: none; }
+}
+
 @media (max-width: 768px) {
-    .dsc { padding: 0 1.4rem; }
-    /* Mobil steht die Wende frueher, also laeuft auch der Schleier frueher an. */
+    /* .dsc-veil ist ab 820px ohnehin ausgeblendet (Splitscreen hat eine
+       eigene, blickdichte Flaeche) – diese Feinjustierung greift nur noch in
+       der Luecke bis 820px, falls sie je gebraucht wird. */
     .dsc-veil {
         top: 500vh;
         backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
@@ -3553,6 +3642,28 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     overflow: visible;
     filter: drop-shadow(0 0 12px rgba(255, 107, 53, 0.45));
     pointer-events: none;
+}
+
+/* Mobiler Splitscreen des Aufstiegs (AufloesungCard.tsx): der maeandrierende
+   Pfad ist auf ein Vollbild gerechnet und passt nicht mehr, sobald nur noch
+   das obere Fenster den Eisberg zeigt – die Box darunter traegt die Aussage
+   stattdessen direkt. Die "sichtbarkeit"-Szene aus TextLayer.tsx (dieselbe
+   Aussage als Vollbild-Ueberlagerung) weicht ihr ebenso. */
+@media (max-width: 820px) {
+    .aufpfad { display: none; }
+    .tl-scene--sichtbarkeit { display: none !important; }
+}
+.ms-aufloesung { display: none; }
+@media (max-width: 820px) {
+    .ms-aufloesung {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        z-index: 0;
+        padding: 3rem 1.4rem 4.5rem;
+        background: linear-gradient(180deg, rgba(8, 20, 32, 0.98), rgba(4, 12, 20, 0.98));
+    }
+    .ms-aufloesung .dsc-card { width: 100%; }
 }
 
 /* Wegmarke: kurzer Anschluss ueber einer Aussage (components/Wegmarke.tsx).

@@ -222,7 +222,7 @@ export default function TextLayer() {
             {/* Steht auf der Aufstiegsstrecke, unter Wasser, kurz bevor der Berg über
                 der Oberfläche steht – jetzt ohne Nebel. Mittig, weil der Satz die
                 ganze Reise zusammenfasst und keine Seite mehr bevorzugt. */}
-            <div ref={r('sichtbarkeit')} className="text-scene tl-glass tl-glass--dark" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', maxWidth: 'min(760px, 86vw)', opacity: 0, visibility: 'hidden' }}>
+            <div ref={r('sichtbarkeit')} className="text-scene tl-glass tl-glass--dark tl-scene--sichtbarkeit" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', maxWidth: 'min(760px, 86vw)', opacity: 0, visibility: 'hidden' }}>
                 <p style={{ ...EYE, color: 'rgba(255,255,255,0.6)', textShadow: TS }}>Schlüsselmoment</p>
                 <h2 style={{ ...HL, textShadow: TS, marginBottom: '1.6rem' }}>
                     Was darunter trägt,<br />
