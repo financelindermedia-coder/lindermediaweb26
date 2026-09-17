@@ -38,21 +38,14 @@ export default function UeberUnsSection() {
                 <div className="mfx-about-text">
                     <p className="mfx-about-p">
                         LinderMedia ist keine Agentur mit mehreren Ebenen zwischen Idee und
-                        Umsetzung. Sie sprechen direkt mit Andreas Linder – von der ersten
-                        strategischen Frage bis zur fertigen Website, Kampagne oder visuellen
-                        Umsetzung.
-                    </p>
-                    <p className="mfx-about-p">
-                        Das bedeutet weniger Übergaben, weniger Abstimmungsschleifen und vor
-                        allem: eine Person, die den Zusammenhang des gesamten Projekts kennt.
+                        Umsetzung. Sie sprechen direkt mit Andreas Linder – von der ersten Idee
+                        bis zur fertigen Umsetzung, ohne Übergaben dazwischen.
                     </p>
                     {/* Wechsel in die erste Person: Ab hier spricht Andreas selbst –
                         der Abschnitt soll persönlich enden, nicht als Firmenprofil. */}
                     <p className="mfx-about-p">
                         Ich verbinde Markenstrategie, Gestaltung, Fotografie, Film, 3D und
-                        digitale Umsetzung, weil gute Kommunikation selten an einer einzelnen
-                        Disziplin scheitert. Sie scheitert häufiger daran, dass die einzelnen
-                        Teile keine gemeinsame Richtung haben.
+                        digitale Umsetzung – aus einer Hand, mit einer gemeinsamen Richtung.
                     </p>
                     <p className="mfx-about-p mfx-about-strong">
                         Gute Unternehmen verdienen gute Sichtbarkeit. Nicht mehr Lärm – mehr Klarheit.
