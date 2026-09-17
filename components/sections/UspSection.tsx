@@ -3,31 +3,35 @@
 import useReveal from '@/components/useReveal'
 
 /**
- * Arbeitsweise: reine Typografie in einer großen Glass-Card. Erklärt, warum
- * Strategie, Gestaltung und Umsetzung hier nicht getrennt eingekauft werden –
- * nicht, welche Leistungen es gibt. Die stehen in der System-Grafik daneben.
+ * Arbeitsweise: eigene Vollbreite-Sektion, zweispaltig (Headline links,
+ * Argumentation rechts), kein Glass-Card mehr. Erklärt, warum Strategie,
+ * Gestaltung und Umsetzung hier nicht getrennt eingekauft werden – nicht,
+ * welche Leistungen es gibt. Die stehen in der System-Grafik weiter unten
+ * (LeistungenSection.tsx, gepaart mit LeistungenIntro im `.a2-duo`-Panel).
+ * Trägt den Anker `#leistungen`, weil sie jetzt der Blockanfang ist (siehe
+ * app/page.tsx).
  *
- * Der Aufbau ist eine Kette von Verneinungen: Erst was NICHT unabhängig
- * voneinander entsteht, dann der Schluss daraus. Deshalb stehen die vier
- * Sätze untereinander und nicht als Absatz – die Wiederholung ist die
- * Argumentation. Die frühere Schlusszeile „Eine Strategie. Eine Handschrift.
- * Ein System." ist jetzt die Headline der System-Grafik daneben
- * (LeistungenSection.tsx) – stand hier doppelt.
+ * Rechts eine Kette von Verneinungen: Erst was NICHT unabhängig voneinander
+ * entsteht, dann der Schluss daraus. Deshalb stehen die vier Sätze
+ * untereinander und nicht als Absatz – die Wiederholung ist die
+ * Argumentation.
  */
 export default function UspSection() {
     const ref = useReveal<HTMLElement>()
 
     return (
-        <section id="usp" ref={ref} className="a2 a2-usp-section">
-            <div className="a2-card a2-usp reveal" data-reveal>
-                <p className="a2-eye" data-reveal>
-                    | Von der Idee zur Wirkung
-                </p>
-                <h2 className="a2-head" data-reveal>
-                    Aus einer klaren Richtung<br />
-                    <span>entsteht ein Auftritt, der funktioniert.</span>
-                </h2>
-                <div className="a2-usp-body" data-reveal>
+        <section id="leistungen" ref={ref} className="a2 a2-usp-section">
+            <div className="a2-usp">
+                <div className="a2-usp-head">
+                    <p className="a2-eye reveal" data-reveal>
+                        | Von der Idee zur Wirkung
+                    </p>
+                    <h2 className="a2-head reveal" data-reveal>
+                        Aus einer klaren Richtung<br />
+                        <span>entsteht ein Auftritt, der funktioniert.</span>
+                    </h2>
+                </div>
+                <div className="a2-usp-body reveal" data-reveal>
                     <p>Wir denken nicht in einzelnen Disziplinen.</p>
                     <ul className="a2-usp-liste">
                         <li>Eine Website wird nicht unabhängig von der Marke entwickelt.</li>

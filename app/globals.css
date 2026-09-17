@@ -2362,7 +2362,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 }
 .a2-inner { max-width: 1180px; margin: 0 auto; }
 
-/* ── Duo: USP-Card + System-Grafik nebeneinander ── */
+/* ── Duo: System-Grafik + knappe Headline nebeneinander ── */
 /* Full-width Frosted-Glass-Panel über beide Spalten */
 .a2-duo {
     position: relative;
@@ -2373,49 +2373,37 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     padding: clamp(6rem, 12vw, 12rem) 0;
 }
 .a2-duo-grid {
-    display: grid; grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
-    gap: clamp(3rem, 7vw, 8rem); align-items: center;
+    display: grid; grid-template-columns: minmax(0, 1.22fr) minmax(0, 0.78fr);
+    /* Etwas grosszuegiger als der alte Wert (7vw/8rem): Das rechte Grafik-
+       Etikett (Charakter) ragt weit ueber die eigene `.sysr`-Box hinaus
+       (siehe .sysr-node-l .sysr-lbl) – mit dem knappen Gap beruehrte es beim
+       Zurechtruecken fuers linke Etikett (unten) sonst die Headline daneben. */
+    gap: clamp(3rem, 7.5vw, 9rem); align-items: center;
     /* Gutter konstant = var(--px), wie Cases/Problem (kein zentrierender Cap,
        der den Seitenabstand auf breiten Screens zusätzlich aufbläht). */
     padding: 0 var(--px);
 }
-/* Grafik in der Spalte etwas nach rechts, damit linke Labels den USP-Text nicht berühren */
-.a2-duo .sysr { padding-left: clamp(0rem, 3vw, 3rem); }
 .a2-duo-grid > .a2 { padding: 0; background: transparent; overflow: visible; min-height: 0; }
-/* USP ohne eigenen Card-Rahmen – Teil des durchgehenden Frost-Panels, linksbündig */
-.a2-duo .a2-usp {
-    max-width: 100%;
-    background: transparent; border: none; box-shadow: none;
-    backdrop-filter: none; -webkit-backdrop-filter: none;
-    padding: 0;
-    text-align: left;
-}
-.a2-duo .a2-usp-body { align-items: flex-start; }
-/* Auf denselben Grad wie die Etiketten der System-Grafik daneben und wie die
-   Projektbeschreibung in der Fallliste – nebeneinander fiel der groessere
-   Standardgrad der a2-Sektionen als Bruch auf. */
-.a2-duo .a2-usp-body p { font-size: clamp(1rem, 1.25vw, 1.15rem); }
-/* Der Satz, der auf das Statement zulaeuft – eine Stufe ueber dem Fliesstext,
-   damit die Kette Absatz → Hinfuehrung → Statement lesbar bleibt. */
-.a2-duo .a2-usp-body .a2-usp-lead {
-    font-size: clamp(1.08rem, 1.4vw, 1.28rem);
-    color: rgba(255, 255, 255, 0.92);
-}
-/* Steht direkt unter der Headline und bleibt bewusst leise. */
-.a2-duo .a2-usp-body .a2-usp-quiet { margin-top: 0.2rem; }
-/* Grafik an Spaltenbreite anpassen */
-/* Mit nur noch drei Ebenen (oben, links, rechts) ist die Buehnenmitte nicht die
-   optische Mitte: Das Strategie-Etikett steht ueber seinem Icon und ragt rund
-   144px ueber die Buehne hinaus, unter den beiden unteren Etiketten bleiben nur
-   rund 65px. Die Haelfte dieser Differenz ist der Versatz, mit dem der
-   Dreiklang auf gleicher Hoehe wie der Text der Nachbarspalte steht.
-   Bewusst `transform` und nicht `margin-top`: Ein Margin vergroessert das
-   Grid-Item, und `align-items: center` gibt die Haelfte davon sofort wieder
-   zurueck – die Grafik bliebe zu hoch stehen. */
+/* Grafik in der Spalte etwas nach rechts, damit das linke Etikett (Wirkung)
+   nicht am Seitenrand klebt. Muss NACH der Padding-0-Regel darueber stehen:
+   gleiche Spezifitaet, sonst gewinnt die per Reihenfolge und die Grafik
+   ruecke trotz dieser Regel nicht nach rechts (war so, bevor die Reihenfolge
+   getauscht wurde – der alte `padding-right`-Trick hatte deshalb nie eine
+   sichtbare Wirkung). */
+.a2-duo .sysr { padding-left: clamp(1.5rem, 6vw, 5rem); }
+/* Headline (LeistungenIntro.tsx) – im Duo steht sie linksbuendig neben der
+   Grafik statt zentriert wie `.a2-head` es sonst durch den Fliesstext
+   darunter meist wirkt. */
+.a2-duo .sysr-intro { text-align: left; }
+/* Grafik an Spaltenbreite anpassen. Seit die Grafik (statt des Fliesstexts)
+   die groesste Reihenhoehe vorgibt, deckt sie die Reihe schon selbst exakt
+   ab – kein Korrektur-Transform mehr noetig (frueher `translateY(105px)`,
+   um das Etikett-Uebergewicht oben/unten auszugleichen; das brauchte nur
+   die alte, viel hoehere Textspalte daneben, die die Reihe streckte und die
+   Grafik darin freischwebend zentrierte). */
 .a2-duo .sysr-stage {
-    width: 100%; max-width: 520px;
+    width: 100%; max-width: 430px;
     aspect-ratio: auto; height: min(420px, 80vw);
-    transform: translateY(105px);
 }
 .a2-duo .sysr-lbl { width: 200px; }
 .a2-duo .sysr-node-l .sysr-lbl { left: 56px; }
@@ -2423,8 +2411,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 /* Sanfte Schatten für zusätzliche Lesbarkeit auf dem Frost-Panel */
 .a2-duo .sysr-name,
 .a2-duo .sysr-claim,
-.a2-duo .sysr-bundle,
-.a2-duo .a2-eye { text-shadow: 0 1px 14px rgba(3, 12, 20, 0.55); }
+.a2-duo .sysr-bundle { text-shadow: 0 1px 14px rgba(3, 12, 20, 0.55); }
 
 @media (max-width: 1900px) {
     /* Zu schmal fürs radiale Nebeneinander → stapeln. Die Schwelle ist zweimal
@@ -2437,7 +2424,20 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     /* Gestapelt steht der Dreiklang allein unter dem Text – hier zaehlt nicht
        die Mitte einer Nachbarspalte, sondern Abstand nach oben. Der optische
        Versatz von oben faellt deshalb weg. */
-    .a2-duo .sysr-stage { max-width: 680px; margin: clamp(2rem, 4vw, 3.5rem) auto 0; height: min(480px, 68vw); transform: none; }
+    .a2-duo .sysr-stage { max-width: 680px; margin: clamp(2rem, 4vw, 3.5rem) auto 0; height: min(480px, 68vw); }
+    /* Gestapelt darf die Headline wieder zentriert stehen, wie die Grafik über
+       ihr – sonst haengt linksbuendiger Text ohne Bezugskante im Raster. */
+    .a2-duo .sysr-intro { text-align: center; }
+    .a2-duo .sysr-intro .a2-head { margin: 0 auto; max-width: 20ch; }
+}
+@media (max-width: 1900px) and (min-width: 1441px) {
+    /* In dieser Breite ist die Buehne noch radial (absolut positionierte
+       Etiketten, siehe .sysr-node) – das MARKENPRAESENZ-Etikett unten ragt
+       ueber die eigene Box hinaus. Solange die Grafik danach nichts folgte,
+       fiel das nicht auf; jetzt steht die Headline direkt darunter und
+       braucht Abstand, sonst ueberlappen sich beide. Unter 1440px uebernimmt
+       das gestapelte Raster ohne absolute Positionierung, dort entfaellt das. */
+    .a2-duo .sysr-intro { margin-top: clamp(2.5rem, 7vw, 4.5rem); }
 }
 
 /* Gemeinsame Glass-Card */
@@ -2618,13 +2618,15 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     .ai-badge { transition: none; }
 }
 
-/* ── USP (Text-only Glass-Card) ── */
+/* ── USP (zweispaltig: Headline links, Argumentation rechts, kein Card-Rahmen) ── */
 .a2-usp-section { padding-top: clamp(5rem, 9vw, 9rem); padding-bottom: clamp(5rem, 9vw, 9rem); }
 .a2-usp {
-    max-width: 860px; text-align: center;
-    padding: clamp(3rem, 6vw, 5.5rem) clamp(1.8rem, 5vw, 4.5rem);
+    max-width: 1180px; margin: 0 auto;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(3rem, 6vw, 6rem);
+    align-items: start; text-align: left;
 }
-.a2-usp .a2-head { margin-bottom: clamp(2rem, 3.5vw, 3rem); }
+.a2-usp-head .a2-head { max-width: 16ch; }
 .a2-usp-body { display: flex; flex-direction: column; gap: 1.4rem; }
 .a2-usp-body .a2-usp-lead {
     color: rgba(255, 255, 255, 0.92); font-weight: 400;
@@ -2641,12 +2643,12 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 .a2-usp-liste {
     list-style: none;
     display: flex; flex-direction: column; gap: 0.7rem;
-    margin: 0.2rem auto;
-    max-width: 54ch; text-align: left;
+    margin: 0.2rem 0;
+    max-width: 54ch;
 }
-/* Im Duo steht die Sektion linksbuendig (`.a2-duo .a2-usp`). Die zentrierende
-   Aussenmarge der Liste zoege sie dort als einzigen Block nach innen ein. */
-.a2-duo .a2-usp-liste { margin-left: 0; margin-right: 0; }
+@media (max-width: 900px) {
+    .a2-usp { grid-template-columns: 1fr; gap: clamp(2rem, 6vw, 3rem); }
+}
 .a2-usp-liste li {
     position: relative; padding-left: 1.5rem;
     font-size: clamp(1.02rem, 1.3vw, 1.18rem);
@@ -2771,25 +2773,6 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 
 /* ── Radiale System-Grafik: die Kompetenzfelder als ein System ── */
 .sysr { text-align: center; }
-.sysr-head {
-    font-size: var(--h2);
-    font-weight: 300; line-height: 1.1; letter-spacing: -0.012em;
-    color: #fff;
-    margin: 0 auto clamp(2rem, 4vw, 3.2rem);
-    max-width: 20ch;
-}
-/* Kopfzeile ueber der Grafik (LeistungenIntro.tsx) – eigener Block, volle
-   Breite, kein Duo-Raster. Bei ihr sitzt der Anchor `#leistungen`. */
-.sysr-intro { padding: clamp(5rem, 9vw, 8rem) var(--px) 0; }
-.sysr-intro .sysr-head { margin-bottom: clamp(1.2rem, 2.2vw, 1.8rem); }
-.sysr-intro-text {
-    max-width: 56ch; margin: 0 auto;
-    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
-    font-weight: 400; line-height: 1.6;
-    color: rgba(255, 255, 255, 0.72);
-}
-.sysr-intro-text strong { color: #fff; font-weight: 700; }
-
 .sysr-stage { position: relative; width: min(760px, 84vw); aspect-ratio: 1; margin: 0 auto; }
 /* Der Scrim gehoert nur zum gestapelten Mobil-Layout (Hintergrund dort per
    Media Query weiter unten gesetzt). Im radialen Desktop-Layout tragen Ring
@@ -2979,7 +2962,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 /* ── Sprungmarken ──
    Ohne dies verschwindet der Anfang jeder Zielsektion unter der fixierten
    Navigationsleiste. */
-#methode, #leistungen, #system, #usp, #projekte, #stimmen,
+#methode, #leistungen, #system, #projekte, #stimmen,
 #ueber-uns, #faq, #statement, #contact,
 #strategie-wirklichkeit, #ideen-erlebnisse, #orientierung {
     scroll-margin-top: clamp(80px, 12vh, 110px);

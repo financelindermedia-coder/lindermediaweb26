@@ -160,25 +160,26 @@ export default function Home() {
                             'Erst wenn Zusammenhänge sichtbar werden, kann Gestaltung ihre Wirkung entfalten.',
                         ]}
                         ctaLabel="Weiter entdecken"
-                        ctaHref="#usp"
+                        ctaHref="#leistungen"
                     />
                     {/* Der Anker #leistungen sitzt seit dem Wegfall des
                         Drei-Bereiche-Teasers an diesem Block: Arbeitsweise und
                         Einzeldisziplinen sind jetzt das, was unter „Leistungen"
                         aus Navigation und Fußzeile angesteuert wird (Anker
-                        liegt jetzt auf LeistungenIntro, dem Blockanfang).
-                        Aufbau: erst die Kopfzeile mit Fließtext, eigene
-                        Sektion, kein Glas-Panel – danach Handschrift
-                        (UspSection) und die System-Grafik (LeistungenSection)
-                        nebeneinander in einem eigenen, zweiten Block (dem
-                        Glas-Panel `.a2-duo`). Die vier Grafik-Knoten verlinken
-                        auf /leistungen und sind damit der Klickpfad zu den
+                        liegt auf UspSection, dem Blockanfang).
+                        Aufbau: erst die Argumentation als eigene, zweispaltige
+                        Vollbreite-Sektion (UspSection, kein Glas-Panel) –
+                        danach die System-Grafik (LeistungenSection) und ihre
+                        knappe Headline (LeistungenIntro) nebeneinander in
+                        einem eigenen, zweiten Block (dem Glas-Panel
+                        `.a2-duo`). Die vier Grafik-Knoten verlinken auf
+                        /leistungen und sind damit der Klickpfad zu den
                         Einzeldisziplinen – LeistungenLinks entfaellt dadurch. */}
-                    <LeistungenIntro />
+                    <UspSection />
                     <div className="a2-duo">
                         <div className="a2-duo-grid">
-                            <UspSection />
                             <LeistungenSection />
+                            <LeistungenIntro />
                         </div>
                     </div>
 
