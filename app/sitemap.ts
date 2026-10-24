@@ -24,6 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     return [
         { url: `${SITE_URL}/`, lastModified, changeFrequency: 'monthly', priority: 1 },
+        { url: `${SITE_URL}/methode`, lastModified, changeFrequency: 'monthly', priority: 0.9 },
         { url: `${SITE_URL}/leistungen`, lastModified, changeFrequency: 'monthly', priority: 0.9 },
         { url: `${SITE_URL}/referenzen`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
         ...FALLSTUDIEN.map((f) => ({

@@ -1,0 +1,75 @@
+/* Methode / Eisberg-Modell (app/methode/page.tsx). Gleiche Farbwelt wie Startseite und Fallstudien. */
+.mp { background: #060f1b; color: #fff; font-family: var(--font-barlow), sans-serif; overflow-x: clip; }
+.mp section, .mp header { padding-left: var(--px); padding-right: var(--px); }
+
+.mp-top { padding: clamp(1.6rem, 3vw, 2.6rem) var(--px) 0; }
+
+.mp-eye {
+    font-size: clamp(0.68rem, 0.8vw, 0.78rem); font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+    color: #ff6b35; margin-bottom: 1.4rem;
+}
+/* Headline-Format kommt aus dem gemeinsamen Block in globals.css (.mp-h1, .mp-h2). */
+.mp-h1, .mp-h2 { color: #fff; }
+.mp-p { font-size: clamp(1.05rem, 1.3vw, 1.25rem); line-height: 1.7; color: rgba(255, 255, 255, 0.74); max-width: 62ch; }
+.mp-p--gross { font-size: clamp(1.15rem, 1.7vw, 1.55rem); line-height: 1.6; color: rgba(255, 255, 255, 0.86); max-width: 56ch; }
+.mp-p--mitte { margin: 0 auto; text-align: center; }
+
+.mp-btn, .mp-link {
+    display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none;
+    font-size: 0.74rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+}
+.mp-btn svg, .mp-link svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
+.mp-btn:hover svg, .mp-link:hover svg { transform: translateX(5px); }
+.mp-btn { margin-top: 2rem; padding: 0.9rem 1.7rem; border-radius: 999px; background: #ff6b35; color: #0b1820; box-shadow: 0 0 26px rgba(255, 107, 53, 0.32); }
+.mp-btn:hover { background: #ff7d4e; }
+.mp-link { margin-top: 1.6rem; color: #ff6b35; }
+.mp-btn:focus-visible, .mp-link:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+
+.mp-hero { padding-top: clamp(3rem, 7vw, 6rem); padding-bottom: clamp(3rem, 6vw, 5.5rem); max-width: 1400px; }
+.mp-hero .mp-h1 { max-width: 18ch; }
+.mp-lead { margin-top: 1.8rem; max-width: 52ch; font-size: clamp(1.1rem, 1.5vw, 1.4rem); line-height: 1.6; color: rgba(255, 255, 255, 0.78); }
+
+/* Modell auf einen Blick */
+.mp-modell { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; padding-bottom: clamp(4rem, 8vw, 7rem); }
+.mp-figure { position: relative; margin: 0; border-radius: 6px; overflow: hidden; background: #03070f; border: 1px solid rgba(255, 255, 255, 0.07); }
+.mp-figure img { display: block; width: 100%; height: auto; }
+.mp-figure figcaption { position: absolute; right: 0.9rem; bottom: 0.7rem; font-size: 0.62rem; letter-spacing: 0.08em; color: rgba(255, 255, 255, 0.5); }
+.mp-modell-text .mp-p { margin-top: 1.4rem; }
+.mp-kurz { list-style: none; margin-top: 1.8rem; display: grid; gap: 0.7rem; }
+.mp-kurz li { font-size: 0.95rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; }
+.mp-kurz span { color: #ff6b35; margin-right: 0.6rem; }
+.mp-kurz em { font-style: normal; font-weight: 600; color: rgba(255, 255, 255, 0.55); letter-spacing: 0.08em; }
+
+/* Vier Ebenen */
+.mp-ebenen { background: #08192a; padding-top: clamp(4rem, 8vw, 7rem); padding-bottom: clamp(4rem, 8vw, 7rem); border-top: 1px solid rgba(255, 255, 255, 0.06); }
+.mp-grid { margin-top: clamp(2rem, 4vw, 3.5rem); display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(1rem, 2vw, 1.8rem); }
+.mp-card { padding: clamp(1.4rem, 2vw, 2rem); border: 1px solid rgba(255, 255, 255, 0.09); border-radius: 6px; background: linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)); }
+.mp-card-nr { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.16em; color: #ff6b35; margin-bottom: 1rem; }
+.mp-card-h { font-size: clamp(1.4rem, 1.9vw, 1.9rem); font-weight: 300; line-height: 1.12; text-transform: uppercase; letter-spacing: -0.01em; color: #fff; }
+.mp-card-h strong { display: block; font-weight: 900; }
+.mp-card dl { margin-top: 1.4rem; display: grid; gap: 0.4rem; }
+.mp-card dt { margin-top: 0.8rem; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #ff6b35; }
+.mp-card dd { font-size: 1rem; line-height: 1.55; color: rgba(255, 255, 255, 0.78); }
+
+/* Warum, Beispiel, CTA */
+.mp-warum { padding-top: clamp(4rem, 8vw, 7rem); padding-bottom: clamp(3rem, 6vw, 5rem); }
+.mp-warum .mp-p { margin-top: 1.8rem; }
+
+.mp-beispiel { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; padding-top: clamp(2rem, 4vw, 3rem); padding-bottom: clamp(4rem, 8vw, 7rem); }
+.mp-beispiel-bild { border-radius: 6px; overflow: hidden; }
+.mp-beispiel-bild img { display: block; width: 100%; height: auto; }
+.mp-beispiel-text .mp-p { margin-top: 1.4rem; }
+
+.mp-cta { text-align: center; background: #08192a; border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: clamp(4rem, 8vw, 7rem); padding-bottom: clamp(4rem, 8vw, 7rem); }
+.mp-cta .mp-h2 { margin: 0 auto 1.6rem; }
+
+@media (max-width: 1100px) {
+    .mp-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 820px) {
+    .mp section, .mp header { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .mp-top { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .mp-modell, .mp-beispiel { grid-template-columns: 1fr; }
+    .mp-grid { grid-template-columns: 1fr; }
+    .mp-btn { margin-top: 1.6rem; }
+}

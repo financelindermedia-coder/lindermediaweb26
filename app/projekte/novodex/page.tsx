@@ -2,13 +2,11 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import CaseChapter, {
     CaseFigure,
-    CaseFocus,
     CaseHero,
-    CaseImpact,
     CaseOutro,
     CaseProcess,
     CaseTerms,
-    CaseTurn,
+    CaseTodo,
 } from '@/components/sections/CaseChapter'
 import CaseSchema from '@/components/CaseSchema'
 import { SITE_URL } from '@/lib/site'
@@ -37,7 +35,7 @@ import { SITE_URL } from '@/lib/site'
 const TITLE =
     'Novodex – Markenstrategie & digitaler Refit-Prozess | LinderMedia'
 const DESCRIPTION =
-    'Wie aus einem Yachtdeck-Anbieter eine klar positionierte Marke für den gesamten Refit-Prozess wurde.'
+    'Markenstrategie, Prozessdarstellung und Kundenportal-Prototyp für Novodex: ein Refit-Prozess, klar vom Aufmaß bis zur Übergabe.'
 
 /*
  * Eigene Metadaten je Fallstudie: Titel und Beschreibung sind das, was in der
@@ -88,132 +86,95 @@ export default function NovodexPage() {
             <CaseHero
                 index="01"
                 kicker="Case Study · Markenstrategie · Digitaler Prozess · Kundenportal"
-                headline={<>Präzision,<br /><strong>die planbar wird.</strong></>}
+                headline={<>Klar vom Aufmaß<br /><strong>bis zur Übergabe.</strong></>}
                 meta="Novodex · Premium Yachtdeck-Refits"
-                text="Ein durchgängiger Refit-Prozess – von der Analyse bis zur dokumentierten Übergabe."
+                text="Novodex beschreibt einen durchgängigen Refit-Prozess für Yachtdecks: sieben Phasen, digitale Planung und nachvollziehbare Projektdokumentation."
                 image="/images/Novodex.webp"
                 alt="Die Wortmarke NOVODEX auf einem Teakdeck neben einer polierten Winsch."
             />
 
             <CaseChapter
-                index="01"
+                index="02"
                 eyebrow="Die Ausgangslage"
                 headline={<>Ein Refit ist mehr<br /><strong>als ein neues Deck.</strong></>}
                 text={[
-                    'Ein Yachtdeck-Refit verbindet viele Anforderungen: handwerkliche Präzision, technische Planung, Material, Timing und eine klare Abstimmung. Für Eigner wird der Prozess schnell komplex, wenn mehrere Gewerke koordiniert werden müssen und Verantwortung nicht an einer Stelle zusammenläuft.',
-                    'Novodex sollte deshalb nicht nur als Anbieter von Yachtdecks sichtbar werden, sondern als verlässlicher Refit-Partner. Ein Auftritt, der zeigt: Hier greifen Bootsbau, Engineering und Projektmanagement in einem klaren Prozess zusammen.',
+                    'Ein Yachtdeck-Refit verbindet Materialwahl, technische Planung, Timing und die Abstimmung mehrerer Gewerke.',
+                    'Die Aufgabe: Novodex nicht nur als Yachtdeck-Anbieter, sondern als Partner für den gesamten Refit-Prozess zu positionieren.',
                 ]}
-                image="/images/case-novodex-ausgangslage-bg.webp"
-                alt=""
                 wide
             />
-
-            {/* Ohne Grundbild: Die übrigen Hintergründe dieser Seite sind
-                KI-Stimmungsbilder, und ausgerechnet unter der strategischen
-                Entscheidung hat ein erfundenes Motiv nichts zu suchen. */}
-            <CaseTurn
-                frage={<>Wie wird aus einer<br />handwerklichen Leistung eine Marke,<br /><strong>die nicht über den Preis verglichen wird?</strong></>}
-                nicht="ein weiterer Anbieter für Yachtdecks sein."
-                sondern={<>der Partner für<br />den gesamten Refit-Prozess.</>}
-                begruendung="Wer ein Deck anbietet, wird mit anderen Decks verglichen – über Material, Quadratmeter und Preis. Wer einen Prozess verantwortet, wird über Verlässlichkeit verglichen. Das ist ein anderer Wettbewerb, und es ist der, in dem Novodex seine Stärken überhaupt zeigen kann."
-                folgen={[
-                    'Der Prozess wird zum Produkt: sieben Phasen von der Beratung bis zur Nachbetreuung.',
-                    'Digitale Technik als Beleg für Präzision – 3D-Scan und CNC sind Argumente, kein Selbstzweck.',
-                    'Ein Kundenportal, das Fortschritt, Entscheidungen und Unterlagen an einem Ort hält.',
-                    'Eine Anfrage in zwei Schritten – und daneben steht, was danach passiert.',
-                ]}
-            />
-
-            <CaseChapter
-                index="02"
-                eyebrow="Die Strategie"
-                headline={<>Präzision braucht<br /><strong>einen klaren Prozess.</strong></>}
-                text={[
-                    'Die Strategie stellt nicht ein einzelnes Produkt in den Mittelpunkt, sondern die Sicherheit eines durchgängigen Ablaufs. Von 3D-Scan und CAD-Engineering bis zur CNC-Fertigung wird digitale Technologie als Werkzeug für präzise Ergebnisse und nachvollziehbare Entscheidungen verständlich gemacht.',
-                    'Daraus entstand ein Markenrahmen, der technische Kompetenz mit Verlässlichkeit und klarer Kommunikation verbindet. Novodex positioniert sich damit als ein Ansprechpartner für den gesamten Refit-Prozess – vom ersten Aufmaß bis zur dokumentierten Umsetzung.',
-                ]}
-                image="/images/case-novodex-strategie-bg.webp"
-                alt=""
-                wide
-            >
-                <CaseTerms items={['Präzision', 'Verlässlichkeit', 'Klarheit']} />
-                <CaseFocus
-                    headline={<>Ein Prozess,<br />der Vertrauen schafft.</>}
-                    text="Analyse, Planung, Fertigung und Übergabe folgen einer klaren, nachvollziehbaren Logik."
-                />
-            </CaseChapter>
 
             <CaseChapter
                 index="03"
-                eyebrow="Analyse & Planung"
-                headline={<>Das Deck wird<br /><strong>vorher verstanden.</strong></>}
+                eyebrow="Der strategische Gedanke"
+                headline={<>Präzision braucht<br /><strong>einen klaren Prozess.</strong></>}
                 text={[
-                    'Der digitale Prozess macht Anforderungen, Flächen und Entscheidungen früh sichtbar. So entsteht eine belastbare Grundlage für Aufmaß, technische Planung und die weitere Umsetzung.',
-                    'Analyse und Planung reduzieren Komplexität nicht durch Vereinfachung, sondern durch einen klaren Überblick über das, was gebaut werden soll.',
+                    'Statt nur das fertige Deck in den Mittelpunkt zu stellen, rückt die Strategie den Ablauf dorthin: vom ersten Gespräch und digitalen Aufmaß über Fertigung und Montage bis zur Übergabe.',
+                    '3D-Scan, CAD-Engineering und CNC werden als Werkzeuge dieses Prozesses beschrieben – als Belege für Präzision, nicht als Selbstzweck.',
                 ]}
-                image="/images/case-novodex-planung-bg.webp"
-                alt=""
                 wide
             >
-                <CaseProcess steps={PHASEN} />
+                <CaseTerms items={['Präzision', 'Verlässlichkeit', 'Klarheit']} />
             </CaseChapter>
 
             <CaseChapter
                 index="04"
-                eyebrow="Das Kundenportal"
-                headline={<>Jeder Schritt<br /><strong>bleibt nachvollziehbar.</strong></>}
+                eyebrow="Die Umsetzung"
+                headline={<>Sieben Phasen,<br /><strong>ein nachvollziehbarer Ablauf.</strong></>}
                 text={[
-                    'Das Kundenportal bündelt Projektstatus, Abstimmungen und Dokumentation. Die digitale Oberfläche ist kein Selbstzweck, sondern Teil der Verlässlichkeit, die Novodex verspricht.',
-                    'Für Eigner entsteht damit ein nachvollziehbarer Verlauf: Ein Bautagebuch hält fest, was an Bord passiert, das Dokumenten-Center sammelt Gutachten und Fotodokumentation – Entscheidungen, Fortschritt und Unterlagen bleiben an einem Ort zugänglich.',
+                    'Der Ablauf führt von der Beratung und Planung über digitale Vermessung, Material und CNC, Oberflächenveredelung, Installation und Qualitätssicherung bis zu Pflege und Service.',
                 ]}
-                // Hier bewusst das echte Key-Visual statt eines KI-Bildes –
-                // es ist das einzige belegte Motiv des Projekts.
-                image="/images/Novodex.webp"
-                alt=""
                 wide
             >
-                <CaseFigure
-                    src="/images/case-novodex-portal.webp"
-                    alt="Kundenportal: eine Leiste mit sieben Projektphasen, darunter das Bautagebuch mit Einträgen und rechts das Dokumenten-Center."
-                    caption="Portal-Ansicht: Projektfortschritt, Bautagebuch und Dokumenten-Center (Prototyp mit Demodaten)."
-                />
-                <CaseFigure
-                    src="/images/case-novodex-anfrage.webp"
-                    alt="Anfrageformular in zwei Schritten, daneben Kontaktdaten und eine Übersicht, was nach der Anfrage passiert."
-                    caption="Der Einstieg: zwei Schritte, und daneben steht, was danach passiert."
-                />
+                <CaseProcess steps={PHASEN} />
+                <CaseTodo items={['Bestätigen, welche der sieben Prozessphasen tatsächlich umgesetzt werden oder im Betrieb verwendet sind.']} />
             </CaseChapter>
 
             <CaseChapter
                 index="05"
-                eyebrow="Die Umsetzung"
-                headline={<>Aus Planung wird<br /><strong>passgenaue Qualität.</strong></>}
+                eyebrow="Das Kundenportal"
+                headline={<>Jeder Schritt<br /><strong>bleibt nachvollziehbar.</strong></>}
                 text={[
-                    'Material, Fertigung und Ausführung führen zusammen, was vorher digital präzise vorbereitet wurde. Die sichtbare Qualität des Decks ist deshalb kein isoliertes Endprodukt, sondern das Ergebnis eines durchgängigen Prozesses.',
+                    'Das Kundenportal soll Projektstatus, Abstimmungen und Unterlagen bündeln: mit Bautagebuch und Dokumenten-Center. Dazu kommt ein Anfrageformular in zwei Schritten.',
                 ]}
-                image="/images/case-novodex-umsetzung-bg.webp"
-                alt=""
                 wide
-            />
+            >
+                <CaseTerms items={['Portal-Ansicht: Prototyp mit Demodaten']} />
+                <CaseFigure
+                    src="/images/case-novodex-portal.webp"
+                    alt="Prototyp des Kundenportals mit Demodaten: eine Leiste mit sieben Projektphasen, darunter das Bautagebuch mit Einträgen und rechts das Dokumenten-Center."
+                    caption="Prototyp mit Demodaten: Projektfortschritt, Bautagebuch und Dokumenten-Center."
+                />
+                <CaseFigure
+                    src="/images/case-novodex-anfrage.webp"
+                    alt="Anfrageformular in zwei Schritten, daneben Kontaktdaten und eine Übersicht, was nach der Anfrage passiert."
+                    caption="Anfrage in zwei Schritten, mit Übersicht der nächsten Schritte."
+                />
+                <CaseTodo items={[
+                    'Status des Portals klären: Konzept, funktionsfähiger Prototyp oder aktives Portal. Mehr als „Prototyp mit Demodaten“ nur mit aktuellem Nachweis.',
+                    'Demodaten auf personenbezogene oder vertrauliche Angaben prüfen; Veröffentlichungsfreigabe für Portal- und Formularansicht.',
+                ]} />
+            </CaseChapter>
 
             <CaseChapter
                 index="06"
-                eyebrow="Das Ergebnis"
-                headline={<>Aus Komplexität wird<br />ein klarer, dokumentierter<br /><strong>Refit-Prozess.</strong></>}
+                eyebrow="Ergebnis und Beleg"
+                headline={<>Ein klar dargestellter,<br />dokumentierter<br /><strong>Refit-Prozess.</strong></>}
                 text={[
-                    'Strategie, Analyse, Planung, Fertigung und Übergabe greifen ineinander. Dadurch entsteht ein Auftritt, der handwerkliche Qualität sichtbar macht und den gesamten Refit-Prozess für Kunden nachvollziehbar begleitet.',
+                    'Als strategisches Ziel verschiebt die Fallstudie den Vergleich vom Material- und Quadratmeterpreis hin zu Prozesssicherheit und Verantwortung. Ob sich diese Wirkung bei Kunden oder im Markt eingestellt hat, ist nicht belegt.',
                 ]}
-                image="/images/case-novodex-ergebnis-bg.webp"
-                alt=""
                 wide
             >
-                <CaseImpact
-                    ziel="Aus dem Vergleich über Material und Preis heraus – hinein in einen Vergleich über Prozesssicherheit."
-                    strategie="Nicht das Ergebnis verkaufen, sondern den Weg dorthin nachvollziehbar machen."
-                    massnahmen={['Markenentwicklung', 'Prozessdefinition', 'Kundenportal', 'Visualisierung', 'Design']}
-                    wirkung="Der Eigner entscheidet nicht mehr nur über ein Deck, sondern über einen kontrollierten Refit. Damit verschiebt sich das Gespräch vom Preis zur Verantwortung – und die läuft bei Novodex an einer Stelle zusammen."
+                <CaseTerms items={['Markenentwicklung', 'Prozessdefinition', 'Kundenportal (Prototyp)', 'Visualisierung', 'Design']} />
+                <CaseTodo items={[
+                    'Freigegebener Nachweis zum realisierten Prozess oder Ergebnis (konkretes Projektbeispiel); Wirkung nur mit belegbaren Daten oder freigegebenem Kundenstatement.',
+                    'Konkrete Rolle von LinderMedia je Bereich bestätigen (Strategie, Prozessdefinition, Portal, Visualisierung, Design).',
+                    'Nutzungsfreigabe für Bilder; prüfen, ob die entfernten dekorativen Hintergründe konkrete Novodex-Arbeiten zeigen.',
+                ]} />
+                <CaseOutro
+                    slug="novodex"
+                    ctaLabel="Über Ihr nächstes Projekt sprechen"
                 />
-                <CaseOutro slug="novodex" />
             </CaseChapter>
         </main>
     )

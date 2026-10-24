@@ -27,8 +27,26 @@ import './HeroIceberg.css'
  * letzten Frame; `ab` ist der Frame, ab dem die jeweilige Trennung im Clip
  * abgeschlossen ist. Wer den Clip tauscht, misst beides (und KEYS) nach.
  */
-const TOTAL_FRAMES = 193
-const FRAME_URL = (i: number) => `/frames-hero/f_${String(i + 1).padStart(3, '0')}.webp`
+/** Quellframes des Clips (0–192); alle Zeitangaben unten (KEYS, `ab`) beziehen sich darauf. */
+const SOURCE_FRAMES = 193
+
+/**
+ * Zwei Bildvarianten derselben Sequenz. Mobil (<= 820 px) reicht ein 960er
+ * Bild mit jedem zweiten Frame: der Berg ist dort ohnehin nur ~340 CSS-Pixel
+ * breit, und die Datenmenge sinkt auf ein Drittel. `step` rechnet einen
+ * Quellframe in den Index der Variante um.
+ */
+const VARIANTS = {
+    desktop: { dir: '/frames-hero', count: 193, step: 1, width: 1280, height: 720 },
+    mobile: { dir: '/frames-hero-m', count: 97, step: 2, width: 960, height: 540 },
+} as const
+type Variant = (typeof VARIANTS)[keyof typeof VARIANTS]
+const frameUrl = (v: Variant, i: number) => `${v.dir}/f_${String(i + 1).padStart(3, '0')}.webp`
+
+/** Nachlade-Fenster um den aktuellen Frame (in Frames der Variante). */
+const AHEAD = 14
+const BEHIND = 6
+const MAX_PARALLEL = 3
 
 /**
  * Scroll-Fortschritt (0–1 der Strecke) → Frame. Stuetzpunkte statt einer
@@ -123,92 +141,124 @@ export default function HeroIceberg() {
         const ctx = canvas.getContext('2d')
         if (!ctx) return
 
-        const frames: (HTMLImageElement | null)[] = new Array(TOTAL_FRAMES).fill(null)
-        let current = -1
-        let wanted = reduced ? TOTAL_FRAMES - 1 : 0
+        // Variante einmal waehlen (Handy: kleines Bild, jeder zweite Frame).
+        const v: Variant = window.matchMedia('(max-width: 820px)').matches ? VARIANTS.mobile : VARIANTS.desktop
+        canvas.width = v.width
+        canvas.height = v.height
+        const last = v.count - 1
+        const toIndex = (source: number) => Math.min(last, Math.max(0, Math.round(source / v.step)))
+
+        /** Fertig dekodierte Frames im beweglichen Fenster (Index → Bild). */
+        const cache = new Map<number, HTMLImageElement>()
+        const loading = new Set<number>()
+        let drawn = -1
+        let wanted = reduced ? last : 0
+        let dir = 1
         let cancelled = false
+        let ready = false // erst nach dem ersten Bild und einer Atempause nachladen
 
-        function draw(idx: number) {
-            // Der gewuenschte Frame ist evtl. noch nicht geladen: nimm den
-            // naechsten davor, statt ein leeres Bild zu zeigen.
-            for (let i = idx; i >= 0; i--) {
-                const img = frames[i]
-                if (img) {
-                    if (i !== current) {
-                        ctx!.drawImage(img, 0, 0, canvas!.width, canvas!.height)
-                        current = i
+        function show(idx: number) {
+            const img = cache.get(idx)
+            if (!img) return
+            ctx!.drawImage(img, 0, 0, canvas!.width, canvas!.height)
+            if (drawn === -1) performance.mark('hero-first-draw')
+            drawn = idx
+            canvas!.dataset.frame = String(idx)
+        }
+
+        /** Zeigt den gewuenschten Frame – oder den naechstliegenden fertigen, solange er noch laedt. */
+        function drawBest() {
+            if (cache.has(wanted)) { if (drawn !== wanted) show(wanted); return }
+            const stale = drawn === -1 ? Infinity : Math.abs(drawn - wanted)
+            for (let d = 1; d <= AHEAD + BEHIND; d++) {
+                if (d >= stale) return // der zuletzt gezeigte Frame ist nicht schlechter
+                for (const idx of [wanted - dir * d, wanted + dir * d]) {
+                    if (cache.has(idx)) { show(idx); return }
+                }
+            }
+        }
+
+        function load(idx: number) {
+            loading.add(idx)
+            const img = new Image()
+            img.decoding = 'async'
+            ;(img as HTMLImageElement & { fetchPriority?: string }).fetchPriority = idx === wanted ? 'high' : 'low'
+            img.src = frameUrl(v, idx)
+            img.decode()
+                .then(() => { if (!cancelled) cache.set(idx, img) })
+                .catch(() => {})
+                .finally(() => {
+                    loading.delete(idx)
+                    if (cancelled) return
+                    if (!ready && cache.size > 0) {
+                        ready = true
+                        // Rest erst im Leerlauf – das erste Bild soll nicht mit
+                        // Skripten und Schriften um die Leitung konkurrieren.
+                        const ric = (window as unknown as { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => void }).requestIdleCallback
+                        if (ric) ric(() => schedule(), { timeout: 1200 })
+                        else setTimeout(schedule, 400)
                     }
-                    return
-                }
+                    schedule()
+                })
+        }
+
+        /** Laedt zuerst den gewuenschten Frame, dann Frames in Scrollrichtung, dann ein paar dahinter. */
+        function pump() {
+            if (!ready) { if (cache.size === 0 && loading.size === 0) load(wanted); return }
+            // Fenster verlassen → freigeben (spart dekodierten Speicher, v. a. auf dem Handy).
+            for (const idx of Array.from(cache.keys())) {
+                if (idx < wanted - BEHIND - 2 || idx > wanted + AHEAD + 4) cache.delete(idx)
             }
-        }
-
-        function load(i: number): Promise<void> {
-            return new Promise((resolve) => {
-                const img = new Image()
-                img.decoding = 'async'
-                img.onload = () => {
-                    frames[i] = img
-                    if (i <= wanted) draw(wanted)
-                    resolve()
-                }
-                img.onerror = () => resolve()
-                img.src = FRAME_URL(i)
-            })
-        }
-
-        async function preload() {
-            // Reduzierte Bewegung: nur das Schlussbild, die Sequenz ist unnoetig.
-            if (reduced) { await load(TOTAL_FRAMES - 1); return }
-            await load(0)
-            // Den Rest erst nach dem ersten Bild und im Leerlauf laden, damit
-            // Text und erstes Bild nicht mit 190 Frames um die Leitung konkurrieren.
-            await new Promise<void>((resolve) => {
-                const ric = (window as unknown as { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => void }).requestIdleCallback
-                if (ric) ric(() => resolve(), { timeout: 1500 })
-                else setTimeout(resolve, 600)
-            })
-            if (cancelled) return
-            const order: number[] = []
-            for (let i = 1; i < TOTAL_FRAMES; i++) order.push(i)
-            let cursor = 0
-            const worker = async () => {
-                while (!cancelled && cursor < order.length) await load(order[cursor++])
+            const order: number[] = [wanted]
+            for (let d = 1; d <= AHEAD; d++) {
+                order.push(wanted + dir * d)
+                if (d <= BEHIND) order.push(wanted - dir * d)
             }
-            await Promise.all(Array.from({ length: 5 }, worker))
-        }
-        void preload()
-
-        if (reduced) {
-            setStep(5)
-            return () => { cancelled = true }
+            for (const idx of order) {
+                if (loading.size >= MAX_PARALLEL) break
+                if (idx < 0 || idx > last || cache.has(idx) || loading.has(idx)) continue
+                load(idx)
+            }
         }
 
         let raf = 0
-        function update() {
+        function tick() {
             raf = 0
-            const rect = pin!.getBoundingClientRect()
-            const span = Math.max(pin!.offsetHeight - window.innerHeight, 1)
-            const p = clamp01(-rect.top / span)
+            if (!reduced) {
+                const rect = pin!.getBoundingClientRect()
+                const span = Math.max(pin!.offsetHeight - window.innerHeight, 1)
+                const p = clamp01(-rect.top / span)
+                const source = Math.min(Math.round(frameAt(p)), SOURCE_FRAMES - 1)
+                const next = toIndex(source)
+                if (next !== wanted) { dir = next > wanted ? 1 : -1; wanted = next }
 
-            wanted = Math.min(Math.round(frameAt(p)), TOTAL_FRAMES - 1)
-            draw(wanted)
-
-            let s = 0
-            if (p >= END_AT) s = 5
-            else for (let k = 0; k < LAYERS.length; k++) if (wanted >= LAYERS[k].ab) s = k + 1
-            setStep((prev) => (prev === s ? prev : s))
+                let s = 0
+                if (p >= END_AT) s = 5
+                else for (let k = 0; k < LAYERS.length; k++) if (source >= LAYERS[k].ab) s = k + 1
+                setStep((prev) => (prev === s ? prev : s))
+            }
+            drawBest()
+            if (!reduced) pump()
         }
-        const onScroll = () => { if (!raf) raf = requestAnimationFrame(update) }
+        function schedule() { if (!raf && !cancelled) raf = requestAnimationFrame(tick) }
 
-        update()
-        window.addEventListener('scroll', onScroll, { passive: true })
-        window.addEventListener('resize', onScroll)
+        if (reduced) {
+            // Ruhige Alternative: nur das Schlussbild laden, alle Aussagen stehen als Text.
+            setStep(5)
+            load(last)
+            return () => { cancelled = true }
+        }
+
+        pump()
+        schedule()
+        window.addEventListener('scroll', schedule, { passive: true })
+        window.addEventListener('resize', schedule)
         return () => {
             cancelled = true
             if (raf) cancelAnimationFrame(raf)
-            window.removeEventListener('scroll', onScroll)
-            window.removeEventListener('resize', onScroll)
+            window.removeEventListener('scroll', schedule)
+            window.removeEventListener('resize', schedule)
+            cache.clear()
         }
     }, [reduced])
 
@@ -229,7 +279,10 @@ export default function HeroIceberg() {
                         {/* Erstes Bild als normales <img>: steht sofort, auch bevor das
                             Script laeuft; das Canvas zeichnet danach darueber. */}
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img className="hi-poster" src={FRAME_URL(0)} alt="" aria-hidden="true" width={1280} height={720} fetchPriority="high" decoding="async" />
+                        <picture>
+                            <source media="(max-width: 820px)" srcSet={frameUrl(VARIANTS.mobile, 0)} />
+                            <img className="hi-poster" src={frameUrl(VARIANTS.desktop, 0)} alt="" aria-hidden="true" width={1280} height={720} fetchPriority="high" decoding="async" />
+                        </picture>
                         <canvas
                             ref={canvasRef}
                             width={1280}
@@ -256,20 +309,20 @@ export default function HeroIceberg() {
 
                     <div className="hi-copy">
                         <div className="hi-intro">
-                            <p className="hi-kicker">Markenstrategie · Gestaltung · Digitale Umsetzung</p>
+                            <p className="hi-kicker">Markenstrategie · Design · Digitale Umsetzung</p>
                             <h1 className="hi-h1">
                                 Starke Marken entstehen<br />
                                 <strong>nicht an der Oberfläche.</strong>
                             </h1>
                             <p className="hi-lead">
-                                LinderMedia entwickelt Markenauftritte für Unternehmen, deren Leistung
-                                nach außen noch nicht klar genug ankommt – von der Positionierung über
-                                das Design bis zur digitalen Umsetzung.
+                                Ich helfe Unternehmen mit erklärungsbedürftigen Leistungen, aus Komplexität
+                                eine klare Marke zu machen – von Positionierung und Markenarchitektur bis zu
+                                Design, Film, Website, Content und Automatisierung.
                             </p>
                             <div className="hero-ctas hi-ctas">
                                 <a className="hero-cta hero-cta--primary" href="#contact">Projekt besprechen</a>
                                 <a className="hero-cta" href="#projekte">
-                                    Projekte ansehen <span aria-hidden="true">→</span>
+                                    Arbeiten ansehen <span aria-hidden="true">→</span>
                                 </a>
                             </div>
                         </div>
@@ -300,9 +353,9 @@ export default function HeroIceberg() {
                                 Strategie, Design und Markenpräsenz greifen ineinander. Was später
                                 sichtbar wird, beginnt mit Entscheidungen, die vorher getroffen werden.
                             </p>
-                            <a className="hi-panel-link" href="#leistungen">
-                                <span>Die Lösung</span><Arrow />
-                            </a>
+                            <Link className="hi-panel-link" href="/methode">
+                                <span>Das Modell im Detail</span><Arrow />
+                            </Link>
                         </div>
                     </div>
 

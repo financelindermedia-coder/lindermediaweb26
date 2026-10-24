@@ -9,7 +9,7 @@ import Image from 'next/image'
  * die Navigation ruhig. Der CTA steht getrennt davon rechts.
  */
 const NAV_LINKS = [
-    { label: 'Methode',    href: '#methode'    },
+    { label: 'Methode',    href: '/methode'    },
     { label: 'Leistungen', href: '#leistungen' },
     { label: 'Projekte',   href: '#projekte'   },
     { label: 'Über',       href: '#ueber-uns'  },

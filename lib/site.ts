@@ -127,4 +127,4 @@ export const SITE_TITLE = 'Markenstrategie, Corporate Design & Webdesign | Linde
  * Vertrauensvorschuss, den sie gewinnen soll.
  */
 export const SITE_DESCRIPTION =
-    'LinderMedia entwickelt Markenauftritte für Unternehmen, deren Leistung nach außen noch nicht klar genug ankommt — von der Positionierung über das Design bis zur digitalen Umsetzung.'
+    'Ich helfe Unternehmen mit erklärungsbedürftigen Leistungen, aus Komplexität eine klare Marke zu machen – von Positionierung und Markenarchitektur bis zu Design, Film, Website, Content und Automatisierung.'

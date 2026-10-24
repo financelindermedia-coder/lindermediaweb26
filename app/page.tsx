@@ -1,8 +1,8 @@
 'use client'
 
 import LenisProvider from '@/components/LenisProvider'
-import SectionConnector from '@/components/SectionConnector'
 import Navbar from '@/components/Navbar'
+import Parallax from '@/components/Parallax'
 import HeroIceberg from '@/components/HeroIceberg'
 import ChaosCharakter from '@/components/sections/ChaosCharakter'
 import ScrollFortschritt from '@/components/ScrollFortschritt'
@@ -80,6 +80,7 @@ export default function Home() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }}
             />
             <LenisProvider />
+            <Parallax />
             <Navbar />
             <ScrollFortschritt />
             <main style={{ position: 'relative' }}>
@@ -87,15 +88,14 @@ export default function Home() {
                     eine Scroll-Inszenierung. Danach laeuft die Seite normal. */}
                 <HeroIceberg />
 
-                {/* „Von Chaos zu Charakter“ – die Erklaerung der vier Ebenen (frueher
-                    „Wir arbeiten unter der Oberflaeche“) steht jetzt im Hero. */}
+                {/* Reihenfolge laut Vorgabe: Chaos → Oberflaeche → Auftritt → Projekte →
+                    Vorgehen → Person → FAQ → Kontakt. Die Erklaerung der vier Ebenen steht
+                    im Hero; „Aus Strategie wird Wirklichkeit“ ist hier aufgegangen. */}
                 <ChaosCharakter />
 
                 <div style={{ position: 'relative', zIndex: 2 }}>
-                    {/* ── Akt 2 · Phase 1: Verstehen ── */}
-                    {/* Hier bewusst OHNE SectionConnector: der Strichpfeil sass
-                        genau auf der Kante zwischen Eisbergbild und Videosektion
-                        und hat den Uebergang zerschnitten. */}
+                    {/* 4 · Wir arbeiten unter der Oberflaeche (Video 1). Die Section-ID
+                        bleibt die frühere, damit bestehende Links weiter greifen. */}
                     <Akt2VideoSection
                         id="strategie-wirklichkeit"
                         index="01"
@@ -103,19 +103,16 @@ export default function Home() {
                         chapter="Strategie & Fundament"
                         videoSrc={AKT2_VIDEOS.v1}
                         poster="/video/poster-lm-1.webp"
-                        headline="Aus Strategie wird Wirklichkeit."
+                        headline="Wir arbeiten unter der Oberfläche."
                         text={[
-                            'Eine Marke beginnt nicht mit Gestaltung. Sie beginnt mit Klarheit.',
-                            'Erst wenn Zusammenhänge sichtbar werden, kann Gestaltung ihre Wirkung entfalten.',
+                            'Nicht mit einzelnen Maßnahmen, sondern Schritt für Schritt an dem, was eine Marke klar, erkennbar und wirksam macht.',
+                            'Eine Marke beginnt nicht mit Gestaltung. Sie beginnt mit Klarheit – erst wenn Zusammenhänge sichtbar werden, kann Gestaltung ihre Wirkung entfalten.',
                         ]}
-                        ctaLabel="Weiter entdecken"
-                        ctaHref="#leistungen"
+                        ctaLabel="Das Vorgehen ansehen"
+                        ctaHref="#vorgehen"
                     />
-                    {/* Der Anker #leistungen liegt auf VorgehenSection. */}
-                    <VorgehenSection />
 
-                    {/* ── Akt 2 · Phase 2: Erleben ── */}
-                    <SectionConnector flip />
+                    {/* 5 · Aus einer klaren Richtung wird ein Auftritt, der traegt (Video 2) */}
                     <Akt2VideoSection
                         id="ideen-erlebnisse"
                         index="02"
@@ -131,11 +128,17 @@ export default function Home() {
                         ctaLabel="Projekte ansehen"
                         ctaHref="#projekte"
                     />
+
+                    {/* 6 · Was aus der Arbeit wirklich wird (Projekt-Slider) */}
                     <CasesSection />
-                    {/* Beweiskette: erst die Arbeit (Cases), direkt danach die Stimmen dazu */}
+                    {/* Beweiskette: direkt nach den Projekten die Stimmen dazu (nicht in der
+                        Vorgabe, aber bestehender Inhalt – bleibt erhalten). */}
                     <StimmenSection />
 
-                    {/* Vertrauen in die Person, zuletzt die verbleibenden Einwände (FAQ). */}
+                    {/* 7 · Von der Idee zur Wirkung – traegt den Anker #leistungen */}
+                    <VorgehenSection />
+
+                    {/* 8 · Person, 9 · FAQ */}
                     <UeberUnsSection />
                     <FragenSection />
 
@@ -148,6 +151,7 @@ export default function Home() {
                             aiGenerated
                             pauseControl
                             pauseControlClassName="site-closing-pause"
+                            parallax="0.08"
                         />
                         {/* KI-generiertes Leuchtturm-Material → Kennzeichnung */}
                         <AiBadge className="site-closing-ai" label="Konzeptvisualisierung · KI-generiert" />

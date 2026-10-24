@@ -2,12 +2,10 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import CaseChapter, {
     CaseFigure,
-    CaseFocus,
     CaseHero,
-    CaseImpact,
     CaseOutro,
     CaseTerms,
-    CaseTurn,
+    CaseTodo,
 } from '@/components/sections/CaseChapter'
 import CaseSchema from '@/components/CaseSchema'
 import { SITE_URL } from '@/lib/site'
@@ -37,9 +35,9 @@ import { SITE_URL } from '@/lib/site'
  */
 
 const TITLE =
-    'Schaaf Tender – Markenauftritt, 3D-Visualisierung & Webdesign | LinderMedia'
+    'Schaaf Tender – Markenauftritt, Visualisierung & Screendesign | LinderMedia'
 const DESCRIPTION =
-    'Wie Details, Visualisierung und ein reduzierter Markenauftritt die Differenzierung eines Superyacht-Tenders sichtbar machen.'
+    'Markenauftritt, Visualisierung, Screendesign und Print für einen Superyacht-Tender: der Unterschied liegt im Detail.'
 
 /*
  * Eigene Metadaten je Fallstudie: Titel und Beschreibung sind das, was in der
@@ -77,135 +75,93 @@ export default function SchaafPage() {
             <CaseHero
                 index="01"
                 kicker="Case Study · Markenauftritt · Screendesign · Visualisierung · Print"
-                headline={<>Der feine<br /><strong>Unterschied.</strong></>}
+                headline={<>Der Unterschied<br /><strong>liegt im Detail.</strong></>}
                 meta="Schaaf Yachtbau · Superyacht-Tender"
-                text="Ein Markenauftritt für ein Boot, das sich nicht über Größe unterscheidet, sondern über Details."
+                text="Für Schaaf Yachtbau zeigt der Markenauftritt den Tender nicht über Größe, sondern über seine Details. Visualisierungen machten das Modell bereits vor dem Zuwasserlassen sichtbar."
                 image="/images/case-schaaf-hero-2.webp"
                 alt="Ein dunkler Schaaf-Tender schiebt sich in voller Fahrt durch die Gischt, der Rumpf hebt sich aus dem Wasser."
             />
 
             <CaseChapter
-                index="01"
+                index="02"
                 eyebrow="Die Ausgangslage"
                 headline={<>Ein Tender ist mehr<br /><strong>als ein Beiboot.</strong></>}
                 text={[
-                    'An Bord einer Superyacht ist der Tender vieles: Zubringer, Sportgerät und oft das Erste, was Gäste betreten. Ausgewählt wird er trotzdem meist wie Zubehör – nach Maß, Gewicht und Motorisierung.',
-                    'Schaaf Yachtbau baut Tender, die diesen Anspruch umkehren. Die Aufgabe war, dieser Haltung eine sichtbare Form zu geben – zu einem Zeitpunkt, als noch nicht jedes Modell auf dem Wasser lag.',
+                    'Ein Tender ist Zubringer und Sportgerät. Als die Arbeit entstand, lag noch nicht jedes Modell auf dem Wasser. Die Aufgabe: die Details des Schaaf-Tenders sichtbar machen, bevor ein fertiges Boot sie zeigen konnte.',
                 ]}
                 image="/images/case-schaaf-ausgangslage-2.webp"
                 alt="Blick vom Teakdeck einer Superyacht: Der Tender fährt längsseits vorbei, im Hintergrund liegt eine weitere Yacht vor der bewaldeten Küste."
                 flip
             />
 
-            <CaseTurn
-                frage={<>Wie verkauft man einen Unterschied,<br /><strong>den man erst beim zweiten Blick bemerkt?</strong></>}
-                nicht="über Größe, Leistung und Ausstattung konkurrieren."
-                sondern={<>die Details so genau zeigen,<br />dass sie zum Argument werden.</>}
-                begruendung="Ein Tender wird meist wie Zubehör ausgewählt – nach Maß, Gewicht und Motorisierung. Der Unterschied bei Schaaf liegt woanders: in der umlaufenden Kufe, in den anpassbaren Carbonteilen, in der Wahl des Antriebs. Solche Details verschwinden in einer Aufzählung. Sie brauchen Raum."
-                folgen={[
-                    'Weißraum als Mittel: ein Boot, kein Katalog.',
-                    'Ein eigener Abschnitt für die Kufe statt einer Zeile im Datenblatt.',
-                    'Farbkombinationen als sechs Ansichten, nicht als sechs Farbfelder.',
-                    'Visualisierung, bevor das Boot im Wasser lag – damit früh darüber entschieden werden kann.',
-                ]}
-            />
-
             <CaseChapter
-                index="02"
-                eyebrow="Die Strategie"
+                index="03"
+                eyebrow="Der strategische Gedanke"
                 headline={<>Nicht lauter.<br /><strong>Genauer.</strong></>}
                 text={[
-                    'Der Unterschied liegt in Details, die erst beim zweiten Blick auffallen: die umlaufende Kufe, mit der sich das Boot auf jeder Badeplattform sicher abstellen lässt. Carbonteile, deren Farbe sich anpassen lässt. Antriebe vom Außenborder bis zum elektrischen Jet.',
-                    'Daraus wurde die Leitidee des Auftritts. Sie verlangt keine großen Worte, sondern eine Darstellung, die genau genug ist, damit die Details überhaupt sichtbar werden.',
+                    'Nicht mit Größe, Leistung und Ausstattung auftreten, sondern die Besonderheiten genauer zeigen: die umlaufende Kufe, anpassbare Carbonteile und verschiedene Antriebe vom Außenborder bis zum elektrischen Jet. Viel Weißraum, präzise Ansichten und einzelne Erklärabschnitte geben diesen Merkmalen Platz.',
                 ]}
                 image="/images/case-schaaf-strategie-2.webp"
                 alt="Studioansicht des Tender 15 von schräg oben: die umlaufende Kufe zeichnet die Kante des Rumpfes nach."
             >
                 <CaseTerms items={['Stil', 'Performance', 'Präzision']} />
-                <CaseFocus
-                    headline={<>Be different.</>}
-                    text="Der Unterschied liegt nicht in der Größe, sondern in den Details, die man erst beim zweiten Blick bemerkt."
-                />
-            </CaseChapter>
-
-            <CaseChapter
-                index="03"
-                eyebrow="Die Visualisierung"
-                headline={<>Sichtbar,<br />bevor es<br /><strong>zu Wasser ging.</strong></>}
-                text={[
-                    'Bevor ein Boot gebaut ist, muss es zu sehen sein. Studioansichten zeigen Rumpf, Deck und Cockpit so genau, dass sich daran entscheiden lässt – über Proportionen, Materialien und Farben.',
-                    'Die Visualisierung ist damit keine Illustration des Fertigen, sondern ein Werkzeug davor: Sie macht verhandelbar, was sonst erst am gebauten Boot sichtbar geworden wäre.',
-                ]}
-                image="/images/case-schaaf-cockpit-2.webp"
-                alt="Das gebaute Cockpit in Nahaufnahme: Steuerrad, Bedienfeld und die scharfe Kante der Konsole."
-                flip
-            >
-                <CaseFigure
-                    src="/images/case-schaaf-visualisierung-2.webp"
-                    alt="Studioansicht des Tender 15 vor dunklem Grund, Deck und Konsole vollständig sichtbar."
-                    caption="Studioansichten des Tender 15 – Grundlage für Entscheidungen über Proportion, Material und Farbe."
-                />
+                <CaseTodo items={['Produktangaben zu Kufe, Carbonteilen und Antriebsoptionen durch Schaaf Yachtbau bestätigen lassen.']} />
             </CaseChapter>
 
             <CaseChapter
                 index="04"
-                eyebrow="Das Screendesign"
-                headline={<>Viel Weißraum.<br /><strong>Ein Boot.</strong></>}
+                eyebrow="Die Umsetzung"
+                headline={<>Visualisierung,<br />Screendesign<br /><strong>und Print.</strong></>}
                 text={[
-                    'Der digitale Auftritt folgt derselben Zurückhaltung wie alles andere: eine Wortmarke, viel Weißraum, großflächige Bilder – und ein Aufbau, der die Details der Reihe nach erklärt statt sie aufzuzählen.',
-                    'Ein eigener Abschnitt gilt der umlaufenden Kufe, ein weiterer den Farbkombinationen: Jedes Boot lässt sich in den Carbonteilen anpassen, und die Seite zeigt das, statt es zu behaupten.',
+                    'Studioansichten zeigen Rumpf, Deck und Cockpit, als Grundlage für Entscheidungen über Proportion, Material und Farbe vor dem Bau. Digital gehören Abschnitte zur Kufe und zu den Farbkombinationen dazu; als Print-Anwendungen sind eine Verkaufsbroschüre und ein Manual genannt, die dieselben Gestaltungsregeln tragen.',
                 ]}
-                image="/images/case-schaaf-varianten-2.webp"
-                alt=""
                 wide
             >
                 <CaseFigure
+                    src="/images/case-schaaf-visualisierung-2.webp"
+                    alt="Studioansicht des Tender 15 vor dunklem Grund, Deck und Konsole vollständig sichtbar."
+                    caption="Studioansicht des Tender 15: Grundlage für Entscheidungen über Proportion, Material und Farbe."
+                />
+                <CaseFigure
                     src="/images/case-schaaf-web-hero.webp"
                     alt="Startseite von schaaf-boats.com: über dem großflächigen Bild des fahrenden Tenders steht mittig die Wortmarke Schaaf."
-                    caption="Startseite – die Wortmarke über dem Bild, sonst nichts."
+                    caption="Screendesign: Startseite mit Wortmarke über dem Bild."
                 />
                 <CaseFigure
                     src="/images/case-schaaf-web-farben.webp"
                     alt="Abschnitt Farbkombinationen: sechs Ansichten des Tenders in unterschiedlichen Farbstellungen von White Orange bis Black Grey."
-                    caption="Farbkombinationen: sechs Stellungen, jede als eigene Ansicht statt als Farbfeld."
+                    caption="Farbkombinationen als sechs Ansichten in einem Abschnitt."
                 />
                 {/* Gestaltet, nicht gebaut – das gehoert in die Fallstudie, sonst
                     liest sich das Kapitel als Anspruch auf die Umsetzung. */}
                 <CaseTerms items={['Screendesign von LinderMedia · technische Umsetzung durch Dritte']} />
+                <CaseTodo items={[
+                    'Rollenabgrenzung bestätigen: Markenauftritt, Visualisierung, Print und technische Umsetzung (nur das Screendesign ist LinderMedia ausdrücklich zugeschrieben).',
+                    'Bestätigung der tatsächlichen Übergabe oder Nutzung von Verkaufsbroschüre und Manual; Nutzungsnachweis.',
+                    'Aus dem Layout genommen (Dateien bleiben): ähnliche Gesamt-/Cockpit-Ansichten, die Varianten- und Print-Hintergründe.',
+                ]} />
             </CaseChapter>
 
             <CaseChapter
                 index="05"
-                eyebrow="Die Anwendung"
-                headline={<>Was nach dem<br />Gespräch<br /><strong>dableibt.</strong></>}
+                eyebrow="Ergebnis und Beleg"
+                headline={<>Gestaltung,<br /><strong>die früh sichtbar macht.</strong></>}
                 text={[
-                    'Im Superyacht-Umfeld entscheidet das Gedruckte mit. Die Verkaufsbroschüre führt vom Claim über die beiden Modelle bis zum Ausblick auf den Tender 24 – zurückhaltend gesetzt, mit viel Weißraum und dem Boot als einzigem Akzent.',
-                    'Dieselben Regeln gelten für das Manual: Auch die technische Dokumentation folgt den Richtlinien der Marke. Wer ein Boot übernimmt, bekommt kein Handbuch, das aus einer anderen Welt zu stammen scheint – Verkauf und Betrieb sprechen dieselbe Sprache.',
+                    'Belegt ist die dokumentierte Gestaltung: Visualisierungen sollten Entscheidungen über Proportion, Material und Farbe ermöglichen, bevor das Boot im Wasser lag. Broschüre und Manual werden als Anwendungen derselben Markenregeln beschrieben.',
                 ]}
-                image="/images/case-schaaf-print-bg-4.webp"
-                alt=""
                 wide
             >
-                <CaseTerms items={['Verkaufsbroschüre', 'Manual', 'eine Regel für beides']} />
-            </CaseChapter>
-
-            <CaseChapter
-                index="06"
-                eyebrow="Das Ergebnis"
-                headline={<>Eine Marke, die sich erklärt,<br /><strong>bevor sie im Wasser liegt.</strong></>}
-                text={[
-                    'Screendesign, Visualisierung und Print tragen dieselbe Haltung. Der Auftritt zeigt ein Boot, dessen Qualität in Details liegt – und macht diese Details früh genug sichtbar, um darüber zu sprechen.',
-                ]}
-                image="/images/case-schaaf-ergebnis-2.webp"
-                alt="Der weiße Tender in Fahrt vor der Küste, eine Person steht aufrecht am Steuer."
-            >
-                <CaseImpact
-                    ziel="Den Tender aus der Zubehör-Logik lösen."
-                    strategie="Nicht lauter, genauer: Jedes Detail bekommt den Raum, in dem es überhaupt wirken kann."
-                    massnahmen={['Markenauftritt', 'Screendesign', 'Visualisierung', 'Verkaufsbroschüre', 'Manual']}
-                    wirkung="Der Auftritt macht die Details früh genug sichtbar, um darüber zu sprechen – auch über Modelle, die noch nicht gebaut waren. Verkauf und Betrieb sprechen dieselbe Sprache, vom ersten Bild bis zum Handbuch."
+                <CaseTerms items={['Markenauftritt', 'Screendesign', 'Visualisierung', 'Verkaufsbroschüre', 'Manual']} />
+                <CaseTodo items={[
+                    'Freigegebene Kundenbestätigung oder Projektunterlagen zur Nutzung der Visualisierungen und Printmaterialien.',
+                    'Messbare Ergebnisse oder belastbare Rückmeldung, falls über die Gestaltungsarbeit hinaus eine Wirkung genannt werden soll; ohne Beleg keine Aussagen zu Anfragen, Verkäufen oder Wahrnehmung.',
+                    'Freigabe von Schaaf Yachtbau für Kundenname, Referenznennung und Bilder.',
+                ]} />
+                <CaseOutro
+                    slug="schaaf-tender"
+                    frage="Sie möchten Ihr Produkt klarer zeigen?"
+                    ctaLabel="Projekt besprechen"
                 />
-                <CaseOutro slug="schaaf-tender" />
             </CaseChapter>
         </main>
     )

@@ -27,6 +27,8 @@ type Teaser = {
     visual: string
     visualAlt: string
     video?: string
+    /** Platzhalter ohne echte Daten: kein Link, deutlich markiert, nur in der Entwicklung sichtbar. */
+    todo?: boolean
 }
 
 const GROSS: Teaser = {
@@ -108,6 +110,28 @@ const SLIDER: Teaser[] = [
     },
 ]
 
+/**
+ * AUSSTELLUNG – Platzhalter. Im Repository gibt es weder Namen noch Clip, Poster
+ * oder Fallstudie zur Ausstellung; es werden keine Inhalte erfunden. Der Eintrag
+ * steht nur im Entwicklungsmodus im Slider (nie in der Produktion) und hat
+ * absichtlich keinen Link. Fuer den Livegang ausfuellen und `todo` entfernen:
+ *   name, kicker, text, href (echte Route), visual (Poster), visualAlt, video.
+ */
+const EXHIBITION_TODO: Teaser = {
+    nr: '08',
+    name: '[TODO: Name der Ausstellung]',
+    kicker: 'Ausstellung · [TODO: echter Schwerpunkt]',
+    text: '[TODO: verifizierte Ausgangslage, Aufgabe und Wirkung in 1–2 Sätzen]',
+    href: '',
+    cta: 'Fallstudie ansehen',
+    visual: '/images/og-lindermedia.jpg',
+    visualAlt: '[TODO: sachliche Beschreibung des tatsächlichen Motivs]',
+    todo: true,
+}
+
+/** Die Slider-Liste; die sichtbare Gesamtzahl wird aus ihr abgeleitet. */
+const SLIDES: Teaser[] = process.env.NODE_ENV === 'production' ? SLIDER : [...SLIDER, EXHIBITION_TODO]
+
 const Arrow = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
 )
@@ -115,7 +139,7 @@ const Arrow = () => (
 function Karte({ t, gross }: { t: Teaser; gross?: boolean }) {
     return (
         <article className={`pj-card${gross ? ' pj-card--gross' : ' pj-card--slide'}`}>
-            <div className="pj-media">
+            <div className="pj-media" data-parallax="0.06" data-parallax-min="821">
                 {t.video ? (
                     <LazyVideo
                         className="pj-visual"
@@ -144,10 +168,12 @@ function Karte({ t, gross }: { t: Teaser; gross?: boolean }) {
                 <h3 className="pj-name">
                     {/* Der Link spannt ueber die ganze Karte (::after); der
                         Pause-Schalter liegt davor und bleibt klickbar. */}
-                    <Link href={t.href} className="pj-link">{t.name}</Link>
+                    {t.todo ? t.name : <Link href={t.href} className="pj-link">{t.name}</Link>}
                 </h3>
                 <p className="pj-text">{t.text}</p>
-                <span className="pj-cta" aria-hidden="true">{t.cta}<Arrow /></span>
+                {t.todo
+                    ? <span className="pj-todo">TODO: Platzhalter – Name, Poster, Clip und Fallstudie fehlen noch (nur im Entwicklungsmodus sichtbar)</span>
+                    : <span className="pj-cta" aria-hidden="true">{t.cta}<Arrow /></span>}
             </div>
         </article>
     )
@@ -186,7 +212,7 @@ export default function CasesSection() {
         track.scrollBy({ left: dir * (card.offsetWidth + gap), behavior: 'smooth' })
     }
 
-    const last = Math.min(first + perView, SLIDER.length)
+    const last = Math.min(first + perView, SLIDES.length)
 
     return (
         <section id="projekte" ref={ref} className="pj">
@@ -207,7 +233,7 @@ export default function CasesSection() {
 
             <div className="pj-slider-bar">
                 <p className="pj-slider-count" aria-live="polite">
-                    Weitere Projekte <span>{first + 1}{last > first + 1 ? `–${last}` : ''} / {SLIDER.length}</span>
+                    Weitere Projekte <span>{first + 1}{last > first + 1 ? `–${last}` : ''} / {SLIDES.length}</span>
                 </p>
                 <div className="pj-arrows">
                     <button type="button" className="pj-arrow pj-arrow--prev" onClick={() => go(-1)} disabled={first <= 0} aria-label="Vorheriges Projekt">
@@ -227,7 +253,7 @@ export default function CasesSection() {
                 aria-roledescription="Slider"
                 aria-label="Weitere Projekte"
             >
-                {SLIDER.map((t) => <Karte key={t.nr} t={t} />)}
+                {SLIDES.map((t) => <Karte key={t.nr} t={t} />)}
             </div>
 
             <div className="pj-more">

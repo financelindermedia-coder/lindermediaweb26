@@ -36,8 +36,8 @@ export default function VorgehenSection() {
             </div>
 
             <ol className="vg-steps">
-                {SCHRITTE.map((s) => (
-                    <li key={s.nr} className="vg-step reveal" data-reveal>
+                {SCHRITTE.map((s, i) => (
+                    <li key={s.nr} className="vg-step reveal" data-reveal style={{ ['--d' as string]: `${i * 0.14}s` } as React.CSSProperties}>
                         <span className="vg-nr" aria-hidden="true">{s.nr}</span>
                         <h3 className="vg-titel">{s.titel}</h3>
                         <p className="vg-text">{s.text}</p>

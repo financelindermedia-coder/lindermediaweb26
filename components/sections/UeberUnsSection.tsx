@@ -17,6 +17,8 @@ export default function UeberUnsSection() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                     className="mfx-portrait"
+                    data-parallax="0.12"
+                    data-parallax-min="821"
                     src="/images/andi.webp"
                     alt="Andreas Linder, Gründer von LinderMedia — Portrait"
                     width={2800}

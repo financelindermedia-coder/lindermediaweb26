@@ -2964,7 +2964,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
    Navigationsleiste. */
 #methode, #leistungen, #system, #projekte, #stimmen,
 #ueber-uns, #faq, #statement, #contact,
-#strategie-wirklichkeit, #ideen-erlebnisse, #orientierung {
+#strategie-wirklichkeit, #ideen-erlebnisse, #orientierung, #vorgehen {
     scroll-margin-top: clamp(80px, 12vh, 110px);
 }
 
@@ -4679,14 +4679,14 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
    Alle Headlines der Startseite teilen sich Groesse, Gewicht, Zeilenhoehe und
    Laufweite: hell in Versalien, der Kern der Aussage fett. Die Groesse kommt
    aus --h2 (siehe :root) – wer sie aendern will, aendert nur dort. */
-.hi-h1, .hi-panel-h, .wende-head, .ped-headline, .a2v-title, .a2-head, .pj-h2, .mfx-headline, .vg-h2 {
+.hi-h1, .hi-panel-h, .wende-head, .ped-headline, .a2v-title, .a2-head, .pj-h2, .mfx-headline, .vg-h2, .mp-h1, .mp-h2 {
     font-size: var(--h2) !important;
     font-weight: 300 !important;
     line-height: 1.05 !important;
     letter-spacing: -0.02em !important;
     text-transform: uppercase;
 }
-.hi-h1 strong, .hi-panel-h strong, .wende-head strong, .ped-headline span, .a2v-title strong, .a2-head span, .pj-h2 strong, .vg-h2 strong, .mfx-headline strong, .mfx-headline span {
+.hi-h1 strong, .hi-panel-h strong, .wende-head strong, .ped-headline span, .a2v-title strong, .a2-head span, .pj-h2 strong, .vg-h2 strong, .mp-h1 strong, .mp-h2 strong, .mfx-headline strong, .mfx-headline span {
     font-weight: 900 !important;
 }
 
@@ -4727,3 +4727,48 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     .a2v-foot { display: none; }
     .a2v-ai { z-index: 3; left: 1rem; right: auto; bottom: 1.2rem; }
 }
+
+/* ── Parallax (components/Parallax.tsx schreibt --py) ────────────────────
+   Nur am Desktop (data-parallax-min=821). Medien werden leicht ueberdimensioniert,
+   damit beim Verschieben keine Kanten sichtbar werden. */
+@media (min-width: 821px) {
+    .a2v-video { transform: translate3d(0, var(--py, 0px), 0) scale(1.18); will-change: transform; }
+    .pj-card .pj-media { inset: -12% 0; transform: translate3d(0, var(--py, 0px), 0); will-change: transform; }
+    .hi-turn-drift { transform: translate3d(0, var(--py, 0px), 0); will-change: transform; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .a2v-video, .pj-media, .hi-turn-drift { transform: none !important; }
+    .a2v-video { transform: scale(1.0) !important; }
+}
+
+
+/* ── Weitere Parallax-Effekte ───────────────────────────────────────────── */
+@media (min-width: 821px) {
+    /* Portrait im „Über uns": driftet langsamer als der Text darueber. */
+    .mfx-portrait { inset: -14% 0; height: 128%; transform: translate3d(0, var(--py, 0px), 0); will-change: transform; }
+    /* Abschluss-Video hinter dem Kontakt. */
+    .site-closing-video { inset: -7% 0; height: 114%; transform: translate3d(0, var(--py, 0px), 0); will-change: transform; }
+    /* Video-Sektionen: zusaetzlich „atmet" das Bild – ganz leicht herangezoomt am
+       Rand, ruhiger in der Bildmitte (--pp: −1 … 1, 0 = mittig). */
+    .a2v-video {
+        transform: translate3d(0, var(--py, 0px), 0)
+                   scale(calc(1.2 - 0.04 * (1 - max(var(--pp, 0), calc(var(--pp, 0) * -1)))));
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .mfx-portrait, .site-closing-video { transform: none !important; inset: 0; height: 100%; }
+}
+
+/* Das Abschluss-Video ist fuer den Parallax ueberdimensioniert und ragte oben
+   als heller Streifen in die FAQ hinein – der Container schneidet jetzt ab. */
+.site-closing { overflow: clip; }
+
+.csx-outro-frage { font-size: clamp(1.1rem, 1.5vw, 1.4rem); color: rgba(255, 255, 255, 0.85); max-width: 40ch; margin: 1rem 0 0.4rem; }
+.hi-turn .wende-lead { max-width: 58ch; margin-left: auto; margin-right: auto; }
+
+/* Offene redaktionelle Punkte (CaseTodo) – nur im Entwicklungsmodus gerendert. */
+.csx-todo { margin-top: 1.6rem; padding: 0.9rem 1.1rem; border: 1px dashed #ff6b35; border-radius: 4px; background: rgba(255, 107, 53, 0.06); max-width: 60ch; }
+.csx-todo-head { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #ff6b35; margin-bottom: 0.5rem; }
+.csx-todo ul { list-style: none; display: grid; gap: 0.35rem; }
+.csx-todo li { font-size: 0.85rem; line-height: 1.45; color: rgba(255, 255, 255, 0.78); }
+.csx-todo li::before { content: '▢ '; color: #ff6b35; }

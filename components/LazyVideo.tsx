@@ -31,6 +31,8 @@ type Props = {
     pauseControlClassName?: string
     /** Was der Schalter benennt, z. B. „Hintergrundvideo". */
     pauseControlLabel?: string
+    /** Parallax-Staerke (siehe components/Parallax.tsx); nur Desktop. */
+    parallax?: string
 }
 
 export default function LazyVideo({
@@ -41,6 +43,7 @@ export default function LazyVideo({
     pauseControl = false,
     pauseControlClassName = '',
     pauseControlLabel = 'Hintergrundvideo',
+    parallax,
 }: Props) {
     const ref = useRef<HTMLVideoElement>(null)
     const [armed, setArmed] = useState(false)
@@ -111,6 +114,7 @@ export default function LazyVideo({
                 playsInline
                 preload="none"
                 {...(aiGenerated ? { 'data-ai-generated': 'true' } : {})}
+                {...(parallax ? { 'data-parallax': parallax, 'data-parallax-min': '821' } : {})}
             />
             {pauseControl && (
                 <button

@@ -28,6 +28,7 @@ ${CORE_SERVICES.map((s) => `- ${s.name}: ${s.description}`).join('\n')}
 ## Wichtige Seiten
 
 - [Startseite](${SITE_URL}/): Vorgehen, Projekte, häufige Fragen
+- [Methode (Eisberg-Modell)](${SITE_URL}/methode): die vier Ebenen Strategie, Charakter, Markenpräsenz, Wirkung erklärt
 - [Leistungen](${SITE_URL}/leistungen): Strategie, Charakter, Markenpräsenz, Wirkung im Detail
 - [Referenzen](${SITE_URL}/referenzen): ausgewählte Projekte
 ${FALLSTUDIEN.map((f) => `- [${f.name}](${SITE_URL}${f.fallstudie}): ${f.teaser}`).join('\n')}

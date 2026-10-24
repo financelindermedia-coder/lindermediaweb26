@@ -271,6 +271,26 @@ export function CaseFocus({
 }
 
 /**
+ * Offener redaktioneller Punkt (Beleg, Freigabe, Rolle, Rechte …).
+ *
+ * Nur im Entwicklungsmodus sichtbar – in der Produktion rendert die Komponente
+ * nichts. So bleiben die offenen Punkte an der Stelle im Code, an der sie
+ * geschlossen werden muessen, ohne je als fertige Copy auf der Seite zu stehen.
+ * Wer einen Punkt schliesst, loescht den Aufruf.
+ */
+export function CaseTodo({ items }: { items: string[] }) {
+    if (process.env.NODE_ENV === 'production') return null
+    return (
+        <aside className="csx-todo" aria-label="Offene Punkte (nur Entwicklung)">
+            <p className="csx-todo-head">[BELEG/FREIGABE ERGÄNZEN] · nur im Entwicklungsmodus sichtbar</p>
+            <ul>
+                {items.map((t) => <li key={t}>{t}</li>)}
+            </ul>
+        </aside>
+    )
+}
+
+/**
  * Platzhalter fuer ein Kapitelbild, zu dem noch kein Material vorliegt.
  *
  * Sichtbar als Platzhalter ausgezeichnet – kein Blindbild, das versehentlich
@@ -296,7 +316,16 @@ export function CaseFigureTodo({ hinweis }: { hinweis: string }) {
  * weiter zur naechsten Fallstudie, oder direkt ins Gespraech. `slug` ist die
  * eigene Seite – daraus ergibt sich die naechste (siehe lib/cases.ts).
  */
-export function CaseOutro({ slug }: { slug: string }) {
+export function CaseOutro({
+    slug,
+    frage,
+    ctaLabel = 'Über Ihr nächstes Projekt sprechen',
+}: {
+    slug: string
+    /** Optionale Frage über dem Kontakt-Button. */
+    frage?: string
+    ctaLabel?: string
+}) {
     const next = naechsteFallstudie(slug)
     const pfeil = (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
@@ -318,8 +347,9 @@ export function CaseOutro({ slug }: { slug: string }) {
                 </Link>
             )}
 
+            {frage && <p className="csx-outro-frage">{frage}</p>}
             <Link href="/#contact" className="csx-cta">
-                Über Ihr nächstes Projekt sprechen {pfeil}
+                {ctaLabel} {pfeil}
             </Link>
         </nav>
     )

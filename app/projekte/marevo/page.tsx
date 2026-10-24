@@ -4,11 +4,10 @@ import CaseChapter, {
     CaseFigure,
     CaseFocus,
     CaseHero,
-    CaseImpact,
     CaseOutro,
     CasePillars,
     CaseTerms,
-    CaseTurn,
+    CaseTodo,
 } from '@/components/sections/CaseChapter'
 import CaseSchema from '@/components/CaseSchema'
 import { SITE_URL } from '@/lib/site'
@@ -42,7 +41,7 @@ import { SITE_URL } from '@/lib/site'
 const TITLE =
     'Marèvo – Premium-Markenentwicklung & Screendesign | LinderMedia'
 const DESCRIPTION =
-    'Wie eine Premium-Yachtmarke über Haltung, Reduktion und einen eigenen Maßstab differenziert wurde.'
+    'Markenidee, Bildwelt und Screendesign-Entwurf für eine Premium-Segelyacht: weiter statt schneller.'
 
 /*
  * Eigene Metadaten je Fallstudie: Titel und Beschreibung sind das, was in der
@@ -75,17 +74,17 @@ const I = (d: JSX.Element) => (
 const PILLARS = [
     {
         label: 'Gewicht, wo es trägt',
-        text: 'Masse sitzt dort, wo sie die Yacht ruhiger macht – nicht dort, wo sie am wenigsten stört.',
+        text: 'Das Versprechen zur Gewichtsverteilung, wie der Entwurf es formuliert.',
         icon: I(<><path d="M12 3v18" /><path d="M5 8h14" /><path d="M7 8l-3 7h6l-3-7z" /><path d="M17 8l-3 7h6l-3-7z" /></>),
     },
     {
         label: 'Kontrolle in Reichweite',
-        text: 'Was gebraucht wird, liegt an der Hand. Der Rest bleibt aus dem Weg.',
+        text: 'Das Versprechen zur Bedienbarkeit, wie der Entwurf es formuliert.',
         icon: I(<><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="2.5" /><path d="M12 3v3M12 18v3M3 12h3M18 12h3" /></>),
     },
     {
         label: 'Energie, leise gesammelt',
-        text: 'Gewonnen wird sie im Fahren, nicht im Nachrüsten – ohne dass es jemand hört.',
+        text: 'Das Versprechen zur Energie an Bord, wie der Entwurf es formuliert.',
         icon: I(<><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z" /></>),
     },
 ]
@@ -104,56 +103,36 @@ export default function MarevoPage() {
                 <Link href="/#projekte" className="csx-back">← Alle Projekte</Link>
             </div>
 
-            {/* Screendesign: „Take the long way." */}
             <CaseHero
                 index="01"
-                kicker="Case Study · Markenentwicklung · Screendesign · Bildwelt"
-                headline={<>Nimm den<br /><strong>langen Weg.</strong></>}
+                kicker="Case Study · Markenentwicklung · Leitidee · Bildwelt · Screendesign"
+                headline={<>Weiter<br /><strong>statt schneller.</strong></>}
                 meta="Marèvo · Segelyacht im Premium-Segment"
-                text="Eine Marke für Menschen, die nicht ankommen wollen, sondern unterwegs sein."
+                text="Marèvo wird hier als Segelyacht im Premium-Segment vorgestellt. Die Fallstudie rückt Stimmigkeit, Ausdauer und Zurückhaltung in den Mittelpunkt – statt des üblichen Vergleichs über Länge, Fläche und Tempo."
+                note="Gestalterischer Entwurf: Markenidee, Bildwelt und Screendesign."
                 image="/images/case-marevo-hero.webp"
                 alt="Die Yacht liegt bei Sonnenuntergang still auf spiegelglattem Wasser, der Horizont geht in Gold über."
             />
 
             <CaseChapter
-                index="01"
-                eyebrow="Die Ausgangslage"
-                headline={<>Im Premium-Segment<br />klingt alles<br /><strong>gleich.</strong></>}
-                text={[
-                    'Yachten in diesem Segment werben mit denselben Argumenten: mehr Länge, mehr Fläche, mehr Tempo. Wer so spricht, wird mit allen anderen verglichen – und muss den Vergleich in Zahlen gewinnen.',
-                    'Marèvo brauchte deshalb keine lautere Version dieser Sprache, sondern eine andere. Eine, die nicht behauptet, das Schnellste zu sein, und trotzdem etwas verspricht.',
-                ]}
-                image="/images/case-marevo-ausgangslage-bg.webp"
-                alt=""
-                wide
-            />
-
-            {/* Screendesign: „Not faster at any cost. Further, because everything
-                aligns." – aus dieser Zeile stammt die Entscheidung. */}
-            <CaseTurn
-                frage={<>Wie unterscheidet sich eine Yacht<br />in einem Segment, in dem alle<br /><strong>mit denselben Zahlen werben?</strong></>}
-                nicht="lauter behaupten, was ohnehin alle behaupten."
-                sondern={<>den Maßstab wechseln.</>}
-                begruendung="Länge, Fläche und Tempo sind vergleichbar – wer so spricht, muss den Vergleich in Zahlen gewinnen. Stimmigkeit ist nicht vergleichbar. Sie verschiebt die Frage von „Wie schnell?“ zu „Wie weit, ohne sich zu verausgaben?“ – und diese Frage hat außer Marèvo niemand gestellt."
-                folgen={[
-                    'Drei Versprechen statt eines Datenblatts.',
-                    'Die Zahlen bleiben – aber in einer schlichten Tabelle, nicht in Kacheln.',
-                    'Die Bildstrecke ist nach Licht gebaut, nicht nach Ausstattung.',
-                    'Der Abschluss lädt nicht zum Kauf ein, sondern zum Kurs.',
-                ]}
-            />
-
-            {/* Screendesign: „Not faster at any cost. Further, because everything aligns." */}
-            <CaseChapter
                 index="02"
-                eyebrow="Die Strategie"
-                headline={<>Nicht schneller<br />um jeden Preis.<br /><strong>Weiter, weil alles zusammenpasst.</strong></>}
+                eyebrow="Die Ausgangslage"
+                headline={<>Wenn alle mit denselben<br /><strong>Zahlen werben.</strong></>}
                 text={[
-                    'Aus dieser Zeile wurde die Haltung der Marke. Sie verschiebt den Maßstab: Nicht die Höchstgeschwindigkeit entscheidet, sondern wie weit man kommt, ohne sich zu verausgaben – das Schiff nicht und die Crew nicht.',
-                    'Alles Weitere folgt daraus. Die Bildsprache bleibt ruhig, die Typografie zurückhaltend, die Zahlen stehen da, ohne sich in den Vordergrund zu drängen.',
+                    'In diesem Segment sind Länge, Fläche und Tempo die üblichen Vergleichsgrößen. Marèvo sollte darin nicht einfach lauter mitbieten, sondern einen anderen Maßstab setzen.',
                 ]}
-                image="/images/case-marevo-strategie-bg.webp"
-                alt=""
+                wide
+            >
+                <CaseTodo items={['Markt- oder Wettbewerbsanalyse, falls dies als recherchierte Ausgangslage statt als strategische Setzung dargestellt werden soll.']} />
+            </CaseChapter>
+
+            <CaseChapter
+                index="03"
+                eyebrow="Der strategische Gedanke"
+                headline={<>Nicht schneller um jeden Preis.<br /><strong>Weiter, weil alles zusammenpasst.</strong></>}
+                text={[
+                    'Die Leitidee verschiebt die Frage von „Wie schnell?“ zu „Wie weit, ohne sich zu verausgaben?“. Die Haltung fasst sich in drei Begriffen: Stimmigkeit, Ausdauer und Zurückhaltung.',
+                ]}
                 wide
             >
                 <CaseTerms items={['Stimmigkeit', 'Ausdauer', 'Zurückhaltung']} />
@@ -163,76 +142,50 @@ export default function MarevoPage() {
                 />
             </CaseChapter>
 
-            {/* Screendesign: „Every load has a language." und „Form follows the flow." */}
             <CaseChapter
-                index="03"
-                eyebrow="Die Konstruktion"
-                headline={<>Jede Last<br /><strong>hat eine Sprache.</strong></>}
+                index="04"
+                eyebrow="Die Umsetzung"
+                headline={<>Eine Haltung,<br /><strong>übersetzt in einen Auftritt.</strong></>}
                 text={[
-                    'Den Unterschied merkt man nicht an Spitzenwerten, sondern am Ende eines langen Tages: wie ruhig das Schiff liegt, wie wenig Kraft ein Manöver kostet, wie selbstverständlich alles zur Hand ist.',
-                    'Genau das sollte der Auftritt zeigen – bevor jemand an Bord war. Nicht über Datenblätter, sondern über drei Versprechen, die jede Seglerin und jeder Segler sofort versteht.',
+                    'Der Umfang: Markenentwicklung, Leitidee, Bildwelt und Screendesign. Der Entwurf führt in ruhigen Abschnitten durch Strategie, Konstruktion und Gestaltung. Drei Versprechen gliedern den Konstruktionsabschnitt.',
                 ]}
                 image="/images/case-marevo-konstruktion-bg.webp"
                 alt=""
                 wide
             >
                 <CasePillars items={PILLARS} />
-            </CaseChapter>
-
-            {/* Screendesign: „Space, tuned to the horizon." */}
-            <CaseChapter
-                index="04"
-                eyebrow="Das Interieur"
-                headline={<>Raum, auf den<br /><strong>Horizont gestimmt.</strong></>}
-                text={[
-                    'An Bord ist die Atmosphäre nicht das, was nach der Konstruktion dazukommt. Sie ist die Konstruktion – übersetzt in Licht, in Materialien, die man anfassen will, und in einen Ort, an dem der Tag ausklingen darf.',
-                    'Deshalb zeigt die Bildstrecke keine ausgeleuchteten Kabinen, sondern Licht zu einer bestimmten Stunde.',
-                ]}
-                image="/images/case-marevo-interieur-bg-3.webp"
-                alt=""
-                wide
-            >
-
+                <CaseFigure
+                    src="/images/case-marevo-screen-auftakt.webp"
+                    alt="Auftakt des Entwurfs: die Zeile „Take the long way“ über einer Yacht im Abendlicht."
+                    caption="Screendesign-Entwurf: der Auftakt mit der Leitzeile „Take the long way“."
+                />
+                <CaseTodo items={[
+                    'Bestätigung, welche Leistungen tatsächlich beauftragt und umgesetzt wurden.',
+                    'Technische Freigabe der drei Versprechen (Gewicht, Kontrolle, Energiegewinnung während der Fahrt) – bis dahin als Entwurfsversprechen zu lesen.',
+                    'Konstruktionsmotiv nur als Konzeptvisualisierung kennzeichnen und freigeben.',
+                ]} />
             </CaseChapter>
 
             <CaseChapter
                 index="05"
-                eyebrow="Das Screendesign"
-                headline={<>Eine Seite, die<br /><strong>nicht drängt.</strong></>}
+                eyebrow="Ergebnis und Beleg"
+                headline={<>Sichtbar ist<br /><strong>der Entwurf.</strong></>}
                 text={[
-                    'Der Entwurf führt in langen, ruhigen Abschnitten durch die Yacht: erst die Haltung, dann das Modell, dann Konstruktion, Interieur und Details. Kein Abschnitt will überholen.',
-                    'Die Zahlen stehen in einer schlichten Tabelle statt in Kacheln, und der Abschluss lädt nicht zum Kauf ein, sondern zum Kurs: „Beginnen Sie mit einer Peilung.“',
+                    'Die Leitidee ist in Bild- und Screendesign-Motiven umgesetzt. Das dokumentiert einen gestalterischen Ansatz, aber keine gemessene Veränderung der Markenwahrnehmung oder des Geschäftsergebnisses.',
                 ]}
-                image="/images/case-marevo-screendesign-bg.webp"
-                alt=""
                 wide
             >
-                <CaseFigure
-                    src="/images/case-marevo-screen-auftakt.webp"
-                    alt="Auftakt des Entwurfs: die Zeile „Take the long way“ über einer Yacht im Abendlicht."
-                    caption="Der Auftakt – eine Zeile, ein Bild, sonst nichts."
+                <CaseTodo items={[
+                    'Klären, ob Marèvo ein reales Kundenprojekt, eine Konzeptstudie oder ein Designentwurf ist; Name, Marke, Bilder und Veröffentlichung freigeben lassen.',
+                    'Freigegebener finaler Auftritt oder Vorher/Nachher-Beleg; sonst bleibt das Ergebnis „Entwurf“.',
+                    'Das entfernte Motiv mit „MARÈVO 62 / Design Study / 2026 / Private Viewing“ erst nach Klärung von Status, Jahr, Produktbezug und Freigabe wieder einsetzen.',
+                    'Rechte für Hero, Renderings, Entwürfe, Marke und Gestaltung.',
+                ]} />
+                <CaseOutro
+                    slug="marevo"
+                    frage="Sie möchten Ihrer Marke eine klare Richtung geben?"
+                    ctaLabel="Projekt besprechen"
                 />
-            </CaseChapter>
-
-            {/* Screendesign: „Begin with a bearing." */}
-            <CaseChapter
-                index="06"
-                eyebrow="Das Ergebnis"
-                headline={<>Beginnen Sie<br /><strong>mit einer Peilung.</strong></>}
-                text={[
-                    'Haltung, Konstruktion und Auftritt erzählen dieselbe Geschichte: dass Stimmigkeit weiter trägt als Tempo. Was bleibt, ist keine Liste von Vorzügen, sondern eine Richtung.',
-                ]}
-                image="/images/case-marevo-ergebnis-bg.webp"
-                alt=""
-                wide
-            >
-                <CaseImpact
-                    ziel="Innerhalb weniger Sekunden als hochwertig wahrgenommen werden – ohne Superlative."
-                    strategie="Reduktion statt Aufzählung: weniger zeigen, damit das Gezeigte trägt."
-                    massnahmen={['Markenentwicklung', 'Leitidee', 'Bildwelt', 'Screendesign']}
-                    wirkung="Premium wird nicht behauptet, sondern im Tempo des Entwurfs erfahrbar. Was bleibt, sind keine Kennwerte, sondern eine Richtung."
-                />
-                <CaseOutro slug="marevo" />
             </CaseChapter>
         </main>
     )

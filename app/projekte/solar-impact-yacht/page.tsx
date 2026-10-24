@@ -3,10 +3,11 @@ import Link from 'next/link'
 import CaseChapter, {
     CaseFigure,
     CaseHero,
-    CaseImpact,
     CaseOutro,
     CasePillars,
+    CaseTerms,
     CaseTile,
+    CaseTodo,
     CaseTurn,
 } from '@/components/sections/CaseChapter'
 import CaseSchema from '@/components/CaseSchema'
@@ -103,8 +104,8 @@ export default function SolarImpactPage() {
             <CaseHero
                 index="01"
                 kicker="Projektarchiv · Branding · Webdesign · Positionierung"
-                headline={<>Ein Markenauftritt<br />für die Zukunft<br /><strong>der Schifffahrt.</strong></>}
-                text="Solar Impact Yacht verband innovative SWATH-Technologie und solarbetriebene Schifffahrt."
+                headline={<>SWATH<br /><strong>verständlich positionieren.</strong></>}
+                text="Wie Solar Impact Yacht eine komplexe SWATH-Technologie in eine verständliche, eigenständige Markenposition übersetzte."
                 note="Der ursprüngliche digitale Auftritt ist derzeit nicht öffentlich zugänglich."
                 leistungen="Markenstrategie · Positionierung · Corporate Design · Webdesign"
                 image="/images/case-solarimpact-hero-2.webp"
@@ -114,40 +115,34 @@ export default function SolarImpactPage() {
             <CaseChapter
                 index="02"
                 eyebrow="Die Ausgangslage"
-                headline={<>Eine Technologie,<br />die erst verstanden<br /><strong>werden musste.</strong></>}
+                headline={<>Eine Bauart,<br />die erst verstanden<br /><strong>werden musste.</strong></>}
                 text={[
-                    'SWATH ist komplex, neu und erklärungsbedürftig. Die Herausforderung: ein Markenauftritt, der Vertrauen schafft, Zusammenhänge verständlich macht und die Pionierleistung hinter Solar Impact Yacht sichtbar werden lässt.',
-                    'Aus einer technischen Idee sollte ein Auftritt entstehen, der Präzision, Innovation und Zukunftsperspektive verbindet – und auch Menschen erreicht, die nicht tief in der Technologie stecken.',
+                    'SWATH steht für Small Waterplane Area Twin Hull und ist eine erklärungsbedürftige Bauart. Die Aufgabe: ihre Funktionsweise und Relevanz so zu vermitteln, dass auch Menschen ohne technisches Vorwissen folgen können.',
                 ]}
                 image="/images/case-solarimpact-technologie.webp"
                 alt="Unterwasseraufnahme der beiden SWATH-Rümpfe: Der eigentliche Auftrieb liegt vollständig unter der Wasseroberfläche."
-            />
+            >
+                <CaseTodo items={['Bestätigtes Briefing oder freigegebene Formulierung des Projektziels.']} />
+            </CaseChapter>
 
-            {/* Die Wende des Projekts: erst die Frage, die zu beantworten war,
-                dann die Entscheidung, aus der alles Weitere folgt. Sie steht
-                zwischen Ausgangslage und Fundament, weil ab hier nicht mehr das
-                Problem beschrieben wird, sondern der Weg heraus. */}
+            {/* Die Wende des Projekts: erst die Frage, dann die Entscheidung. Die
+                Gegenueberstellung „Technik erklaeren“ gegen „Veraenderung zeigen“
+                steht nur hier – nicht noch einmal in Fundament oder Ergebnis. */}
             <CaseTurn
                 image="/images/case-solarimpact-fundament.webp"
                 frage={<>Wie wird aus einer Technologie,<br />die kaum jemand kennt,<br /><strong>eine Marke, der man vertraut?</strong></>}
-                nicht="die Technologie in den Mittelpunkt stellen und sie erklären."
-                sondern={<>die Veränderung zeigen,<br />die sie möglich macht.</>}
-                begruendung="SWATH lässt sich erklären. Aber eine Erklärung schafft noch kein Vertrauen – sie setzt voraus, dass jemand lange genug zuhört. Deshalb steht am Anfang nicht die Bauart, sondern das, was sie für die Zukunft der Schifffahrt bedeutet. Die Technik folgt dort, wo sie die Aussage belegt."
-                folgen={[
-                    'Positionierung als Technologieunternehmen, nicht als Yachtbauer.',
-                    'Die Bauart wird belegt statt behauptet – im direkten Vergleich zu Katamaran und Einrumpfboot.',
-                    'Visuelle Reduktion: Die Ruhe des Auftritts ist derselbe Beleg wie die Ruhe des Schiffs.',
-                    'Print und Digital tragen dieselbe Zurückhaltung – auch das, was nach dem Gespräch dableibt.',
-                ]}
+                nicht="mit der Bauart beginnen."
+                sondern={<>mit der Veränderung beginnen,<br />die sie für die Schifffahrt ermöglichen soll.</>}
+                begruendung="Die Technik folgt dort, wo sie die Aussage belegt. Positioniert wurde Solar Impact Yacht deshalb als Technologieunternehmen statt als Yachtbauer."
             />
+            <CaseTodo items={['Kundenfreigabe für Strategie und Positionierung als Technologieunternehmen.']} />
 
             <CaseChapter
                 index="03"
                 eyebrow="Das Fundament"
                 headline={<>Klarheit vor<br /><strong>Kommunikation.</strong></>}
                 text={[
-                    'Bevor Gestaltung sichtbar werden konnte, musste klar sein, wofür Solar Impact Yacht steht – und was SWATH überhaupt bedeutet: Small Waterplane Area Twin Hull. Der Auftrieb liegt in zwei Torpedokörpern tief unter der Oberfläche, verbunden über schmale Streben. Was durch die Wellen läuft, ist deshalb nur ein Bruchteil dessen, was ein herkömmlicher Rumpf ihnen entgegensetzt.',
-                    'Das Ergebnis ist ein Schiff, das kaum auf den Seegang reagiert. Genau diese Ruhe war das Versprechen der Marke – und sie musste erklärt werden, bevor jemand sie erlebt hatte.',
+                    'Bevor Gestaltung sichtbar werden konnte, musste klar sein, wofür die Marke steht – und was SWATH bedeutet: Der Auftrieb liegt in zwei Torpedokörpern unter der Wasseroberfläche, verbunden über schmale Streben.',
                 ]}
                 image="/images/case-solarimpact-system-bg.webp"
                 alt=""
@@ -158,9 +153,12 @@ export default function SolarImpactPage() {
                     src="/images/case-solarimpact-vergleich.webp"
                     bleed
                     alt="Drei Vergleichsgrafiken: Krängung von Katamaran, SWATH und Einrumpfboot bei sechs Fuß hohen Wellen, dazu die Wasserlinienfläche der drei Bauarten im Vergleich."
-                    caption="Erklärt statt behauptet: Krängung und Wasserlinienfläche im Vergleich zu Katamaran und Einrumpfboot."
+                    caption="Vergleichsgrafik zu Krängung und Wasserlinienfläche von Katamaran, SWATH und Einrumpfboot."
                 />
-
+                <CaseTodo items={[
+                    'Quelle, Zahlen, Maßstab und Messmethode der Vergleichsgrafiken; freigegebene Originalgrafiken.',
+                    'Technische Aussagen zum Verhalten im Seegang belegen oder streichen (hier bewusst nicht behauptet).',
+                ]} />
             </CaseChapter>
 
             <CaseChapter
@@ -168,7 +166,7 @@ export default function SolarImpactPage() {
                 eyebrow="Die Identität"
                 headline={<>Technologie mit einer<br /><strong>klaren Haltung.</strong></>}
                 text={[
-                    'Aus der Positionierung wurde eine visuelle Sprache: reduziert, technisch präzise und auf das Wesentliche konzentriert – damit die Technologie wirken kann, ohne sich zu erklären.',
+                    'Aus der Positionierung wurde eine visuelle Sprache: reduziert, technisch präzise und auf das Wesentliche konzentriert.',
                 ]}
                 image="/images/case-solarimpact-identitaet-bg.webp"
                 alt=""
@@ -206,17 +204,16 @@ export default function SolarImpactPage() {
                 </div>
             </CaseChapter>
 
-            {/* Die Ueberschrift und der Text dieses Kapitels sind von mir gesetzt
-                und noch nicht freigegeben – anders als die uebrigen, die aus
-                Andreas' Vorlage stammen. Die Aufnahmen der Broschuere fehlen
-                noch; ihr Platz steht. */}
+            {/* Anwendung: genau ein Beleg (Geschaeftsausstattung). Die frueher
+                eigene Navigationsansicht („Umsetzung“) steht nicht mehr auf der
+                Seite – sie belegt kein freigegebenes Interface; die Datei bleibt
+                im Repository. */}
             <CaseChapter
                 index="05"
                 eyebrow="Die Anwendung"
                 headline={<>Die Marke<br /><strong>wird greifbar.</strong></>}
                 text={[
-                    'Was digital entwickelt wurde, musste auch auf Papier tragen. Geschäftsausstattung und Broschüre übernehmen dieselbe Zurückhaltung: gedecktes Anthrazit, viel Ruhe um die Marke herum, die Wortmarke als einziger Akzent.',
-                    'Gerade im Premium-Segment entscheidet das Gedruckte mit. Es ist das, was nach einem Gespräch dableibt.',
+                    'Geschäftsausstattung und Broschüre übernehmen dieselbe Zurückhaltung: gedecktes Anthrazit, viel Ruhe um die Marke herum, die Wortmarke als einziger Akzent.',
                 ]}
                 image="/images/case-solarimpact-anwendung-bg.webp"
                 alt=""
@@ -227,38 +224,32 @@ export default function SolarImpactPage() {
                     alt="Geschäftsausstattung: aufgeschlagene Präsentationsmappe in Anthrazit mit Briefbogen und Visitenkarte, daneben eine geschlossene Mappe."
                     caption="Geschäftsausstattung: Mappe, Briefbogen und Visitenkarte."
                 />
+                <CaseTodo items={['Bestätigung, dass die Print-Motive zu diesem Projekt gehören und veröffentlicht werden dürfen; Aufnahmen der Broschüre.']} />
             </CaseChapter>
 
             <CaseChapter
                 index="06"
-                eyebrow="Die Umsetzung"
-                headline={<>Eine digitale Bühne<br /><strong>für die Idee.</strong></>}
-                text={[
-                    'Klare Strukturen, starke Bildsprache und präzise Inhalte führen durch die Technologie und machen sie erlebbar.',
-                    'Was an Bord selbstverständlich ist – Orientierung, Übersicht, Ruhe –, sollte auch der Auftritt leisten.',
-                ]}
-                image="/images/case-solarimpact-umsetzung.webp"
-                alt="Navigationsansicht an Bord: eine Seekarte mit eingezeichneter Route, Uhrzeit und Ladestand der Batterien."
-                flip
-            />
-
-            <CaseChapter
-                index="07"
-                eyebrow="Das Ergebnis"
+                eyebrow="Ergebnis und Beleg"
                 headline={<>Aus einer komplexen Idee<br /><strong>wurde ein klarer Auftritt.</strong></>}
                 text={[
-                    'Strategie, Gestaltung und digitale Präsenz erzählen dieselbe Geschichte.',
+                    'Umgesetzt wurden Markenstrategie, Positionierung, Corporate Design, Bildwelt, Webdesign, Geschäftsausstattung und Broschüre. Sie folgen derselben Haltung: Strategie, Gestaltung und digitale Präsenz erzählen dieselbe Geschichte.',
+                    'Ein messbarer oder extern bestätigter Effekt liegt für dieses Projekt nicht vor – gezeigt wird deshalb die dokumentierte Arbeit.',
                 ]}
                 image="/images/case-solarimpact-ergebnis-2.webp"
                 alt="Die Yacht liegt im letzten Licht des Tages ruhig vor einer flachen Bergkette."
             >
-                <CaseImpact
-                    ziel="Als technologischer Vorreiter wahrgenommen werden – nicht als weiterer Anbieter im Premium-Segment."
-                    strategie="Die Technologie nicht über Datenblätter erklären, sondern über die Zukunft, die sie möglich macht."
-                    massnahmen={['Positionierung', 'Corporate Design', 'Bildwelt', 'Webdesign', 'Geschäftsausstattung', 'Broschüre']}
-                    wirkung="Eine erklärungsbedürftige Bauart wurde in wenigen Sekunden verständlich – und die Marke dahinter als eigenständige Position im Markt lesbar, statt als technisches Detail."
+                <CaseTerms items={['Markenstrategie', 'Positionierung', 'Corporate Design', 'Bildwelt', 'Webdesign', 'Geschäftsausstattung', 'Broschüre']} />
+                <CaseTodo items={[
+                    'Freigegebene Kundenstimme, Nutzertest oder anderer überprüfbarer Wirkungsbeleg; ohne Beleg bleibt es bei der Beschreibung der Umsetzung.',
+                    'Rolle von LinderMedia und tatsächlich ausgeführter Projektumfang bestätigen.',
+                    'Originalwebsite oder archivierter Screenshot (Auftritt laut Seite nicht öffentlich zugänglich).',
+                    'Freigabe für Projektname, Beschreibung, Bilder und Grafiken; CTA-Kontaktweg bestätigen.',
+                ]} />
+                <CaseOutro
+                    slug="solar-impact-yacht"
+                    frage="Sie möchten eine komplexe Technologie klar positionieren?"
+                    ctaLabel="Ein ähnliches Projekt besprechen"
                 />
-                <CaseOutro slug="solar-impact-yacht" />
             </CaseChapter>
         </main>
     )

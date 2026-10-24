@@ -178,6 +178,8 @@ export default function Akt2VideoSection({
             <video
                 ref={videoRef}
                 className="a2v-video"
+                data-parallax="0.12"
+                data-parallax-min="821"
                 // Quelle erst setzen, wenn die Sektion in Reichweite ist
                 src={armed && autoplay && resolvedSrc ? resolvedSrc : undefined}
                 poster={poster}

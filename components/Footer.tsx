@@ -11,7 +11,7 @@ import type { CSSProperties } from 'react'
  * ins Leere.
  */
 const NAV = [
-    { label: 'Methode',           href: '/#methode'    },
+    { label: 'Methode',           href: '/methode'     },
     { label: 'Leistungen',        href: '/#leistungen' },
     { label: 'Projekte',          href: '/#projekte'   },
     { label: 'Über LinderMedia',  href: '/#ueber-uns'  },
