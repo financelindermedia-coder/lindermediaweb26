@@ -1,30 +1,21 @@
 'use client'
 
 import LenisProvider from '@/components/LenisProvider'
-import VideoCanvas from '@/components/VideoCanvas'
-import TextLayer from '@/components/TextLayer'
 import SectionConnector from '@/components/SectionConnector'
 import Navbar from '@/components/Navbar'
+import HeroIceberg from '@/components/HeroIceberg'
+import ChaosCharakter from '@/components/sections/ChaosCharakter'
 import ScrollFortschritt from '@/components/ScrollFortschritt'
-import MethodeSection from '@/components/sections/MethodeSection'
 import Akt2VideoSection from '@/components/sections/Akt2VideoSection'
-import UspSection from '@/components/sections/UspSection'
-import LeistungenSection from '@/components/sections/LeistungenSection'
-import LeistungenIntro from '@/components/sections/LeistungenIntro'
 import CasesSection from '@/components/sections/CasesSection'
-import StatementSection from '@/components/sections/StatementSection'
 import StimmenSection from '@/components/sections/StimmenSection'
+import VorgehenSection from '@/components/sections/VorgehenSection'
 import UeberUnsSection from '@/components/sections/UeberUnsSection'
-import ZielgruppeSection from '@/components/sections/ZielgruppeSection'
 import FragenSection from '@/components/sections/FragenSection'
 import ContactSection from '@/components/sections/ContactSection'
 import Footer from '@/components/Footer'
 import AiBadge from '@/components/AiBadge'
 import LazyVideo from '@/components/LazyVideo'
-import DescentStack from '@/components/DescentStack'
-import AufstiegsPfad from '@/components/AufstiegsPfad'
-import { IcebergDescentCanvas, IcebergAscentCanvas } from '@/components/IcebergMobile'
-import AufloesungCard from '@/components/AufloesungCard'
 import { FAQ } from '@/lib/faq'
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '@/lib/site'
 
@@ -89,58 +80,16 @@ export default function Home() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }}
             />
             <LenisProvider />
-            <VideoCanvas />
             <Navbar />
             <ScrollFortschritt />
-            <TextLayer />
-            {/* Kennzeichnung für die Eisberg-Strecke – läuft mit und blendet danach
-                aus. Der Text benennt, was das Material ist: eine
-                Konzeptvisualisierung, kein aufgenommenes Bild. Das ist die
-                zutreffende Angabe und zugleich die leiseste – ein breites
-                „KI-generiert“ über der ganzen Strecke las sich wie eine Warnung. */}
-            <AiBadge track="iceberg" label="Konzeptvisualisierung · KI-generiert" />
-
             <main style={{ position: 'relative' }}>
-                {/* Akt 1 – Abstieg: Eisberg → Wasserlinie → Problem →
-                    Markenpräsenz · Design · Strategie → tiefster Punkt.
-                    Hoehe kommt aus CSS (#video-scroll in globals.css), nicht
-                    mehr inline – mobil ist sie `auto` statt fester 710vh, weil
-                    der Splitscreen-Kartenweg (siehe unten) organisch waechst. */}
-                <div id="video-scroll" style={{ position: 'relative', zIndex: 1 }}>
-                    {/* Mobiler Splitscreen, nur ≤820px sichtbar (siehe
-                        IcebergMobile.tsx + .ms-split-canvas in globals.css):
-                        oben ein sticky Kaderfenster ueber der GANZEN Strecke,
-                        unten Held, Ausgangspunkt und Kartenkette im normalen
-                        Fluss (HeroSplitBoxes wird von DescentStack aus vor den
-                        Stationen eingehaengt). Am Desktop unveraendert – dort
-                        zeigt VideoCanvas weiter die volle Sequenz im
-                        Hintergrund, Held/Ausgangspunkt stehen als fixierte
-                        Szenen in TextLayer. */}
-                    <IcebergDescentCanvas />
-                    <DescentStack />
-                </div>
+                {/* Hero: scrollgesteuerter Eisberg (ice_crash.mp4), nur hier gibt es
+                    eine Scroll-Inszenierung. Danach laeuft die Seite normal. */}
+                <HeroIceberg />
 
-                {/* Der Prozessbereich sitzt am tiefsten Punkt, noch vollständig
-                    unter Wasser: der Eisberg läuft dahinter weiter und hebt sich
-                    dabei schon – die Strecke zwischen den beiden Drivern ist der
-                    mittlere Abschnitt der Bildsequenz (siehe VideoCanvas). */}
-                <div style={{ position: 'relative', zIndex: 2 }}>
-                    <MethodeSection />
-                </div>
-
-                {/* Akt 1 – Wiederaufstieg: Wasser und Licht werden heller, der
-                    Berg steht wieder über der Oberfläche, jetzt ohne Nebel. */}
-                {/* Der Weg laeuft weiter: von unten aus der Tiefe bis zur
-                    Wasserlinie, wo der Berg wieder auftaucht. Hoehe wieder aus
-                    CSS (siehe #video-scroll oben). */}
-                <div id="video-ascent" style={{ position: 'relative', zIndex: 1 }}>
-                    <IcebergAscentCanvas />
-                    <AufstiegsPfad />
-                    {/* Mobiler Splitscreen: dieselbe Aussage wie die
-                        "sichtbarkeit"-Szene in TextLayer, hier als Box im
-                        unteren Fensterbereich statt als Vollbild-Ueberlagerung. */}
-                    <AufloesungCard />
-                </div>
+                {/* „Von Chaos zu Charakter“ – die Erklaerung der vier Ebenen (frueher
+                    „Wir arbeiten unter der Oberflaeche“) steht jetzt im Hero. */}
+                <ChaosCharakter />
 
                 <div style={{ position: 'relative', zIndex: 2 }}>
                     {/* ── Akt 2 · Phase 1: Verstehen ── */}
@@ -162,41 +111,22 @@ export default function Home() {
                         ctaLabel="Weiter entdecken"
                         ctaHref="#leistungen"
                     />
-                    {/* Der Anker #leistungen sitzt seit dem Wegfall des
-                        Drei-Bereiche-Teasers an diesem Block: Arbeitsweise und
-                        Einzeldisziplinen sind jetzt das, was unter „Leistungen"
-                        aus Navigation und Fußzeile angesteuert wird (Anker
-                        liegt auf UspSection, dem Blockanfang).
-                        Aufbau: erst die Argumentation als eigene, zweispaltige
-                        Vollbreite-Sektion (UspSection, kein Glas-Panel) –
-                        danach die System-Grafik (LeistungenSection) und ihre
-                        knappe Headline (LeistungenIntro) nebeneinander in
-                        einem eigenen, zweiten Block (dem Glas-Panel
-                        `.a2-duo`). Die vier Grafik-Knoten verlinken auf
-                        /leistungen und sind damit der Klickpfad zu den
-                        Einzeldisziplinen – LeistungenLinks entfaellt dadurch. */}
-                    <UspSection />
-                    <div className="a2-duo">
-                        <div className="a2-duo-grid">
-                            <LeistungenSection />
-                            <LeistungenIntro />
-                        </div>
-                    </div>
+                    {/* Der Anker #leistungen liegt auf VorgehenSection. */}
+                    <VorgehenSection />
 
                     {/* ── Akt 2 · Phase 2: Erleben ── */}
                     <SectionConnector flip />
                     <Akt2VideoSection
                         id="ideen-erlebnisse"
                         index="02"
-                        kicker="Wie aus Konzept Gestaltung wird"
+                        kicker="Weniger Lärm. Mehr Wirkung."
                         chapter="Kreation & Umsetzung"
                         cgiGenerated
                         videoSrc={AKT2_VIDEOS.v2}
                         poster="/video/poster-lm-2.webp"
-                        headline="Aus Ideen werden Erlebnisse."
+                        headline="Aus einer klaren Richtung wird ein Auftritt, der trägt."
                         text={[
-                            'Strategie, Gestaltung und Umsetzung greifen ineinander.',
-                            'Was danach kommt, sind keine Einzelmaßnahmen mehr.',
+                            'Bild, Bewegung und Sprache erzählen dieselbe Geschichte – und machen sichtbar, was eine Marke besonders macht.',
                         ]}
                         ctaLabel="Projekte ansehen"
                         ctaHref="#projekte"
@@ -205,15 +135,9 @@ export default function Home() {
                     {/* Beweiskette: erst die Arbeit (Cases), direkt danach die Stimmen dazu */}
                     <StimmenSection />
 
-                    {/* Vertrauen in die Person, dann die Frage „Bin ich gemeint?“,
-                        zuletzt die verbleibenden Einwände (FAQ). */}
+                    {/* Vertrauen in die Person, zuletzt die verbleibenden Einwände (FAQ). */}
                     <UeberUnsSection />
-                    <ZielgruppeSection />
                     <FragenSection />
-
-                    {/* ── Akt 2 · Phase 3: Vertrauen ── */}
-                    <SectionConnector />
-                    <StatementSection />
 
                     {/* ── Abschluss: Kontakt (Leuchtturm-Hintergrund bleibt) ── */}
                     <div className="site-closing">

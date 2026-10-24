@@ -199,7 +199,13 @@ export default function Akt2VideoSection({
                         {kicker}
                     </p>
                     <h2 className="a2v-title reveal" data-reveal>
-                        {headline}
+                        {/* Wie alle Sektions-Headlines: hell, der letzte Begriff fett. */}
+                        {headline.includes(' ') ? (
+                            <>
+                                {headline.slice(0, headline.lastIndexOf(' '))}{' '}
+                                <strong>{headline.slice(headline.lastIndexOf(' ') + 1)}</strong>
+                            </>
+                        ) : headline}
                     </h2>
                     <span className="a2v-rule reveal" data-reveal />
                     <div className="a2v-text reveal" data-reveal>

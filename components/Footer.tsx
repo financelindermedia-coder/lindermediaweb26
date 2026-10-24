@@ -105,8 +105,8 @@ export default function Footer() {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
                         <div>
                             <p style={{ ...MUTED, marginBottom: '0.15rem' }}>Telefon</p>
-                            <a href="tel:+4917693177417" style={{ ...VALUE, textDecoration: 'none' }}>
-                                +49 (0) 176. 931 77 417
+                            <a href="tel:+4915567850306" style={{ ...VALUE, textDecoration: 'none' }}>
+                                +49 (0) 155. 678 503 06
                             </a>
                         </div>
                         <div>

@@ -5,7 +5,9 @@
  * Videos, Bilder und die Framesequenz, die sonst ueber die Bildersuche
  * auffindbar blieben.
  */
-const NOINDEX = ['1', 'true'].includes((process.env.NEXT_PUBLIC_NOINDEX ?? '').trim().toLowerCase())
+const NOINDEX =
+    require('./lib/prelaunch.json').preLaunch === true ||
+    ['1', 'true'].includes((process.env.NEXT_PUBLIC_NOINDEX ?? '').trim().toLowerCase())
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -68,8 +70,8 @@ const nextConfig = {
                 ],
             },
             {
-                // Die 303 Eisberg-Frames aendern sich nur mit dem Quellvideo.
-                source: '/frames/:path*',
+                // Die Hero-Eisberg-Frames aendern sich nur mit dem Quellvideo.
+                source: '/frames-hero/:path*',
                 headers: [
                     {
                         key: 'Cache-Control',

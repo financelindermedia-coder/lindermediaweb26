@@ -1,3 +1,5 @@
+import prelaunch from './prelaunch.json'
+
 /**
  * Zentrale Stammdaten für SEO und Structured Data. Alle Schema.org-Blöcke,
  * Sitemap und robots.txt ziehen ihre Werte hier heraus – damit NAP-Daten
@@ -38,16 +40,22 @@ export const SITE_URL = (
  * Setzen in den Vercel-Projekteinstellungen:  NEXT_PUBLIC_NOINDEX = 1
  * Danach neu deployen – NEXT_PUBLIC_*-Werte werden beim Build eingesetzt.
  */
-export const NOINDEX = ['1', 'true'].includes(
-    (process.env.NEXT_PUBLIC_NOINDEX ?? '').trim().toLowerCase(),
-)
+/**
+ * VOR DEM LIVEGANG: lib/prelaunch.json steht auf `"preLaunch": true`. Solange
+ * das so ist, ist die Seite auf JEDER Instanz gesperrt (robots, Meta-Tag,
+ * X-Robots-Tag, llms.txt) – unabhaengig davon, ob die Umgebungsvariable gesetzt
+ * ist. Zum Livegang den Wert auf `false` stellen und neu deployen.
+ */
+export const NOINDEX =
+    prelaunch.preLaunch === true ||
+    ['1', 'true'].includes((process.env.NEXT_PUBLIC_NOINDEX ?? '').trim().toLowerCase())
 
 export const BUSINESS = {
     name: 'LinderMedia',
     legalName: 'LinderMedia – Andreas Linder',
     founder: 'Andreas Linder',
     email: 'hello@lindermedia.de',
-    telephone: '+4917693177417',
+    telephone: '+4915567850306',
     street: 'Schloßstraße 31',
     postalCode: '56459',
     city: 'Pottum',
@@ -70,13 +78,10 @@ export const AREA_SERVED = [
 ]
 
 /**
- * Die drei Hauptbereiche. Speisen den OfferCatalog im Structured Data
- * (app/layout.tsx).
- *
- * Namen und Beschreibungen entsprechen dem, was die System-Grafik auf der
- * Startseite sichtbar zeigt (components/sections/LeistungenSection.tsx) –
- * ausgezeichnet wird also genau das, was der Besucher auch liest. Wer dort die
- * Ebenen aendert, zieht sie hier mit.
+ * Die vier Ebenen einer Marke, wie sie im Hero der Startseite erklaert werden
+ * (components/HeroIceberg.tsx). Speisen den OfferCatalog im Structured Data
+ * (app/layout.tsx) und die llms.txt – ausgezeichnet wird also genau das, was
+ * der Besucher auch liest. Wer dort die Ebenen aendert, zieht sie hier mit.
  */
 export const CORE_SERVICES = [
     {
@@ -85,20 +90,25 @@ export const CORE_SERVICES = [
             'Gibt Richtung: Positionierung, Zielgruppe, Botschaft und Markenarchitektur.',
     },
     {
-        name: 'Design',
+        name: 'Charakter',
         description:
-            'Gibt Form: Corporate Design, Art Direction, Identität und Bildwelt.',
+            'Gibt Form: Corporate Design, Art Direction, Sprache und Bildwelt.',
     },
     {
         name: 'Markenpräsenz',
         description:
-            'Macht sichtbar: Website, Fotografie, Film & Video und 3D-Visualisierung.',
+            'Macht sichtbar: Website, Fotografie, Film & Video, 3D-Visualisierung und Content.',
+    },
+    {
+        name: 'Wirkung',
+        description:
+            'Bringt Ergebnisse: SEO, Marketing, Ads und Automatisierung.',
     },
 ]
 
 /**
  * Nachgeordnete Kompetenzfelder – sichtbar in der System-Grafik, aber bewusst
- * nicht auf derselben Ebene wie die drei Hauptbereiche und deshalb auch nicht
+ * nicht auf derselben Ebene wie die vier Hauptbereiche und deshalb auch nicht
  * als eigene Offers ausgezeichnet.
  */
 export const COMPETENCES = [

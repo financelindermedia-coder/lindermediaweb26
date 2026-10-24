@@ -4673,3 +4673,57 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
    Ereignisbehandlern, damit der Fuss ein Server-Component bleiben kann. */
 .footer-link { transition: color 0.2s ease; }
 .footer-link:hover { color: #ff6b35; }
+
+
+/* ── Einheitliche Sektions-Headlines ──────────────────────────────────────
+   Alle Headlines der Startseite teilen sich Groesse, Gewicht, Zeilenhoehe und
+   Laufweite: hell in Versalien, der Kern der Aussage fett. Die Groesse kommt
+   aus --h2 (siehe :root) – wer sie aendern will, aendert nur dort. */
+.hi-h1, .hi-panel-h, .wende-head, .ped-headline, .a2v-title, .a2-head, .pj-h2, .mfx-headline, .vg-h2 {
+    font-size: var(--h2) !important;
+    font-weight: 300 !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.02em !important;
+    text-transform: uppercase;
+}
+.hi-h1 strong, .hi-panel-h strong, .wende-head strong, .ped-headline span, .a2v-title strong, .a2-head span, .pj-h2 strong, .vg-h2 strong, .mfx-headline strong, .mfx-headline span {
+    font-weight: 900 !important;
+}
+
+/* ── Gemeinsame linke Textkante ──────────────────────────────────────────
+   Alle Sektionen beginnen links bei --px. Einige Container waren zusaetzlich
+   mit max-width + margin: auto zentriert und rutschten auf breiten Schirmen
+   weiter nach rechts als Projekte oder Vorgehen. */
+.a2v-inner { max-width: none; margin: 0; }
+.a2v-foot { left: var(--px); }
+.a2-usp, .mfx-inner { margin-left: 0; margin-right: 0; }
+
+/* Video-Sektionen: Kicker ohne vorangestellte Linie, damit Kicker, Headline,
+   Text und Link buendig auf derselben linken Kante stehen. */
+.a2v-kicker-rule { display: none; }
+
+/* FAQ: Kopf und Liste mittig auf der Seite; die Antworten bleiben linksbuendig lesbar. */
+.mfx-inner-faq { margin-left: auto; margin-right: auto; width: 100%; }
+.mfx-inner-faq > .mfx-eye, .mfx-inner-faq > .mfx-headline { text-align: center; }
+
+/* ── Video-Sektionen mobil: erst der Text, darunter das Video im Fenster ──
+   Als Vollbild-Hintergrund verschwindet das Video mobil unter dem Schleier
+   und hinter dem Text. Hier steht der Text auf ruhigem Grund und das Video
+   darunter ungedimmt, oben weich in den Textgrund auslaufend. */
+@media (max-width: 820px) {
+    .a2v { flex-direction: column; align-items: stretch; min-height: 0; padding-top: 0; }
+    .a2v-inner { order: 1; padding-top: clamp(4rem, 12vw, 5.5rem); padding-bottom: 2.2rem; }
+    .a2v-video {
+        order: 2; position: relative; inset: auto; width: 100%; height: auto;
+        aspect-ratio: 5 / 4; object-fit: cover; object-position: 50% 40%;
+    }
+    .a2v-overlay {
+        inset: auto 0 0 0; aspect-ratio: 5 / 4; z-index: 1;
+        background: linear-gradient(to bottom, #04121c 0%, rgba(4, 18, 28, 0) 28%);
+    }
+    .a2v-play, .a2v-play--corner {
+        top: auto; left: auto; transform: none; right: 1rem; bottom: 1rem; width: 48px; z-index: 3;
+    }
+    .a2v-foot { display: none; }
+    .a2v-ai { z-index: 3; left: 1rem; right: auto; bottom: 1.2rem; }
+}

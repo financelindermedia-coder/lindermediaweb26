@@ -33,7 +33,7 @@ export default function ImpressumPage() {
 
                 <h2 style={h2}>Kontakt</h2>
                 <p style={p}>
-                    Telefon: <a href="tel:+4917693177417" style={{ color: '#fff', textDecoration: 'none' }}>+49 (0) 176. 931 77 417</a><br />
+                    Telefon: <a href="tel:+4915567850306" style={{ color: '#fff', textDecoration: 'none' }}>+49 (0) 155. 678 503 06</a><br />
                     E-Mail: <a href="mailto:hello@lindermedia.de" style={{ color: '#fff', textDecoration: 'none' }}>hello@lindermedia.de</a><br />
                     Web: <a href="https://www.lindermedia.de" style={{ color: '#fff', textDecoration: 'none' }}>www.lindermedia.de</a>
                 </p>

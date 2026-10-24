@@ -1,0 +1,195 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Hero-Eisberg (HeroIceberg.tsx) – Scrollstrecke mit sticky Buehne.
+   Das Dokument scrollt normal; die Buehne klebt nur waehrend der Strecke.
+   Der Frame ist 16:9 und steht komplett unter der Navigationsleiste im Bild.
+   Alle Positionen der Kurzmarken sind Anteile am Frame.
+   Links steht ein Textfeld: erst der Einstieg, dann je Ebene eine Erklaerung
+   am selben Platz (`.hi-intro` / `.hi-panel`).
+   ══════════════════════════════════════════════════════════════════════ */
+.hi { position: relative; background: #03070f; }
+.hi-pin { position: relative; height: 600vh; }
+.hi-stage {
+    position: sticky; top: 0;
+    height: 100vh; height: 100svh;
+    overflow: hidden;
+    background: #03070f;
+}
+
+/* Desktop: der ganze Berg steht unter der Leiste – der Frame wird auf die Hoehe
+   unterhalb der Leiste eingepasst statt die Buehne zu fuellen. */
+.hi-frame {
+    position: absolute; left: 50%; top: 5.5rem;
+    height: calc(100svh - 5.5rem);
+    width: calc((100svh - 5.5rem) * 16 / 9);
+    transform: translateX(-50%);
+}
+/* Ist das Fenster breiter als der Frame, laufen die Seiten in die Buehne aus. */
+.hi-frame::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(to right, #03070f 0, rgba(3, 7, 15, 0) 7%, rgba(3, 7, 15, 0) 93%, #03070f 100%);
+}
+.hi-canvas {
+    display: block; width: 100%; height: 100%;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 2%, #000 98%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 2%, #000 98%, transparent 100%);
+}
+/* Lesbarkeit links: dunkler Schleier ueber dem freien Wasser. */
+.hi-shade {
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(to right, rgba(3, 7, 15, 0.78) 0%, rgba(3, 7, 15, 0.45) 34%, rgba(3, 7, 15, 0) 52%);
+}
+
+.hi-copy { position: absolute; inset: 0; pointer-events: none; }
+.hi-copy a { pointer-events: auto; }
+
+/* Das gemeinsame Textfeld: Einstieg und Ebenen liegen deckungsgleich uebereinander. */
+.hi-intro, .hi-panel {
+    position: absolute; left: clamp(1.5rem, 6vw, 6rem); top: 50%;
+    width: min(33vw, 36rem);
+    transform: translateY(-50%);
+    transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s;
+}
+.hi-panel { opacity: 0; visibility: hidden; transform: translateY(calc(-50% + 14px)); }
+.hi-panel.is-active { opacity: 1; visibility: visible; transform: translateY(-50%); }
+/* Einstieg weicht, sobald die erste Ebene steht. */
+.hi:not([data-step="0"]) .hi-intro { opacity: 0; visibility: hidden; transform: translateY(calc(-50% - 14px)); }
+
+.hi-kicker, .hi-panel-nr {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+    color: #ff6b35; margin-bottom: 1.1rem;
+}
+/* Headline-Format kommt aus dem gemeinsamen Block am Ende von globals.css. */
+.hi-h1, .hi-panel-h { color: #fff; }
+.hi-lead {
+    margin-top: 1.4rem; max-width: 44ch;
+    font-size: clamp(1rem, 1.25vw, 1.2rem); line-height: 1.65; color: rgba(255, 255, 255, 0.72);
+}
+.hi-panel-intro {
+    margin-top: 1.4rem;
+    font-size: clamp(1.1rem, 1.4vw, 1.4rem); font-weight: 400; line-height: 1.4; color: #fff;
+    padding-left: 1rem; border-left: 2px solid #ff6b35;
+}
+.hi-panel-text {
+    margin-top: 1.1rem; max-width: 46ch;
+    font-size: clamp(0.95rem, 1.1vw, 1.1rem); line-height: 1.65; color: rgba(255, 255, 255, 0.72);
+}
+.hi-panel-services {
+    margin-top: 1.1rem; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+}
+.hi-panel-link {
+    display: inline-flex; align-items: center; gap: 0.55rem; margin-top: 1.5rem;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+    color: #ff6b35; text-decoration: none;
+}
+.hi-panel-link svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
+.hi-panel-link:hover svg { transform: translateX(5px); }
+
+.hi .hero-cta { color: #fff; border-color: rgba(255, 255, 255, 0.42); }
+.hi .hero-cta:hover { background: rgba(255, 255, 255, 0.1); }
+.hi .hero-cta--primary { color: #0b1820; border-color: #ff6b35; }
+.hi .hero-cta--primary:hover { background: #ff7d4e; border-color: #ff7d4e; color: #0b1820; }
+
+/* Kurzmarken am Segment: Name + Fuehrungslinie bis zur Kante der Scheibe. */
+.hi-tags { list-style: none; position: absolute; inset: 0; }
+.hi-tag {
+    position: absolute; display: flex; align-items: center; justify-content: flex-end;
+    transform: translate(-100%, -50%);
+    opacity: 0; transition: opacity 0.5s ease;
+}
+.hi-tag.is-on { opacity: 0.55; }
+.hi-tag.is-active { opacity: 1; }
+.hi-tag-name {
+    font-size: clamp(0.7rem, 0.9vw, 0.9rem); font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #fff; white-space: nowrap;
+}
+.hi-tag-name i { font-style: normal; color: #ff6b35; margin-right: 0.45em; }
+.hi-tag-line { flex: none; width: clamp(1.4rem, 3vw, 3rem); height: 1px; margin-left: 0.7rem; background: linear-gradient(to right, rgba(255, 107, 53, 0), #ff6b35); position: relative; }
+.hi-tag-line::after { content: ''; position: absolute; right: -3px; top: -3px; width: 7px; height: 7px; border-radius: 50%; background: #ff6b35; box-shadow: 0 0 10px #ff6b35; }
+
+.hi-hint {
+    position: absolute; left: clamp(1.5rem, 6vw, 6rem); bottom: clamp(1.4rem, 4vh, 2.6rem);
+    display: flex; align-items: center; gap: 0.8rem;
+    font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255, 255, 255, 0.55);
+    transition: opacity 0.4s ease;
+}
+.hi-hint i { display: block; width: 3rem; height: 1px; background: rgba(255, 255, 255, 0.4); }
+.hi:not([data-step="0"]) .hi-hint { opacity: 0; }
+.hi-badge {
+    position: absolute; right: clamp(1rem, 2vw, 2rem); bottom: 1rem;
+    font-size: 0.62rem; letter-spacing: 0.08em; color: rgba(255, 255, 255, 0.42);
+}
+
+/* Ohne Animation (prefers-reduced-motion): kein Pin, Schlussbild, alles lesbar. */
+.hi--static .hi-pin { height: auto; }
+.hi--static .hi-stage { position: relative; height: auto; overflow: visible; }
+.hi--static .hi-frame { position: relative; top: auto; left: auto; transform: none; width: 100%; height: auto; aspect-ratio: 16 / 9; margin-top: 5.5rem; }
+.hi--static .hi-frame::after, .hi--static .hi-shade { display: none; }
+.hi--static .hi-tag { opacity: 1; }
+.hi--static .hi-copy { position: relative; inset: auto; padding: 2rem clamp(1.5rem, 6vw, 6rem) 3rem; display: grid; gap: 2.4rem; }
+.hi--static .hi-intro, .hi--static .hi-panel {
+    position: static; width: auto; max-width: 42rem; opacity: 1; visibility: visible; transform: none;
+}
+.hi--static .hi-hint { display: none; }
+
+/* ── Mobil: Berg oben im Bild, Erklaerung darunter ── */
+@media (max-width: 820px) {
+    .hi-pin { height: 560vh; }
+    .hi-stage { --h: max(68vw, clamp(14rem, min(88vw, 100svh - 27rem), 40rem)); --fb: clamp(1.5rem, 5svh, 3rem); }
+    /* Ausschnitt um den Berg (er liegt bei ~66 % der Bildbreite): Der Frame ist
+       breiter als der Schirm, der Berg bleibt komplett im Fenster. */
+    .hi-frame {
+        top: auto; bottom: var(--fb);
+        height: var(--h); width: calc(var(--h) * 16 / 9);
+        left: calc(100vw * 0.62 - var(--h) * 16 / 9 * 0.665);
+        transform: none;
+        transition: transform 0.6s ease;
+    }
+    .hi-frame::after { display: none; }
+    /* Einstieg: Text oben, Berg unten. Ab der ersten Ebene wandert der Berg nach
+       oben unter die Leiste und die Erklaerung steht darunter. */
+    .hi:not([data-step="0"]) .hi-frame { transform: translateY(calc(-1 * (100svh - var(--fb) - var(--h) - 5.6rem))); }
+    .hi-shade { background: linear-gradient(to bottom, rgba(3, 7, 15, 0.9) 0%, rgba(3, 7, 15, 0.55) 38%, rgba(3, 7, 15, 0) 62%); }
+    .hi:not([data-step="0"]) .hi-shade { opacity: 0; }
+
+    .hi-intro { left: 1.25rem; right: 1.25rem; width: auto; top: 6.6rem; transform: none; }
+    .hi:not([data-step="0"]) .hi-intro { transform: translateY(-10px); }
+    .hi-panel { left: 1.25rem; right: 1.25rem; width: auto; top: calc(5.6rem + var(--h) + 1.4rem); transform: translateY(10px); }
+    .hi-panel.is-active { transform: none; }
+    .hi-kicker { font-size: 0.6rem; margin-bottom: 0.7rem; }
+    .hi-panel-nr { font-size: 0.64rem; margin-bottom: 0.6rem; }
+    .hi-lead { font-size: 0.95rem; margin-top: 0.9rem; line-height: 1.5; }
+    .hi .hero-ctas { margin-top: 1.1rem; }
+    .hi-panel-intro { margin-top: 0.8rem; font-size: 1.02rem; }
+    .hi-panel-text { margin-top: 0.7rem; font-size: 0.92rem; line-height: 1.55; }
+    .hi-panel-services { display: none; }
+    .hi-panel-link { margin-top: 1rem; }
+
+    .hi-tag-name { font-size: 0.64rem; letter-spacing: 0.1em; }
+    .hi-tag-line { width: 1.4rem; margin-left: 0.4rem; }
+
+    .hi-hint { left: 1.25rem; bottom: 0.9rem; }
+    .hi-badge { right: 1rem; bottom: 0.6rem; }
+
+    .hi--static .hi-frame { top: auto; bottom: auto; left: auto; width: 100%; height: auto; margin-top: 4.8rem; transform: none !important; }
+    .hi--static .hi-copy { padding: 1.5rem 1.25rem 2.5rem; }
+    .hi--static .hi-intro, .hi--static .hi-panel { left: auto; right: auto; top: auto; transform: none; }
+    .hi--static .hi-panel-services { display: block; }
+}
+/* Kurze Handys: der Lead-Absatz weicht dem Berg. */
+@media (max-width: 820px) and (max-height: 740px) {
+    .hi-lead { display: none; }
+}
+
+/* „Von Chaos zu Charakter" direkt unter dem Hero: gleicher Grund, zentriert. */
+.hi-turn {
+    position: relative; text-align: center;
+    padding: clamp(5rem, 12vh, 9rem) 1.5rem clamp(4rem, 9vh, 7rem);
+    background: #03070f;
+}
+.hi-turn .dsc-turn-eye { margin-bottom: 1.2rem; }
+
+/* Standbild unter dem Canvas (siehe HeroIceberg.tsx). */
+.hi-poster, .hi-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hi-poster { object-fit: cover; -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 2%, #000 98%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 2%, #000 98%, transparent 100%); }
+.hi--static .hi-poster { display: none; }

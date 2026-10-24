@@ -77,7 +77,7 @@ export const metadata: Metadata = {
  * Grundregel: ausgezeichnet wird nur, was auf der Seite auch sichtbar steht
  * und belegbar ist. Deshalb hier bewusst KEINE Preisspanne, keine Bewertungen,
  * kein `sameAs` auf Profile ohne eindeutige Zuordnung und im OfferCatalog nur
- * die drei Hauptbereiche aus dem sichtbaren Leistungsteaser – nicht die
+ * die vier Hauptbereiche aus dem Hero – nicht die
  * Einzeldisziplinen aus der System-Grafik.
  */
 const jsonLd = {
@@ -123,6 +123,7 @@ const jsonLd = {
             name: BUSINESS.founder,
             // Genau die Rolle, die im Abschnitt „Über LinderMedia" steht.
             jobTitle: 'Gründer',
+            knowsAbout: ['Markenstrategie', 'Positionierung', 'Corporate Design', 'Webdesign', 'Film und Fotografie', '3D-Visualisierung', 'SEO'],
             image: `${SITE_URL}/images/andi.webp`,
             worksFor: { '@id': `${SITE_URL}/#organization` },
             url: `${SITE_URL}/#ueber-uns`,

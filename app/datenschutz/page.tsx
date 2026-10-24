@@ -35,7 +35,7 @@ export default function DatenschutzPage() {
                     LinderMedia<br />
                     Dipl.-Ing. Andreas Linder<br />
                     Schloßstraße 31, D – 56459 Pottum<br />
-                    Telefon: <a href="tel:+4917693177417" style={{ color: '#fff', textDecoration: 'none' }}>+49 (0) 176. 931 77 417</a><br />
+                    Telefon: <a href="tel:+4915567850306" style={{ color: '#fff', textDecoration: 'none' }}>+49 (0) 155. 678 503 06</a><br />
                     E-Mail: <a href="mailto:hello@lindermedia.de" style={{ color: '#fff', textDecoration: 'none' }}>hello@lindermedia.de</a>
                 </p>
 

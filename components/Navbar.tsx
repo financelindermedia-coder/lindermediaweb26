@@ -34,7 +34,7 @@ function menuLogo(nav: HTMLElement, variant: 'light' | 'dark') {
 
 export default function Navbar() {
     const navRef  = useRef<HTMLElement>(null)
-    const darkRef = useRef(false)
+    const darkRef = useRef<boolean | null>(null)
     const [menuOpen, setMenuOpen] = useState(false)
 
     const renderNavLink = (link: { label: string; href: string }) => (
@@ -58,14 +58,10 @@ export default function Navbar() {
 
     useEffect(() => {
         function update() {
-            const el = document.getElementById('video-scroll')
-            if (!el || !navRef.current) return
-            const progress  = window.scrollY / el.offsetHeight
-            // Bis ~Frame 45 liegt der helle Nebel im Bild; danach ist der
-            // Hintergrund unter Wasser dunkel. Die Abstiegsstrecke deckt die
-            // Frames 1–205 ab, der Wechsel liegt also bei 45/205. (Siehe
-            // SCENES in TextLayer und DEEP_FRAME in VideoCanvas.)
-            const wantsDark = progress < 0.22
+            if (!navRef.current) return
+            // Der Einstieg ist durchgehend dunkel (Hero-Eisberg) – die Leiste
+            // braucht deshalb keinen Wechsel mehr zwischen hell und dunkel.
+            const wantsDark = false
 
             if (wantsDark === darkRef.current) return
             darkRef.current = wantsDark
