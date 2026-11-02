@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
     title: 'Impressum',
-    description: 'Impressum und Anbieterkennzeichnung von LinderMedia, Andreas Linder, Schloßstraße 31, 56459 Pottum.',
+    description: 'Impressum und Anbieterkennzeichnung von LinderMedia, Inhaber Dipl.-Ing. Andreas Linder, Schloßstraße 31, 56459 Pottum – mit Kontaktdaten und Umsatzsteuer-ID.',
     alternates: { canonical: '/impressum' },
     robots: { index: true, follow: true },
 }

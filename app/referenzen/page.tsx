@@ -15,7 +15,7 @@ import { BUSINESS, SITE_URL } from '@/lib/site'
 export const metadata: Metadata = {
     title: { absolute: 'Referenzen | LinderMedia' },
     description:
-        'Aus Strategie, Design und digitaler Umsetzung entstehen echte Projekte – die Referenzen von LinderMedia.',
+        'Aus Strategie, Design und digitaler Umsetzung entstehen echte Projekte – die Referenzen und Fallstudien von LinderMedia aus Pottum im Westerwald im Überblick.',
     alternates: { canonical: '/referenzen' },
     openGraph: {
         title: 'Referenzen | LinderMedia',

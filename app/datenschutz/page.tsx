@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
     title: 'Datenschutzerklärung',
-    description: 'Informationen zur Verarbeitung personenbezogener Daten bei LinderMedia gemäß DSGVO.',
+    description: 'Datenschutzerklärung von LinderMedia: Informationen zur Verarbeitung personenbezogener Daten gemäß DSGVO, zu Hosting, Kontaktformular und Ihren Rechten.',
     alternates: { canonical: '/datenschutz' },
     robots: { index: true, follow: true },
 }
@@ -12,7 +12,6 @@ export const metadata: Metadata = {
 const h1: CSSProperties = { fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 900, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#fff', marginBottom: '2.5rem' }
 const h2: CSSProperties = { fontSize: '1.15rem', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: '#ff6b35', margin: '2.4rem 0 0.8rem' }
 const p: CSSProperties = { fontSize: '1rem', fontWeight: 300, lineHeight: 1.8, color: 'rgba(255,255,255,0.75)' }
-const muted: CSSProperties = { ...p, color: 'rgba(255,255,255,0.45)', fontSize: '0.85rem' }
 
 export default function DatenschutzPage() {
     return (
@@ -64,12 +63,12 @@ export default function DatenschutzPage() {
                     Zweckerreichung nicht mehr erforderlich sind.
                 </p>
 
-                <h2 style={h2}>4. Cookies</h2>
+                <h2 style={h2}>4. Cookies, Tracking und externe Dienste</h2>
                 <p style={p}>
-                    Diese Website verwendet technisch notwendige Cookies, soweit sie für den Betrieb
-                    erforderlich sind. Nicht notwendige Cookies oder Tracking-Dienste werden nur mit Ihrer
-                    Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) eingesetzt.
-                    {' '}<span style={{ color: 'rgba(255,255,255,0.45)' }}>[Eingesetzte Dienste ergänzen, falls vorhanden]</span>
+                    Diese Website setzt keine Cookies zu Analyse- oder Werbezwecken ein und bindet keine
+                    Tracking-Dienste, Social-Media-Plugins oder eingebetteten Inhalte Dritter ein. Die
+                    verwendete Schriftart wird vom eigenen Server ausgeliefert; beim Aufruf der Seite wird
+                    keine Verbindung zu Schriftdiensten Dritter aufgebaut.
                 </p>
 
                 <h2 style={h2}>5. Ihre Rechte</h2>
@@ -93,10 +92,6 @@ export default function DatenschutzPage() {
                     technische Rahmenbedingungen anzupassen.
                 </p>
 
-                <p style={{ ...muted, marginTop: '3rem' }}>
-                    Hinweis: Sobald Tracking- oder Analyse-Dienste eingebunden werden, wird Abschnitt 4
-                    (Cookies) um die dann eingesetzten Dienste ergänzt.
-                </p>
             </div>
         </main>
     )

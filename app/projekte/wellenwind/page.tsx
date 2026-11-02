@@ -26,7 +26,7 @@ import { SITE_URL } from '@/lib/site'
 const TITLE =
     'Wellenwind – Markenaufbau, Onlineshop & Content | LinderMedia'
 const DESCRIPTION =
-    'Markenstrategie, Bildwelt, Onlineshop und Content-System für die maritime Lifestyle-Marke Wellenwind.'
+    'Markenstrategie, Bildwelt, Onlineshop und Content-System für die maritime Lifestyle-Marke Wellenwind: ein stimmiger Markenauftritt vom Konzept bis zum Shop.'
 
 /*
  * Eigene Metadaten je Fallstudie: Titel und Beschreibung sind das, was in der

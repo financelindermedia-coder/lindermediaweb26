@@ -41,7 +41,7 @@ import { SITE_URL } from '@/lib/site'
 const TITLE =
     'Marèvo – Premium-Markenentwicklung & Screendesign | LinderMedia'
 const DESCRIPTION =
-    'Markenidee, Bildwelt und Screendesign-Entwurf für eine Premium-Segelyacht: weiter statt schneller.'
+    'Marèvo – Markenidee, Bildwelt und Screendesign-Entwurf für eine Premium-Segelyacht: Die Leitidee „Weiter statt schneller“ als gestalterische Case Study.'
 
 /*
  * Eigene Metadaten je Fallstudie: Titel und Beschreibung sind das, was in der
@@ -84,6 +84,7 @@ export default function MarevoPage() {
                 text="Der Entwurf positioniert Marèvo über Stimmigkeit, Ausdauer und Zurückhaltung – nicht über Länge oder Tempo."
                 note="Gestalterischer Entwurf: Markenidee, Bildwelt und Screendesign."
                 image="/images/case-marevo-hero.webp"
+                ki
                 alt="Die Yacht liegt bei Sonnenuntergang still auf spiegelglattem Wasser, der Horizont geht in Gold über."
             />
 
@@ -107,6 +108,7 @@ export default function MarevoPage() {
                         '„Weiter statt schneller“ verschiebt den Maßstab. Nicht Zahlen oder Spitzentempo sollen die Geschichte tragen, sondern Stimmigkeit, Ausdauer und Zurückhaltung. Die Leitidee gibt der Marke eine eigene Haltung und führt sie durch Markenbild, Bildwelt und Screendesign weiter.',
                     ]}
                     image="/images/case-marevo-bg-segel.webp"
+                    ki
                     alt=""
                     wide
                 >
@@ -122,6 +124,7 @@ export default function MarevoPage() {
                     eyebrow="Maßnahmen"
                     headline={<>Eine Haltung,<br /><strong>übersetzt in einen Auftritt.</strong></>}
                     image="/images/case-marevo-bg-heck.webp"
+                    ki
                     alt=""
                     wide
                 >
@@ -167,6 +170,7 @@ export default function MarevoPage() {
                         'Eine gemessene Veränderung der Markenwahrnehmung oder des Geschäftsergebnisses ist damit nicht verbunden.',
                     ]}
                     image="/images/case-marevo-bg-fahrt.webp"
+                    ki
                     alt=""
                     wide
                 >

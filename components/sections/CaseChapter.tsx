@@ -2,6 +2,7 @@
 
 import { Children, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import AiBadge from '@/components/AiBadge'
 import useReveal from '@/components/useReveal'
 import useVisibleRaf from '@/components/useVisibleRaf'
 import { naechsteFallstudie } from '@/lib/cases'
@@ -91,18 +92,23 @@ function CaseVideoBg({ src }: { src: string }) {
         const video = videoRef.current
         if (!host || !video) return
         if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
+        // Auf dem Telefon und bei Datensparmodus bleibt der Grund ruhig: kein Download.
+        const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData
+        if (saveData || window.matchMedia?.('(max-width: 900px)').matches) return
 
         const io = new IntersectionObserver(([e]) => {
+            // Die Quelle wird erst gesetzt, wenn das Kapitel in die Naehe kommt.
+            if (e.isIntersecting && !video.getAttribute('src')) video.src = src
             if (e.isIntersecting) video.play().catch(() => {})
             else video.pause()
-        }, { threshold: 0.1 })
+        }, { threshold: 0.1, rootMargin: '30% 0px' })
         io.observe(host)
         return () => io.disconnect()
-    }, [])
+    }, [src])
 
     return (
         <div className="csx-video" ref={hostRef} aria-hidden="true">
-            <video ref={videoRef} src={src} muted loop playsInline preload="metadata" tabIndex={-1} />
+            <video ref={videoRef} muted loop playsInline preload="none" tabIndex={-1} />
             <span className="csx-media-scrim" />
         </div>
     )
@@ -123,6 +129,7 @@ export function CaseHero({
     leistungen,
     image,
     alt,
+    ki,
 }: {
     index: string
     kicker: string
@@ -136,12 +143,15 @@ export function CaseHero({
     leistungen?: string
     image: string
     alt: string
+    /** Bildmaterial ganz oder teilweise KI-generiert: setzt den Transparenzhinweis. */
+    ki?: boolean
 }) {
     const ref = useReveal<HTMLElement>({ threshold: 0.1 })
 
     return (
         <section className="csx csx-hero" ref={ref}>
             <CaseMedia src={image} alt={alt} />
+            {ki && <AiBadge className="csx-ai" />}
             <div className="csx-inner">
                 <div className="csx-card reveal" data-reveal>
                     <p className="csx-num reveal" data-reveal>
@@ -176,6 +186,7 @@ export default function CaseChapter({
     alt,
     imagePosition,
     video,
+    ki,
     flip,
     wide,
     children,
@@ -190,6 +201,8 @@ export default function CaseChapter({
     imagePosition?: string
     /** Dezentes Hintergrundvideo statt Bild (nur sinnvoll mit `wide`). */
     video?: string
+    /** Bildmaterial ganz oder teilweise KI-generiert: setzt den Transparenzhinweis. */
+    ki?: boolean
     flip?: boolean
     /** Kapitel ohne seitliches Bild: Text und Karten laufen ueber die Breite. */
     wide?: boolean
@@ -204,6 +217,7 @@ export default function CaseChapter({
         >
             {image && <CaseMedia src={image} alt={alt ?? ''} position={imagePosition} />}
             {video && <CaseVideoBg src={video} />}
+            {ki && <AiBadge className="csx-ai" />}
             <div className="csx-inner">
                 <div className="csx-body">
                     <p className="csx-num reveal" data-reveal>

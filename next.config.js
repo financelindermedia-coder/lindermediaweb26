@@ -11,6 +11,9 @@ const NOINDEX =
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    // Schlankes, eigenstaendiges Server-Bundle (.next/standalone) – das nutzt das
+    // Dockerfile fuer das Hosting auf dem eigenen Server. Auf Vercel ohne Wirkung.
+    output: 'standalone',
     reactStrictMode: true,
     swcMinify: true,
     compress: true,
@@ -54,6 +57,17 @@ const nextConfig = {
                       headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
                   }]
                 : []),
+            {
+                // Grundlegende Haertung. HSTS setzt der Reverse-Proxy (nginx) erst,
+                // wenn HTTPS dort sauber laeuft.
+                source: '/:path*',
+                headers: [
+                    { key: 'X-Content-Type-Options', value: 'nosniff' },
+                    { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+                    { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+                    { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()' },
+                ],
+            },
             {
                 /*
                  * Statische Medien sind inhaltsadressiert genug: Bilder und

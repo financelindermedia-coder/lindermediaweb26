@@ -2578,6 +2578,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 
 /* Variante in einer Videosektion: gleiche Ecke wie auf der Eisberg-Strecke */
 .a2v-ai,
+.csx-ai,
 .site-closing-ai {
     position: absolute; z-index: 3;
     right: clamp(1rem, 2.5vw, 2rem);
@@ -2589,6 +2590,7 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     /* etwas mehr Luft zum Displayrand, wo Browserleisten eingeblendet werden */
     .ai-badge--fixed,
     .a2v-ai,
+    .csx-ai,
     .site-closing-ai { bottom: calc(1.35rem + env(safe-area-inset-bottom, 0px)); }
     /* Blur auf Handys reduzieren – 22px über volle Sektionshöhe kostet dort spürbar Leistung */
     .a2-duo,
@@ -3859,6 +3861,8 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
        Abbildungen nach Hoehe begrenzt. */
     .csx-hs-track .csx-mass { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.4rem, 2.6vh, 2.2rem) clamp(2rem, 3.4vw, 3rem); }
     .csx-hs-track .csx-figure img { width: auto; max-width: 100%; max-height: 58vh; }
+    /* Im Side-Scroll liegt die Fortschrittslinie am unteren Rand – der Hinweis darueber. */
+    .csx-hs-track .csx-ai { bottom: 3.4rem; }
     .csx-hs-bar {
         position: absolute; z-index: 5; left: var(--px); right: var(--px); bottom: 1.6rem;
         height: 2px; background: rgba(255, 255, 255, 0.12);
@@ -4863,3 +4867,15 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 .csx-outro-frage { font-size: clamp(1.1rem, 1.5vw, 1.4rem); color: rgba(255, 255, 255, 0.85); max-width: 40ch; margin: 1rem 0 0.4rem; }
 .hi-turn .wende-lead { max-width: 58ch; margin-left: auto; margin-right: auto; }
 
+
+/* ── Tippflaechen auf Touchgeraeten ─────────────────────────────────────────
+   Mindestens 44 px Hoehe fuer alleinstehende Links und Schaltflaechen (WCAG
+   2.5.5 / Apple HIG). Fliesstext-Links bleiben unveraendert. */
+@media (pointer: coarse) {
+    .nav-burger { min-width: 44px; min-height: 44px; }
+    .hero-cta { min-height: 44px; }
+    .a2v-cta, .pj-link, .pj-all, .footer-link, footer a {
+        display: inline-flex; align-items: center; min-height: 44px;
+    }
+    .media-pause { min-width: 44px; min-height: 44px; }
+}
