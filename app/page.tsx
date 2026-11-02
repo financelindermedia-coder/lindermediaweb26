@@ -8,7 +8,6 @@ import ChaosCharakter from '@/components/sections/ChaosCharakter'
 import ScrollFortschritt from '@/components/ScrollFortschritt'
 import Akt2VideoSection from '@/components/sections/Akt2VideoSection'
 import CasesSection from '@/components/sections/CasesSection'
-import StimmenSection from '@/components/sections/StimmenSection'
 import VorgehenSection from '@/components/sections/VorgehenSection'
 import UeberUnsSection from '@/components/sections/UeberUnsSection'
 import FragenSection from '@/components/sections/FragenSection'
@@ -105,8 +104,7 @@ export default function Home() {
                         poster="/video/poster-lm-1.webp"
                         headline="Wir arbeiten unter der Oberfläche."
                         text={[
-                            'Nicht mit einzelnen Maßnahmen, sondern Schritt für Schritt an dem, was eine Marke klar, erkennbar und wirksam macht.',
-                            'Eine Marke beginnt nicht mit Gestaltung. Sie beginnt mit Klarheit – erst wenn Zusammenhänge sichtbar werden, kann Gestaltung ihre Wirkung entfalten.',
+                            'Wir klären Positionierung, Zielgruppe, Botschaft und Markenarchitektur. Erst daraus entstehen Gestaltung, Website und Inhalte, die dieselbe Richtung zeigen.',
                         ]}
                         ctaLabel="Das Vorgehen ansehen"
                         ctaHref="#vorgehen"
@@ -131,9 +129,8 @@ export default function Home() {
 
                     {/* 6 · Was aus der Arbeit wirklich wird (Projekt-Slider) */}
                     <CasesSection />
-                    {/* Beweiskette: direkt nach den Projekten die Stimmen dazu (nicht in der
-                        Vorgabe, aber bestehender Inhalt – bleibt erhalten). */}
-                    <StimmenSection />
+                    {/* Stimmen-Block vorerst ausgeblendet (2026-11-02). Wieder einsetzen:
+                        <StimmenSection /> direkt nach den Projekten. */}
 
                     {/* 7 · Von der Idee zur Wirkung – traegt den Anker #leistungen */}
                     <VorgehenSection />

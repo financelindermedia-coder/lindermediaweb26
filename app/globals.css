@@ -3823,6 +3823,55 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
         linear-gradient(to bottom, #08192a, rgba(8, 25, 42, 0.24) 22%, rgba(8, 25, 42, 0.24) 78%, #08192a);
 }
 
+/* Hintergrundvideo: flaechig hinter dem Kapitel, nur als Stimmung. Niedrige
+   Deckkraft plus der dichte Scrim der breiten Kapitel halten den Text lesbar. */
+.csx-video { position: absolute; z-index: 0; inset: 0; overflow: hidden; }
+.csx-video video {
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: 0.32; filter: saturate(0.8);
+}
+.csx-video .csx-media-scrim {
+    background:
+        linear-gradient(to right, rgba(8, 25, 42, 0.8), rgba(8, 25, 42, 0.45) 55%, rgba(8, 25, 42, 0.7)),
+        linear-gradient(to bottom, #08192a, rgba(8, 25, 42, 0.2) 22%, rgba(8, 25, 42, 0.2) 78%, #08192a);
+}
+
+/* ── Side-Scrolling (CaseSideScroll) ────────────────────────────────────── */
+/* Schmal oder bei reduzierter Bewegung bleibt alles ein normaler Block. */
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+    .csx-hs { height: calc(var(--n) * 100vh); position: relative; }
+    .csx-hs-stage {
+        position: sticky; top: 0; height: 100vh; overflow: hidden;
+    }
+    .csx-hs-track {
+        display: flex; height: 100%;
+        width: calc(var(--n) * 100%);
+        will-change: transform;
+    }
+    .csx-hs-track > .csx {
+        flex: 0 0 calc(100% / var(--n));
+        height: 100%; min-height: 0;
+        padding: clamp(4.5rem, 9vh, 6rem) 0;
+        border-top: 0;
+    }
+    .csx-hs-track > .csx + .csx { border-left: 1px solid rgba(255, 255, 255, 0.07); }
+    /* Kapitel passen auf eine Bildschirmhoehe: Massnahmen in zwei Spalten,
+       Abbildungen nach Hoehe begrenzt. */
+    .csx-hs-track .csx-mass { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.4rem, 2.6vh, 2.2rem) clamp(2rem, 3.4vw, 3rem); }
+    .csx-hs-track .csx-figure img { width: auto; max-width: 100%; max-height: 58vh; }
+    .csx-hs-bar {
+        position: absolute; z-index: 5; left: var(--px); right: var(--px); bottom: 1.6rem;
+        height: 2px; background: rgba(255, 255, 255, 0.12);
+    }
+    .csx-hs-bar > span {
+        display: block; height: 100%; background: #ff6b35;
+        transform: scaleX(0); transform-origin: left;
+    }
+}
+@media not all and (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+    .csx-hs-bar { display: none; }
+}
+
 /* ── Auftakt ────────────────────────────────────────────────────────────── */
 .csx-hero { min-height: min(92vh, 940px); }
 /* Glass-Card wie im Leistungsblock der Startseite. */
@@ -3845,6 +3894,8 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     margin-bottom: clamp(1.2rem, 2.2vw, 1.8rem);
 }
 .csx-h1 strong { font-weight: 900; }
+/* Lange Komposita („Technologieunternehmen“) duerfen auf schmalen Viewports trennen. */
+.csx-h1, .csx-h2 { overflow-wrap: break-word; hyphens: auto; }
 /* Der Auftritt von damals ist nicht mehr erreichbar – der Hinweis steht als
    eigener, abgesetzter Block, nicht versteckt im Fliesstext. */
 .csx-note {
@@ -4171,6 +4222,25 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 
 /* ── Drei Begriffe ──────────────────────────────────────────────────────── */
 /* Schlagworte, keine Inhalte – deshalb eine Zeile und keine Karten. */
+/* Aufzaehlung (CaseList) */
+.csx-list { margin-top: clamp(1.4rem, 2.4vw, 2rem); max-width: 56ch; }
+.csx-list-lead {
+    font-size: clamp(1.02rem, 1.3vw, 1.15rem); font-weight: 600; letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.9); margin-bottom: 0.9rem;
+    text-shadow: 0 1px 3px rgba(3, 12, 20, 0.75), 0 2px 22px rgba(3, 12, 20, 0.65);
+}
+.csx-list ul { list-style: none; display: grid; gap: 0.55rem; }
+.csx-list li {
+    position: relative; padding-left: 1.5rem;
+    font-size: clamp(1rem, 1.25vw, 1.12rem); line-height: 1.55;
+    color: rgba(255, 255, 255, 0.72);
+    text-shadow: 0 1px 3px rgba(3, 12, 20, 0.75), 0 2px 22px rgba(3, 12, 20, 0.65);
+}
+.csx-list li::before {
+    content: ''; position: absolute; left: 0; top: 0.72em;
+    width: 0.7rem; height: 1px; background: #ff6b35;
+}
+
 .csx-terms {
     margin-top: clamp(1.8rem, 3vw, 2.6rem);
     padding-top: 1.3rem;
@@ -4243,6 +4313,33 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 .csx-step-zusatz {
     font-size: clamp(0.82rem, 0.95vw, 0.92rem); font-weight: 400; line-height: 1.5;
     color: rgba(255, 255, 255, 0.5);
+}
+
+/* ── Benannte Massnahmen ────────────────────────────────────────────────── */
+/* Eine Spalte, auch am Desktop: Jede Massnahme ist ein eigener, scanbarer
+   Abschnitt mit Nummer, Zwischenueberschrift und kurzem Absatz. */
+.csx-mass {
+    list-style: none; margin: clamp(2rem, 3.6vw, 3rem) 0 0; padding: 0;
+    display: grid; gap: clamp(2rem, 3.4vw, 3rem);
+    max-width: 1180px;
+}
+.csx-mass-item {
+    padding-top: clamp(1rem, 1.6vw, 1.3rem);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+.csx-mass-nr {
+    display: block; margin-bottom: 0.5rem;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em;
+    color: rgba(255, 145, 92, 0.9);
+}
+.csx-mass-h {
+    font-size: clamp(1.25rem, 2vw, 1.7rem); font-weight: 700;
+    line-height: 1.2; color: #fff; margin-bottom: 0.7rem;
+}
+.csx-mass-p {
+    font-size: clamp(1.02rem, 1.3vw, 1.15rem); line-height: 1.7;
+    color: rgba(255, 255, 255, 0.74); max-width: 56ch;
+    overflow-wrap: break-word;
 }
 
 /* ── Abbildung in voller Spaltenbreite ──────────────────────────────────── */
@@ -4766,9 +4863,3 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
 .csx-outro-frage { font-size: clamp(1.1rem, 1.5vw, 1.4rem); color: rgba(255, 255, 255, 0.85); max-width: 40ch; margin: 1rem 0 0.4rem; }
 .hi-turn .wende-lead { max-width: 58ch; margin-left: auto; margin-right: auto; }
 
-/* Offene redaktionelle Punkte (CaseTodo) – nur im Entwicklungsmodus gerendert. */
-.csx-todo { margin-top: 1.6rem; padding: 0.9rem 1.1rem; border: 1px dashed #ff6b35; border-radius: 4px; background: rgba(255, 107, 53, 0.06); max-width: 60ch; }
-.csx-todo-head { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #ff6b35; margin-bottom: 0.5rem; }
-.csx-todo ul { list-style: none; display: grid; gap: 0.35rem; }
-.csx-todo li { font-size: 0.85rem; line-height: 1.45; color: rgba(255, 255, 255, 0.78); }
-.csx-todo li::before { content: '▢ '; color: #ff6b35; }

@@ -18,10 +18,18 @@ export default function ChaosCharakter() {
                     Von Chaos<br /><strong>zu Charakter.</strong>
                 </h2>
                 <p className="wende-lead">
-                    Viele Unternehmen leisten mehr, als ihr Auftritt erkennen lässt. Angebote, Qualität und Erfahrung sind vorhanden – aber Positionierung, Gestaltung und Kommunikation erzählen noch nicht dieselbe Geschichte. LinderMedia bringt diese Teile in eine klare Richtung. Damit sichtbar wird, wofür ein Unternehmen steht und warum es die passende Wahl ist.
+                    Angebot, Qualität und Erfahrung sind da. Doch der Auftritt zeigt noch nicht klar genug, wofür das Unternehmen steht – und warum es die passende Wahl ist.
                 </p>
+                <div className="hi-fit">
+                    <p className="hi-fit-eye">Sie sind hier richtig, wenn …</p>
+                    <ul className="hi-fit-list">
+                        <li>Ihre Leistung komplex ist und sich schwer auf den Punkt bringen lässt.</li>
+                        <li>Website, Inhalte und Gestaltung noch nicht dieselbe Geschichte erzählen.</li>
+                        <li>Sie den nächsten Marketing-Schritt planen, obwohl die strategische Richtung noch offen ist.</li>
+                    </ul>
+                </div>
                 <p className="wende-claim">
-                    Weniger Lärm. <strong>Mehr Wirkung.</strong>
+                    Dann lohnt sich ein Schritt zurück: <strong>Erst die Richtung klären, dann sichtbar machen.</strong>
                 </p>
                 </div>
             </div>

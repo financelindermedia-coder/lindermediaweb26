@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { Children, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import useReveal from '@/components/useReveal'
 import useVisibleRaf from '@/components/useVisibleRaf'
@@ -78,6 +78,37 @@ function CaseMedia({ src, alt, position }: { src: string; alt: string; position?
 }
 
 /**
+ * Stummes Hintergrundvideo, bewusst zurueckgenommen (Deckkraft und Scrim im
+ * CSS). Es spielt nur, solange die Sektion im Bild ist; bei reduzierter
+ * Bewegung bleibt es auf dem ersten Bild stehen.
+ */
+function CaseVideoBg({ src }: { src: string }) {
+    const hostRef = useRef<HTMLDivElement>(null)
+    const videoRef = useRef<HTMLVideoElement>(null)
+
+    useEffect(() => {
+        const host = hostRef.current
+        const video = videoRef.current
+        if (!host || !video) return
+        if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
+
+        const io = new IntersectionObserver(([e]) => {
+            if (e.isIntersecting) video.play().catch(() => {})
+            else video.pause()
+        }, { threshold: 0.1 })
+        io.observe(host)
+        return () => io.disconnect()
+    }, [])
+
+    return (
+        <div className="csx-video" ref={hostRef} aria-hidden="true">
+            <video ref={videoRef} src={src} muted loop playsInline preload="metadata" tabIndex={-1} />
+            <span className="csx-media-scrim" />
+        </div>
+    )
+}
+
+/**
  * Auftakt der Fallstudie: Bild ueber die volle Breite, die Angaben zum Projekt
  * in einer Glass-Card davor – dasselbe Panel-Muster wie im Leistungsblock der
  * Startseite.
@@ -144,6 +175,7 @@ export default function CaseChapter({
     image,
     alt,
     imagePosition,
+    video,
     flip,
     wide,
     children,
@@ -156,6 +188,8 @@ export default function CaseChapter({
     alt?: string
     /** Bildausschnitt, falls die Mitte das Motiv nicht trifft (CSS object-position). */
     imagePosition?: string
+    /** Dezentes Hintergrundvideo statt Bild (nur sinnvoll mit `wide`). */
+    video?: string
     flip?: boolean
     /** Kapitel ohne seitliches Bild: Text und Karten laufen ueber die Breite. */
     wide?: boolean
@@ -169,6 +203,7 @@ export default function CaseChapter({
             ref={ref}
         >
             {image && <CaseMedia src={image} alt={alt ?? ''} position={imagePosition} />}
+            {video && <CaseVideoBg src={video} />}
             <div className="csx-inner">
                 <div className="csx-body">
                     <p className="csx-num reveal" data-reveal>
@@ -184,6 +219,69 @@ export default function CaseChapter({
                 </div>
             </div>
         </section>
+    )
+}
+
+/**
+ * Side-Scrolling: Die Kapitel stehen nebeneinander, die Seite scrollt senkrecht
+ * und schiebt sie dabei seitlich durchs Bild.
+ *
+ * Aeusserer Block = Scrollstrecke (n Bildschirmhoehen), innere Buehne klebt am
+ * Viewport. Nur auf breiten Schirmen und ohne reduzierte Bewegung – sonst
+ * stehen die Kapitel wie gewohnt untereinander (die Query steht im CSS und
+ * hier identisch; ausserhalb wird kein Transform gesetzt).
+ */
+const SIDE_QUERY = '(min-width: 901px) and (prefers-reduced-motion: no-preference)'
+
+export function CaseSideScroll({ children }: { children: React.ReactNode }) {
+    const items = Children.toArray(children)
+    const n = items.length
+    const hostRef = useRef<HTMLDivElement>(null)
+    const trackRef = useRef<HTMLDivElement>(null)
+    const barRef = useRef<HTMLSpanElement>(null)
+
+    useVisibleRaf(hostRef, () => {
+        const host = hostRef.current
+        const track = trackRef.current
+        const bar = barRef.current
+        if (!host || !track) return
+
+        const bilder = track.querySelectorAll<HTMLElement>('.csx-media img')
+
+        if (!window.matchMedia(SIDE_QUERY).matches) {
+            track.style.transform = ''
+            if (bar) bar.style.transform = ''
+            bilder.forEach((img) => { img.style.translate = '' })
+            return
+        }
+
+        const r = host.getBoundingClientRect()
+        const strecke = r.height - window.innerHeight
+        const p = strecke > 0 ? Math.max(0, Math.min(1, -r.top / strecke)) : 0
+        track.style.transform = `translate3d(${(-p * ((n - 1) / n) * 100).toFixed(3)}%, 0, 0)`
+        if (bar) bar.style.transform = `scaleX(${p.toFixed(4)})`
+
+        // Seitlicher Parallax: Die Bilder laufen langsamer als ihr Kapitel. Die
+        // Ueberdeckung (SCALE) reicht fuer rund 7 % der Breite je Seite.
+        const vw = window.innerWidth
+        bilder.forEach((img) => {
+            const panel = img.closest('.csx') as HTMLElement | null
+            if (!panel) return
+            const pr = panel.getBoundingClientRect()
+            const d = pr.left + pr.width / 2 - vw / 2
+            img.style.translate = `${(-d * 0.07).toFixed(1)}px 0`
+        })
+    })
+
+    return (
+        <div className="csx-hs" ref={hostRef} style={{ ['--n' as string]: n } as React.CSSProperties}>
+            <div className="csx-hs-stage">
+                <div className="csx-hs-track" ref={trackRef}>
+                    {items}
+                </div>
+                <span className="csx-hs-bar" aria-hidden="true"><span ref={barRef} /></span>
+            </div>
+        </div>
     )
 }
 
@@ -231,6 +329,39 @@ export function CaseTile({
 }
 
 /**
+ * Aufzaehlung mit Einleitungszeile – fuer Leistungsumfang oder Bausteine eines
+ * Kapitels. `lead` steht ueber den Punkten, `note` abgesetzt darunter.
+ */
+export function CaseList({
+    lead,
+    items,
+    note,
+}: {
+    lead?: string
+    items: string[]
+    note?: string
+}) {
+    return (
+        <div className="csx-list">
+            {lead && <p className="csx-list-lead reveal" data-reveal>{lead}</p>}
+            <ul>
+                {items.map((t, i) => (
+                    <li
+                        className="reveal"
+                        data-reveal
+                        key={t}
+                        style={{ ['--d' as string]: `${0.34 + i * 0.05}s` } as React.CSSProperties}
+                    >
+                        {t}
+                    </li>
+                ))}
+            </ul>
+            {note && <p className="csx-note reveal" data-reveal>{note}</p>}
+        </div>
+    )
+}
+
+/**
  * Drei Begriffe als Zeile – die Positionierung auf den Punkt gebracht.
  * Bewusst keine Karten: Es sind Schlagworte, keine Inhalte.
  */
@@ -267,26 +398,6 @@ export function CaseFocus({
             <p className="csx-focus-head">{headline}</p>
             <p className="csx-focus-text">{text}</p>
         </div>
-    )
-}
-
-/**
- * Offener redaktioneller Punkt (Beleg, Freigabe, Rolle, Rechte …).
- *
- * Nur im Entwicklungsmodus sichtbar – in der Produktion rendert die Komponente
- * nichts. So bleiben die offenen Punkte an der Stelle im Code, an der sie
- * geschlossen werden muessen, ohne je als fertige Copy auf der Seite zu stehen.
- * Wer einen Punkt schliesst, loescht den Aufruf.
- */
-export function CaseTodo({ items }: { items: string[] }) {
-    if (process.env.NODE_ENV === 'production') return null
-    return (
-        <aside className="csx-todo" aria-label="Offene Punkte (nur Entwicklung)">
-            <p className="csx-todo-head">[BELEG/FREIGABE ERGÄNZEN] · nur im Entwicklungsmodus sichtbar</p>
-            <ul>
-                {items.map((t) => <li key={t}>{t}</li>)}
-            </ul>
-        </aside>
     )
 }
 
@@ -352,6 +463,32 @@ export function CaseOutro({
                 {ctaLabel} {pfeil}
             </Link>
         </nav>
+    )
+}
+
+/**
+ * Benannte Massnahmen: je eine scanbare Zwischenueberschrift mit kurzem Absatz.
+ *
+ * Statt einer Leistungsliste zeigt jede Massnahme, wie der strategische Gedanke
+ * in konkrete Arbeit uebersetzt wurde. `children` haengt einen Beleg (Abbildung,
+ * Prozesskette) direkt an die Massnahme, zu der er gehoert.
+ */
+export function CaseMassnahmen({
+    items,
+}: {
+    items: { titel: string; text: string; children?: React.ReactNode }[]
+}) {
+    return (
+        <ol className="csx-mass">
+            {items.map((m, i) => (
+                <li className="csx-mass-item reveal" data-reveal key={m.titel}>
+                    <span className="csx-mass-nr" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                    <h3 className="csx-mass-h">{m.titel}</h3>
+                    <p className="csx-mass-p">{m.text}</p>
+                    {m.children}
+                </li>
+            ))}
+        </ol>
     )
 }
 

@@ -189,6 +189,30 @@
 }
 .hi-turn .dsc-turn-eye { margin-bottom: 1.2rem; }
 
+/* „Passt, wenn …": Einschub in der Sektion, kein eigener Block. Orange Linie
+   links wie die uebrigen Akzente; eine Spalte, Text linksbuendig fuer Lesbarkeit. */
+.hi-fit {
+    max-width: 40rem; margin: clamp(2rem, 4vw, 3rem) auto 0;
+    padding-left: clamp(1rem, 2.4vw, 1.6rem);
+    border-left: 2px solid #ff6b35;
+    text-align: left;
+}
+.hi-fit-eye {
+    font-size: clamp(0.8rem, 0.9vw, 0.9rem); font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase; color: #ff6b35;
+    margin-bottom: 0.7rem;
+}
+.hi-fit-list { list-style: none; display: grid; gap: 0.7rem; }
+.hi-fit-list li {
+    position: relative; padding-left: 1.1rem;
+    font-size: clamp(1rem, 1.3vw, 1.1rem); line-height: 1.5;
+    color: rgba(255, 255, 255, 0.72); overflow-wrap: break-word;
+}
+.hi-fit-list li::before {
+    content: ''; position: absolute; left: 0; top: 0.68em;
+    width: 0.4rem; height: 2px; background: #ff6b35;
+}
+
 /* Standbild unter dem Canvas (siehe HeroIceberg.tsx). */
 .hi-poster, .hi-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .hi-poster { object-fit: cover; -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 2%, #000 98%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 2%, #000 98%, transparent 100%); }

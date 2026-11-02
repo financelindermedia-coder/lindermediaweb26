@@ -3,9 +3,9 @@ import Link from 'next/link'
 import CaseChapter, {
     CaseFigure,
     CaseHero,
+    CaseMassnahmen,
     CaseOutro,
     CaseTerms,
-    CaseTodo,
 } from '@/components/sections/CaseChapter'
 import CaseSchema from '@/components/CaseSchema'
 import { SITE_URL } from '@/lib/site'
@@ -66,78 +66,76 @@ export default function WellenwindPage() {
                 kicker="Projektarchiv · Markenstrategie · Onlineshop · Content"
                 headline={<>Eine Marke für<br /><strong>Küste und Alltag.</strong></>}
                 meta="Wellenwind · Sea-licious Funwear"
-                text="Wellenwind verbindet Segel-Lifestyle mit Kleidung für den Alltag. Die Fallstudie dokumentiert eine gemeinsame Richtung für Markenbild, Onlineshop und Content."
+                text="Wellenwind sollte nicht vor allem über den Preis erkennbar werden. Eine gemeinsame Haltung zu Segeln und Küstenalltag verbindet Bildwelt, Shop und Content."
                 image="/images/wellenwind.webp"
                 alt="Drei Hoodies in Hellblau, Weiß und Türkis vor dunklem Grund, daneben die Wellenwind-Wortmarke."
             />
 
             <CaseChapter
                 index="02"
-                eyebrow="Die Ausgangslage"
+                eyebrow="Ausgangslage"
                 headline={<>Erkennbar werden,<br /><strong>ohne über den Preis zu gehen.</strong></>}
                 text={[
-                    'Wie wird eine neue Segelmarke erkennbar, ohne sich vor allem über den Preis abzugrenzen? Der Ausgangspunkt war eine Haltung, die über einzelne Produkte hinausgeht.',
+                    'Eine neue Segel-Lifestyle-Marke muss zunächst erkennbar werden. Wellenwind sollte sich von etablierten Segelmarken abgrenzen, ohne vor allem über den Preis zu konkurrieren. Die Marke sollte mehr erzählen als das einzelne Kleidungsstück.',
                 ]}
                 wide
             >
-                <CaseTodo items={['Von Wellenwind bestätigte Ausgangslage und Zielsetzung, idealerweise als freigegebene Kundenformulierung.']} />
             </CaseChapter>
 
             <CaseChapter
                 index="03"
-                eyebrow="Der strategische Gedanke"
+                eyebrow="Strategischer Gedanke"
                 headline={<>Nicht nur maritim.<br /><strong>Sondern eine Haltung.</strong></>}
                 text={[
-                    'Nicht nur Segelbekleidung zeigen, sondern Küstengeist und Leichtigkeit als verbindende Themen nutzen. So kann die Marke auch Momente an Land erzählen.',
+                    'Wellenwind wird nicht nur als Segelbekleidung gezeigt, sondern als Marke mit eigener Haltung zu Segeln und Küstenalltag. Diese Idee soll sich an den relevanten Kontaktpunkten wiederfinden: in der Produktdarstellung, im Onlineshop und in den Inhalten.',
                 ]}
                 image="/images/case-wellenwind-strategie-2.webp"
                 alt="Drei Personen in Wellenwind-Hoodies gehen an einer Hafenpromenade entlang, die Rückenmotive gut sichtbar."
                 flip
             >
                 <CaseTerms items={['Küstengeist', 'Leichtigkeit', 'Wiedererkennung']} />
-                <CaseTodo items={['Freigegebene Positionierung, Zielgruppe und konkrete Markenbotschaft.']} />
             </CaseChapter>
 
             <CaseChapter
                 index="04"
-                eyebrow="Die Umsetzung"
-                headline={<>Bildwelt, Shop<br />und Content<br /><strong>aus einer Quelle.</strong></>}
-                text={[
-                    'Dokumentiert sind eine Bildwelt mit Produkten, Menschen und maritimen Situationen, ein Onlineshop-Auftritt sowie Kampagnenmotive, Social Content und Bewegtbild. Shop und Inhalte folgen derselben Bildsprache.',
-                ]}
+                eyebrow="Maßnahmen"
+                headline={<>Dieselbe Haltung<br /><strong>an jedem Kontaktpunkt.</strong></>}
                 wide
             >
-                <CaseFigure
-                    src="/images/case-wellenwind-kampagne-2.webp"
-                    alt="Startseite des Wellenwind-Onlineshops mit großflächigem Motiv und der Navigation zu den Kollektionen."
-                    caption="Onlineshop: dieselbe Bildsprache wie in Kampagne und Social Content."
-                />
-                <CaseTodo items={[
-                    'Genaue, von Wellenwind bestätigte Leistungen und LinderMedias jeweilige Rolle (Strategie, Gestaltung, Foto/Film, Shop, Content).',
-                    'Nutzungsrechte, Projektzuordnung und Veröffentlichungsfreigabe für jedes Medium; aktuellen Shop-Stand prüfen.',
-                    'Instagram-Feed-Hintergrund (August 2026) wurde aus dem Layout genommen; nur mit konkretem, freigegebenem Einzelmotiv wieder einsetzen.',
+                <CaseMassnahmen items={[
+                    {
+                        titel: 'Eine Bildwelt mit Produkt und Nutzungskontext',
+                        text: 'Produktmotive und Menschen in Wellenwind-Kleidung zeigen die Marke nicht nur als Artikel, sondern im maritimen Alltag.',
+                    },
+                    {
+                        titel: 'Den Onlineshop in die Markendarstellung eingebunden',
+                        text: 'Der Shop übernimmt dieselbe Bildsprache: Menschen am Wasser statt reiner Produktfreisteller.',
+                        children: (
+                            <CaseFigure
+                                src="/images/case-wellenwind-kampagne-2.webp"
+                                alt="Ausschnitt aus dem Wellenwind-Onlineshop: Hoodies an der Kleiderstange und darunter drei Motive mit Menschen in Wellenwind-Kleidung am Hafen."
+                                caption="Onlineshop: dieselbe Bildsprache wie in Kampagne und Social Content."
+                            />
+                        ),
+                    },
+                    {
+                        titel: 'Kampagnen- und Social-Content als Kontaktpunkte',
+                        text: 'Kampagnenmotive und Social Content greifen die Bildwelt des Shops auf, damit die Marke überall gleich erkennbar bleibt.',
+                    },
                 ]} />
             </CaseChapter>
 
             <CaseChapter
                 index="05"
-                eyebrow="Ergebnis und Beleg"
+                eyebrow="Ergebnis"
                 headline={<>Ein zusammenhängender<br /><strong>Markenauftritt.</strong></>}
                 text={[
-                    'Entstanden ist ein Markenauftritt für Shop, Kampagne und Social Content. Unabhängige Wirkungsdaten oder belegte Geschäftsergebnisse liegen dafür nicht vor – gezeigt wird deshalb die dokumentierte Arbeit.',
+                    'Produktdarstellung, Bildwelt und Shop folgen einer gemeinsamen visuellen Richtung. Das ist das sichtbare Ergebnis der dokumentierten Arbeit.',
+                    'Wirkungsdaten oder Geschäftsergebnisse liegen dafür nicht vor – gezeigt wird deshalb die dokumentierte Arbeit.',
                 ]}
-                image="/images/case-wellenwind-ergebnis-2.webp"
-                alt="Eine Seglerin im Hoodie mit dem Motiv Sea of Life an Bord, dahinter glitzert das Wasser."
-                // Die Seglerin steht bei rund 78 % der Bildbreite; mittig
-                // zugeschnitten bliebe von ihr nur die Schulter am Rand.
-                imagePosition="85% center"
+                wide
             >
-                <CaseTerms items={['Markenstrategie', 'Bildwelt', 'Onlineshop', 'Kampagnenmotive', 'Social Content']} />
-                <CaseTodo items={[
-                    'Nachprüfbarer Wirkungsbeleg (Vorher/Nachher, Shop-Kennzahlen mit Zeitraum und Vergleichsbasis oder freigegebenes Kundenzitat); ohne Beleg keine Erfolgsbehauptung.',
-                    'Aussage zum nachhaltigen Druck nur als Profilangabe kennzeichnen oder belegen; keine Zertifizierung suggerieren (hier nicht verwendet).',
-                    'Kundenname, Zitate, Fotos, Videos und Posts freigeben; ggf. Personenfreigaben.',
-                ]} />
+                <CaseTerms items={['Markenstrategie', 'Bildwelt', 'Onlineshop', 'Social Content']} />
                 <CaseOutro
                     slug="wellenwind"
                     frage="Sie planen einen Markenauftritt? Erzählen Sie uns, wo Ihre Marke heute steht."

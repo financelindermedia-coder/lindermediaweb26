@@ -1,43 +1,37 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import CaseChapter, {
-    CaseFigure,
     CaseHero,
     CaseOutro,
+    CaseSideScroll,
     CaseTerms,
-    CaseTodo,
 } from '@/components/sections/CaseChapter'
 import CaseSchema from '@/components/CaseSchema'
 import { SITE_URL } from '@/lib/site'
 
 /**
- * Fallstudie Schaaf Tender.
+ * Fallstudie Schaaf Yachtbau (Tender).
  *
- * ENTWURF – anders als bei LubriCan, Wellenwind und Novodex lagen fuer dieses
- * Projekt keine Texte vor. Ueberschriften und Fliesstext sind von mir und
- * brauchen Freigabe. Die Angaben zum Produkt stammen von schaaf-boats.com
- * (Tender 15 und 24, umlaufende Kufe, Carbonteile, Antriebe vom Aussenborder
- * bis zum E-Jet) und aus dem vorliegenden Material – nichts davon ist erfunden.
+ * Die Texte stammen aus der Vorlage von Andreas (2026-11-02). Die Angaben zum
+ * Produkt stammen urspruenglich von schaaf-boats.com (Tender 15 und 24,
+ * umlaufende Kufe, Carbonteile, Antriebe vom Aussenborder bis zum E-Jet).
  *
  * Leistungen laut Andreas: Screendesign und alles Weitere – ausgenommen ist
- * allein die Programmierung. Der Auftritt schaaf-boats.com ist also gestaltet,
- * aber nicht umgesetzt worden; das Kapitel „Das Screendesign" sagt das auch so.
+ * allein die Programmierung.
  *
  * Bildmaterial (Sekunden siehe scripts/to-webp.sh):
  *   video/VID_20200912_160853683.mp4  1920x1080  echte Fahraufnahmen
  *   video/Studio T15 web.mp4          1280x682   Studio-Renderings
  *   video/schaaf.mp4                   800x450   nur hier: Yachtdeck und Broschuere
  *
- * Die beiden Screendesign-Abbildungen sind eigene Aufnahmen von
- * schaaf-boats.com (Puppeteer, 1600x1000 bei deviceScaleFactor 1.5). Sie sind
- * damit reproduzierbar, altern aber mit der Seite – bei einem Relaunch neu
- * aufnehmen.
+ * Die Screendesign-Abbildungen (case-schaaf-web-*.webp) liegen weiter in
+ * public/images, stehen aber nicht mehr auf der Seite.
  */
 
 const TITLE =
-    'Schaaf Tender – Markenauftritt, Visualisierung & Screendesign | LinderMedia'
+    'Schaaf Yachtbau – Markenstrategie, Screendesign & 3D-Visualisierung | LinderMedia'
 const DESCRIPTION =
-    'Markenauftritt, Visualisierung, Screendesign und Print für einen Superyacht-Tender: der Unterschied liegt im Detail.'
+    'Markenstrategie, Webstrategie, Screendesign, 3D-Visualisierung, Produktfotografie und Marketing für Schaaf Yachtbau: Produkte, die für sich sprechen.'
 
 /*
  * Eigene Metadaten je Fallstudie: Titel und Beschreibung sind das, was in der
@@ -74,10 +68,10 @@ export default function SchaafPage() {
 
             <CaseHero
                 index="01"
-                kicker="Case Study · Markenauftritt · Screendesign · Visualisierung · Print"
-                headline={<>Der Unterschied<br /><strong>liegt im Detail.</strong></>}
-                meta="Schaaf Yachtbau · Superyacht-Tender"
-                text="Für Schaaf Yachtbau zeigt der Markenauftritt den Tender nicht über Größe, sondern über seine Details. Visualisierungen machten das Modell bereits vor dem Zuwasserlassen sichtbar."
+                kicker="Case Study · Markenstrategie · Webstrategie · Screendesign · 3D-Visualisierung · Produktfotografie · Marketing"
+                headline={<>Produkte, die<br /><strong>für sich sprechen.</strong></>}
+                meta="Schaaf Yachtbau"
+                text="Ein hochwertiger Tender ist mehr als ein Beiboot. Er verbindet Funktion, Design und technische Präzision. Für Schaaf Yachtbau entstand ein Marken- und Kommunikationsauftritt, der genau diese Eigenschaften sichtbar macht – digital, visuell und in klassischen Printmedien."
                 image="/images/case-schaaf-hero-2.webp"
                 alt="Ein dunkler Schaaf-Tender schiebt sich in voller Fahrt durch die Gischt, der Rumpf hebt sich aus dem Wasser."
             />
@@ -85,84 +79,109 @@ export default function SchaafPage() {
             <CaseChapter
                 index="02"
                 eyebrow="Die Ausgangslage"
-                headline={<>Ein Tender ist mehr<br /><strong>als ein Beiboot.</strong></>}
+                headline={<>Ein Produkt mit Charakter.<br /><strong>Ein Auftritt mit Anspruch.</strong></>}
                 text={[
-                    'Ein Tender ist Zubringer und Sportgerät. Als die Arbeit entstand, lag noch nicht jedes Modell auf dem Wasser. Die Aufgabe: die Details des Schaaf-Tenders sichtbar machen, bevor ein fertiges Boot sie zeigen konnte.',
+                    'Schaaf Yachtbau entwickelt hochwertige Tender für anspruchsvolle Yachtbesitzer. Die Besonderheiten liegen nicht allein in den technischen Daten, sondern vor allem in der Konstruktion, den verwendeten Materialien und den individuellen Ausstattungsmöglichkeiten.',
+                    'Die Herausforderung bestand darin, diese Qualität auch in der Kommunikation erlebbar zu machen. Das Produkt sollte nicht einfach präsentiert, sondern verständlich, hochwertig und emotional inszeniert werden.',
                 ]}
                 image="/images/case-schaaf-ausgangslage-2.webp"
                 alt="Blick vom Teakdeck einer Superyacht: Der Tender fährt längsseits vorbei, im Hintergrund liegt eine weitere Yacht vor der bewaldeten Küste."
                 flip
             />
 
-            <CaseChapter
-                index="03"
-                eyebrow="Der strategische Gedanke"
-                headline={<>Nicht lauter.<br /><strong>Genauer.</strong></>}
-                text={[
-                    'Nicht mit Größe, Leistung und Ausstattung auftreten, sondern die Besonderheiten genauer zeigen: die umlaufende Kufe, anpassbare Carbonteile und verschiedene Antriebe vom Außenborder bis zum elektrischen Jet. Viel Weißraum, präzise Ansichten und einzelne Erklärabschnitte geben diesen Merkmalen Platz.',
-                ]}
-                image="/images/case-schaaf-strategie-2.webp"
-                alt="Studioansicht des Tender 15 von schräg oben: die umlaufende Kufe zeichnet die Kante des Rumpfes nach."
-            >
-                <CaseTerms items={['Stil', 'Performance', 'Präzision']} />
-                <CaseTodo items={['Produktangaben zu Kufe, Carbonteilen und Antriebsoptionen durch Schaaf Yachtbau bestätigen lassen.']} />
-            </CaseChapter>
+            <CaseSideScroll>
+                <CaseChapter
+                    index="03"
+                    eyebrow="Die Strategie"
+                    headline={<>Qualität<br /><strong>sichtbar machen.</strong></>}
+                    text={[
+                        'Am Anfang stand die Frage, wie sich ein technisch anspruchsvolles Produkt überzeugend positionieren lässt.',
+                        'Die digitale Kommunikation sollte die Besonderheiten der Tender verständlich vermitteln, Vertrauen schaffen und Interessenten gezielt durch die Produktwelt führen.',
+                        'Daraus entstand ein Konzept, das Markenpositionierung, Produktkommunikation und visuelle Inszenierung miteinander verbindet.',
+                    ]}
+                    image="/images/case-schaaf-strategie-2.webp"
+                    alt="Studioansicht des Tender 15 von schräg oben: die umlaufende Kufe zeichnet die Kante des Rumpfes nach."
+                />
 
-            <CaseChapter
-                index="04"
-                eyebrow="Die Umsetzung"
-                headline={<>Visualisierung,<br />Screendesign<br /><strong>und Print.</strong></>}
-                text={[
-                    'Studioansichten zeigen Rumpf, Deck und Cockpit, als Grundlage für Entscheidungen über Proportion, Material und Farbe vor dem Bau. Digital gehören Abschnitte zur Kufe und zu den Farbkombinationen dazu; als Print-Anwendungen sind eine Verkaufsbroschüre und ein Manual genannt, die dieselben Gestaltungsregeln tragen.',
-                ]}
-                wide
-            >
-                <CaseFigure
-                    src="/images/case-schaaf-visualisierung-2.webp"
-                    alt="Studioansicht des Tender 15 vor dunklem Grund, Deck und Konsole vollständig sichtbar."
-                    caption="Studioansicht des Tender 15: Grundlage für Entscheidungen über Proportion, Material und Farbe."
+                <CaseChapter
+                    index="04"
+                    eyebrow="Der digitale Auftritt"
+                    headline={<>Eine Website,<br /><strong>die das Produkt versteht.</strong></>}
+                    text={[
+                        'Das Screendesign übersetzt die gestalterische und technische Qualität der Tender in eine klare digitale Bildsprache.',
+                        'Großzügige Bildwelten, reduzierte Gestaltung und eine nachvollziehbare Informationsarchitektur geben den Produkten den Raum, den sie verdienen.',
+                        'Produktmerkmale, Ausstattungsoptionen, Materialien und technische Besonderheiten werden strukturiert vermittelt. So wird aus einer klassischen Unternehmenswebsite eine digitale Präsentationsfläche für die Marke und ihre Produkte.',
+                    ]}
+                    image="/images/case-schaaf-cockpit-2.webp"
+                    alt=""
+                    wide
                 />
-                <CaseFigure
-                    src="/images/case-schaaf-web-hero.webp"
-                    alt="Startseite von schaaf-boats.com: über dem großflächigen Bild des fahrenden Tenders steht mittig die Wortmarke Schaaf."
-                    caption="Screendesign: Startseite mit Wortmarke über dem Bild."
-                />
-                <CaseFigure
-                    src="/images/case-schaaf-web-farben.webp"
-                    alt="Abschnitt Farbkombinationen: sechs Ansichten des Tenders in unterschiedlichen Farbstellungen von White Orange bis Black Grey."
-                    caption="Farbkombinationen als sechs Ansichten in einem Abschnitt."
-                />
-                {/* Gestaltet, nicht gebaut – das gehoert in die Fallstudie, sonst
-                    liest sich das Kapitel als Anspruch auf die Umsetzung. */}
-                <CaseTerms items={['Screendesign von LinderMedia · technische Umsetzung durch Dritte']} />
-                <CaseTodo items={[
-                    'Rollenabgrenzung bestätigen: Markenauftritt, Visualisierung, Print und technische Umsetzung (nur das Screendesign ist LinderMedia ausdrücklich zugeschrieben).',
-                    'Bestätigung der tatsächlichen Übergabe oder Nutzung von Verkaufsbroschüre und Manual; Nutzungsnachweis.',
-                    'Aus dem Layout genommen (Dateien bleiben): ähnliche Gesamt-/Cockpit-Ansichten, die Varianten- und Print-Hintergründe.',
-                ]} />
-            </CaseChapter>
 
-            <CaseChapter
-                index="05"
-                eyebrow="Ergebnis und Beleg"
-                headline={<>Gestaltung,<br /><strong>die früh sichtbar macht.</strong></>}
-                text={[
-                    'Belegt ist die dokumentierte Gestaltung: Visualisierungen sollten Entscheidungen über Proportion, Material und Farbe ermöglichen, bevor das Boot im Wasser lag. Broschüre und Manual werden als Anwendungen derselben Markenregeln beschrieben.',
-                ]}
-                wide
-            >
-                <CaseTerms items={['Markenauftritt', 'Screendesign', 'Visualisierung', 'Verkaufsbroschüre', 'Manual']} />
-                <CaseTodo items={[
-                    'Freigegebene Kundenbestätigung oder Projektunterlagen zur Nutzung der Visualisierungen und Printmaterialien.',
-                    'Messbare Ergebnisse oder belastbare Rückmeldung, falls über die Gestaltungsarbeit hinaus eine Wirkung genannt werden soll; ohne Beleg keine Aussagen zu Anfragen, Verkäufen oder Wahrnehmung.',
-                    'Freigabe von Schaaf Yachtbau für Kundenname, Referenznennung und Bilder.',
-                ]} />
+                <CaseChapter
+                    index="05"
+                    eyebrow="Produktvisualisierung"
+                    headline={<>Sichtbar,<br /><strong>bevor es schwimmt.</strong></>}
+                    text={[
+                        '3D-Visualisierungen machen die Tender unabhängig von Produktionsstand und Aufnahmebedingungen erlebbar.',
+                        'Unterschiedliche Perspektiven, Materialvarianten, Farbkombinationen und Ausstattungsdetails lassen sich bereits vor dem fertigen Produkt darstellen.',
+                        'Die Visualisierungen dienen nicht nur der Präsentation, sondern auch als Grundlage für gestalterische und konzeptionelle Entscheidungen.',
+                    ]}
+                    image="/images/case-schaaf-varianten-2.webp"
+                    alt=""
+                    wide
+                />
+
+                <CaseChapter
+                    index="06"
+                    eyebrow="Produktfotografie"
+                    headline={<>Details, die<br /><strong>den Unterschied machen.</strong></>}
+                    text={[
+                        'Hochwertige Produktfotografie zeigt, was eine Visualisierung allein nicht vermitteln kann: echte Materialien, Oberflächen, Verarbeitung und die Wirkung des Produkts im Wasser.',
+                        'Die Bildsprache verbindet technische Präzision mit emotionaler Inszenierung. So entstehen Motive für Website, Verkaufsunterlagen und Marketingkommunikation.',
+                    ]}
+                    image="/images/case-schaaf-ergebnis-2.webp"
+                    alt=""
+                    wide
+                />
+
+                <CaseChapter
+                    index="07"
+                    eyebrow="Marketing und Kommunikation"
+                    headline={<>Aus Produktqualität wird<br /><strong>Markenkommunikation.</strong></>}
+                    text={[
+                        'Ein konsistenter Markenauftritt endet nicht bei der Website.',
+                        'Die visuelle Gestaltung und die entwickelten Kommunikationsmittel schaffen eine einheitliche Grundlage für die Präsentation der Produkte – von digitalen Medien über Verkaufsbroschüren bis hin zu Produktdokumentationen und Manuals.',
+                    ]}
+                    image="/images/case-schaaf-print-bg-4.webp"
+                    alt=""
+                    wide
+                />
+
+                <CaseChapter
+                    index="08"
+                    eyebrow="Das Ergebnis"
+                    headline={<>Ein Auftritt<br /><strong>aus einem Guss.</strong></>}
+                    text={[
+                        'Strategie, Screendesign, Visualisierung und Fotografie greifen ineinander. Das Ergebnis ist eine Produktkommunikation, die technische Eigenschaften verständlich macht und den gestalterischen Anspruch von Schaaf Yachtbau transportiert.',
+                    ]}
+                    image="/images/case-schaaf-visualisierung-2.webp"
+                    alt=""
+                    wide
+                >
+                    <CaseTerms items={[
+                        'Markenstrategie', 'Webstrategie', 'Screendesign', 'Digitale Kommunikation',
+                        '3D-Produktvisualisierung', 'Produktfotografie', 'Marketing', 'Verkaufsbroschüre', 'Produktmanual',
+                    ]} />
+                </CaseChapter>
+            </CaseSideScroll>
+
+            <section className="csx csx-outro-sec"><div className="csx-inner">
                 <CaseOutro
                     slug="schaaf-tender"
-                    frage="Sie möchten Ihr Produkt klarer zeigen?"
+                    frage="Sie möchten Ihr Produkt überzeugender präsentieren?"
                     ctaLabel="Projekt besprechen"
                 />
-            </CaseChapter>
+            </div></section>
         </main>
     )
 }

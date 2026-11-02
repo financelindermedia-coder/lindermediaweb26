@@ -1,12 +1,11 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import CaseChapter, {
-    CaseFigure,
     CaseHero,
+    CaseList,
     CaseOutro,
     CaseProcess,
     CaseTerms,
-    CaseTodo,
 } from '@/components/sections/CaseChapter'
 import CaseSchema from '@/components/CaseSchema'
 import { SITE_URL } from '@/lib/site'
@@ -33,9 +32,9 @@ import { SITE_URL } from '@/lib/site'
  */
 
 const TITLE =
-    'Novodex – Markenstrategie & digitaler Refit-Prozess | LinderMedia'
+    'NOVODEX – Markenentwicklung, Corporate Design & Digital Experience | LinderMedia'
 const DESCRIPTION =
-    'Markenstrategie, Prozessdarstellung und Kundenportal-Prototyp für Novodex: ein Refit-Prozess, klar vom Aufmaß bis zur Übergabe.'
+    'NOVODEX – von der Idee zur eigenständigen Marke: Markenstrategie, Naming, Corporate Design, Webdesign und ein digitales Konzept für den Refit-Prozess.'
 
 /*
  * Eigene Metadaten je Fallstudie: Titel und Beschreibung sind das, was in der
@@ -85,91 +84,157 @@ export default function NovodexPage() {
 
             <CaseHero
                 index="01"
-                kicker="Case Study · Markenstrategie · Digitaler Prozess · Kundenportal"
-                headline={<>Klar vom Aufmaß<br /><strong>bis zur Übergabe.</strong></>}
-                meta="Novodex · Premium Yachtdeck-Refits"
-                text="Novodex beschreibt einen durchgängigen Refit-Prozess für Yachtdecks: sieben Phasen, digitale Planung und nachvollziehbare Projektdokumentation."
+                kicker="NOVODEX · Markenentwicklung · Corporate Identity · Markenarchitektur · Digital Experience"
+                headline={<>Von der Idee zur<br /><strong>eigenständigen Marke.</strong></>}
+                text="Eine Marke entsteht nicht durch ein Logo allein. Sie braucht eine klare Identität, eine durchdachte Positionierung und einen visuellen Auftritt, der ihre Werte und Leistungen unverwechselbar kommuniziert."
+                note="Für NOVODEX wurde eine ganzheitliche Markenentwicklung konzipiert – von der Namensfindung und strategischen Ausrichtung über die Entwicklung der Wortmarke und des Corporate Designs bis hin zur digitalen Markenpräsenz."
                 image="/images/Novodex.webp"
                 alt="Die Wortmarke NOVODEX auf einem Teakdeck neben einer polierten Winsch."
             />
 
             <CaseChapter
                 index="02"
-                eyebrow="Die Ausgangslage"
-                headline={<>Ein Refit ist mehr<br /><strong>als ein neues Deck.</strong></>}
+                eyebrow="Ausgangslage"
+                headline={<>Eine neue Marke braucht<br /><strong>ein klares Fundament.</strong></>}
                 text={[
-                    'Ein Yachtdeck-Refit verbindet Materialwahl, technische Planung, Timing und die Abstimmung mehrerer Gewerke.',
-                    'Die Aufgabe: Novodex nicht nur als Yachtdeck-Anbieter, sondern als Partner für den gesamten Refit-Prozess zu positionieren.',
+                    'Im Premiumsegment für Yachtdeck-Refits sollte eine eigenständige Marke entstehen, die handwerkliche Präzision, technische Kompetenz und maritime Ästhetik miteinander verbindet.',
+                    'Die Herausforderung bestand darin, aus einer Geschäftsidee eine klar positionierte Marke zu entwickeln. Sie sollte Vertrauen schaffen, eine hochwertige Zielgruppe ansprechen und gleichzeitig die technischen und handwerklichen Leistungen verständlich vermitteln.',
+                    'Dafür brauchte es mehr als einen Namen und ein Logo: eine durchgängige Markenidentität.',
                 ]}
+                image="/images/case-novodex-deck-bestand.webp"
+                alt=""
                 wide
             />
 
             <CaseChapter
                 index="03"
-                eyebrow="Der strategische Gedanke"
-                headline={<>Präzision braucht<br /><strong>einen klaren Prozess.</strong></>}
+                eyebrow="Markenstrategie & Positionierung"
+                headline={<>Erst die Strategie.<br /><strong>Dann das Erscheinungsbild.</strong></>}
                 text={[
-                    'Statt nur das fertige Deck in den Mittelpunkt zu stellen, rückt die Strategie den Ablauf dorthin: vom ersten Gespräch und digitalen Aufmaß über Fertigung und Montage bis zur Übergabe.',
-                    '3D-Scan, CAD-Engineering und CNC werden als Werkzeuge dieses Prozesses beschrieben – als Belege für Präzision, nicht als Selbstzweck.',
+                    'Am Anfang stand die Definition des Markenkerns. Welche Werte soll NOVODEX vermitteln? Wie positioniert sich die Marke im Markt? Und wodurch unterscheidet sie sich von klassischen Anbietern im Yachtdeck- und Refit-Bereich?',
                 ]}
+                image="/images/case-novodex-deck-strategie.webp"
+                alt=""
                 wide
             >
-                <CaseTerms items={['Präzision', 'Verlässlichkeit', 'Klarheit']} />
+                <CaseList
+                    lead="Die strategische Grundlage umfasst:"
+                    items={[
+                        'Definition von Markencharakter und Markenwerten',
+                        'Positionierung im Premiumsegment',
+                        'Zielgruppen- und Wettbewerbsbetrachtung',
+                        'Entwicklung der Markenbotschaft',
+                        'Definition der sprachlichen Tonalität',
+                        'Entwicklung einer konsistenten Markenarchitektur',
+                    ]}
+                />
+                <CaseTerms items={['Präzision', 'Qualität', 'Vertrauen', 'Beständigkeit']} />
             </CaseChapter>
 
             <CaseChapter
                 index="04"
-                eyebrow="Die Umsetzung"
-                headline={<>Sieben Phasen,<br /><strong>ein nachvollziehbarer Ablauf.</strong></>}
+                eyebrow="Naming & Markenidentität"
+                headline={<>Ein Name mit<br /><strong>eigenständigem Charakter.</strong></>}
                 text={[
-                    'Der Ablauf führt von der Beratung und Planung über digitale Vermessung, Material und CNC, Oberflächenveredelung, Installation und Qualitätssicherung bis zu Pflege und Service.',
+                    'Die Namensentwicklung bildete einen wichtigen Baustein der Markenstrategie. Ziel war ein prägnanter, international verständlicher Markenname mit technischem Charakter und eigenständiger Wiedererkennbarkeit.',
+                    'Aus der Namensidee NOVODEX entstand eine visuelle Identität, die maritime Handwerkskunst mit moderner Technologie und einem hochwertigen Markenverständnis verbindet.',
                 ]}
+                image="/images/case-novodex-deck-naming.webp"
+                alt=""
                 wide
             >
-                <CaseProcess steps={PHASEN} />
-                <CaseTodo items={['Bestätigen, welche der sieben Prozessphasen tatsächlich umgesetzt werden oder im Betrieb verwendet sind.']} />
+                <CaseList
+                    lead="Die Markenentwicklung umfasste:"
+                    items={[
+                        'Namensfindung und Namenskonzeption',
+                        'Recherche und Bewertung möglicher Markennamen',
+                        'Entwicklung der Wortmarke NOVODEX',
+                        'Definition der visuellen Markenidentität',
+                        'Entwicklung eines konsistenten Markenauftritts',
+                    ]}
+                    note="Hinweis: Eine rechtliche Markenfreigabe oder Markenregistrierung ist von der Namensentwicklung und Recherche zu unterscheiden."
+                />
             </CaseChapter>
 
             <CaseChapter
                 index="05"
-                eyebrow="Das Kundenportal"
-                headline={<>Jeder Schritt<br /><strong>bleibt nachvollziehbar.</strong></>}
+                eyebrow="Corporate Design"
+                headline={<>Eine visuelle Sprache für<br /><strong>Qualität und Präzision.</strong></>}
                 text={[
-                    'Das Kundenportal soll Projektstatus, Abstimmungen und Unterlagen bündeln: mit Bautagebuch und Dokumenten-Center. Dazu kommt ein Anfrageformular in zwei Schritten.',
+                    'Das Corporate Design übersetzt die strategische Positionierung in ein eigenständiges visuelles Erscheinungsbild.',
+                    'Eine reduzierte, hochwertige Gestaltung verbindet maritime Anmutung mit technischer Klarheit. Farben, Typografie, Bildsprache und grafische Elemente schaffen einen konsistenten Auftritt über alle Kommunikationskanäle hinweg.',
                 ]}
+                image="/images/case-novodex-deck-design.webp"
+                alt=""
                 wide
             >
-                <CaseTerms items={['Portal-Ansicht: Prototyp mit Demodaten']} />
-                <CaseFigure
-                    src="/images/case-novodex-portal.webp"
-                    alt="Prototyp des Kundenportals mit Demodaten: eine Leiste mit sieben Projektphasen, darunter das Bautagebuch mit Einträgen und rechts das Dokumenten-Center."
-                    caption="Prototyp mit Demodaten: Projektfortschritt, Bautagebuch und Dokumenten-Center."
+                <CaseList
+                    lead="Entwickelte Gestaltungselemente:"
+                    items={[
+                        'Logo und Wortmarke',
+                        'Farbwelt und Typografie',
+                        'Gestaltungsraster und Bildsprache',
+                        'Grafische Gestaltungselemente',
+                        'Digitale und kommunikative Markenanwendungen',
+                        'Visuelle Gestaltungsrichtlinien',
+                    ]}
                 />
-                <CaseFigure
-                    src="/images/case-novodex-anfrage.webp"
-                    alt="Anfrageformular in zwei Schritten, daneben Kontaktdaten und eine Übersicht, was nach der Anfrage passiert."
-                    caption="Anfrage in zwei Schritten, mit Übersicht der nächsten Schritte."
-                />
-                <CaseTodo items={[
-                    'Status des Portals klären: Konzept, funktionsfähiger Prototyp oder aktives Portal. Mehr als „Prototyp mit Demodaten“ nur mit aktuellem Nachweis.',
-                    'Demodaten auf personenbezogene oder vertrauliche Angaben prüfen; Veröffentlichungsfreigabe für Portal- und Formularansicht.',
-                ]} />
             </CaseChapter>
 
             <CaseChapter
                 index="06"
-                eyebrow="Ergebnis und Beleg"
-                headline={<>Ein klar dargestellter,<br />dokumentierter<br /><strong>Refit-Prozess.</strong></>}
+                eyebrow="Webdesign & digitale Markenpräsenz"
+                headline={<>Die Marke wird<br /><strong>digital erlebbar.</strong></>}
                 text={[
-                    'Als strategisches Ziel verschiebt die Fallstudie den Vergleich vom Material- und Quadratmeterpreis hin zu Prozesssicherheit und Verantwortung. Ob sich diese Wirkung bei Kunden oder im Markt eingestellt hat, ist nicht belegt.',
+                    'Die Website übersetzt die Markenidentität in eine digitale Erlebniswelt. Sie verbindet hochwertige Bildsprache, klare Informationsarchitektur und eine moderne Nutzerführung.',
+                    'Im Mittelpunkt stehen die Leistungen, die handwerkliche Qualität und der strukturierte Weg zu einem neuen Yachtdeck.',
+                    'Dabei wurde die digitale Präsenz nicht isoliert betrachtet, sondern als konsequente Fortführung des Corporate Designs entwickelt.',
+                ]}
+                image="/images/case-novodex-deck-web.webp"
+                alt=""
+                wide
+            />
+
+            <CaseChapter
+                index="07"
+                eyebrow="Digitale Prozesse & Customer Experience"
+                headline={<>Vom ersten Kontakt bis<br /><strong>zum fertigen Yachtdeck.</strong></>}
+                text={[
+                    'Über den Markenauftritt hinaus wurde ein digitales Konzept entwickelt, das den gesamten Refit-Prozess verständlich und transparent macht.',
+                    'Ein Sieben-Phasen-Modell strukturiert den Projektablauf – von der ersten Beratung über digitale Vermessung und Fertigung bis hin zu Montage, Qualitätssicherung und Service.',
                 ]}
                 wide
             >
-                <CaseTerms items={['Markenentwicklung', 'Prozessdefinition', 'Kundenportal (Prototyp)', 'Visualisierung', 'Design']} />
-                <CaseTodo items={[
-                    'Freigegebener Nachweis zum realisierten Prozess oder Ergebnis (konkretes Projektbeispiel); Wirkung nur mit belegbaren Daten oder freigegebenem Kundenstatement.',
-                    'Konkrete Rolle von LinderMedia je Bereich bestätigen (Strategie, Prozessdefinition, Portal, Visualisierung, Design).',
-                    'Nutzungsfreigabe für Bilder; prüfen, ob die entfernten dekorativen Hintergründe konkrete Novodex-Arbeiten zeigen.',
+                <CaseProcess steps={PHASEN} />
+                <CaseList
+                    lead="Ergänzend wurden digitale Anwendungskonzepte ausgearbeitet:"
+                    items={[
+                        'Mehrstufiges Anfrageformular mit Projektinformationen und Foto-Upload',
+                        'Interne Verwaltung von Anfragen und Angeboten',
+                        'Überführung angenommener Angebote in Projekte',
+                        'Digitales Bautagebuch',
+                        'Kundenportal mit Projektfortschritt und Dokumenten-Center',
+                    ]}
+                    note="Die Portalansicht visualisiert die geplante Customer Experience anhand eines Prototyps mit Demodaten."
+                />
+            </CaseChapter>
+
+            <CaseChapter
+                index="08"
+                eyebrow="Ergebnis"
+                headline={<>Eine Marke. Ein konsistenter Auftritt.<br /><strong>Eine klare Richtung.</strong></>}
+                text={[
+                    'Aus einer Geschäftsidee wurde ein ganzheitliches Markenkonzept entwickelt. NOVODEX verbindet eine eigenständige Markenidentität mit einem hochwertigen Corporate Design und einer digitalen Strategie, die weit über die klassische Unternehmenswebsite hinausgeht.',
+                    'Das Ergebnis ist ein durchgängiges Konzept, in dem Markenstrategie, Gestaltung, Kommunikation und digitale Prozesse zusammenspielen.',
+                    'NOVODEX – Precision meets craftsmanship.',
+                ]}
+                image="/images/case-novodex-deck-ergebnis.webp"
+                alt=""
+                wide
+            >
+                <CaseTerms items={[
+                    'Markenstrategie', 'Naming', 'Markenentwicklung', 'Logo Design', 'Corporate Identity',
+                    'Corporate Design', 'Webdesign', 'UX/UI', 'Digitale Strategie', 'Customer Experience',
                 ]} />
                 <CaseOutro
                     slug="novodex"

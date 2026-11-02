@@ -1,10 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import CaseChapter, {
+    CaseFigure,
     CaseHero,
+    CaseMassnahmen,
     CaseOutro,
+    CaseSideScroll,
     CaseTerms,
-    CaseTodo,
 } from '@/components/sections/CaseChapter'
 import CaseSchema from '@/components/CaseSchema'
 import { SITE_URL } from '@/lib/site'
@@ -65,86 +67,113 @@ export default function LubriCanPage() {
             <CaseHero
                 index="01"
                 kicker="Case Study · Branding · Produktinszenierung · Onlineshop"
-                headline={<>Technisches Produkt,<br /><strong>klar inszeniert.</strong></>}
+                headline={<>Wirkung zuerst.<br /><strong>Technik, wenn sie Orientierung gibt.</strong></>}
                 meta="LubriCan · Produkt- und Markenauftritt"
-                text="Ein Marken- und Shopauftritt für LubriCan. Im Mittelpunkt stehen verständliche Produktdarstellung und Orientierung."
+                text="Einzelne Produkte und technische Informationen sollten in einem verständlichen Marken- und Shopauftritt zusammenfinden."
                 image="/images/lubrican.webp"
                 alt="Zwei LubriCan-Flaschen vor einem roten Sportwagen in einer Werkstatt, darüber die Wortmarke."
             />
 
             <CaseChapter
                 index="02"
-                eyebrow="Die Ausgangslage"
-                headline={<>Ein technisches Produkt<br />braucht mehr als eine<br /><strong>Produktseite.</strong></>}
+                eyebrow="Ausgangslage"
+                headline={<>Orientierung schaffen,<br /><strong>ohne Tiefe zu verlieren.</strong></>}
                 text={[
-                    'Einzelne Produkte und technische Informationen sollten in einem konsistenten Auftritt zusammenfinden.',
+                    'Einzelne LubriCan-Produkte und technische Informationen sollten in einem verständlichen, zusammenhängenden Marken- und Shopauftritt zusammenfinden. Die Herausforderung war, Orientierung zu schaffen, ohne die technische Tiefe der Produkte zu verlieren.',
                 ]}
+                image="/images/case-lubrican-ausgangslage.webp"
+                alt=""
                 wide
             >
-                <CaseTodo items={['Kundenbriefing oder freigegebene Beschreibung der tatsächlichen Ausgangslage; bestätigte Rolle von LinderMedia.']} />
             </CaseChapter>
 
-            <CaseChapter
-                index="03"
-                eyebrow="Der strategische Gedanke"
-                headline={<>Wirkung zuerst,<br /><strong>Technik dort, wo sie hilft.</strong></>}
-                text={[
-                    'Technische Details folgen dort, wo sie bei der Orientierung helfen. Dieser Leitgedanke verbindet Marke, Produktdarstellung und Shop.',
-                ]}
-                wide
-            >
-                <CaseTerms items={['Präzision', 'Orientierung', 'Vertrauen']} />
-                <CaseTodo items={['Bestätigte Strategie und Kundenfreigabe.']} />
-            </CaseChapter>
+            <CaseSideScroll>
+                <CaseChapter
+                    index="03"
+                    eyebrow="Strategischer Gedanke"
+                    headline={<>Wirkung zuerst,<br /><strong>Technik dort, wo sie hilft.</strong></>}
+                    text={[
+                        'Nicht mit einer langen Liste technischer Eigenschaften beginnen: Das Produkt soll zuerst im Anwendungskontext verständlich werden. Technische Details folgen dort, wo sie bei der Orientierung oder Auswahl helfen.',
+                        'Das ist die Leitlinie der Kommunikation – keine Aussage über die Wirkung des Produkts selbst.',
+                    ]}
+                    image="/images/case-lubrican-strategie.webp"
+                    alt=""
+                    wide
+                >
+                    <CaseTerms items={['Präzision', 'Orientierung', 'Vertrauen']} />
+                </CaseChapter>
 
-            <CaseChapter
-                index="04"
-                eyebrow="Die Umsetzung"
-                headline={<>Produktinszenierung<br /><strong>und Onlineshop.</strong></>}
-                text={[
-                    'Genannt sind Branding, Produktinszenierung, Onlineshop und Content. Gezeigt werden ein Produktmotiv im Performance-Umfeld und eine Ansicht des Shops.',
-                ]}
-                image="/images/case-lubrican-produkt.webp"
-                alt="Zwei LubriCan-Flaschen neben einem freigestellten Motorblock vor tiefblauem Grund."
-            >
-                <CaseTodo items={['Konkret ausgeführte Leistungen, Umfang und Zuordnung der gezeigten Medien.']} />
-            </CaseChapter>
+                <CaseChapter
+                    index="04"
+                    eyebrow="Maßnahmen"
+                    headline={<>Von der Leitlinie<br /><strong>zum Produkt- und Shopauftritt.</strong></>}
+                    wide
+                >
+                    <CaseMassnahmen items={[
+                        {
+                            titel: 'Produkte im Anwendungskontext inszeniert',
+                            text: 'Der Einstieg zeigt das Produkt dort, wo es gebraucht wird: im Fahrzeug- und Werkstattumfeld, nicht vor neutralem Grund.',
+                        },
+                        {
+                            titel: 'Produktdarstellung und technische Information verbunden',
+                            text: 'Das Produktdetail neben dem Motorblock verbindet das Produkt mit der Technik, auf die es wirkt – so entsteht Orientierung, ohne dass die Technik zur Liste wird.',
+                        },
+                        {
+                            titel: 'Den Shop als Informationsweg gezeigt',
+                            text: 'Der Shop führt über Fahrzeugkategorien zum passenden Produkt. Kategorien und Produktinformationen stehen im selben Weg, nicht in getrennten Bereichen.',
+                        },
+                    ]} />
+                </CaseChapter>
 
-            <CaseChapter
-                index="05"
-                eyebrow="Der Onlineshop"
-                headline={<>Vom ersten Eindruck<br /><strong>zur passenden Lösung.</strong></>}
-                text={[
-                    'Der Shop übersetzt die Markenlogik in eine klare digitale Führung mit Kategorien, Produktinformationen und Kontaktpunkten.',
-                ]}
-                image="/images/case-lubrican-digital.webp"
-                alt="Ansicht des Onlineshops: eine Fahrzeugkategorie mit großflächigem Bild und Einstieg in das Sortiment."
-                flip
-            >
-                <CaseTodo items={['Bestätigung, dass die Shopansicht den realisierten Stand zeigt; Rechte und Bildfreigaben.']} />
-            </CaseChapter>
+                <CaseChapter
+                    index="05"
+                    eyebrow="Produktdarstellung"
+                    headline={<>Das Produkt<br /><strong>neben der Technik.</strong></>}
+                    wide
+                >
+                    <CaseFigure
+                        src="/images/case-lubrican-produkt.webp"
+                        alt="Zwei LubriCan-Flaschen neben einem freigestellten Motorblock vor tiefblauem Grund."
+                        caption="Produktdetail: LubriCan-Flaschen neben dem Motorblock."
+                    />
+                </CaseChapter>
 
-            <CaseChapter
-                index="06"
-                eyebrow="Ergebnis und Beleg"
-                headline={<>Ein zusammenhängender<br /><strong>Marken- und Produktauftritt.</strong></>}
-                text={[
-                    'Die gezeigten Motive machen den Marken- und Produktauftritt sowie den Einstieg in den Shop sichtbar. Ein messbarer Effekt oder eine bestätigte Veränderung ist für dieses Projekt nicht belegt.',
-                ]}
-                wide
-            >
-                <CaseTerms items={['Branding', 'Produktinszenierung', 'Onlineshop', 'Content']} />
-                <CaseTodo items={[
-                    'Freigegebener Vorher/Nachher-Beleg, Kundenfeedback oder belastbare Kennzahl; ohne Beleg keine Erfolgsbehauptung.',
-                    'Freigabe von Kundenname, Marke, Bildern, Zitaten und Projektbehauptungen.',
-                    'Aus dem Layout genommen (Dateien bleiben): Zahnrad-Motiv und Kolben/Pleuel – nur wieder einsetzen, wenn sie eine konkrete Produktinformation belegen; das Wortmarken-Leuchtschriftbild, falls Branding nicht schon im Hero sichtbar wäre.',
-                ]} />
+                <CaseChapter
+                    index="06"
+                    eyebrow="Onlineshop"
+                    headline={<>Der Shop<br /><strong>als Informationsweg.</strong></>}
+                    wide
+                >
+                    <CaseFigure
+                        src="/images/case-lubrican-digital.webp"
+                        alt="Ansicht des Onlineshops: eine Fahrzeugkategorie mit großflächigem Bild und Einstieg in das Sortiment."
+                        caption="Onlineshop: Einstieg über die Fahrzeugkategorie."
+                    />
+                </CaseChapter>
+
+                <CaseChapter
+                    index="07"
+                    eyebrow="Ergebnis"
+                    headline={<>Ein zusammenhängender<br /><strong>Marken- und Produktauftritt.</strong></>}
+                    text={[
+                        'Produktdarstellung, Markenauftritt und Shop führen die Leitlinie zu einem zusammenhängenden Auftritt zusammen.',
+                        'Ein messbarer Effekt ist für dieses Projekt nicht belegt – gezeigt wird deshalb die dokumentierte Arbeit.',
+                    ]}
+                    image="/images/case-lubrican-ergebnis.webp"
+                    alt=""
+                    wide
+                >
+                    <CaseTerms items={['Branding', 'Produktinszenierung', 'Onlineshop']} />
+                </CaseChapter>
+            </CaseSideScroll>
+
+            <section className="csx csx-outro-sec"><div className="csx-inner">
                 <CaseOutro
                     slug="lubrican"
                     frage="Sie möchten technische Produkte verständlich präsentieren?"
                     ctaLabel="Projekt besprechen"
                 />
-            </CaseChapter>
+            </div></section>
         </main>
     )
 }
