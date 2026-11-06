@@ -123,8 +123,18 @@ export default function Akt2VideoSection({
             if ((e.target as HTMLElement | null)?.closest?.('.a2v-sound')) return
             v.muted = false
             setSoundOn(true)
+            /* Mobil zaehlt nicht jede Beruehrung (z. B. Scrollen) als Nutzeraktion; dann
+               pausiert der Browser das Video beim Entstummen. Dann stumm weiterlaufen lassen. */
+            window.setTimeout(() => {
+                if (!v.paused || manuallyPaused.current) return
+                const r = v.getBoundingClientRect()
+                if (r.bottom < 0 || r.top > window.innerHeight) return
+                v.muted = true
+                setSoundOn(false)
+                v.play().catch(() => {})
+            }, 250)
         }
-        const evs = ['pointerdown', 'keydown', 'touchend'] as const
+        const evs = ['click', 'keydown'] as const
         evs.forEach((n) => window.addEventListener(n, unlock, { passive: true }))
         return () => evs.forEach((n) => window.removeEventListener(n, unlock))
     }, [withSound])
