@@ -4,6 +4,7 @@ import CaseChapter, {
     CaseFigure,
     CaseFocus,
     CaseHero,
+    CaseTrio,
     CaseMassnahmen,
     CaseOutro,
     CaseSideScroll,
@@ -39,7 +40,7 @@ import { SITE_URL } from '@/lib/site'
  */
 
 const TITLE =
-    'Marèvo – Premium-Markenentwicklung & Screendesign | LinderMedia'
+    'Marèvo – Markenentwicklung & Screendesign | LinderMedia'
 const DESCRIPTION =
     'Marèvo – Markenidee, Bildwelt und Screendesign-Entwurf für eine Premium-Segelyacht: Die Leitidee „Weiter statt schneller“ als gestalterische Case Study.'
 
@@ -88,6 +89,12 @@ export default function MarevoPage() {
                 alt="Die Yacht liegt bei Sonnenuntergang still auf spiegelglattem Wasser, der Horizont geht in Gold über."
             />
 
+            <CaseTrio
+                herausforderung="Eine Premium-Segelyacht wird meist über Länge, Fläche und Tempo erzählt. Die Aufgabe des Entwurfs war, einen Maßstab zu finden, der darüber hinausgeht und die Yacht unverwechselbar macht."
+                ansatz="LinderMedia entwickelte die Leitidee „Weiter statt schneller“ und übersetzte sie in Markenbild, Bildwelt und Screendesign. Stimmigkeit, Ausdauer und Zurückhaltung geben dem Auftritt eine klare Haltung."
+                ergebnis="Ein gestalterischer Entwurf mit eigener Markenidee, durchgängiger Bildwelt und Screendesign, der Marèvo über Haltung statt über Kennzahlen positioniert."
+            />
+
             <CaseChapter
                 index="02"
                 eyebrow="Ausgangslage"
@@ -109,7 +116,7 @@ export default function MarevoPage() {
                     ]}
                     image="/images/case-marevo-bg-segel.webp"
                     ki
-                    alt=""
+                    alt="Segelyacht mit dunklen Segeln in ruhiger Fahrt bei tiefstehender Sonne"
                     wide
                 >
                     <CaseTerms items={['Stimmigkeit', 'Ausdauer', 'Zurückhaltung']} />
@@ -125,7 +132,7 @@ export default function MarevoPage() {
                     headline={<>Eine Haltung,<br /><strong>übersetzt in einen Auftritt.</strong></>}
                     image="/images/case-marevo-bg-heck.webp"
                     ki
-                    alt=""
+                    alt="Blick von oben auf das Heck einer Segelyacht auf glattem, goldenem Wasser"
                     wide
                 >
                     <CaseMassnahmen items={[
@@ -171,7 +178,7 @@ export default function MarevoPage() {
                     ]}
                     image="/images/case-marevo-bg-fahrt.webp"
                     ki
-                    alt=""
+                    alt="Segelyacht in zügiger Fahrt, die Bugwelle glitzert im Abendlicht"
                     wide
                 >
                 </CaseChapter>

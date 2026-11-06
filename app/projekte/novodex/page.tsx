@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import CaseChapter, {
     CaseHero,
+    CaseTrio,
     CaseList,
     CaseOutro,
     CaseProcess,
@@ -32,7 +33,7 @@ import { SITE_URL } from '@/lib/site'
  */
 
 const TITLE =
-    'NOVODEX – Markenentwicklung, Corporate Design & Digital Experience | LinderMedia'
+    'NOVODEX – Markenentwicklung & Webauftritt | LinderMedia'
 const DESCRIPTION =
     'NOVODEX – von der Idee zur eigenständigen Marke: Markenstrategie, Naming, Corporate Design, Webdesign und ein digitales Konzept für den Refit-Prozess.'
 
@@ -92,6 +93,12 @@ export default function NovodexPage() {
                 alt="Die Wortmarke NOVODEX auf einem Teakdeck neben einer polierten Winsch."
             />
 
+            <CaseTrio
+                herausforderung="Ein hochwertiger Yachtdeck-Refit ist ein komplexes Projekt mit vielen Beteiligten, individuellen Anforderungen und zahlreichen Abstimmungsschritten. Die Herausforderung bestand darin, diesen Prozess auch digital verständlich, strukturiert und hochwertig abzubilden."
+                ansatz="LinderMedia entwickelte ein durchgängiges Markenkonzept und übersetzte den Refit-Prozess in einen digitalen Auftritt. Im Mittelpunkt standen eine klare Markenidentität, eine hochwertige visuelle Sprache und die Idee eines digitalen Kundenportals, das den Projektablauf nachvollziehbar macht."
+                ergebnis="Eine eigenständige Markenidentität, ein hochwertiger Webauftritt und ein digitales Prozesskonzept, das die Qualität des Handwerks mit einer modernen Kundenerfahrung verbindet."
+            />
+
             <CaseChapter
                 index="02"
                 eyebrow="Ausgangslage"
@@ -102,7 +109,7 @@ export default function NovodexPage() {
                     'Dafür brauchte es mehr als einen Namen und ein Logo: eine durchgängige Markenidentität.',
                 ]}
                 image="/images/case-novodex-deck-bestand.webp"
-                alt=""
+                alt="Altes Teakdeck einer Yacht im Hafen, darauf Werkzeug für den Refit"
                 wide
             />
 
@@ -114,7 +121,7 @@ export default function NovodexPage() {
                     'Am Anfang stand die Definition des Markenkerns. Welche Werte soll NOVODEX vermitteln? Wie positioniert sich die Marke im Markt? Und wodurch unterscheidet sie sich von klassischen Anbietern im Yachtdeck- und Refit-Bereich?',
                 ]}
                 image="/images/case-novodex-deck-strategie.webp"
-                alt=""
+                alt="Neues, helles Teakdeck mit feinen schwarzen Fugen in der Schrägansicht"
                 wide
             >
                 <CaseList
@@ -140,7 +147,7 @@ export default function NovodexPage() {
                     'Aus der Namensidee NOVODEX entstand eine visuelle Identität, die maritime Handwerkskunst mit moderner Technologie und einem hochwertigen Markenverständnis verbindet.',
                 ]}
                 image="/images/case-novodex-deck-naming.webp"
-                alt=""
+                alt="Nahaufnahme einer Deckskante mit hellem Teak und schwarzer Fuge"
                 wide
             >
                 <CaseList
@@ -165,7 +172,7 @@ export default function NovodexPage() {
                     'Eine reduzierte, hochwertige Gestaltung verbindet maritime Anmutung mit technischer Klarheit. Farben, Typografie, Bildsprache und grafische Elemente schaffen einen konsistenten Auftritt über alle Kommunikationskanäle hinweg.',
                 ]}
                 image="/images/case-novodex-deck-design.webp"
-                alt=""
+                alt="Graues Yachtdeck mit Teak-Optik, Reling und poliertem Mahagoni-Holz"
                 wide
             >
                 <CaseList
@@ -191,7 +198,7 @@ export default function NovodexPage() {
                     'Dabei wurde die digitale Präsenz nicht isoliert betrachtet, sondern als konsequente Fortführung des Corporate Designs entwickelt.',
                 ]}
                 image="/images/case-novodex-deck-web.webp"
-                alt=""
+                alt="Yachtdeck mit zwei Winschen, Fugenbild und Mahagoni-Einfassung"
                 wide
             />
 
@@ -229,7 +236,7 @@ export default function NovodexPage() {
                     'NOVODEX – Precision meets craftsmanship.',
                 ]}
                 image="/images/case-novodex-deck-ergebnis.webp"
-                alt=""
+                alt="Vordeck einer Segelyacht mit hellem Teak, weißen Fugen und Luke"
                 wide
             >
                 <CaseTerms items={[

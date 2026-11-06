@@ -3,6 +3,7 @@ import Link from 'next/link'
 import CaseChapter, {
     CaseFigure,
     CaseHero,
+    CaseTrio,
     CaseMassnahmen,
     CaseOutro,
     CaseTerms,
@@ -24,7 +25,7 @@ import { SITE_URL } from '@/lib/site'
  */
 
 const TITLE =
-    'Wellenwind – Markenaufbau, Onlineshop & Content | LinderMedia'
+    'Wellenwind – Markenaufbau & Onlineshop | LinderMedia'
 const DESCRIPTION =
     'Markenstrategie, Bildwelt, Onlineshop und Content-System für die maritime Lifestyle-Marke Wellenwind: ein stimmiger Markenauftritt vom Konzept bis zum Shop.'
 
@@ -69,6 +70,12 @@ export default function WellenwindPage() {
                 text="Wellenwind sollte nicht vor allem über den Preis erkennbar werden. Eine gemeinsame Haltung zu Segeln und Küstenalltag verbindet Bildwelt, Shop und Content."
                 image="/images/wellenwind.webp"
                 alt="Drei Hoodies in Hellblau, Weiß und Türkis vor dunklem Grund, daneben die Wellenwind-Wortmarke."
+            />
+
+            <CaseTrio
+                herausforderung="Eine neue Segel-Lifestyle-Marke muss erkennbar werden, ohne sich vor allem über den Preis zu behaupten. Wellenwind sollte mehr erzählen als das einzelne Kleidungsstück."
+                ansatz="LinderMedia entwickelte eine gemeinsame Haltung zu Segeln und Küstenalltag und trug sie in Bildwelt, Onlineshop und Content. Produkte werden im Nutzungskontext gezeigt, nicht nur als Artikel."
+                ergebnis="Ein stimmiger Markenauftritt, der Produktdarstellung, Shop und Inhalte an jedem Kontaktpunkt zusammenhält und die Marke wiedererkennbar macht."
             />
 
             <CaseChapter

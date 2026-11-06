@@ -1,3 +1,4 @@
+import CookieSettingsLink from '@/components/CookieSettingsLink'
 import Image from 'next/image'
 import type { CSSProperties } from 'react'
 
@@ -144,6 +145,7 @@ export default function Footer() {
                 <div style={{ display: 'flex', gap: '2.5rem' }}>
                     <a href="/impressum" style={{ fontSize: '0.82rem', fontWeight: 400, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>Impressum</a>
                     <a href="/datenschutz" style={{ fontSize: '0.82rem', fontWeight: 400, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>Datenschutz</a>
+                    <CookieSettingsLink style={{ fontSize: '0.82rem', fontWeight: 400, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.5)' }} />
                 </div>
             </div>
         </footer>

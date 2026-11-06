@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Barlow } from 'next/font/google'
 import './globals.css'
+import CookieConsent from '@/components/CookieConsent'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 import { AREA_SERVED, BUSINESS, CORE_SERVICES, NOINDEX, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '@/lib/site'
 
 const barlow = Barlow({
@@ -149,7 +151,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />
             </head>
-            <body>{children}</body>
+            <body>
+                {children}
+                <CookieConsent />
+                <GoogleAnalytics />
+            </body>
         </html>
     )
 }

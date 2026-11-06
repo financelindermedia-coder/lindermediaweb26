@@ -7,6 +7,8 @@ import HeroIceberg from '@/components/HeroIceberg'
 import ChaosCharakter from '@/components/sections/ChaosCharakter'
 import ScrollFortschritt from '@/components/ScrollFortschritt'
 import Akt2VideoSection from '@/components/sections/Akt2VideoSection'
+import ProblemSection from '@/components/sections/ProblemSection'
+import KompetenzSection from '@/components/sections/KompetenzSection'
 import CasesSection from '@/components/sections/CasesSection'
 import VorgehenSection from '@/components/sections/VorgehenSection'
 import UeberUnsSection from '@/components/sections/UeberUnsSection'
@@ -47,6 +49,20 @@ const pageJsonLd = {
             },
         },
         {
+            // Showreel in der Sektion „Aus einer klaren Richtung wird ein Auftritt, der trägt.“
+            '@type': 'VideoObject',
+            '@id': `${SITE_URL}/#showreel`,
+            name: 'LinderMedia Showreel',
+            description: 'Ausgewählte Arbeiten aus Markenentwicklung, Fotografie, Film, 3D-Visualisierung, Webdesign und KI-gestützter Produktion. Teile des Materials sind KI-generiert.',
+            thumbnailUrl: `${SITE_URL}/video/poster-lm-reel9.webp`,
+            contentUrl: `${SITE_URL}/video/vid-lm-reel9.mp4`,
+            uploadDate: '2026-11-06',
+            duration: 'PT40S',
+            inLanguage: 'de-DE',
+            isPartOf: { '@id': `${SITE_URL}/#webpage` },
+            publisher: { '@id': `${SITE_URL}/#organization` },
+        },
+        {
             '@type': 'FAQPage',
             '@id': `${SITE_URL}/#faq`,
             isPartOf: { '@id': `${SITE_URL}/#webpage` },
@@ -67,8 +83,8 @@ const pageJsonLd = {
 // entfallen. Die Datei `orientierung-flight.mp4` und ihr Poster liegen weiter
 // in public/video, werden aber nirgends mehr eingebunden.
 const AKT2_VIDEOS = {
-    v1: '/video/vid-lm-1.mp4',  // „Aus Strategie wird Wirklichkeit"
-    v2: '/video/vid-lm-2.mp4',  // „Aus Ideen werden Erlebnisse"
+    v1: '/video/vid-lm-1b.mp4',  // „Aus Strategie wird Wirklichkeit"
+    v2: '/video/vid-lm-reel9.mp4',  // Showreel (mit Ton)
 }
 
 export default function Home() {
@@ -93,6 +109,9 @@ export default function Home() {
                 <ChaosCharakter />
 
                 <div style={{ position: 'relative', zIndex: 2 }}>
+                    {/* A · Das Problem: Warum braucht ein Unternehmen LinderMedia? */}
+                    <ProblemSection />
+
                     {/* 4 · Wir arbeiten unter der Oberflaeche (Video 1). Die Section-ID
                         bleibt die frühere, damit bestehende Links weiter greifen. */}
                     <Akt2VideoSection
@@ -116,9 +135,10 @@ export default function Home() {
                         index="02"
                         kicker="Weniger Lärm. Mehr Wirkung."
                         chapter="Kreation & Umsetzung"
-                        cgiGenerated
+                        aiGenerated
                         videoSrc={AKT2_VIDEOS.v2}
-                        poster="/video/poster-lm-2.webp"
+                        withSound
+                        poster="/video/poster-lm-reel9.webp"
                         headline="Aus einer klaren Richtung wird ein Auftritt, der trägt."
                         text={[
                             'Bild, Bewegung und Sprache erzählen dieselbe Geschichte – und machen sichtbar, was eine Marke besonders macht.',
@@ -126,6 +146,9 @@ export default function Home() {
                         ctaLabel="Projekte ansehen"
                         ctaHref="#projekte"
                     />
+
+                    {/* D · Die Loesung: Zusammenspiel der Disziplinen, sechs Felder */}
+                    <KompetenzSection />
 
                     {/* 6 · Was aus der Arbeit wirklich wird (Projekt-Slider) */}
                     <CasesSection />

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import CaseChapter, {
     CaseHero,
+    CaseTrio,
     CaseMassnahmen,
     CaseOutro,
     CaseSideScroll,
@@ -21,7 +22,7 @@ import { SITE_URL } from '@/lib/site'
  */
 
 const TITLE =
-    'Solar Impact Yacht – Markenstrategie & Positionierung | LinderMedia'
+    'Solar Impact Yacht – Positionierung | LinderMedia'
 const DESCRIPTION =
     'Solar Impact Yacht als Technologieunternehmen statt als Yachtbauer positioniert: Die mögliche Bedeutung für die Schifffahrt steht vor der technischen Bauweise.'
 
@@ -67,6 +68,12 @@ export default function SolarImpactPage() {
                 alt="Die Solar Impact Yacht liegt in der Dämmerung ruhig auf offener See, dahinter eine flache Bergkette."
             />
 
+            <CaseTrio
+                herausforderung="Eine neue Technologie braucht einen klaren Platz im Markt. Die Marke sollte nicht allein über ein Yachtmodell oder eine Bauweise wahrgenommen werden."
+                ansatz="LinderMedia positionierte Solar Impact als Technologieunternehmen. Die Geschichte beginnt mit der möglichen Veränderung für die Schifffahrt, nicht mit der technischen Erklärung der Bauweise."
+                ergebnis="Eine Positionierung und Leitlinie, die die Relevanz der Technologie verständlich macht und über die unmittelbare Produktentwicklung hinaus trägt."
+            />
+
             <CaseChapter
                 index="02"
                 eyebrow="Ausgangslage"
@@ -89,7 +96,7 @@ export default function SolarImpactPage() {
                         'Eine neue Technologie braucht nicht nur eine Erklärung, sondern auch einen klaren Platz im Markt und eine Geschichte, die über die unmittelbare Produktentwicklung hinaus verständlich ist.',
                     ]}
                     image="/images/case-solarimpact-daemmerung.webp"
-                    alt=""
+                    alt="Solar Impact Yacht in der Dämmerung auf ruhiger See mit leuchtendem Salon"
                     wide
                 >
                 </CaseChapter>
@@ -99,7 +106,7 @@ export default function SolarImpactPage() {
                     eyebrow="Maßnahmen"
                     headline={<>Aus der Entscheidung<br /><strong>wurde eine Leitlinie.</strong></>}
                     image="/images/case-solarimpact-keyfacts.webp"
-                    alt=""
+                    alt="Die Solar Impact Yacht auf hellem Grund mit einer Leiste technischer Kennzahlen darunter"
                     wide
                 >
                     <CaseMassnahmen items={[
@@ -119,7 +126,7 @@ export default function SolarImpactPage() {
                     eyebrow="Ergebnis"
                     headline={<>Eine neue Perspektive<br /><strong>auf die Schifffahrt.</strong></>}
                     image="/images/case-solarimpact-unterwasser.webp"
-                    alt=""
+                    alt="Die Solar Impact Yacht an der Wasserlinie, unter Wasser sind die schmalen Rümpfe sichtbar"
                     imagePosition="50% 20%"
                     text={[
                         'Die dokumentierte Arbeit zeigt eine strategische Neuausrichtung: Solar Impact Yacht sollte als Technologieunternehmen wahrgenommen werden, das eine neue Perspektive auf die Schifffahrt eröffnet.',

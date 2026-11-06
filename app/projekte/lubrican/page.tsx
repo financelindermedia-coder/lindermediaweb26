@@ -3,6 +3,7 @@ import Link from 'next/link'
 import CaseChapter, {
     CaseFigure,
     CaseHero,
+    CaseTrio,
     CaseMassnahmen,
     CaseOutro,
     CaseSideScroll,
@@ -27,7 +28,7 @@ import { SITE_URL } from '@/lib/site'
  */
 
 const TITLE =
-    'LubriCan – Branding, Produktinszenierung & Onlineshop | LinderMedia'
+    'LubriCan – Branding & Onlineshop | LinderMedia'
 const DESCRIPTION =
     'Wie Marke, Produktinszenierung und Onlineshop für ein technisches Performance-Produkt zu einem verständlichen System verbunden wurden.'
 
@@ -74,6 +75,12 @@ export default function LubriCanPage() {
                 alt="Zwei LubriCan-Flaschen vor einem roten Sportwagen in einer Werkstatt, darüber die Wortmarke."
             />
 
+            <CaseTrio
+                herausforderung="Einzelne Produkte und technische Informationen sollten in einem verständlichen Marken- und Shopauftritt zusammenfinden, ohne die technische Tiefe zu verlieren."
+                ansatz="LinderMedia stellte die Wirkung im Anwendungskontext an den Anfang und ließ die Technik dort folgen, wo sie bei Orientierung und Auswahl hilft. Produktinszenierung, Branding und Onlineshop folgen dieser Leitlinie."
+                ergebnis="Ein zusammenhängender Produkt- und Markenauftritt mit klarer Orientierung für Besucher und technischer Tiefe, wo sie gebraucht wird."
+            />
+
             <CaseChapter
                 index="02"
                 eyebrow="Ausgangslage"
@@ -82,7 +89,7 @@ export default function LubriCanPage() {
                     'Einzelne LubriCan-Produkte und technische Informationen sollten in einem verständlichen, zusammenhängenden Marken- und Shopauftritt zusammenfinden. Die Herausforderung war, Orientierung zu schaffen, ohne die technische Tiefe der Produkte zu verlieren.',
                 ]}
                 image="/images/case-lubrican-ausgangslage.webp"
-                alt=""
+                alt="Nahaufnahme polierter Kolben und Pleuel im Inneren eines Motors, rötlich ausgeleuchtet"
                 wide
             >
             </CaseChapter>
@@ -97,7 +104,7 @@ export default function LubriCanPage() {
                         'Das ist die Leitlinie der Kommunikation – keine Aussage über die Wirkung des Produkts selbst.',
                     ]}
                     image="/images/case-lubrican-strategie.webp"
-                    alt=""
+                    alt="Freigestellter Motorblock neben der Wortmarke LubriCan auf schwarzem Grund"
                     wide
                 >
                     <CaseTerms items={['Präzision', 'Orientierung', 'Vertrauen']} />
@@ -160,7 +167,7 @@ export default function LubriCanPage() {
                         'Ein messbarer Effekt ist für dieses Projekt nicht belegt – gezeigt wird deshalb die dokumentierte Arbeit.',
                     ]}
                     image="/images/case-lubrican-ergebnis.webp"
-                    alt=""
+                    alt="Leuchtende LubriCan-Wortmarke mit Blendenzeichen und dem Claim „…läuft besser“ auf dunklem Raster"
                     wide
                 >
                     <CaseTerms items={['Branding', 'Produktinszenierung', 'Onlineshop']} />

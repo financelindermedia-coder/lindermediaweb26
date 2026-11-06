@@ -52,6 +52,9 @@ export default function LenisProvider() {
         })
 
         lenisRef = lenis
+        // Cookie-Banner: solange keine Entscheidung vorliegt, steht das Scrollen still.
+        const onLock = (e: Event) => ((e as CustomEvent<boolean>).detail ? lenis.stop() : lenis.start())
+        window.addEventListener('lm-scroll-lock', onLock)
         let handle = 0
         function raf(time: number) {
             lenis.raf(time)
@@ -64,6 +67,7 @@ export default function LenisProvider() {
             // und riefe `raf` auf einer zerstoerten Instanz auf.
             cancelAnimationFrame(handle)
             document.removeEventListener('click', onAnchorClick)
+            window.removeEventListener('lm-scroll-lock', onLock)
             lenis.destroy()
         }
     }, [])

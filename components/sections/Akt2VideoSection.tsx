@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import useReveal from '@/components/useReveal'
 import useVideoSource from '@/components/useVideoSource'
 import usePrefersReducedMotion from '@/components/usePrefersReducedMotion'
@@ -43,6 +43,11 @@ type Props = {
      * bevor es von vorn beginnt (sanfterer Loop statt native `loop`-Attribut).
      */
     endHoldSeconds?: number
+    /**
+     * Das Video hat eine Tonspur. Es startet weiterhin stumm (Browser erlauben
+     * keinen Autoplay mit Ton); ein Schalter in der Ecke schaltet den Ton zu.
+     */
+    withSound?: boolean
 }
 
 export default function Akt2VideoSection({
@@ -61,7 +66,11 @@ export default function Akt2VideoSection({
     compassOverlay = false,
     cornerPlayButton = false,
     endHoldSeconds = 0,
+    withSound = false,
 }: Props) {
+    const [soundOn, setSoundOn] = useState(false)
+    /** Hat der Besucher den Ton selbst ausgeschaltet, bleibt er aus. */
+    const userMuted = useRef(false)
     const revealRef = useReveal<HTMLElement>({ threshold: 0.3 })
     const sectionRef = useRef<HTMLElement | null>(null)
     const videoRef = useRef<HTMLVideoElement>(null)
@@ -85,6 +94,39 @@ export default function Akt2VideoSection({
     const showAsPaused = paused || !autoplay
 
     /**
+     * Spielt ab – bei `withSound` zuerst mit Ton. Erlaubt der Browser das nicht
+     * (noch keine Interaktion mit der Seite), laeuft das Video stumm weiter und
+     * der Ton wird mit der ersten Eingabe zugeschaltet (siehe Effekt unten).
+     */
+    const startPlay = useCallback((v: HTMLVideoElement) => {
+        if (!withSound || userMuted.current) {
+            v.play().catch(() => {})
+            return
+        }
+        v.muted = false
+        v.play().then(() => setSoundOn(true)).catch(() => {
+            v.muted = true
+            setSoundOn(false)
+            v.play().catch(() => {})
+        })
+    }, [withSound])
+
+    /** Fallback: erste Eingabe irgendwo auf der Seite schaltet den Ton zu. */
+    useEffect(() => {
+        if (!withSound) return
+        const unlock = (e: Event) => {
+            const v = videoRef.current
+            if (!v || userMuted.current || !v.muted || v.paused) return
+            if ((e.target as HTMLElement | null)?.closest?.('.a2v-sound')) return
+            v.muted = false
+            setSoundOn(true)
+        }
+        const evs = ['pointerdown', 'keydown', 'touchend'] as const
+        evs.forEach((n) => window.addEventListener(n, unlock, { passive: true }))
+        return () => evs.forEach((n) => window.removeEventListener(n, unlock))
+    }, [withSound])
+
+    /**
      * Die drei Fullscreen-Videos wiegen zusammen rund 27 MB (mobil 9 MB). Ohne diesen
      * Observer laedt der Browser sie schon beim Seitenaufruf an, obwohl sie weit
      * unterhalb des Viewports liegen. Die Quelle wird deshalb erst gesetzt, wenn
@@ -104,7 +146,7 @@ export default function Akt2VideoSection({
                 const v = videoRef.current
                 if (!v || !v.src) return
                 if (entry.intersectionRatio > 0.15) {
-                    if (!manuallyPaused.current) v.play().catch(() => {})
+                    if (!manuallyPaused.current) startPlay(v)
                 } else if (!v.paused) {
                     v.pause()
                 }
@@ -113,7 +155,7 @@ export default function Akt2VideoSection({
         )
         io.observe(el)
         return () => io.disconnect()
-    }, [autoplay])
+    }, [autoplay, startPlay])
 
     /**
      * Statt des nativen `loop`-Attributs (das sofort und übergangslos neu
@@ -140,6 +182,14 @@ export default function Akt2VideoSection({
             if (timeoutId) clearTimeout(timeoutId)
         }
     }, [endHoldSeconds])
+
+    const toggleSound = () => {
+        const v = videoRef.current
+        if (!v) return
+        userMuted.current = soundOn
+        v.muted = soundOn
+        setSoundOn(!soundOn)
+    }
 
     const toggle = () => {
         // Erster Klick bei „weniger Bewegung": Quelle scharfschalten. Das
@@ -239,6 +289,23 @@ export default function Akt2VideoSection({
                     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" /></svg>
                 )}
             </button>
+
+            {withSound && (
+                <button
+                    type="button"
+                    className="a2v-play a2v-play--corner a2v-sound"
+                    onClick={toggleSound}
+                    aria-label={soundOn ? 'Ton ausschalten' : 'Ton einschalten'}
+                    aria-pressed={soundOn}
+                >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" fill="currentColor" stroke="none" />
+                        {soundOn
+                            ? <path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.6 7.6 0 0 1 0 11" />
+                            : <path d="M16 9.5l5 5M21 9.5l-5 5" />}
+                    </svg>
+                </button>
+            )}
 
             <div className="a2v-foot">
                 <span className="a2v-foot-index">{index}</span>

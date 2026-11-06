@@ -173,6 +173,44 @@ export function CaseHero({
 }
 
 /**
+ * Kurzfassung der Fallstudie in drei Bausteinen: Herausforderung, Ansatz, Ergebnis.
+ * Steht direkt unter dem Auftakt; die Kapitel darunter liefern die Tiefe.
+ */
+export function CaseTrio({
+    herausforderung,
+    ansatz,
+    ergebnis,
+}: {
+    herausforderung: string
+    ansatz: string
+    ergebnis: string
+}) {
+    const ref = useReveal<HTMLElement>({ threshold: 0.2 })
+    const items = [
+        { nr: '01', label: 'Herausforderung', text: herausforderung },
+        { nr: '02', label: 'Ansatz', text: ansatz },
+        { nr: '03', label: 'Ergebnis', text: ergebnis },
+    ]
+    return (
+        <section className="csx-trio" ref={ref} aria-label="Kurzfassung">
+            <div className="csx-trio-inner">
+                {items.map((it, i) => (
+                    <div
+                        className="csx-trio-item reveal"
+                        data-reveal
+                        key={it.nr}
+                        style={{ ['--d' as string]: `${i * 0.1}s` } as React.CSSProperties}
+                    >
+                        <p className="csx-trio-label">{it.nr} / {it.label}</p>
+                        <p className="csx-trio-text">{it.text}</p>
+                    </div>
+                ))}
+            </div>
+        </section>
+    )
+}
+
+/**
  * Nummeriertes Kapitel. `flip` stellt das Bild nach links und den Text nach
  * rechts – im Wechsel gelesen bleibt die Strecke in Bewegung.
  * `children` steht unter dem Text, dort haengen die Karten der Kapitel 03/04.

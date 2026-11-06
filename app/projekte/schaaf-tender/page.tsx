@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import CaseChapter, {
     CaseHero,
+    CaseTrio,
     CaseOutro,
     CaseSideScroll,
     CaseTerms,
@@ -29,7 +30,7 @@ import { SITE_URL } from '@/lib/site'
  */
 
 const TITLE =
-    'Schaaf Yachtbau – Markenstrategie, Screendesign & 3D-Visualisierung | LinderMedia'
+    'Schaaf Tender – Markenstrategie & 3D | LinderMedia'
 const DESCRIPTION =
     'Markenstrategie, Webstrategie, Screendesign, 3D-Visualisierung, Produktfotografie und Marketing für Schaaf Yachtbau: Produkte, die für sich sprechen.'
 
@@ -76,6 +77,12 @@ export default function SchaafPage() {
                 alt="Ein dunkler Schaaf-Tender schiebt sich in voller Fahrt durch die Gischt, der Rumpf hebt sich aus dem Wasser."
             />
 
+            <CaseTrio
+                herausforderung="Ein hochwertiger Superyacht-Tender sollte nicht allein über seine technischen Eigenschaften, sondern vor allem über Design, Verarbeitung und besondere Details erlebbar werden."
+                ansatz="LinderMedia entwickelte eine visuelle Präsentation, die den Charakter des Tenders in den Mittelpunkt stellt. Durch hochwertige Visualisierungen, eine gezielte Bildsprache und ein darauf abgestimmtes Screendesign wurden Form, Materialität und Details wirkungsvoll inszeniert."
+                ergebnis="Ein eigenständiger digitaler Markenauftritt mit einer hochwertigen Produktinszenierung, der die Besonderheiten des Tenders sichtbar macht und seine Positionierung im Premiumsegment unterstützt."
+            />
+
             <CaseChapter
                 index="02"
                 eyebrow="Die Ausgangslage"
@@ -113,7 +120,7 @@ export default function SchaafPage() {
                         'Produktmerkmale, Ausstattungsoptionen, Materialien und technische Besonderheiten werden strukturiert vermittelt. So wird aus einer klassischen Unternehmenswebsite eine digitale Präsentationsfläche für die Marke und ihre Produkte.',
                     ]}
                     image="/images/case-schaaf-cockpit-2.webp"
-                    alt=""
+                    alt="Cockpit eines Schaaf-Tenders mit schwarzem Lenkrad und Display vor tiefschwarzem Hintergrund"
                     wide
                 />
 
@@ -127,7 +134,7 @@ export default function SchaafPage() {
                         'Die Visualisierungen dienen nicht nur der Präsentation, sondern auch als Grundlage für gestalterische und konzeptionelle Entscheidungen.',
                     ]}
                     image="/images/case-schaaf-varianten-2.webp"
-                    alt=""
+                    alt="3D-Visualisierung eines schwarzen Tenders mit grünen Akzenten und der Nummer 15"
                     wide
                 />
 
@@ -140,7 +147,7 @@ export default function SchaafPage() {
                         'Die Bildsprache verbindet technische Präzision mit emotionaler Inszenierung. So entstehen Motive für Website, Verkaufsunterlagen und Marketingkommunikation.',
                     ]}
                     image="/images/case-schaaf-ergebnis-2.webp"
-                    alt=""
+                    alt="Weißer Schaaf-Tender in Fahrt vor bewaldeter Küste"
                     wide
                 />
 
@@ -153,7 +160,7 @@ export default function SchaafPage() {
                         'Die visuelle Gestaltung und die entwickelten Kommunikationsmittel schaffen eine einheitliche Grundlage für die Präsentation der Produkte – von digitalen Medien über Verkaufsbroschüren bis hin zu Produktdokumentationen und Manuals.',
                     ]}
                     image="/images/case-schaaf-print-bg-4.webp"
-                    alt=""
+                    alt="Aufgeschlagene Schaaf-Broschüre mit Tender-Abbildungen auf dunklem Grund"
                     wide
                 />
 
@@ -165,7 +172,7 @@ export default function SchaafPage() {
                         'Strategie, Screendesign, Visualisierung und Fotografie greifen ineinander. Das Ergebnis ist eine Produktkommunikation, die technische Eigenschaften verständlich macht und den gestalterischen Anspruch von Schaaf Yachtbau transportiert.',
                     ]}
                     image="/images/case-schaaf-visualisierung-2.webp"
-                    alt=""
+                    alt="Visualisierung eines weißen Tenders mit blauem Streifen im Studiolicht"
                     wide
                 >
                     <CaseTerms items={[

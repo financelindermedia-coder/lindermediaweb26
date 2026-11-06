@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react'
+import { GA_ID } from '@/lib/consent'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
@@ -63,13 +64,38 @@ export default function DatenschutzPage() {
                     Zweckerreichung nicht mehr erforderlich sind.
                 </p>
 
-                <h2 style={h2}>4. Cookies, Tracking und externe Dienste</h2>
+                <h2 style={h2}>4. Cookies, Einwilligung und externe Dienste</h2>
                 <p style={p}>
-                    Diese Website setzt keine Cookies zu Analyse- oder Werbezwecken ein und bindet keine
-                    Tracking-Dienste, Social-Media-Plugins oder eingebetteten Inhalte Dritter ein. Die
-                    verwendete Schriftart wird vom eigenen Server ausgeliefert; beim Aufruf der Seite wird
-                    keine Verbindung zu Schriftdiensten Dritter aufgebaut.
+                    Diese Website verwendet keine Social-Media-Plugins und bindet keine eingebetteten Inhalte
+                    Dritter ein. Die verwendete Schriftart wird vom eigenen Server ausgeliefert; beim Aufruf der
+                    Seite wird keine Verbindung zu Schriftdiensten Dritter aufgebaut.
                 </p>
+                <p style={p}>
+                    <strong>Cookie-Banner.</strong> Ihre Entscheidung im Cookie-Banner speichern wir im lokalen
+                    Speicher Ihres Browsers (Schlüssel „lm-consent“, Gültigkeit 12 Monate). Das ist technisch
+                    erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG; Art. 6 Abs. 1 lit. c und f DSGVO). Über den Link
+                    „Cookie-Einstellungen“ am Ende jeder Seite können Sie Ihre Entscheidung jederzeit ändern oder
+                    widerrufen.
+                </p>
+                {GA_ID ? (
+                    <p style={p}>
+                        <strong>Google Analytics 4.</strong> Mit Ihrer Einwilligung nutzen wir Google Analytics 4
+                        der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland, zur
+                        statistischen Auswertung der Nutzung dieser Website. Dabei werden Cookies gesetzt und
+                        Daten wie aufgerufene Seiten, Verweildauer, Herkunft, Gerätetyp und ungefährer Standort
+                        verarbeitet. Die Verwendung der Daten für Werbezwecke ist deaktiviert (Google-Signale
+                        und Anzeigenpersonalisierung aus). Eine Übermittlung an Google LLC in den USA ist
+                        möglich; sie stützt sich auf den Angemessenheitsbeschluss zum EU-US Data Privacy
+                        Framework. Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO,
+                        § 25 Abs. 1 TDDDG). Ohne Ihre Einwilligung wird Google Analytics nicht geladen und es
+                        findet keine Verbindung zu Google statt.
+                    </p>
+                ) : (
+                    <p style={p}>
+                        Diese Website setzt keine Cookies zu Analyse- oder Werbezwecken ein und bindet keine
+                        Tracking-Dienste ein.
+                    </p>
+                )}
 
                 <h2 style={h2}>5. Ihre Rechte</h2>
                 <p style={p}>

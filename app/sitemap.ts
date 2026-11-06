@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
 import { FALLSTUDIEN } from '@/lib/cases'
 import { SITE_URL } from '@/lib/site'
 
-const SITE_LAST_MODIFIED = '2026-10-24'
+const SITE_LAST_MODIFIED = '2026-11-06'
 const LEGAL_LAST_MODIFIED = '2026-10-24'
 
 /**
