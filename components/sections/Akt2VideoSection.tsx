@@ -19,8 +19,8 @@ type Props = {
     index: string
     kicker: string
     headline: string
-    /** Ganze Headline fett statt nur das letzte Wort. */
-    headlineBold?: boolean
+    /** Anzahl der fetten Wörter am Ende der Headline (Standard 1). */
+    boldWords?: number
     text: string[]
     ctaLabel?: string
     ctaHref?: string
@@ -57,7 +57,7 @@ export default function Akt2VideoSection({
     index,
     kicker,
     headline,
-    headlineBold,
+    boldWords = 1,
     text,
     ctaLabel,
     ctaHref = '#contact',
@@ -255,14 +255,16 @@ export default function Akt2VideoSection({
                     </p>
                     <h2 className="a2v-title reveal" data-reveal>
                         {/* Wie alle Sektions-Headlines: hell, der letzte Begriff fett. */}
-                        {headlineBold ? (
-                            <strong>{headline}</strong>
-                        ) : headline.includes(' ') ? (
-                            <>
-                                {headline.slice(0, headline.lastIndexOf(' '))}{' '}
-                                <strong>{headline.slice(headline.lastIndexOf(' ') + 1)}</strong>
-                            </>
-                        ) : headline}
+                        {headline.includes(' ') ? (() => {
+                            const w = headline.split(' ')
+                            const n = Math.min(boldWords, w.length - 1)
+                            return (
+                                <>
+                                    {w.slice(0, w.length - n).join(' ')}{' '}
+                                    <strong>{w.slice(w.length - n).join(' ')}</strong>
+                                </>
+                            )
+                        })() : headline}
                     </h2>
                     <span className="a2v-rule reveal" data-reveal />
                     <div className="a2v-text reveal" data-reveal>

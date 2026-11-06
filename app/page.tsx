@@ -140,7 +140,7 @@ export default function Home() {
                         withSound
                         poster="/video/poster-lm-reel9.webp"
                         headline="Aus einer klaren Richtung wird ein Auftritt, der trägt."
-                        headlineBold
+                        boldWords={3}
                         text={[
                             'Bild, Bewegung und Sprache erzählen dieselbe Geschichte – und machen sichtbar, was eine Marke besonders macht.',
                         ]}
