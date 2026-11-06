@@ -51,6 +51,15 @@ function FELDER_POS() {
 export default function KompetenzSection() {
     const ref = useReveal<HTMLElement>({ threshold: 0.12 })
     const [aktiv, setAktiv] = useState(0)
+    /** Schmale Viewports: Texte stehen darunter, also kann der Kreis fast die ganze Breite nutzen. */
+    const [schmal, setSchmal] = useState(false)
+    useEffect(() => {
+        const mq = window.matchMedia('(max-width: 900px)')
+        const sync = () => setSchmal(mq.matches)
+        sync()
+        mq.addEventListener('change', sync)
+        return () => mq.removeEventListener('change', sync)
+    }, [])
     /** Bis wann der Automatik-Wechsel ruht (Zeitstempel; Infinity = solange die Maus darüber steht). */
     const pauseBis = useRef(0)
     const sichtbar = useRef(false)
@@ -126,7 +135,7 @@ export default function KompetenzSection() {
                     onPointerLeave={(e) => { if (e.pointerType === 'mouse') pauseBis.current = Date.now() + 3000 }}
                 >
                     <div className="kmp-stage reveal" data-reveal>
-                        <svg viewBox="-350 -200 1300 940" role="img" aria-label="Sechs Felder um eine gemeinsame Idee">
+                        <svg className={schmal ? 'kmp-narrow' : undefined} viewBox={schmal ? '-20 -20 640 640' : '-350 -200 1300 940'} role="img" aria-label="Sechs Felder um eine gemeinsame Idee">
                             <defs>
                                 <clipPath id="kmp-clip"><circle cx="300" cy="300" r="150" /></clipPath>
                             </defs>

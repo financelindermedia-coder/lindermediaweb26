@@ -4993,6 +4993,14 @@ a.ped-arrow:hover { background: #ff6b35; border-color: #ff6b35; color: #0b1820; 
     .kmp-caps { display: grid; width: 100%; max-width: 40rem; margin-top: 1rem; text-align: center; }
 }
 
+@media (max-width: 900px) {
+    .kmp-stage { max-width: 34rem; }
+    .kmp-narrow .kmp-node-halo { r: 54px; }
+    .kmp-narrow .kmp-node-disc { r: 42px; stroke-width: 2; }
+    .kmp-narrow .kmp-node-ic { transform: translate(-17px, -17px) scale(1.4167); stroke-width: 1.4; }
+    .kmp-narrow .kmp-core-label { font-size: 32px; }
+}
+
 /* ── Fallstudien: Herausforderung · Ansatz · Ergebnis ───────────────────────
    Drei Spalten mit Akzentlinie, direkt unter dem Auftaktbild. */
 .csx-trio {
