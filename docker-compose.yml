@@ -1,11 +1,18 @@
-version: '3.8'
-
 services:
   web:
-    build: .
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://lindermedia.de}
+        NEXT_PUBLIC_GA_ID: ${NEXT_PUBLIC_GA_ID:-}
+        NEXT_PUBLIC_NOINDEX: ${NEXT_PUBLIC_NOINDEX:-}
     container_name: lindermedia
     restart: unless-stopped
+    # Nur lokal erreichbar – von aussen kommt man ausschliesslich ueber nginx.
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
+    # SMTP_*, CONTACT_* usw. (siehe .env.example) – Datei liegt nur auf dem Server.
+    env_file:
+      - .env
     environment:
       - NODE_ENV=production

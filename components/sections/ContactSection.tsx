@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react'
 import { BUSINESS } from '@/lib/site'
+import { trackEvent } from '@/lib/consent'
 import {
     CONTACT_FIELDS,
     validateContact,
@@ -62,6 +63,7 @@ export default function ContactSection() {
             if (response.ok && body.ok) {
                 setStatus({ state: 'sent', message: body.message ?? 'Vielen Dank. Wir melden uns in Kürze.' })
                 setValues(EMPTY)
+                trackEvent('generate_lead', { form: 'kontakt' })
                 return
             }
 

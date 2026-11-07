@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Script from 'next/script'
-import { EVENT_AENDERUNG, GA_ID, hatEinwilligung } from '@/lib/consent'
+import { EVENT_AENDERUNG, GA_ID, hatEinwilligung, trackEvent } from '@/lib/consent'
 
 type Gtag = (...args: unknown[]) => void
 declare global {
@@ -52,7 +52,19 @@ export default function GoogleAnalytics() {
         }
         sync()
         window.addEventListener(EVENT_AENDERUNG, sync)
-        return () => window.removeEventListener(EVENT_AENDERUNG, sync)
+
+        // E-Mail- und Telefon-Klicks als Ereignisse (nur nach Einwilligung, siehe trackEvent).
+        const onClick = (e: MouseEvent) => {
+            const a = (e.target as Element | null)?.closest?.('a[href^="mailto:"], a[href^="tel:"]')
+            if (!a) return
+            const href = a.getAttribute('href') ?? ''
+            trackEvent(href.startsWith('tel:') ? 'click_phone' : 'click_email', { link_url: href })
+        }
+        document.addEventListener('click', onClick)
+        return () => {
+            window.removeEventListener(EVENT_AENDERUNG, sync)
+            document.removeEventListener('click', onClick)
+        }
     }, [])
 
     if (!GA_ID || !erlaubt) return null

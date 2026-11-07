@@ -9,3 +9,8 @@ Dockerfile
 docker-compose.yml
 README.md
 scripts/
+public/video/_src
+public/video/Vid_LM_*.mp4
+public/video/N_swath.mp4
+public/video/VID_*.mp4
+.next

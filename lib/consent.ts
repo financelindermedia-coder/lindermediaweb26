@@ -25,6 +25,16 @@ export const CONSENT_AKTIV =
     process.env.NEXT_PUBLIC_CONSENT_PREVIEW === '1' ||
     process.env.NODE_ENV === 'development'
 
+/**
+ * Sendet ein GA4-Ereignis – aber nur, wenn Analytics tatsächlich geladen ist
+ * (also nach Einwilligung). Ohne Einwilligung ist das ein stiller No-Op.
+ */
+export function trackEvent(name: string, params: Record<string, unknown> = {}) {
+    if (typeof window === 'undefined' || !GA_ID) return
+    const g = (window as unknown as { gtag?: (...a: unknown[]) => void }).gtag
+    if (typeof g === 'function') g('event', name, params)
+}
+
 export type KategorieId = 'statistik'
 
 export const KATEGORIEN: { id: KategorieId; titel: string; text: string }[] = [
