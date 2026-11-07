@@ -61,7 +61,10 @@ export default function DatenschutzPage() {
                     Bearbeitung der Anfrage und für den Fall von Anschlussfragen gespeichert. Rechtsgrundlage
                     ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen) bzw. Art. 6 Abs. 1 lit. f DSGVO
                     (berechtigtes Interesse an der Beantwortung). Die Daten werden gelöscht, sobald sie für die
-                    Zweckerreichung nicht mehr erforderlich sind.
+                    Zweckerreichung nicht mehr erforderlich sind. Das Kontaktformular wird verschlüsselt (HTTPS)
+                    übertragen; die Anfrage wird per E-Mail an uns zugestellt und nicht in einer Datenbank auf
+                    dieser Website gespeichert. Unser E-Mail-Postfach betreibt die ALL-INKL.COM – Neue Medien
+                    Münnich, Hauptstraße 68, 02742 Friedersdorf, als Auftragsverarbeiter (Art. 28 DSGVO).
                 </p>
 
                 <h2 style={h2}>4. Cookies, Einwilligung und externe Dienste</h2>
@@ -88,7 +91,9 @@ export default function DatenschutzPage() {
                         möglich; sie stützt sich auf den Angemessenheitsbeschluss zum EU-US Data Privacy
                         Framework. Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO,
                         § 25 Abs. 1 TDDDG). Ohne Ihre Einwilligung wird Google Analytics nicht geladen und es
-                        findet keine Verbindung zu Google statt.
+                        findet keine Verbindung zu Google statt. Wir messen unter anderem Seitenaufrufe, das
+                        Absenden des Kontaktformulars sowie Klicks auf die E-Mail-Adresse und die Telefonnummer.
+                        Die Daten werden in Google Analytics 14 Monate gespeichert und danach automatisch gelöscht.
                     </p>
                 ) : (
                     <p style={p}>
