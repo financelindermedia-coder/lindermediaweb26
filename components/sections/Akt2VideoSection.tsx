@@ -245,7 +245,8 @@ export default function Akt2VideoSection({
                 data-parallax-min="821"
                 // Quelle erst setzen, wenn die Sektion in Reichweite ist
                 src={armed && autoplay && resolvedSrc ? resolvedSrc : undefined}
-                poster={poster}
+                // Das Poster erst mit der Quelle laden: das poster-Attribut wird sonst schon beim Seitenstart abgerufen und konkurriert mit dem Hero-Bild.
+                poster={armed || !autoplay ? poster : undefined}
                 autoPlay
                 muted
                 loop={endHoldSeconds <= 0}
