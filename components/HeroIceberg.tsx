@@ -315,7 +315,7 @@ export default function HeroIceberg() {
                                 <strong>nicht an der Oberfläche.</strong>
                             </h1>
                             <p className="hi-lead">
-                                Ich helfe Unternehmen mit erklärungsbedürftigen Leistungen, aus Komplexität
+                                Wir helfen Unternehmen mit erklärungsbedürftigen Leistungen, aus Komplexität
                                 eine klare Marke zu machen – von Positionierung und Markenarchitektur bis zu
                                 Design, Film, Website, Content und Automatisierung.
                             </p>

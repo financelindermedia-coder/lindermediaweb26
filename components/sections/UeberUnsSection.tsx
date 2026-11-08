@@ -43,10 +43,9 @@ export default function UeberUnsSection() {
                         Umsetzung. Sie sprechen direkt mit Andreas Linder – von der ersten Idee
                         bis zur fertigen Umsetzung, ohne Übergaben dazwischen.
                     </p>
-                    {/* Wechsel in die erste Person: Ab hier spricht Andreas selbst –
-                        der Abschnitt soll persönlich enden, nicht als Firmenprofil. */}
+                    {/* Durchgehend Wir-Form wie auf der übrigen Seite. */}
                     <p className="mfx-about-p">
-                        Ich verbinde Markenstrategie, Gestaltung, Fotografie, Film, 3D und
+                        Wir verbinden Markenstrategie, Gestaltung, Fotografie, Film, 3D und
                         digitale Umsetzung – aus einer Hand, mit einer gemeinsamen Richtung.
                     </p>
                     <p className="mfx-about-p mfx-about-strong">

@@ -122,9 +122,9 @@ export const COMPETENCES = [
 
 export const SITE_TITLE = 'Markenstrategie, Corporate Design & Webdesign | LinderMedia'
 /*
- * Wortgleich mit dem Lead im Hero. Eine Beschreibung, die in der Suche etwas
- * anderes verspricht als die Seite im ersten Satz sagt, kostet genau den
- * Vertrauensvorschuss, den sie gewinnen soll.
+ * Meta-Description (Suche, Open Graph, Structured Data): bewusst kuerzer als der
+ * Lead im Hero – Google schneidet ab etwa 160 Zeichen ab. Inhaltlich dasselbe
+ * Versprechen, nur ohne die Aufzaehlung am Ende.
  */
 export const SITE_DESCRIPTION =
-    'Ich helfe Unternehmen mit erklärungsbedürftigen Leistungen, aus Komplexität eine klare Marke zu machen – von Positionierung und Markenarchitektur bis zu Design, Film, Website, Content und Automatisierung.'
+    'Wir machen aus Komplexität eine klare Marke – für Unternehmen mit erklärungsbedürftigen Leistungen: von Positionierung über Design und Film bis zur Website.'
